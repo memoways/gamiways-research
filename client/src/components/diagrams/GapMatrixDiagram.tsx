@@ -4,6 +4,7 @@
  * Design: compact grid, color-coded cells, hover for explanation
  */
 import { useState } from "react";
+import { useLang } from "@/contexts/LangContext";
 
 type CellValue = "full" | "partial" | "none" | "rd";
 
@@ -106,11 +107,8 @@ const cellConfig: Record<CellValue, { color: string; bg: string; label: string; 
   rd: { color: "oklch(0.60 0.20 25)", bg: "oklch(0.98 0.02 25)", label: "R&D", labelFr: "R&D", icon: "⚗" },
 };
 
-interface Props {
-  lang?: "en" | "fr";
-}
-
-export default function GapMatrixDiagram({ lang = "en" }: Props) {
+export default function GapMatrixDiagram() {
+  const { lang } = useLang();
   const [hoveredCell, setHoveredCell] = useState<{ sol: string; crit: string } | null>(null);
   const [hoveredCrit, setHoveredCrit] = useState<string | null>(null);
   const isFr = lang === "fr";

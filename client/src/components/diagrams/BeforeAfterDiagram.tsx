@@ -4,6 +4,7 @@
  * Design: side-by-side, SVG inline, hover tooltips
  */
 import { useState } from "react";
+import { useLang } from "@/contexts/LangContext";
 
 interface StepProps {
   label: string;
@@ -66,11 +67,8 @@ function Arrow({ bottleneck }: { bottleneck?: boolean }) {
   );
 }
 
-interface Props {
-  lang?: "en" | "fr";
-}
-
-export default function BeforeAfterDiagram({ lang = "en" }: Props) {
+export default function BeforeAfterDiagram() {
+  const { lang } = useLang();
   const isFr = lang === "fr";
 
   const beforeSteps: StepProps[] = [

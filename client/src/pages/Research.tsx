@@ -226,7 +226,7 @@ export default function Research() {
               ? "Cliquer sur un axe pour les détails techniques et les hypothèses."
               : "Click an axis to expand technical details and hypotheses."}
           </p>
-          <ResearchAxesDiagram lang={lang} />
+          <ResearchAxesDiagram />
         </section>
 
         {/* ── SECTION 1: LATENCY ───────────────────────────────────────────── */}
@@ -242,7 +242,7 @@ export default function Research() {
                 : "Hover over each component for details. The red block = main bottleneck."}
             </p>
           </div>
-          <BeforeAfterDiagram lang={lang} />
+          <BeforeAfterDiagram />
           <Accordion label="Approaches to solve the bottleneck" labelFr="Approches pour résoudre le goulot" isFr={isFr}>
             <div className="pt-3 space-y-3">
               {[

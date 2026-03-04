@@ -109,7 +109,7 @@ export default function Home() {
             </p>
           </div>
 
-          <BeforeAfterDiagram lang={lang} />
+          <BeforeAfterDiagram />
 
           <ToggleBlock label="Why is avatar generation the bottleneck?" labelFr="Pourquoi la génération avatar est le goulot ?" isFr={isFr}>
             <div className="pt-3 space-y-2">
@@ -147,7 +147,7 @@ export default function Home() {
             </p>
           </div>
 
-          <PlatformModeDiagram lang={lang} />
+          <PlatformModeDiagram />
 
           <ToggleBlock label="Analogy: what DigiDouble is NOT" labelFr="Analogie : ce que DigiDouble n'est PAS" isFr={isFr}>
             <div className="pt-3">
@@ -174,7 +174,7 @@ export default function Home() {
             </p>
           </div>
 
-          <ResearchAxesDiagram lang={lang} />
+          <ResearchAxesDiagram />
 
           <ToggleBlock label="Why this is not just engineering" labelFr="Pourquoi ce n'est pas juste de l'ingénierie" isFr={isFr}>
             <div className="pt-3 space-y-2">
@@ -210,7 +210,7 @@ export default function Home() {
             </p>
           </div>
 
-          <GapMatrixDiagram lang={lang} />
+          <GapMatrixDiagram />
 
           <ToggleBlock label="Why this gap justifies fundamental research" labelFr="Pourquoi ce gap justifie la recherche fondamentale" isFr={isFr}>
             <div className="pt-3">
@@ -237,7 +237,7 @@ export default function Home() {
             </p>
           </div>
 
-          <TechStackDiagram lang={lang} />
+          <TechStackDiagram />
         </section>
 
         {/* ── SECTION 7: NAVIGATION ───────────────────────────────────────────── */}

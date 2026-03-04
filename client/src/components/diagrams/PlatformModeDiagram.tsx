@@ -4,12 +4,10 @@
  * Design: clear visual split, hover for details on each component
  */
 import { useState } from "react";
+import { useLang } from "@/contexts/LangContext";
 
-interface Props {
-  lang?: "en" | "fr";
-}
-
-export default function PlatformModeDiagram({ lang = "en" }: Props) {
+export default function PlatformModeDiagram() {
+  const { lang } = useLang();
   const [hovered, setHovered] = useState<string | null>(null);
   const isFr = lang === "fr";
 

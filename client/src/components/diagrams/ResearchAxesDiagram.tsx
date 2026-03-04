@@ -5,6 +5,7 @@
  */
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useLang } from "@/contexts/LangContext";
 
 interface Axis {
   number: string;
@@ -142,11 +143,8 @@ const axes: Axis[] = [
   },
 ];
 
-interface Props {
-  lang?: "en" | "fr";
-}
-
-export default function ResearchAxesDiagram({ lang = "en" }: Props) {
+export default function ResearchAxesDiagram() {
+  const { lang } = useLang();
   const [expanded, setExpanded] = useState<number | null>(null);
   const isFr = lang === "fr";
 

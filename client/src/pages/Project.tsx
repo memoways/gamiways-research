@@ -177,7 +177,7 @@ export default function Project() {
                 : "Hover over engine components for technical details. Both modes share the same infrastructure."}
             </p>
           </div>
-          <PlatformModeDiagram lang={lang} />
+          <PlatformModeDiagram />
           <Accordion label="Fundamental differentiation — why this is new" labelFr="Différenciation fondamentale — pourquoi c'est nouveau" isFr={isFr}>
             <div className="pt-3">
               <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
@@ -200,7 +200,7 @@ export default function Project() {
               {isFr ? "Hover sur les cellules pour les détails." : "Hover over cells for details."}
             </p>
           </div>
-          <GapMatrixDiagram lang={lang} />
+          <GapMatrixDiagram />
         </section>
 
         {/* ── SECTION 3: COMPETITIVE TABLE ─────────────────────────────────── */}

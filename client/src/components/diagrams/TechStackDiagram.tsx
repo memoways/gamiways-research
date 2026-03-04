@@ -4,6 +4,7 @@
  * Design: horizontal layers, color-coded by status, hover tooltips
  */
 import { useState } from "react";
+import { useLang } from "@/contexts/LangContext";
 
 interface Layer {
   id: string;
@@ -99,11 +100,8 @@ const statusConfig = {
   transition: { label: "In transition", labelFr: "En transition", color: "oklch(0.75 0.16 75)", bg: "oklch(0.97 0.04 75)" },
 };
 
-interface Props {
-  lang?: "en" | "fr";
-}
-
-export default function TechStackDiagram({ lang = "en" }: Props) {
+export default function TechStackDiagram() {
+  const { lang } = useLang();
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const isFr = lang === "fr";
 
