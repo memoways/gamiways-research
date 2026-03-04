@@ -6,6 +6,9 @@
 import { useState } from "react";
 import SectionHeader from "@/components/SectionHeader";
 import StatusBadge from "@/components/StatusBadge";
+import LatencyBenchmarkDiagram from "@/components/diagrams/LatencyBenchmarkDiagram";
+import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
+import ResearchGapDiagram from "@/components/diagrams/ResearchGapDiagram";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -506,6 +509,19 @@ export default function StateOfArt() {
                   </div>
                 ))}
               </div>
+
+              {/* Radar diagram for commercial comparison */}
+              <div className="mt-6">
+                <h3
+                  className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  Vue radar — Comparatif multi-critères
+                </h3>
+                <div className="border border-slate-200 rounded p-4 bg-white">
+                  <RadarCompareDiagram />
+                </div>
+              </div>
             </div>
           )}
 
@@ -717,6 +733,11 @@ export default function StateOfArt() {
             </div>
           </div>
 
+          {/* Latency benchmark diagram */}
+          <div className="border border-slate-200 rounded p-4 bg-white mb-6">
+            <LatencyBenchmarkDiagram />
+          </div>
+
           <div className="callout-warning">
             <p className="text-sm font-semibold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               Analyse : le trilemme Qualité / Latence / Coût
@@ -772,6 +793,32 @@ export default function StateOfArt() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Research gap matrix */}
+          <div className="grid md:grid-cols-2 gap-6 mt-6">
+            <div>
+              <h3
+                className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                Matrice Urgence × Difficulté
+              </h3>
+              <div className="border border-slate-200 rounded p-4 bg-white">
+                <ResearchGapDiagram />
+              </div>
+            </div>
+            <div>
+              <h3
+                className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                Comparatif Radar — Plateformes
+              </h3>
+              <div className="border border-slate-200 rounded p-4 bg-white">
+                <RadarCompareDiagram />
+              </div>
+            </div>
           </div>
         </section>
 

@@ -4,8 +4,9 @@
  * Hero sobre avec résumé du projet, liens vers les sections clés
  */
 import { Link } from "wouter";
-import { ArrowRight, Cpu, Brain, Layers, Zap, BookOpen, BarChart2 } from "lucide-react";
+import { ArrowRight, Brain, BookOpen, BarChart2 } from "lucide-react";
 import StatusBadge from "@/components/StatusBadge";
+import PipelineDiagram from "@/components/diagrams/PipelineDiagram";
 
 const quickLinks = [
   {
@@ -277,6 +278,34 @@ export default function Home() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Pipeline Diagram */}
+      <section className="py-12 border-b border-slate-200">
+        <div className="container">
+          <div className="flex items-baseline gap-3 mb-5">
+            <span
+              className="text-3xl font-bold"
+              style={{ fontFamily: "'JetBrains Mono', monospace", color: "oklch(0.72 0.18 200 / 0.2)" }}
+            >
+              →
+            </span>
+            <div>
+              <h2
+                className="text-xl font-semibold text-slate-900"
+                style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
+              >
+                Pipeline Conversationnel
+              </h2>
+              <p className="text-sm text-slate-500 mt-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                Chaque échange passe par 6 étapes — la génération d'avatar est le goulot d'étranglement principal (5–15s actuellement, cible 500ms).
+              </p>
+            </div>
+          </div>
+          <div className="border border-slate-200 rounded p-4 bg-white">
+            <PipelineDiagram />
           </div>
         </div>
       </section>

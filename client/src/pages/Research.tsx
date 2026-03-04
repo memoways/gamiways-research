@@ -5,6 +5,10 @@
  */
 import SectionHeader from "@/components/SectionHeader";
 import StatusBadge from "@/components/StatusBadge";
+import PipelineDiagram from "@/components/diagrams/PipelineDiagram";
+import MemoryArchDiagram from "@/components/diagrams/MemoryArchDiagram";
+import AvatarBehaviorDiagram from "@/components/diagrams/AvatarBehaviorDiagram";
+import ConversationFlowDiagram from "@/components/diagrams/ConversationFlowDiagram";
 
 const latencyPipeline = [
   { stage: "ASR+STT", current: "2–5s", target: "300ms", currentPct: 18, targetPct: 15 },
@@ -163,6 +167,24 @@ export default function Research() {
             accent="red"
           />
 
+          {/* Pipeline diagram */}
+          <div className="border border-slate-200 rounded p-4 bg-white mb-6">
+            <PipelineDiagram />
+          </div>
+
+          {/* Conversation sequence */}
+          <div className="mb-6">
+            <h3
+              className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              Diagramme de séquence — Cible &lt;2s
+            </h3>
+            <div className="border border-slate-200 rounded p-4 bg-white">
+              <ConversationFlowDiagram />
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <div className="callout-danger">
               <div
@@ -268,6 +290,19 @@ export default function Research() {
               >
                 Un avatar doit maintenir la cohérence sur des <strong>sessions longues (1h+)</strong> et des <strong>sessions multiples sur des jours ou semaines</strong>. Les approches naïves échouent : garder l'historique complet dans le contexte LLM est prohibitivement coûteux. Tronquer l'historique détruit la continuité. Le défi : atteindre la <strong>richesse contextuelle</strong> de l'historique complet avec le <strong>coût et la vitesse</strong> d'un contexte minimal.
               </p>
+            </div>
+
+            {/* Memory architecture diagram */}
+            <div className="mb-6">
+              <h3
+                className="text-base font-semibold text-slate-900 mb-3"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                Architecture Mémoire — Vue Système
+              </h3>
+              <div className="border border-slate-200 rounded p-4 bg-white">
+                <MemoryArchDiagram />
+              </div>
             </div>
 
             {/* Memory layers */}
@@ -427,6 +462,11 @@ export default function Research() {
             subtitle="Dr. Mathew Magimai-Doss · Speech & Audio Processing, IDIAP"
             accent="orange"
           />
+
+          {/* Avatar behavior diagram */}
+          <div className="border border-slate-200 rounded p-4 bg-white mb-6">
+            <AvatarBehaviorDiagram />
+          </div>
 
           <div className="callout-warning mb-6">
             <p

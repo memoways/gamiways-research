@@ -5,7 +5,9 @@
  */
 import SectionHeader from "@/components/SectionHeader";
 import StatusBadge from "@/components/StatusBadge";
-import { CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { CheckCircle, AlertCircle } from "lucide-react";
+import ProductArchDiagram from "@/components/diagrams/ProductArchDiagram";
+import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
 
 const competitiveData = [
   {
@@ -312,6 +314,11 @@ export default function Project() {
             accent="orange"
           />
 
+          {/* Architecture diagram */}
+          <div className="border border-slate-200 rounded p-4 bg-white mb-6">
+            <ProductArchDiagram />
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="border border-slate-200 rounded p-5">
               <div
@@ -493,6 +500,19 @@ export default function Project() {
             >
               <strong>Analogie :</strong> HeyGen/Synthesia = iMovie (simple, limité). Flowise + custom = Final Cut XML (puissant, complexe). <strong>DigiDouble = Final Cut Pro</strong> (puissant ET utilisable par des créateurs non-techniques).
             </p>
+          </div>
+
+          {/* Radar diagram */}
+          <div className="mt-6">
+            <h3
+              className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              Comparatif radar — Plateformes avatar
+            </h3>
+            <div className="border border-slate-200 rounded p-4 bg-white">
+              <RadarCompareDiagram />
+            </div>
           </div>
         </section>
 
