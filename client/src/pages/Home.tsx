@@ -7,7 +7,7 @@
  */
 import { useState } from "react";
 import { Link } from "wouter";
-import { ChevronDown, ChevronUp, ArrowRight, BarChart2, BookOpen, Layers } from "lucide-react";
+import { ChevronDown, ChevronUp, ArrowRight, BarChart2, BookOpen, Layers, Download } from "lucide-react";
 import BeforeAfterDiagram from "@/components/diagrams/BeforeAfterDiagram";
 import ResearchAxesDiagram from "@/components/diagrams/ResearchAxesDiagram";
 import TechStackDiagram from "@/components/diagrams/TechStackDiagram";
@@ -89,6 +89,17 @@ export default function Home() {
                 <BarChart2 size={14} />
               </button>
             </Link>
+            <a
+              href="https://d2xsxph8kpxj0f.cloudfront.net/117184650/JCUDa4RfVRrK7WLqtd9JFw/digidouble-technical-brief_2a088351.pdf"
+              download="DigiDouble-Technical-Brief.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium border-2 transition-colors"
+              style={{ borderColor: "oklch(0.45 0.18 200)", color: "oklch(0.45 0.18 200)", background: "oklch(0.97 0.02 200)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
+            >
+              <Download size={14} />
+              {isFr ? "Télécharger le brief technique" : "Download Technical Brief"}
+            </a>
           </div>
         </div>
       </section>
