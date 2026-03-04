@@ -10,6 +10,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script type="text/javascript">
+      (function() {
+        try {
+          if(window.location && window.location.search && window.location.search.indexOf('capture-sitebehaviour-heatmap') !== -1) {
+            sessionStorage.setItem('capture-sitebehaviour-heatmap', '_');
+          }
+          var sbSiteSecret = 'e04d55b7-f6b1-40d2-bc87-ff8b385cd1a7';
+          window.sitebehaviourTrackingSecret = sbSiteSecret;
+          var scriptElement = document.createElement('script');
+          scriptElement.defer = true;
+          scriptElement.id = 'site-behaviour-script-v2';
+          scriptElement.src = 'https://sitebehaviour-cdn.fra1.cdn.digitaloceanspaces.com/index.min.js?sitebehaviour-secret=' + sbSiteSecret;
+          document.head.appendChild(scriptElement);
+        }
+        catch (e) {console.error(e)}
+      })()
+    </script>
   </head>
 
   <body>
