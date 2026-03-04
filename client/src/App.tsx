@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import { LangProvider } from "./contexts/LangContext";
 import Home from "./pages/Home";
 import Project from "./pages/Project";
 import Research from "./pages/Research";
@@ -31,12 +32,14 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="light">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
+      <LangProvider>
+        <ThemeProvider defaultTheme="light">
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </ThemeProvider>
+      </LangProvider>
     </ErrorBoundary>
   );
 }

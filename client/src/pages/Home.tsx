@@ -1,83 +1,94 @@
 /*
  * Home — DigiDouble Research Portal
- * Design: Technical Blueprint, Space Grotesk, sections numérotées
- * Hero sobre avec résumé du projet, liens vers les sections clés
+ * Design: Technical Blueprint, Space Grotesk, numbered sections
+ * i18n: EN (default) / FR via LangContext
  */
 import { Link } from "wouter";
 import { ArrowRight, Brain, BookOpen, BarChart2 } from "lucide-react";
 import StatusBadge from "@/components/StatusBadge";
 import PipelineDiagram from "@/components/diagrams/PipelineDiagram";
-
-const quickLinks = [
-  {
-    href: "/project",
-    icon: BookOpen,
-    number: "01",
-    title: "Contexte & Vision",
-    desc: "Deux projets fondateurs, architecture produit, positionnement compétitif.",
-    accent: "oklch(0.72 0.18 200)",
-  },
-  {
-    href: "/research",
-    icon: Brain,
-    number: "02",
-    title: "Défis de Recherche",
-    desc: "Axes IDIAP : mémoire conversationnelle, avatar expressif, orchestration.",
-    accent: "oklch(0.72 0.18 50)",
-  },
-  {
-    href: "/state-of-art",
-    icon: BarChart2,
-    number: "03",
-    title: "État de l'Art",
-    desc: "Solutions existantes, benchmarks de latence, enjeux technologiques.",
-    accent: "oklch(0.65 0.18 145)",
-  },
-];
-
-const keyFacts = [
-  { label: "Latence actuelle", value: "15–40s", unit: "par échange", variant: "gap" as const },
-  { label: "Latence cible", value: "<2s", unit: "end-to-end", variant: "target" as const },
-  { label: "Réduction requise", value: "10–20×", unit: "amélioration", variant: "rd" as const },
-  { label: "Streams parallèles", value: "5", unit: "synchronisés", variant: "available" as const },
-];
-
-const researchAxes = [
-  {
-    id: "AX1",
-    title: "Mémoire Conversationnelle",
-    researcher: "Dr. Elena Epure",
-    group: "Language & Information Technologies",
-    challenge: "Cohérence sur sessions 1h+ sans explosion des tokens",
-    color: "oklch(0.72 0.18 200)",
-  },
-  {
-    id: "AX2",
-    title: "Avatar Expressif & TTS",
-    researcher: "Dr. Mathew Magimai-Doss",
-    group: "Speech & Audio Processing",
-    challenge: "Génération temps réel avec langage corporel et voix personnalisée",
-    color: "oklch(0.72 0.18 50)",
-  },
-  {
-    id: "AX3",
-    title: "Orchestration Déterministe-Organique",
-    researcher: "Équipe interne",
-    group: "Architecture",
-    challenge: "Équilibre contraintes narratives / liberté conversationnelle IA",
-    color: "oklch(0.65 0.18 145)",
-  },
-  {
-    id: "AX4",
-    title: "Synchronisation Multi-Flux",
-    researcher: "Memoways",
-    group: "Ingénierie interne",
-    challenge: "Coordination 5 streams <100ms désynchronisation",
-    color: "oklch(0.5 0.015 265)",
-  },
-];
+import { useLang } from "@/contexts/LangContext";
 
 export default function Home() {
+  const { t } = useLang();
+
+  const quickLinks = [
+    {
+      href: "/project",
+      icon: BookOpen,
+      number: "01",
+      title: t("home.nav.01.title"),
+      desc: t("home.nav.01.desc"),
+      accent: "oklch(0.72 0.18 200)",
+    },
+    {
+      href: "/research",
+      icon: Brain,
+      number: "02",
+      title: t("home.nav.02.title"),
+      desc: t("home.nav.02.desc"),
+      accent: "oklch(0.72 0.18 50)",
+    },
+    {
+      href: "/state-of-art",
+      icon: BarChart2,
+      number: "03",
+      title: t("home.nav.03.title"),
+      desc: t("home.nav.03.desc"),
+      accent: "oklch(0.65 0.18 145)",
+    },
+  ];
+
+  const keyFacts = [
+    { label: t("home.metric.latency_current"), value: "15–40s", unit: t("home.metric.latency_current_sub"), variant: "gap" as const },
+    { label: t("home.metric.latency_target"), value: "<2s", unit: t("home.metric.latency_target_sub"), variant: "target" as const },
+    { label: t("home.metric.reduction"), value: "10–20×", unit: t("home.metric.reduction_sub"), variant: "rd" as const },
+    { label: t("home.metric.streams"), value: "5", unit: t("home.metric.streams_sub"), variant: "available" as const },
+  ];
+
+  const researchAxes = [
+    {
+      id: "AX1",
+      title: t("research.s2.title"),
+      researcher: "Dr. Elena Epure",
+      group: "Language & Information Technologies",
+      challenge: t("research.mem.gap.title"),
+      color: "oklch(0.72 0.18 200)",
+      statusLabel: "PRIMARY",
+      statusVariant: "rd" as const,
+    },
+    {
+      id: "AX2",
+      title: t("research.s3.title"),
+      researcher: "Dr. Mathew Magimai-Doss",
+      group: "Speech & Audio Processing",
+      challenge: t("research.avatar.gap.title"),
+      color: "oklch(0.72 0.18 50)",
+      statusLabel: "PRIMARY",
+      statusVariant: "rd" as const,
+    },
+    {
+      id: "AX3",
+      title: "Deterministic-Organic Orchestration",
+      researcher: "Internal team",
+      group: "Architecture",
+      challenge: "Balance narrative constraints / AI conversational freedom",
+      color: "oklch(0.65 0.18 145)",
+      statusLabel: "SECONDARY",
+      statusVariant: "rd" as const,
+    },
+    {
+      id: "AX4",
+      title: "Multi-Stream Synchronization",
+      researcher: "Memoways",
+      group: "Internal Engineering",
+      challenge: "Coordinate 5 streams <100ms desync",
+      color: "oklch(0.5 0.015 265)",
+      statusLabel: "INTERNAL",
+      statusVariant: "internal" as const,
+    },
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Hero */}
@@ -89,29 +100,29 @@ export default function Home() {
                 className="text-xs font-semibold tracking-widest text-slate-400 uppercase"
                 style={{ fontFamily: "'JetBrains Mono', monospace" }}
               >
-                Research Portal
+                {t("home.label")}
               </span>
               <span className="text-slate-200">·</span>
-              <StatusBadge variant="rd" label="INNOSUISSE / IDIAP" />
+              <StatusBadge variant="rd" label={t("home.badge")} />
             </div>
 
             <h1
               className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 leading-tight"
               style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}
             >
-              DigiDouble
+              {t("home.title")}
             </h1>
             <p
               className="text-xl text-slate-600 mb-3 leading-relaxed max-w-3xl"
               style={{ fontFamily: "'Source Serif 4', serif" }}
             >
-              Plateforme de création d'expériences conversationnelles interactives avec avatars vidéo — combinant dialogue IA temps réel, génération d'avatar photorealistic et séquençage cinématographique intelligent.
+              {t("home.tagline")}
             </p>
             <p
               className="text-base text-slate-500 mb-8 max-w-2xl"
               style={{ fontFamily: "'Source Serif 4', serif" }}
             >
-              Ce portail documente les défis de recherche fondamentale pour la collaboration Memoways × Gamilab × IDIAP, dans le cadre d'un projet Innosuisse.
+              {t("home.desc")}
             </p>
 
             {/* Key metrics */}
@@ -149,7 +160,7 @@ export default function Home() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded text-sm font-semibold text-white no-underline transition-opacity hover:opacity-90"
                 style={{ background: "oklch(0.72 0.18 200)", fontFamily: "'Space Grotesk', sans-serif" }}
               >
-                Découvrir le projet
+                {t("home.cta.project")}
                 <ArrowRight size={14} />
               </Link>
               <Link
@@ -157,7 +168,7 @@ export default function Home() {
                 className="inline-flex items-center gap-2 px-4 py-2 rounded text-sm font-semibold text-slate-700 border border-slate-300 bg-white no-underline hover:bg-slate-50 transition-colors"
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
-                État de l'art
+                {t("home.cta.sota")}
                 <BarChart2 size={14} />
               </Link>
             </div>
@@ -204,7 +215,7 @@ export default function Home() {
                     className="flex items-center gap-1 mt-3 text-xs font-medium"
                     style={{ color: link.accent, fontFamily: "'Space Grotesk', sans-serif" }}
                   >
-                    Lire
+                    {t("nav.home") === "Accueil" ? "Lire" : "Read"}
                     <ArrowRight size={12} />
                   </div>
                 </Link>
@@ -228,7 +239,7 @@ export default function Home() {
               className="text-xl font-semibold text-slate-900"
               style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
             >
-              Axes de Recherche
+              {t("nav.home") === "Accueil" ? "Axes de Recherche" : "Research Axes"}
             </h2>
           </div>
 
@@ -236,11 +247,11 @@ export default function Home() {
             <table className="data-table">
               <thead>
                 <tr>
-                  <th>Axe</th>
-                  <th>Défi</th>
-                  <th>Chercheur</th>
-                  <th>Groupe IDIAP</th>
-                  <th>Statut</th>
+                  <th>{t("nav.home") === "Accueil" ? "Axe" : "Axis"}</th>
+                  <th>{t("nav.home") === "Accueil" ? "Défi" : "Challenge"}</th>
+                  <th>{t("nav.home") === "Accueil" ? "Chercheur" : "Researcher"}</th>
+                  <th>{t("nav.home") === "Accueil" ? "Groupe IDIAP" : "IDIAP Group"}</th>
+                  <th>{t("nav.home") === "Accueil" ? "Statut" : "Status"}</th>
                 </tr>
               </thead>
               <tbody>
@@ -267,12 +278,7 @@ export default function Home() {
                       {ax.group}
                     </td>
                     <td>
-                      {ax.id === "AX1" || ax.id === "AX2"
-                        ? <StatusBadge variant="rd" label="PRIMAIRE" />
-                        : ax.id === "AX3"
-                        ? <StatusBadge variant="rd" label="SECONDAIRE" />
-                        : <StatusBadge variant="internal" label="INTERNE" />
-                      }
+                      <StatusBadge variant={ax.statusVariant} label={ax.statusLabel} />
                     </td>
                   </tr>
                 ))}
@@ -297,10 +303,10 @@ export default function Home() {
                 className="text-xl font-semibold text-slate-900"
                 style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
               >
-                Pipeline Conversationnel
+                {t("home.pipeline.title")}
               </h2>
               <p className="text-sm text-slate-500 mt-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                Chaque échange passe par 6 étapes — la génération d'avatar est le goulot d'étranglement principal (5–15s actuellement, cible 500ms).
+                {t("home.pipeline.desc")}
               </p>
             </div>
           </div>
@@ -316,72 +322,31 @@ export default function Home() {
           <div className="max-w-3xl">
             <div className="flex items-baseline gap-3 mb-6">
               <span
-                className="text-3xl font-bold"
-                style={{ fontFamily: "'JetBrains Mono', monospace", color: "oklch(0.60 0.20 25 / 0.25)" }}
+                className="text-xs font-bold tracking-widest"
+                style={{ fontFamily: "'JetBrains Mono', monospace", color: "oklch(0.60 0.20 25)" }}
               >
-                !!
+                {t("home.gap.label")}
               </span>
-              <h2
-                className="text-xl font-semibold text-slate-900"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
-              >
-                Le Problème en 30 Secondes
-              </h2>
             </div>
-
-            <div className="callout-danger mb-4">
+            <h2
+              className="text-2xl font-semibold text-slate-900 mb-4"
+              style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
+            >
+              {t("home.gap.title")}
+            </h2>
+            <p
+              className="text-base text-slate-600 leading-relaxed mb-4"
+              style={{ fontFamily: "'Source Serif 4', serif" }}
+            >
+              {t("home.gap.body")}
+            </p>
+            <div className="border-l-2 pl-4 py-1" style={{ borderColor: "oklch(0.72 0.18 200)" }}>
               <p
-                className="text-slate-800 font-medium mb-2"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
-                Aucune solution existante ne combine :
-              </p>
-              <div className="grid sm:grid-cols-2 gap-2">
-                {[
-                  "Dialogue IA conversationnel temps réel",
-                  "Génération d'avatar photorealistic",
-                  "Séquençage vidéo intelligent",
-                  "Contrôle narratif / pédagogique",
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <span style={{ color: "oklch(0.60 0.20 25)", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", marginTop: "2px" }}>✗</span>
-                    <span className="text-sm text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-              <p
-                className="text-sm text-slate-600 mt-3 italic"
+                className="text-sm text-slate-500 leading-relaxed italic"
                 style={{ fontFamily: "'Source Serif 4', serif" }}
               >
-                — dans une expérience coordonnée unique, souveraine et configurable par des créateurs non-techniques.
+                {t("home.gap.challenge")}
               </p>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-3">
-              <div className="callout-success">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <StatusBadge variant="available" />
-                </div>
-                <p className="text-xs text-slate-600 mt-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  Pipeline ASR→STT souverain (Audiogami) + expertise multi-stream (Memoways, 14 ans)
-                </p>
-              </div>
-              <div className="callout-danger">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <StatusBadge variant="gap" />
-                </div>
-                <p className="text-xs text-slate-600 mt-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  Orchestration, mémoire long-terme, synthèse avatar temps réel, TTS expressif personnalisé
-                </p>
-              </div>
-              <div className="callout-info">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <StatusBadge variant="rd" />
-                </div>
-                <p className="text-xs text-slate-600 mt-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  Recherche fondamentale IDIAP sur les axes 1 et 2, avec publications et datasets ouverts
-                </p>
-              </div>
             </div>
           </div>
         </div>

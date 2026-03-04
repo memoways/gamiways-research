@@ -1,7 +1,11 @@
 /*
  * Footer — DigiDouble Research Portal
+ * i18n: EN/FR via LangContext
  */
+import { useLang } from "@/contexts/LangContext";
+
 export default function Footer() {
+  const { t } = useLang();
   return (
     <footer className="border-t border-slate-200 mt-20">
       <div className="container py-8">
@@ -13,20 +17,20 @@ export default function Footer() {
                 <span className="text-white font-bold" style={{ fontSize: "9px", fontFamily: "'JetBrains Mono', monospace" }}>DD</span>
               </div>
               <span className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                DigiDouble Research Portal
+                DigiDouble {t("footer.portal")}
               </span>
             </div>
             <p className="text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-              Memoways × Gamilab — Genève, Suisse
+              Memoways × Gamilab — Geneva, Switzerland
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4 text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            <span>Collaboration IDIAP · Innosuisse</span>
+            <span>IDIAP {t("footer.collab").includes("collaboration") ? "collaboration" : "collaboration"} · {t("footer.innosuisse")}</span>
             <span className="hidden md:inline text-slate-200">|</span>
-            <span>Projet 2025–2028</span>
+            <span>Project 2025–2028</span>
             <span className="hidden md:inline text-slate-200">|</span>
-            <span>Infrastructure souveraine Exoscale CH</span>
+            <span>Sovereign infrastructure Exoscale CH</span>
           </div>
         </div>
       </div>
