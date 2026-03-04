@@ -389,8 +389,8 @@ export default function StateOfArt() {
     {
       domain: isFr ? "Latence avatar end-to-end" : "End-to-end avatar latency",
       gap: isFr
-        ? "15–40s actuels vs <2s requis — goulot : génération vidéo avatar"
-        : "Current 15–40s vs <2s required — bottleneck: avatar video generation",
+        ? "6–12s actuels vs <2s requis — goulot : génération vidéo avatar"
+        : "Current 6–12s vs <2s required — bottleneck: avatar video generation",
       sota: isFr
         ? "Beyond Presence <100ms, NVIDIA ACE <100ms — mais infrastructure propriétaire"
         : "Beyond Presence <100ms, NVIDIA ACE <100ms — but proprietary infrastructure",
@@ -786,14 +786,7 @@ export default function StateOfArt() {
                 ))}
               </div>
 
-              <div className="mt-6">
-                <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Vue radar — Comparatif multi-critères" : "Radar view — Multi-criteria comparison"}
-                </h3>
-                <div className="border border-slate-200 rounded p-4 bg-white">
-                  <RadarCompareDiagram />
-                </div>
-              </div>
+
             </div>
           )}
 
@@ -910,6 +903,11 @@ export default function StateOfArt() {
             accent="orange"
           />
 
+          {/* Diagram first */}
+          <div className="border border-slate-200 rounded-lg p-5 bg-white mb-6">
+            <LatencyBenchmarkDiagram />
+          </div>
+
           <div className="mb-4">
             <div className="overflow-x-auto">
               <table className="data-table">
@@ -951,9 +949,7 @@ export default function StateOfArt() {
             </div>
           </div>
 
-          <div className="border border-slate-200 rounded p-4 bg-white mb-6">
-            <LatencyBenchmarkDiagram />
-          </div>
+
 
           <div className="callout-warning">
             <p className="text-sm font-semibold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -976,6 +972,26 @@ export default function StateOfArt() {
             subtitle={isFr ? "Ce qui manque, ce qui existe, et où DigiDouble peut contribuer." : "What is missing, what exists, and where DigiDouble can contribute."}
             accent="red"
           />
+
+          {/* Diagrams first */}
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Matrice Urgence × Difficulté" : "Urgency × Difficulty Matrix"}
+              </h3>
+              <div className="border border-slate-200 rounded-lg p-4 bg-white">
+                <ResearchGapDiagram />
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Comparatif Radar" : "Radar Comparison"}
+              </h3>
+              <div className="border border-slate-200 rounded-lg p-4 bg-white">
+                <RadarCompareDiagram />
+              </div>
+            </div>
+          </div>
 
           <div className="overflow-x-auto">
             <table className="data-table">
@@ -1007,24 +1023,6 @@ export default function StateOfArt() {
             </table>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 mt-6">
-            <div>
-              <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "Matrice Urgence × Difficulté" : "Urgency × Difficulty Matrix"}
-              </h3>
-              <div className="border border-slate-200 rounded p-4 bg-white">
-                <ResearchGapDiagram />
-              </div>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "Comparatif Radar — Plateformes" : "Radar Comparison — Platforms"}
-              </h3>
-              <div className="border border-slate-200 rounded p-4 bg-white">
-                <RadarCompareDiagram />
-              </div>
-            </div>
-          </div>
         </section>
 
         {/* Research Assessment */}

@@ -1,165 +1,77 @@
 /*
  * Project — DigiDouble Research Portal
- * Page: Context & Vision
- * Design: Technical Blueprint, numbered sections, comparative tables
+ * Design: schema-first, details in accordion/toggle
+ * Sections: Platform (PlatformMode) → Gap (GapMatrix) → Competitive → Infrastructure
  * i18n: EN (default) / FR via LangContext
  */
-import SectionHeader from "@/components/SectionHeader";
-import StatusBadge from "@/components/StatusBadge";
-import { CheckCircle, AlertCircle } from "lucide-react";
-import ProductArchDiagram from "@/components/diagrams/ProductArchDiagram";
+import { useState } from "react";
+import { ChevronDown, ChevronUp, CheckCircle, AlertCircle } from "lucide-react";
+import PlatformModeDiagram from "@/components/diagrams/PlatformModeDiagram";
+import GapMatrixDiagram from "@/components/diagrams/GapMatrixDiagram";
 import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
+import StatusBadge from "@/components/StatusBadge";
 import { useLang } from "@/contexts/LangContext";
+
+function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
+  return (
+    <div className="flex items-center gap-4 mb-8">
+      <span className="text-xs font-mono text-slate-300 shrink-0">{number}</span>
+      <div className="h-px flex-1 bg-slate-200" />
+      <span className="text-xs font-bold uppercase tracking-widest text-slate-400 shrink-0" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        {isFr ? titleFr : title}
+      </span>
+      <div className="h-px w-8 bg-slate-200" />
+    </div>
+  );
+}
+
+function Accordion({ label, labelFr, isFr, children }: { label: string; labelFr: string; isFr: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-slate-200 rounded mt-4">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-3 text-xs font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors rounded"
+        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+      >
+        <span>{isFr ? labelFr : label}</span>
+        {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+      </button>
+      {open && (
+        <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function LevelDots({ level }: { level: number }) {
   return (
     <div className="flex gap-0.5">
       {[1, 2, 3].map((i) => (
-        <div
-          key={i}
-          className="w-2 h-2 rounded-full"
-          style={{
-            background: i <= level
-              ? level === 3 ? "oklch(0.65 0.18 145)" : "oklch(0.72 0.18 200)"
-              : "oklch(0.88 0.006 265)",
-          }}
-        />
+        <div key={i} className="w-2 h-2 rounded-full" style={{
+          background: i <= level
+            ? level === 3 ? "oklch(0.65 0.18 145)" : "oklch(0.72 0.18 200)"
+            : "oklch(0.88 0.006 265)",
+        }} />
       ))}
     </div>
   );
 }
 
 export default function Project() {
-  const { t } = useLang();
-  const isFr = t("nav.home") === "Accueil";
+  const { lang } = useLang();
+  const isFr = lang === "fr";
 
   const competitiveData = [
-    {
-      criterion: isFr ? "Avatars temps réel" : "Real-time avatars",
-      heygen: { value: "✓✓✓", level: 3 },
-      synthesia: { value: "✗", level: 0 },
-      flowise: { value: "✓ (OS)", level: 1 },
-      digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true },
-    },
-    {
-      criterion: isFr ? "Langage corporel" : "Body language",
-      heygen: { value: "✓", level: 1 },
-      synthesia: { value: "✗", level: 0 },
-      flowise: { value: "✗", level: 0 },
-      digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true },
-    },
-    {
-      criterion: isFr ? "Sync multi-stream" : "Multi-stream sync",
-      heygen: { value: "✗", level: 0 },
-      synthesia: { value: "✗", level: 0 },
-      flowise: { value: "✓", level: 2 },
-      digidouble: { value: "✓✓✓", level: 3 },
-    },
-    {
-      criterion: isFr ? "Mémoire conversationnelle" : "Conversational memory",
-      heygen: { value: "✗", level: 0 },
-      synthesia: { value: "✗", level: 0 },
-      flowise: { value: "✓", level: 2 },
-      digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true },
-    },
-    {
-      criterion: isFr ? "Éditeur nœuds" : "Node editor",
-      heygen: { value: "✗", level: 0 },
-      synthesia: { value: "✗", level: 0 },
-      flowise: { value: "✓ (tech)", level: 1 },
-      digidouble: { value: "✓✓✓", level: 3 },
-    },
-    {
-      criterion: isFr ? "Souveraineté données" : "Data sovereignty",
-      heygen: { value: "✗", level: 0 },
-      synthesia: { value: "✗", level: 0 },
-      flowise: { value: "✓ (self)", level: 2 },
-      digidouble: { value: "✓✓✓", level: 3 },
-    },
-    {
-      criterion: isFr ? "Risque censure" : "Censorship risk",
-      heygen: { value: isFr ? "Élevé" : "High", level: 0 },
-      synthesia: { value: isFr ? "Élevé" : "High", level: 0 },
-      flowise: { value: isFr ? "Élevé" : "High", level: 0 },
-      digidouble: { value: isFr ? "Nul (souverain)" : "None (sovereign)", level: 3 },
-    },
-  ];
-
-  const projects = [
-    {
-      id: "P1",
-      name: "Le Dilemme Plastique",
-      type: "EdTech",
-      period: isFr ? "2023–présent" : "2023–present",
-      desc: isFr
-        ? "Outil éducatif sur la pollution plastique océanique. Les étudiants conversent avec un avatar IA 'Peter' qui guide à travers des sujets de sciences environnementales, affichant des clips documentaires et images pendant la conversation."
-        : "Educational tool on ocean plastic pollution. Students converse with an AI avatar 'Peter' who guides them through environmental science topics, displaying documentary clips and images during the conversation.",
-      versions: isFr
-        ? [
-            { v: "V1 (2023)", desc: "8 no-code apps, linear deterministic path → too rigid" },
-            { v: "V2 (2024)", desc: "Pivot to generative AI (GPT-4 + Flowise + ElevenLabs) → natural conversation, but 15–40s latency" },
-            { v: "2025", desc: "Pedagogical expert Jérémy Argyriades (PhD physics) joins to structure interactions" },
-          ]
-        : [
-            { v: "V1 (2023)", desc: "8 no-code apps, linear deterministic path → too rigid" },
-            { v: "V2 (2024)", desc: "Pivot to generative AI (GPT-4 + Flowise + ElevenLabs) → natural conversation, but 15–40s latency" },
-            { v: "2025", desc: "Pedagogical expert Jérémy Argyriades (PhD physics) joins to structure interactions" },
-          ],
-      learnings: isFr
-        ? [
-            "Orchestration multi-services : fragile et lente",
-            "Curation de contenu pour RAG : critique",
-            "Latence et synchronisation : blocages UX primaires",
-            "Flowise : outil le plus proche de la vision produit",
-          ]
-        : [
-            "Multi-service orchestration: fragile and slow",
-            "Content curation for RAG: critical",
-            "Latency and synchronization: primary UX blockers",
-            "Flowise: closest tool to the product vision",
-          ],
-      validation: [
-        { metric: isFr ? "Enseignants interviewés" : "Teachers interviewed", value: "11" },
-        { metric: isFr ? "Veulent expérimenter" : "Want to experiment", value: "100%" },
-        { metric: isFr ? "Utilisent déjà l'IA" : "Already use AI", value: "78%" },
-        { metric: isFr ? "Veulent tester le proto" : "Want to test prototype", value: "78%" },
-        { metric: isFr ? "Satisfaction outils actuels" : "Current tool satisfaction", value: "6.9/10" },
-      ],
-      color: "oklch(0.72 0.18 200)",
-    },
-    {
-      id: "P2",
-      name: "Parle à AVA!",
-      type: isFr ? "Cinéma interactif" : "Interactive Cinema",
-      period: isFr ? "2024–présent" : "2024–present",
-      desc: isFr
-        ? "Expérience narrative interactive permettant aux spectateurs de converser avec des personnages du film dystopique 'Où est AVA?' de Romed Wyder. Les spectateurs dialoguent avec des avatars photorealistic de personnages du film."
-        : "Interactive narrative experience allowing viewers to converse with characters from Romed Wyder's dystopian film 'Where is AVA?'. Viewers dialogue with photorealistic avatars of film characters.",
-      versions: isFr
-        ? [
-            { v: "Incident censure", desc: "OpenAI a bloqué l'accès API pour mots-clés sensibles dans un contexte purement artistique → pivot vers open-source et infrastructure européenne" },
-            { v: "Solution souveraine", desc: "Partenariat Exoscale (cloud GPU suisse), déploiement HeyGem open-source en Docker. Gain 30% performance avec Arch Linux vs Ubuntu." },
-          ]
-        : [
-            { v: "Censorship incident", desc: "OpenAI blocked API access for sensitive keywords in a purely artistic context → pivot to open-source and European infrastructure" },
-            { v: "Sovereign solution", desc: "Exoscale partnership (Swiss GPU cloud), HeyGem open-source deployment in Docker. 30% performance gain with Arch Linux vs Ubuntu." },
-          ],
-      learnings: isFr
-        ? [
-            "Plateformes commerciales : censure arbitraire — infrastructure souveraine non-négociable",
-            "Fine-tuning personnage : nécessite des milliers d'exemples de dialogue",
-            "Latence temps réel : goulot d'étranglement critique",
-            "Absence de langage corporel : artificialité perceptible",
-          ]
-        : [
-            "Commercial platforms: arbitrary censorship — sovereign infrastructure non-negotiable",
-            "Character fine-tuning: requires thousands of dialogue examples",
-            "Real-time latency: critical bottleneck",
-            "Absence of body language: perceptible artificiality",
-          ],
-      validation: [],
-      color: "oklch(0.72 0.18 50)",
-    },
+    { criterion: isFr ? "Avatars temps réel" : "Real-time avatars", heygen: { value: "✓✓✓", level: 3 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (OS)", level: 1 }, digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
+    { criterion: isFr ? "Langage corporel" : "Body language", heygen: { value: "✓", level: 1 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✗", level: 0 }, digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
+    { criterion: isFr ? "Sync multi-stream" : "Multi-stream sync", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓", level: 2 }, digidouble: { value: "✓✓✓", level: 3, rd: false } },
+    { criterion: isFr ? "Mémoire conversationnelle" : "Conversational memory", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓", level: 2 }, digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
+    { criterion: isFr ? "Éditeur nœuds" : "Node editor", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (tech)", level: 1 }, digidouble: { value: "✓✓✓", level: 3, rd: false } },
+    { criterion: isFr ? "Souveraineté données" : "Data sovereignty", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (self)", level: 2 }, digidouble: { value: "✓✓✓", level: 3, rd: false } },
+    { criterion: isFr ? "Risque censure" : "Censorship risk", heygen: { value: isFr ? "Élevé" : "High", level: 0 }, synthesia: { value: isFr ? "Élevé" : "High", level: 0 }, flowise: { value: isFr ? "Élevé" : "High", level: 0 }, digidouble: { value: isFr ? "Nul (souverain)" : "None (sovereign)", level: 3, rd: false } },
   ];
 
   const techStack = [
@@ -173,329 +85,268 @@ export default function Project() {
     { name: isFr ? "TTS prosodique personnalisé" : "Personalized prosodic TTS", status: "gap", desc: isFr ? "Capture de l'empreinte prosodique individuelle" : "Capture of individual prosodic fingerprint" },
   ];
 
+  const projects = [
+    {
+      id: "P1",
+      name: "Le Dilemme Plastique",
+      type: "EdTech",
+      period: isFr ? "2023–présent" : "2023–present",
+      color: "oklch(0.72 0.18 200)",
+      desc: isFr
+        ? "Outil éducatif sur la pollution plastique océanique. Les étudiants conversent avec un avatar IA 'Peter' qui guide à travers des sujets de sciences environnementales."
+        : "Educational tool on ocean plastic pollution. Students converse with an AI avatar 'Peter' who guides them through environmental science topics.",
+      versions: isFr
+        ? [
+            { v: "V1 (2023)", desc: "8 no-code apps, parcours linéaire déterministe → trop rigide" },
+            { v: "V2 (2024)", desc: "Pivot vers IA générative (GPT-4 + Flowise + ElevenLabs) → conversation naturelle, mais 6–12s de latence" },
+            { v: "2025", desc: "Expert pédagogique Jérémy Argyriades (PhD physique) rejoint pour structurer les interactions" },
+          ]
+        : [
+            { v: "V1 (2023)", desc: "8 no-code apps, linear deterministic path → too rigid" },
+            { v: "V2 (2024)", desc: "Pivot to generative AI (GPT-4 + Flowise + ElevenLabs) → natural conversation, but 6–12s latency" },
+            { v: "2025", desc: "Pedagogical expert Jérémy Argyriades (PhD physics) joins to structure interactions" },
+          ],
+      learnings: isFr
+        ? ["Orchestration multi-services : fragile et lente", "Curation de contenu pour RAG : critique", "Latence et synchronisation : blocages UX primaires", "Flowise : outil le plus proche de la vision produit"]
+        : ["Multi-service orchestration: fragile and slow", "Content curation for RAG: critical", "Latency and synchronization: primary UX blockers", "Flowise: closest tool to the product vision"],
+      validation: [
+        { metric: isFr ? "Enseignants interviewés" : "Teachers interviewed", value: "11" },
+        { metric: isFr ? "Veulent expérimenter" : "Want to experiment", value: "100%" },
+        { metric: isFr ? "Utilisent déjà l'IA" : "Already use AI", value: "78%" },
+        { metric: isFr ? "Satisfaction outils actuels" : "Current tool satisfaction", value: "6.9/10" },
+      ],
+    },
+    {
+      id: "P2",
+      name: "Parle à AVA!",
+      type: isFr ? "Cinéma interactif" : "Interactive Cinema",
+      period: isFr ? "2024–présent" : "2024–present",
+      color: "oklch(0.72 0.18 50)",
+      desc: isFr
+        ? "Expérience narrative interactive permettant aux spectateurs de converser avec des personnages du film dystopique 'Où est AVA?' de Romed Wyder. Avatars photorealistic de personnages du film."
+        : "Interactive narrative experience allowing viewers to converse with characters from Romed Wyder's dystopian film 'Where is AVA?'. Photorealistic avatars of film characters.",
+      versions: isFr
+        ? [
+            { v: "Incident censure", desc: "OpenAI a bloqué l'accès API pour mots-clés sensibles dans un contexte purement artistique → pivot vers open-source et infrastructure européenne" },
+            { v: "Solution souveraine", desc: "Partenariat Exoscale (cloud GPU suisse), déploiement HeyGem open-source en Docker. Gain 30% performance avec Arch Linux vs Ubuntu." },
+          ]
+        : [
+            { v: "Censorship incident", desc: "OpenAI blocked API access for sensitive keywords in a purely artistic context → pivot to open-source and European infrastructure" },
+            { v: "Sovereign solution", desc: "Exoscale partnership (Swiss GPU cloud), HeyGem open-source deployment in Docker. 30% performance gain with Arch Linux vs Ubuntu." },
+          ],
+      learnings: isFr
+        ? ["Plateformes commerciales : censure arbitraire — infrastructure souveraine non-négociable", "Fine-tuning personnage : nécessite des milliers d'exemples de dialogue", "Latence temps réel : goulot d'étranglement critique", "Absence de langage corporel : artificialité perceptible"]
+        : ["Commercial platforms: arbitrary censorship — sovereign infrastructure non-negotiable", "Character fine-tuning: requires thousands of dialogue examples", "Real-time latency: critical bottleneck", "Absence of body language: perceptible artificiality"],
+      validation: [],
+    },
+  ];
+
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-16">
       {/* Page header */}
-      <div className="border-b border-slate-200 py-8">
-        <div className="container">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">01</span>
-              <span className="text-slate-300">·</span>
-              <span className="text-xs font-mono text-slate-400">{t("project.label")}</span>
-            </div>
-            <h1
-              className="text-3xl font-bold text-slate-900 mb-3"
-              style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.025em" }}
-            >
-              {isFr ? "Projet DigiDouble" : "DigiDouble Project"}
-            </h1>
-            <p
-              className="text-base text-slate-600 leading-relaxed"
-              style={{ fontFamily: "'Source Serif 4', serif" }}
-            >
-              {isFr
-                ? <>DigiDouble est une collaboration entre <strong>Memoways</strong> (Genève, 14 ans d'expertise en vidéo interactive) et <strong>Gamilab</strong> (startup voice-first AI, SDK Audiogami). Ce document présente le contexte, les projets fondateurs et le positionnement compétitif.</>
-                : <>DigiDouble is a collaboration between <strong>Memoways</strong> (Geneva, 14 years of interactive video expertise) and <strong>Gamilab</strong> (voice-first AI startup, Audiogami SDK). This document presents the context, founding projects, and competitive positioning.</>
-              }
-            </p>
+      <div className="border-b border-slate-200 py-10">
+        <div className="container max-w-4xl">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">01</span>
+            <span className="text-slate-300">·</span>
+            <span className="text-xs font-mono text-slate-400">{isFr ? "Contexte & Vision" : "Context & Vision"}</span>
           </div>
+          <h1 className="text-4xl font-black text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+            {isFr ? "Projet DigiDouble" : "DigiDouble Project"}
+          </h1>
+          <p className="text-base text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? "Collaboration entre Memoways (Genève, 14 ans d'expertise vidéo interactive) et Gamilab (startup voice-first AI, SDK Audiogami)."
+              : "Collaboration between Memoways (Geneva, 14 years of interactive video expertise) and Gamilab (voice-first AI startup, Audiogami SDK)."}
+          </p>
         </div>
       </div>
 
-      <div className="container py-12">
+      <div className="container max-w-4xl py-14 space-y-20">
 
-        {/* Founding Projects */}
-        <section className="mb-16">
-          <SectionHeader
-            number={t("project.s1.number")}
-            title={t("project.s1.title")}
-            subtitle={t("project.s1.subtitle")}
-            accent="cyan"
-          />
+        {/* ── SECTION 1: PLATFORM ──────────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="01" title="Product Vision — Two Modes, One Engine" titleFr="Vision Produit — Deux Modes, Un Moteur" isFr={isFr} />
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Edugami + Storygami, moteur partagé." : "Edugami + Storygami, shared engine."}
+            </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Hover sur les composants du moteur pour les détails techniques. Les deux modes partagent la même infrastructure."
+                : "Hover over engine components for technical details. Both modes share the same infrastructure."}
+            </p>
+          </div>
+          <PlatformModeDiagram lang={lang} />
+          <Accordion label="Fundamental differentiation — why this is new" labelFr="Différenciation fondamentale — pourquoi c'est nouveau" isFr={isFr}>
+            <div className="pt-3">
+              <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "DigiDouble crée un nouveau type d'outil de \"montage\" vidéo où le montage n'est plus temporel (timeline) mais spatial et conversationnel — nœuds + agents + streams synchronisés temps réel. Analogie : HeyGen/Synthesia = iMovie (simple, limité). Flowise + custom = Final Cut XML (puissant, complexe). DigiDouble = Final Cut Pro (puissant ET utilisable par des créateurs non-techniques)."
+                  : "DigiDouble creates a new type of video \"editing\" tool where editing is no longer temporal (timeline) but spatial and conversational — nodes + agents + real-time synchronized streams. Analogy: HeyGen/Synthesia = iMovie (simple, limited). Flowise + custom = Final Cut XML (powerful, complex). DigiDouble = Final Cut Pro (powerful AND usable by non-technical creators)."}
+              </p>
+            </div>
+          </Accordion>
+        </section>
 
+        {/* ── SECTION 2: GAP MATRIX ────────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="02" title="Competitive Gap" titleFr="Gap Compétitif" isFr={isFr} />
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Aucune solution ne combine les 5 critères." : "No solution combines all 5 criteria."}
+            </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr ? "Hover sur les cellules pour les détails." : "Hover over cells for details."}
+            </p>
+          </div>
+          <GapMatrixDiagram lang={lang} />
+        </section>
+
+        {/* ── SECTION 3: COMPETITIVE TABLE ─────────────────────────────────── */}
+        <section>
+          <SectionDivider number="03" title="Competitive Comparison" titleFr="Comparaison Compétitive" isFr={isFr} />
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "HeyGen · Synthesia · Flowise vs DigiDouble" : "HeyGen · Synthesia · Flowise vs DigiDouble"}
+            </h2>
+          </div>
+
+          {/* Radar */}
+          <div className="border border-slate-200 rounded-lg p-5 bg-white mb-4">
+            <RadarCompareDiagram />
+          </div>
+
+          {/* Detailed table in accordion */}
+          <Accordion label="Detailed criterion-by-criterion comparison" labelFr="Comparaison détaillée critère par critère" isFr={isFr}>
+            <div className="pt-3 overflow-x-auto">
+              <table className="w-full border-collapse" style={{ minWidth: "520px" }}>
+                <thead>
+                  <tr>
+                    <th className="text-left py-2 pr-4 text-xs font-mono text-slate-400 font-normal">{isFr ? "Critère" : "Criterion"}</th>
+                    <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">HeyGen</th>
+                    <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">Synthesia</th>
+                    <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">Flowise</th>
+                    <th className="text-center py-2 px-2 text-xs font-mono font-bold" style={{ color: "oklch(0.45 0.18 200)" }}>DigiDouble</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {competitiveData.map((row) => (
+                    <tr key={row.criterion} className="border-t border-slate-100">
+                      <td className="py-2 pr-4 text-xs font-medium text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.criterion}</td>
+                      {[row.heygen, row.synthesia, row.flowise, row.digidouble].map((cell, ci) => (
+                        <td key={ci} className="text-center py-2 px-2">
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-xs font-mono" style={{ color: cell.level === 0 ? "oklch(0.60 0.20 25)" : ci === 3 ? "oklch(0.45 0.18 200)" : "oklch(0.65 0.18 145)" }}>
+                              {cell.value}
+                            </span>
+                            <LevelDots level={cell.level} />
+                          </div>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Accordion>
+        </section>
+
+        {/* ── SECTION 4: FOUNDING PROJECTS ─────────────────────────────────── */}
+        <section>
+          <SectionDivider number="04" title="Founding Projects" titleFr="Projets Fondateurs" isFr={isFr} />
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Deux prototypes validés avec utilisateurs réels." : "Two prototypes validated with real users."}
+            </h2>
+          </div>
           <div className="grid md:grid-cols-2 gap-6">
             {projects.map((proj) => (
               <div key={proj.id} className="border border-slate-200 rounded overflow-hidden">
-                <div
-                  className="px-5 py-4 border-b border-slate-200"
-                  style={{ borderLeft: `4px solid ${proj.color}` }}
-                >
+                <div className="px-5 py-4 border-b border-slate-200" style={{ borderLeft: `4px solid ${proj.color}` }}>
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-bold" style={{ fontFamily: "'JetBrains Mono', monospace", color: proj.color }}>
-                          {proj.id}
-                        </span>
+                        <span className="text-xs font-bold font-mono" style={{ color: proj.color }}>{proj.id}</span>
                         <span className="text-xs text-slate-400 font-mono">{proj.period}</span>
                       </div>
-                      <h3 className="font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                        {proj.name}
-                      </h3>
+                      <h3 className="font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{proj.name}</h3>
                     </div>
-                    <span
-                      className="text-xs px-2 py-0.5 rounded border"
-                      style={{ fontFamily: "'JetBrains Mono', monospace", color: proj.color, borderColor: `${proj.color}40`, background: `${proj.color}0d` }}
-                    >
+                    <span className="text-xs px-2 py-0.5 rounded border font-mono" style={{ color: proj.color, borderColor: `${proj.color}40`, background: `${proj.color}0d` }}>
                       {proj.type}
                     </span>
                   </div>
                 </div>
-
                 <div className="p-5">
-                  <p className="text-sm text-slate-600 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                    {proj.desc}
-                  </p>
+                  <p className="text-sm text-slate-600 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{proj.desc}</p>
 
-                  <div className="mb-4">
-                    <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Évolution technique" : "Technical Evolution"}
-                    </h4>
-                    <div className="space-y-2">
-                      {proj.versions.map((v) => (
-                        <div key={v.v} className="flex gap-3">
-                          <span className="text-xs font-bold shrink-0 mt-0.5" style={{ fontFamily: "'JetBrains Mono', monospace", color: proj.color, minWidth: "80px" }}>
-                            {v.v}
-                          </span>
-                          <span className="text-xs text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                            {v.desc}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Enseignements clés" : "Key Learnings"}
-                    </h4>
-                    <div className="space-y-1">
-                      {proj.learnings.map((l) => (
-                        <div key={l} className="flex gap-2">
-                          <span className="text-xs mt-0.5" style={{ color: "oklch(0.72 0.18 50)" }}>→</span>
-                          <span className="text-xs text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{l}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
+                  {/* Validation metrics */}
                   {proj.validation.length > 0 && (
-                    <div>
-                      <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                        {isFr ? "Validation marché" : "Market Validation"}
-                      </h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        {proj.validation.map((v) => (
-                          <div key={v.metric} className="bg-slate-50 rounded p-2">
-                            <div className="text-base font-bold" style={{ fontFamily: "'JetBrains Mono', monospace", color: proj.color }}>
-                              {v.value}
-                            </div>
-                            <div className="text-xs text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                              {v.metric}
-                            </div>
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      {proj.validation.map((v) => (
+                        <div key={v.metric} className="bg-slate-50 rounded p-2">
+                          <div className="text-base font-bold font-mono" style={{ color: proj.color }}>{v.value}</div>
+                          <div className="text-xs text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{v.metric}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Technical evolution in accordion */}
+                  <Accordion label="Technical evolution & key learnings" labelFr="Évolution technique & enseignements clés" isFr={isFr}>
+                    <div className="pt-3 space-y-3">
+                      <div>
+                        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {isFr ? "Évolution" : "Evolution"}
+                        </div>
+                        {proj.versions.map((v) => (
+                          <div key={v.v} className="flex gap-3 mb-1">
+                            <span className="text-xs font-bold shrink-0 mt-0.5 font-mono" style={{ color: proj.color, minWidth: "90px" }}>{v.v}</span>
+                            <span className="text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>{v.desc}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="border-t border-slate-200 pt-3">
+                        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {isFr ? "Enseignements" : "Learnings"}
+                        </div>
+                        {proj.learnings.map((l) => (
+                          <div key={l} className="flex gap-2 mb-1">
+                            <span className="text-xs mt-0.5" style={{ color: "oklch(0.72 0.18 50)" }}>→</span>
+                            <span className="text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>{l}</span>
                           </div>
                         ))}
                       </div>
                     </div>
-                  )}
+                  </Accordion>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Product Vision */}
-        <section className="mb-16">
-          <SectionHeader
-            number={t("project.s2.number")}
-            title={isFr ? "Vision Produit — Deux Modes, Un Moteur" : "Product Vision — Two Modes, One Engine"}
-            subtitle={t("project.s2.subtitle")}
-            accent="orange"
-          />
-
-          <div className="border border-slate-200 rounded p-4 bg-white mb-6">
-            <ProductArchDiagram />
+        {/* ── SECTION 5: INFRASTRUCTURE ────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="05" title="Infrastructure & Technical Expertise" titleFr="Infrastructure & Expertise Technique" isFr={isFr} />
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Opérationnel aujourd'hui vs. R&D nécessaire." : "Operational today vs. R&D required."}
+            </h2>
           </div>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="border border-slate-200 rounded p-5">
-              <div className="text-xs font-bold mb-2" style={{ fontFamily: "'JetBrains Mono', monospace", color: "oklch(0.72 0.18 200)" }}>
-                {t("project.mode01")}
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                Edugami — {isFr ? "Mode Pédagogique" : "Pedagogical Mode"}
-              </h3>
-              <p className="text-xs text-slate-500 mb-3 font-mono">
-                {t("project.mode01.title")}
-              </p>
-              <p className="text-sm text-slate-600 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                {isFr
-                  ? "Avatar comme tuteur/expert aux côtés d'une vidéo illustrative. Données factuelles affichées (liens, documents, statistiques). Validation des connaissances via mini-formulaires interactifs."
-                  : "Avatar as tutor/expert alongside an illustrative video. Factual data displayed (links, documents, statistics). Knowledge validation via interactive mini-forms."
-                }
-              </p>
-              <div className="space-y-1">
-                {(isFr ? ["EdTech", "Patrimoine culturel", "Formation corporate"] : ["EdTech", "Cultural heritage", "Corporate training"]).map((m) => (
-                  <div key={m} className="flex gap-2 items-center">
-                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: "oklch(0.72 0.18 200)" }} />
-                    <span className="text-xs text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{m}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="border border-slate-200 rounded p-5">
-              <div className="text-xs font-bold mb-2" style={{ fontFamily: "'JetBrains Mono', monospace", color: "oklch(0.72 0.18 50)" }}>
-                {t("project.mode02")}
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                Storygami — {isFr ? "Mode Narratif" : "Narrative Mode"}
-              </h3>
-              <p className="text-xs text-slate-500 mb-3 font-mono">
-                {t("project.mode02.title")}
-              </p>
-              <p className="text-sm text-slate-600 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                {isFr
-                  ? "Avatar comme personnage dans une scène plein écran. Vidéo dominante avec séquences et transitions. Navigation vocale, UI minimale. Personnalité et réactions émotionnelles modélisées."
-                  : "Avatar as character in a full-screen scene. Dominant video with sequences and transitions. Voice navigation, minimal UI. Personality and emotional reactions modeled."
-                }
-              </p>
-              <div className="space-y-1">
-                {(isFr ? ["Cinéma", "Gaming", "Économie créative"] : ["Cinema", "Gaming", "Creative economy"]).map((m) => (
-                  <div key={m} className="flex gap-2 items-center">
-                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: "oklch(0.72 0.18 50)" }} />
-                    <span className="text-xs text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{m}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="callout-info">
-            <p className="text-sm font-semibold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {isFr ? "Différenciation fondamentale" : "Fundamental Differentiation"}
-            </p>
-            <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-              {isFr
-                ? <>DigiDouble crée un <strong>nouveau type d'outil de "montage" vidéo</strong> où le montage n'est plus temporel (timeline) mais <strong>spatial et conversationnel</strong> — nœuds + agents + streams synchronisés temps réel. Les créateurs configurent n'importe quel point du continuum entre pédagogie pure et immersion narrative pure.</>
-                : <>DigiDouble creates a <strong>new type of video "editing" tool</strong> where editing is no longer temporal (timeline) but <strong>spatial and conversational</strong> — nodes + agents + real-time synchronized streams. Creators configure any point on the continuum between pure pedagogy and pure narrative immersion.</>
-              }
-            </p>
-          </div>
-        </section>
-
-        {/* Competitive Positioning */}
-        <section className="mb-16">
-          <SectionHeader
-            number={t("project.s3.number")}
-            title={isFr ? "Positionnement Compétitif" : "Competitive Positioning"}
-            subtitle={isFr ? "Comparaison avec les solutions existantes sur les critères clés." : "Comparison with existing solutions on key criteria."}
-            accent="green"
-          />
-
-          <div className="overflow-x-auto mb-6">
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>{isFr ? "Critère" : "Criterion"}</th>
-                  <th>HeyGen</th>
-                  <th>Synthesia</th>
-                  <th>Flowise + Custom</th>
-                  <th style={{ background: "oklch(0.45 0.18 200)" }}>DigiDouble</th>
-                </tr>
-              </thead>
-              <tbody>
-                {competitiveData.map((row) => (
-                  <tr key={row.criterion}>
-                    <td className="font-medium text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {row.criterion}
-                    </td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm" style={{ fontFamily: "'JetBrains Mono', monospace", color: row.heygen.level === 0 ? "oklch(0.60 0.20 25)" : "oklch(0.65 0.18 145)" }}>
-                          {row.heygen.value}
-                        </span>
-                        <LevelDots level={row.heygen.level} />
-                      </div>
-                    </td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm" style={{ fontFamily: "'JetBrains Mono', monospace", color: row.synthesia.level === 0 ? "oklch(0.60 0.20 25)" : "oklch(0.65 0.18 145)" }}>
-                          {row.synthesia.value}
-                        </span>
-                        <LevelDots level={row.synthesia.level} />
-                      </div>
-                    </td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm" style={{ fontFamily: "'JetBrains Mono', monospace", color: row.flowise.level === 0 ? "oklch(0.60 0.20 25)" : "oklch(0.65 0.18 145)" }}>
-                          {row.flowise.value}
-                        </span>
-                        <LevelDots level={row.flowise.level} />
-                      </div>
-                    </td>
-                    <td style={{ background: "oklch(0.72 0.18 200 / 0.04)" }}>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold" style={{ fontFamily: "'JetBrains Mono', monospace", color: row.digidouble.rd ? "oklch(0.45 0.18 200)" : "oklch(0.45 0.18 145)" }}>
-                          {row.digidouble.value}
-                        </span>
-                        <LevelDots level={row.digidouble.level} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="callout-info">
-            <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
-              {isFr
-                ? <><strong>Analogie :</strong> HeyGen/Synthesia = iMovie (simple, limité). Flowise + custom = Final Cut XML (puissant, complexe). <strong>DigiDouble = Final Cut Pro</strong> (puissant ET utilisable par des créateurs non-techniques).</>
-                : <><strong>Analogy:</strong> HeyGen/Synthesia = iMovie (simple, limited). Flowise + custom = Final Cut XML (powerful, complex). <strong>DigiDouble = Final Cut Pro</strong> (powerful AND usable by non-technical creators).</>
-              }
-            </p>
-          </div>
-
-          <div className="mt-6">
-            <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {t("project.radar.title")}
-            </h3>
-            <div className="border border-slate-200 rounded p-4 bg-white">
-              <RadarCompareDiagram />
-            </div>
-          </div>
-        </section>
-
-        {/* Infrastructure */}
-        <section className="mb-16">
-          <SectionHeader
-            number={t("project.s4.number")}
-            title={isFr ? "Infrastructure & Expertise Technique" : "Infrastructure & Technical Expertise"}
-            subtitle={isFr ? "Ce qui est opérationnel aujourd'hui vs. ce qui nécessite de la R&D." : "What is operational today vs. what requires R&D."}
-            accent="cyan"
-          />
-
           <div className="grid sm:grid-cols-2 gap-3">
             {techStack.map((item) => (
               <div key={item.name} className="flex gap-3 p-4 border border-slate-200 rounded">
                 <div className="shrink-0 mt-0.5">
-                  {item.status === "available" ? (
-                    <CheckCircle size={16} style={{ color: "oklch(0.65 0.18 145)" }} />
-                  ) : (
-                    <AlertCircle size={16} style={{ color: "oklch(0.60 0.20 25)" }} />
-                  )}
+                  {item.status === "available"
+                    ? <CheckCircle size={16} style={{ color: "oklch(0.65 0.18 145)" }} />
+                    : <AlertCircle size={16} style={{ color: "oklch(0.60 0.20 25)" }} />}
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {item.name}
-                    </span>
+                    <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.name}</span>
                     <StatusBadge variant={item.status === "available" ? "available" : "gap"} />
                   </div>
-                  <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                    {item.desc}
-                  </p>
+                  <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.desc}</p>
                 </div>
               </div>
             ))}
