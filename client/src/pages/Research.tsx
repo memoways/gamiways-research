@@ -11,6 +11,7 @@ import VideoPipelineDiagram from "@/components/diagrams/VideoPipelineDiagram";
 import ConversationFlowDiagram from "@/components/diagrams/ConversationFlowDiagram";
 import TargetArchDiagram from "@/components/diagrams/TargetArchDiagram";
 import OrchestrationDiagram from "@/components/diagrams/OrchestrationDiagram";
+import DiagramModal from "@/components/DiagramModal";
 import { useLang } from "@/contexts/LangContext";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
@@ -227,7 +228,9 @@ export default function Research() {
               ? "Architecture cible : blocs disponibles (vert), R&D requis (bleu), interne Memoways (jaune). Budget latence cible en bas."
               : "Target architecture: available blocks (green), R&D required (blue), Memoways internal (yellow). Target latency budget at bottom."}
           </p>
-          <TargetArchDiagram />
+          <DiagramModal title="Target Architecture — Available, R&D Gap, Internal">
+            <TargetArchDiagram />
+          </DiagramModal>
         </section>
 
         {/* ── SECTION 1: LATENCY ────────────────────────────────────────────── */}
@@ -243,7 +246,9 @@ export default function Research() {
                 : "Target latency budget per component. Hover over each layer for technical justification."}
             </p>
           </div>
-          <ConversationFlowDiagram />
+          <DiagramModal title="Conversation Flow — Latency Sequence Diagram">
+            <ConversationFlowDiagram />
+          </DiagramModal>
           <Accordion label="Approaches to solve the bottleneck" labelFr="Approches pour résoudre le goulot" isFr={isFr}>
             <div className="pt-3 space-y-3">
               {[
@@ -293,9 +298,9 @@ export default function Research() {
           </div>
 
           {/* Memory diagram */}
-          <div className="border border-slate-200 rounded-lg p-5 bg-white mb-4">
+          <DiagramModal title="Memory Architecture — 3-Layer Model">
             <MemoryArchDiagram />
-          </div>
+          </DiagramModal>
 
           {/* 3-layer cards */}
           <div className="grid md:grid-cols-3 gap-4 mb-4">
@@ -363,9 +368,9 @@ export default function Research() {
           </div>
 
           {/* Video Pipeline diagram */}
-          <div className="border border-slate-200 rounded-lg p-5 bg-white mb-4">
+          <DiagramModal title="Video Pipeline — Dual Stream (Analysis & Avatar)">
             <VideoPipelineDiagram />
-          </div>
+          </DiagramModal>
 
           {/* Sub-axes */}
           <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -409,7 +414,9 @@ export default function Research() {
                 : "Each conversation node can define its own freedom degree (0% = scripted, 90%+ = free AI). The R&D challenge: guarantee mandatory content coverage while maintaining conversational naturalness."}
             </p>
           </div>
-          <OrchestrationDiagram />
+          <DiagramModal title="Orchestration Freedom Degree — 0% to 90%+">
+            <OrchestrationDiagram />
+          </DiagramModal>
         </section>
 
         {/* ── SECTION 5: PARTNERSHIP ──────────────────────────────────────── */}

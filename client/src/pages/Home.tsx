@@ -12,6 +12,7 @@ import BeforeAfterDiagram from "@/components/diagrams/BeforeAfterDiagram";
 import ResearchAxesDiagram from "@/components/diagrams/ResearchAxesDiagram";
 import TechStackDiagram from "@/components/diagrams/TechStackDiagram";
 import WhatWeHaveDiagram from "@/components/diagrams/WhatWeHaveDiagram";
+import DiagramModal from "@/components/DiagramModal";
 import { useLang } from "@/contexts/LangContext";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
@@ -119,7 +120,9 @@ export default function Home() {
             </p>
           </div>
 
-          <BeforeAfterDiagram />
+          <DiagramModal title="Before / After — Latency Pipeline">
+            <BeforeAfterDiagram />
+          </DiagramModal>
 
           <ToggleBlock label="Why is avatar generation the bottleneck?" labelFr="Pourquoi la génération avatar est le goulot ?" isFr={isFr}>
             <div className="pt-3 space-y-2">
@@ -157,7 +160,9 @@ export default function Home() {
             </p>
           </div>
 
-          <WhatWeHaveDiagram />
+          <DiagramModal title="What We Have, What Is Missing, What We Are Building">
+            <WhatWeHaveDiagram />
+          </DiagramModal>
 
           <ToggleBlock label="Analogy: what DigiDouble is NOT" labelFr="Analogie : ce que DigiDouble n'est PAS" isFr={isFr}>
             <div className="pt-3">
@@ -184,7 +189,9 @@ export default function Home() {
             </p>
           </div>
 
-          <ResearchAxesDiagram />
+          <DiagramModal title="Research Axes Overview">
+            <ResearchAxesDiagram />
+          </DiagramModal>
 
           <ToggleBlock label="Why this is not just engineering" labelFr="Pourquoi ce n'est pas juste de l'ingénierie" isFr={isFr}>
             <div className="pt-3 space-y-2">
@@ -245,7 +252,9 @@ export default function Home() {
             </p>
           </div>
 
-          <TechStackDiagram />
+          <DiagramModal title="Technology Stack — Layers & Latency Targets">
+            <TechStackDiagram />
+          </DiagramModal>
         </section>
 
         {/* ── SECTION 7: NAVIGATION ───────────────────────────────────────────── */}

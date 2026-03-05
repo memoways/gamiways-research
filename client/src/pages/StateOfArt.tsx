@@ -10,6 +10,7 @@ import StatusBadge from "@/components/StatusBadge";
 import LatencyBenchmarkDiagram from "@/components/diagrams/LatencyBenchmarkDiagram";
 import ResearchAxesDiagram from "@/components/diagrams/ResearchAxesDiagram";
 import ResearchGapDiagram from "@/components/diagrams/ResearchGapDiagram";
+import DiagramModal from "@/components/DiagramModal";
 import { useLang } from "@/contexts/LangContext";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -904,9 +905,9 @@ export default function StateOfArt() {
           />
 
           {/* Diagram first */}
-          <div className="border border-slate-200 rounded-lg p-5 bg-white mb-6">
+          <DiagramModal title="Latency Benchmarks by Component (2025–2026)">
             <LatencyBenchmarkDiagram />
-          </div>
+          </DiagramModal>
 
           <div className="mb-4">
             <div className="overflow-x-auto">
@@ -979,17 +980,17 @@ export default function StateOfArt() {
               <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 {isFr ? "Matrice Urgence × Difficulté" : "Urgency × Difficulty Matrix"}
               </h3>
-              <div className="border border-slate-200 rounded-lg p-4 bg-white">
+              <DiagramModal title="Research Gap Matrix — Urgency × Difficulty">
                 <ResearchGapDiagram />
-              </div>
+              </DiagramModal>
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 {isFr ? "3 Axes de Recherche" : "3 Research Axes"}
               </h3>
-              <div className="border border-slate-200 rounded-lg p-4 bg-white">
+              <DiagramModal title="3 Research Axes — Latency, Memory, Avatar">
                 <ResearchAxesDiagram />
-              </div>
+              </DiagramModal>
             </div>
           </div>
 

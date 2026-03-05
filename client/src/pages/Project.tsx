@@ -9,6 +9,7 @@ import { ChevronDown, ChevronUp, CheckCircle, AlertCircle } from "lucide-react";
 import ProductArchDiagram from "@/components/diagrams/ProductArchDiagram";
 import GapMatrixDiagram from "@/components/diagrams/GapMatrixDiagram";
 import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
+import DiagramModal from "@/components/DiagramModal";
 import StatusBadge from "@/components/StatusBadge";
 import { useLang } from "@/contexts/LangContext";
 
@@ -177,7 +178,9 @@ export default function Project() {
                 : "Hover over engine components for technical details. Both modes share the same infrastructure."}
             </p>
           </div>
-          <ProductArchDiagram />
+          <DiagramModal title="Product Architecture — Edugami & Storygami">
+            <ProductArchDiagram />
+          </DiagramModal>
           <Accordion label="Fundamental differentiation — why this is new" labelFr="Différenciation fondamentale — pourquoi c'est nouveau" isFr={isFr}>
             <div className="pt-3">
               <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
@@ -200,7 +203,9 @@ export default function Project() {
               {isFr ? "Hover sur les cellules pour les détails." : "Hover over cells for details."}
             </p>
           </div>
-          <GapMatrixDiagram />
+          <DiagramModal title="Competitive Gap Matrix">
+            <GapMatrixDiagram />
+          </DiagramModal>
         </section>
 
         {/* ── SECTION 3: COMPETITIVE TABLE ─────────────────────────────────── */}
@@ -213,9 +218,9 @@ export default function Project() {
           </div>
 
           {/* Radar */}
-          <div className="border border-slate-200 rounded-lg p-5 bg-white mb-4">
+          <DiagramModal title="Radar Comparison — Platforms vs DigiDouble Target">
             <RadarCompareDiagram />
-          </div>
+          </DiagramModal>
 
           {/* Detailed table in accordion */}
           <Accordion label="Detailed criterion-by-criterion comparison" labelFr="Comparaison détaillée critère par critère" isFr={isFr}>
