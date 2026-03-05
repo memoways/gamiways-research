@@ -11,8 +11,7 @@ import { ChevronDown, ChevronUp, ArrowRight, BarChart2, BookOpen, Layers, Downlo
 import BeforeAfterDiagram from "@/components/diagrams/BeforeAfterDiagram";
 import ResearchAxesDiagram from "@/components/diagrams/ResearchAxesDiagram";
 import TechStackDiagram from "@/components/diagrams/TechStackDiagram";
-import GapMatrixDiagram from "@/components/diagrams/GapMatrixDiagram";
-import PlatformModeDiagram from "@/components/diagrams/PlatformModeDiagram";
+import WhatWeHaveDiagram from "@/components/diagrams/WhatWeHaveDiagram";
 import { useLang } from "@/contexts/LangContext";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
@@ -149,16 +148,16 @@ export default function Home() {
           <SectionDivider number="02" title="The Platform" titleFr="La Plateforme" isFr={isFr} />
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
-              {isFr ? "Deux modes d'expérience, un moteur partagé." : "Two experience modes, one shared engine."}
+              {isFr ? "Ce que nous avons, ce qui manque, et ce que nous construisons." : "What we have, what is missing, and what we are building."}
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "DigiDouble sert deux marchés (EdTech et cinéma interactif) via le même moteur technique. Hover sur les composants pour les détails."
-                : "DigiDouble serves two markets (EdTech and interactive cinema) via the same technical engine. Hover over components for details."}
+                ? "Vue d'ensemble du pipeline complet : ASR souverain (disponible), composants R&D (gap), synchronisation multi-stream (interne). Hover sur les blocs pour les détails."
+                : "Overview of the full pipeline: sovereign ASR (available), R&D components (gap), multi-stream sync (internal). Hover over blocks for details."}
             </p>
           </div>
 
-          <PlatformModeDiagram />
+          <WhatWeHaveDiagram />
 
           <ToggleBlock label="Analogy: what DigiDouble is NOT" labelFr="Analogie : ce que DigiDouble n'est PAS" isFr={isFr}>
             <div className="pt-3">
@@ -212,16 +211,14 @@ export default function Home() {
           <SectionDivider number="04" title="The Gap" titleFr="Le Gap" isFr={isFr} />
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
-              {isFr ? "Aucune solution existante ne combine les 5 critères." : "No existing solution combines all 5 criteria."}
+              {isFr ? "Aucune solution existante ne combine les 5 critères requis." : "No existing solution combines all 5 required criteria."}
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Hover sur les cellules pour les détails. DigiDouble (ligne du bas) cible les 5 critères — certains via R&D."
-                : "Hover over cells for details. DigiDouble (bottom row) targets all 5 criteria — some via R&D."}
+                ? "Voir l'analyse comparative complète avec schéma radar et matrice dans la page Projet et État de l'Art."
+                : "See the full comparative analysis with radar chart and matrix in the Project and State of the Art pages."}
             </p>
           </div>
-
-          <GapMatrixDiagram />
 
           <ToggleBlock label="Why this gap justifies fundamental research" labelFr="Pourquoi ce gap justifie la recherche fondamentale" isFr={isFr}>
             <div className="pt-3">

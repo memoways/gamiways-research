@@ -6,10 +6,11 @@
  */
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import BeforeAfterDiagram from "@/components/diagrams/BeforeAfterDiagram";
 import MemoryArchDiagram from "@/components/diagrams/MemoryArchDiagram";
 import AvatarBehaviorDiagram from "@/components/diagrams/AvatarBehaviorDiagram";
-import ResearchAxesDiagram from "@/components/diagrams/ResearchAxesDiagram";
+import ConversationFlowDiagram from "@/components/diagrams/ConversationFlowDiagram";
+import TargetArchDiagram from "@/components/diagrams/TargetArchDiagram";
+import OrchestrationDiagram from "@/components/diagrams/OrchestrationDiagram";
 import { useLang } from "@/contexts/LangContext";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
@@ -220,29 +221,29 @@ export default function Research() {
 
         {/* ── OVERVIEW: 3 AXES ─────────────────────────────────────────────── */}
         <section>
-          <SectionDivider number="01" title="Overview — 3 Research Axes" titleFr="Vue d'ensemble — 3 Axes de Recherche" isFr={isFr} />
+          <SectionDivider number="01" title="Target Architecture" titleFr="Architecture Cible" isFr={isFr} />
           <p className="text-sm text-slate-500 mb-6 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "Cliquer sur un axe pour les détails techniques et les hypothèses."
-              : "Click an axis to expand technical details and hypotheses."}
+              ? "Architecture cible : blocs disponibles (vert), R&D requis (bleu), interne Memoways (jaune). Budget latence cible en bas."
+              : "Target architecture: available blocks (green), R&D required (blue), Memoways internal (yellow). Target latency budget at bottom."}
           </p>
-          <ResearchAxesDiagram />
+          <TargetArchDiagram />
         </section>
 
-        {/* ── SECTION 1: LATENCY ───────────────────────────────────────────── */}
+        {/* ── SECTION 1: LATENCY ────────────────────────────────────────────── */}
         <section>
-          <SectionDivider number="02" title="Latency — Before & After" titleFr="Latence — Avant & Après" isFr={isFr} />
+          <SectionDivider number="02" title="Axis 1 — Latency Budget" titleFr="Axe 1 — Budget Latence" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Le goulot : génération vidéo avatar (5–10s)" : "The bottleneck: avatar video generation (5–10s)"}
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Hover sur chaque composant pour les détails. La ligne rouge = goulot principal."
-                : "Hover over each component for details. The red block = main bottleneck."}
+                ? "Budget latence cible par composant. Hover sur chaque couche pour la justification technique."
+                : "Target latency budget per component. Hover over each layer for technical justification."}
             </p>
           </div>
-          <BeforeAfterDiagram />
+          <ConversationFlowDiagram />
           <Accordion label="Approaches to solve the bottleneck" labelFr="Approches pour résoudre le goulot" isFr={isFr}>
             <div className="pt-3 space-y-3">
               {[
@@ -390,9 +391,25 @@ export default function Research() {
           </Accordion>
         </section>
 
-        {/* ── SECTION 4: PARTNERSHIP ───────────────────────────────────────── */}
+         {/* ── SECTION 4: ORCHESTRATION ──────────────────────────────────── */}
         <section>
-          <SectionDivider number="05" title="IDIAP Partnership — Mutual Contributions" titleFr="Partenariat IDIAP — Apports Mutuels" isFr={isFr} />
+          <SectionDivider number="05" title="Axis 3 — Orchestration Freedom Degree" titleFr="Axe 3 — Degré de Liberté d'Orchestration" isFr={isFr} />
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Déterministe vs organique : le trilemme de l'orchestration" : "Deterministic vs organic: the orchestration trilemma"}
+            </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Chaque nœud de conversation peut définir son propre degré de liberté (0% = scripté, 90%+ = IA libre). Le défi R&D : garantir la couverture du contenu obligatoire tout en maintenant la naturalité conversationnelle."
+                : "Each conversation node can define its own freedom degree (0% = scripted, 90%+ = free AI). The R&D challenge: guarantee mandatory content coverage while maintaining conversational naturalness."}
+            </p>
+          </div>
+          <OrchestrationDiagram />
+        </section>
+
+        {/* ── SECTION 5: PARTNERSHIP ──────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="06" title="IDIAP Partnership — Mutual Contributions" titleFr="Partenariat IDIAP — Apports Mutuels" isFr={isFr} />
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>

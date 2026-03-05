@@ -8,7 +8,7 @@ import { useState } from "react";
 import SectionHeader from "@/components/SectionHeader";
 import StatusBadge from "@/components/StatusBadge";
 import LatencyBenchmarkDiagram from "@/components/diagrams/LatencyBenchmarkDiagram";
-import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
+import ResearchAxesDiagram from "@/components/diagrams/ResearchAxesDiagram";
 import ResearchGapDiagram from "@/components/diagrams/ResearchGapDiagram";
 import { useLang } from "@/contexts/LangContext";
 
@@ -985,10 +985,10 @@ export default function StateOfArt() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "Comparatif Radar" : "Radar Comparison"}
+                {isFr ? "3 Axes de Recherche" : "3 Research Axes"}
               </h3>
               <div className="border border-slate-200 rounded-lg p-4 bg-white">
-                <RadarCompareDiagram />
+                <ResearchAxesDiagram />
               </div>
             </div>
           </div>

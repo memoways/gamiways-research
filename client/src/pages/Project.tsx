@@ -6,7 +6,7 @@
  */
 import { useState } from "react";
 import { ChevronDown, ChevronUp, CheckCircle, AlertCircle } from "lucide-react";
-import PlatformModeDiagram from "@/components/diagrams/PlatformModeDiagram";
+import ProductArchDiagram from "@/components/diagrams/ProductArchDiagram";
 import GapMatrixDiagram from "@/components/diagrams/GapMatrixDiagram";
 import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
 import StatusBadge from "@/components/StatusBadge";
@@ -177,7 +177,7 @@ export default function Project() {
                 : "Hover over engine components for technical details. Both modes share the same infrastructure."}
             </p>
           </div>
-          <PlatformModeDiagram />
+          <ProductArchDiagram />
           <Accordion label="Fundamental differentiation — why this is new" labelFr="Différenciation fondamentale — pourquoi c'est nouveau" isFr={isFr}>
             <div className="pt-3">
               <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
