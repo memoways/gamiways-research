@@ -7,7 +7,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import MemoryArchDiagram from "@/components/diagrams/MemoryArchDiagram";
-import AvatarBehaviorDiagram from "@/components/diagrams/AvatarBehaviorDiagram";
+import VideoPipelineDiagram from "@/components/diagrams/VideoPipelineDiagram";
 import ConversationFlowDiagram from "@/components/diagrams/ConversationFlowDiagram";
 import TargetArchDiagram from "@/components/diagrams/TargetArchDiagram";
 import OrchestrationDiagram from "@/components/diagrams/OrchestrationDiagram";
@@ -344,22 +344,27 @@ export default function Research() {
 
         {/* ── SECTION 3: AVATAR ────────────────────────────────────────────── */}
         <section>
-          <SectionDivider number="04" title="Axis 2 — Expressive Avatar & TTS" titleFr="Axe 2 — Avatar Expressif & TTS" isFr={isFr} />
+          <SectionDivider number="04" title="Axis 2 — Video Pipeline & Avatar Construction" titleFr="Axe 2 — Pipeline Vidéo & Construction Avatar" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
-              {isFr ? "Au-delà du lip-sync : fidélité comportementale" : "Beyond lip-sync: behavioral fidelity"}
+              {isFr ? "Deux flux indépendants, une sortie dual-stream" : "Two independent streams, one dual-stream output"}
             </h2>
-            <p className="text-sm text-slate-400 font-mono mb-4">Dr. Mathew Magimai-Doss · IDIAP</p>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            <p className="text-sm text-slate-400 font-mono mb-2">Dr. Mathew Magimai-Doss · IDIAP</p>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-3xl mb-2" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Les plateformes actuelles produisent des \"têtes parlantes uniformisées\" — visuellement photorealistic mais comportementalement génériques. Cela crée une vallée de l'étrange de la familiarité."
-                : "Current platforms produce \"standardized talking heads\" — visually photorealistic but behaviorally generic. This creates an uncanny valley of familiarity."}
+                ? "Le système sépare strictement l'analyse des sources vidéo (Flux A, offline, non-critique) de la construction de l'avatar (Flux B, R&D principal). La vidéo d'entraînement de l'avatar n'est jamais jouée dans l'expérience."
+                : "The system strictly separates source video analysis (Stream A, offline, non-critical) from avatar construction (Stream B, main R&D). The avatar training video is never played in the experience."}
             </p>
+            <div className="flex flex-wrap gap-3 mb-4 text-xs font-mono">
+              <span className="px-2 py-1 rounded" style={{ background: "#dcfce7", color: "#15803d" }}>{isFr ? "Flux A : Analyse offline — standard, non-critique" : "Stream A: Offline analysis — standard, non-critical"}</span>
+              <span className="px-2 py-1 rounded" style={{ background: "#fee2e2", color: "#dc2626" }}>{isFr ? "Flux B : Construction avatar — enjeu R&D principal (Axe 2b)" : "Stream B: Avatar construction — main R&D challenge (Axis 2b)"}</span>
+              <span className="px-2 py-1 rounded" style={{ background: "#eff6ff", color: "#0891b2" }}>{isFr ? "Sortie : Dual-stream synchronisé — expertise interne" : "Output: Synchronized dual-stream — internal expertise"}</span>
+            </div>
           </div>
 
-          {/* Avatar diagram */}
+          {/* Video Pipeline diagram */}
           <div className="border border-slate-200 rounded-lg p-5 bg-white mb-4">
-            <AvatarBehaviorDiagram />
+            <VideoPipelineDiagram />
           </div>
 
           {/* Sub-axes */}
