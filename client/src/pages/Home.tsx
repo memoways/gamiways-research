@@ -90,7 +90,7 @@ export default function Home() {
               </button>
             </Link>
             <a
-              href="https://d2xsxph8kpxj0f.cloudfront.net/117184650/JCUDa4RfVRrK7WLqtd9JFw/digidouble-technical-brief-landscape_8628009d.pdf"
+              href="https://d2xsxph8kpxj0f.cloudfront.net/117184650/JCUDa4RfVRrK7WLqtd9JFw/digidouble-technical-brief_36ad6093.pdf"
               download="DigiDouble-Technical-Brief.pdf"
               target="_blank"
               rel="noopener noreferrer"
@@ -115,8 +115,8 @@ export default function Home() {
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Chaque échange conversationnel avec un avatar vidéo prend actuellement 6 à 12 secondes. Le goulot est la génération vidéo. La recherche vise une réduction de 6 à 10×."
-                : "Each conversational exchange with a video avatar currently takes 6 to 12 seconds. The bottleneck is video generation. Research targets a 6–10× reduction."}
+                ? "Chaque échange conversationnel avec un avatar vidéo prend actuellement 6 à 12 secondes (estimé depuis des tests de composants partiels — les benchmarks end-to-end sont prévus au printemps 2026). Le goulot est la génération vidéo. La recherche vise une réduction de 6 à 10×."
+                : "Each conversational exchange with a video avatar currently takes 6 to 12 seconds (extrapolated from partial component tests — end-to-end benchmarks planned for spring 2026). The bottleneck is video generation. Research targets a 6–10× reduction."}
             </p>
           </div>
 

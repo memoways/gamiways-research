@@ -457,13 +457,13 @@ export default function StateOfArt() {
       color: "oklch(0.72 0.18 50)",
       items: isFr
         ? [
-            "Réduction 10–20× de la latence end-to-end",
+            "Réduction 6–10× de la latence end-to-end (estimé depuis tests partiels)",
             "Mémoire conversationnelle sans explosion des coûts",
             "Fidélité comportementale au-delà du lip-sync",
             "Synchronisation multi-flux temps réel (<100ms)",
           ]
         : [
-            "10–20× reduction in end-to-end latency",
+            "6–10× reduction in end-to-end latency (extrapolated from partial tests)",
             "Conversational memory without cost explosion",
             "Behavioral fidelity beyond lip-sync",
             "Real-time multi-stream synchronization (<100ms)",
