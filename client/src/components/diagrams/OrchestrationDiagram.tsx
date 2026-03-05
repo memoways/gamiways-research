@@ -3,6 +3,7 @@
  * Shows the Orchestration Freedom Degree continuum: 0% (scripted) → 90%+ (open)
  * With Edugami / Storygami mapping and node-level freedom concept
  * i18n: EN (default) / FR via useLang
+ * Size: +35% from original
  */
 import { useLang } from "@/contexts/LangContext";
 
@@ -43,21 +44,22 @@ export default function OrchestrationDiagram() {
     },
   ];
 
-  const stepW = 148;
-  const stepH = 100;
-  const startX = 20;
-  const stepY = 60;
-  const gap = 12;
+  const stepW = 200;
+  const stepH = 135;
+  const startX = 27;
+  const stepY = 81;
+  const gap = 16;
+  const totalW = steps.length * (stepW + gap) - gap;
 
   return (
     <div className="w-full overflow-x-auto">
-      <svg viewBox="0 0 820 310" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 680 }}>
+      <svg viewBox={`0 0 ${totalW + startX * 2} 420`} className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 900 }}>
 
         {/* ── Title ── */}
-        <text x="410" y="22" textAnchor="middle" fontSize="9" fontWeight="700" fill="#0f172a" fontFamily="'JetBrains Mono', monospace" letterSpacing="0.5">
+        <text x={(totalW + startX * 2) / 2} y="28" textAnchor="middle" fontSize="13" fontWeight="700" fill="#0f172a" fontFamily="'JetBrains Mono', monospace" letterSpacing="0.5">
           {isFr ? "DEGRÉ DE LIBERTÉ — PAR NŒUD DE CONVERSATION" : "FREEDOM DEGREE — PER CONVERSATION NODE"}
         </text>
-        <text x="410" y="38" textAnchor="middle" fontSize="7.5" fill="#64748b">
+        <text x={(totalW + startX * 2) / 2} y="50" textAnchor="middle" fontSize="11" fill="#64748b">
           {isFr ? "Chaque nœud définit son propre équilibre déterministe ↔ organique" : "Each node defines its own deterministic ↔ organic balance"}
         </text>
 
@@ -71,7 +73,7 @@ export default function OrchestrationDiagram() {
             <stop offset="100%" stopColor="#0a3622" />
           </linearGradient>
         </defs>
-        <rect x={startX} y={stepY - 8} width={steps.length * (stepW + gap) - gap} height="4" rx="2" fill="url(#freedomGrad)" opacity="0.5" />
+        <rect x={startX} y={stepY - 11} width={totalW} height="5" rx="3" fill="url(#freedomGrad)" opacity="0.5" />
 
         {/* ── Steps ── */}
         {steps.map((s, i) => {
@@ -79,52 +81,66 @@ export default function OrchestrationDiagram() {
           const lines = s.desc.split("\n");
           return (
             <g key={i}>
-              {/* Step box */}
-              <rect x={x} y={stepY} width={stepW} height={stepH} rx="5" fill={s.bg} stroke={s.border} strokeWidth="1.5" />
-              {/* Percentage */}
-              <text x={x + stepW / 2} y={stepY + 28} textAnchor="middle" fontSize="20" fontWeight="900" fill={s.color} fontFamily="'JetBrains Mono', monospace">{s.pct}</text>
-              {/* Label */}
-              <text x={x + stepW / 2} y={stepY + 48} textAnchor="middle" fontSize="9.5" fontWeight="700" fill={s.color}>{s.label}</text>
-              {/* Description lines */}
+              <rect x={x} y={stepY} width={stepW} height={stepH} rx="6" fill={s.bg} stroke={s.border} strokeWidth="2" />
+              <text x={x + stepW / 2} y={stepY + 38} textAnchor="middle" fontSize="27" fontWeight="900" fill={s.color} fontFamily="'JetBrains Mono', monospace">{s.pct}</text>
+              <text x={x + stepW / 2} y={stepY + 65} textAnchor="middle" fontSize="13" fontWeight="700" fill={s.color}>{s.label}</text>
               {lines.map((line, li) => (
-                <text key={li} x={x + stepW / 2} y={stepY + 65 + li * 14} textAnchor="middle" fontSize="7.5" fill="#475569">{line}</text>
+                <text key={li} x={x + stepW / 2} y={stepY + 88 + li * 19} textAnchor="middle" fontSize="10" fill="#475569">{line}</text>
               ))}
-              {/* Arrow between steps */}
               {i < steps.length - 1 && (
-                <text x={x + stepW + gap / 2} y={stepY + stepH / 2 + 4} textAnchor="middle" fontSize="12" fill="#94a3b8">→</text>
+                <text x={x + stepW + gap / 2} y={stepY + stepH / 2 + 5} textAnchor="middle" fontSize="16" fill="#94a3b8">→</text>
               )}
             </g>
           );
         })}
 
-        {/* ── Edugami / Storygami mapping ── */}
-        <rect x={startX} y={stepY + stepH + 18} width={2 * (stepW + gap) - gap + stepW * 0.5} height="52" rx="4" fill="#eff6ff" stroke="#0891b2" strokeWidth="1.5" />
-        <text x={startX + (2 * (stepW + gap) - gap + stepW * 0.5) / 2} y={stepY + stepH + 34} textAnchor="middle" fontSize="8" fontWeight="700" fill="#0891b2" fontFamily="'JetBrains Mono', monospace">EDUGAMI — {isFr ? "Mode Pédagogique" : "Pedagogical Mode"}</text>
-        <text x={startX + (2 * (stepW + gap) - gap + stepW * 0.5) / 2} y={stepY + stepH + 48} textAnchor="middle" fontSize="7.5" fill="#475569">{isFr ? "0–50% · Couverture contenu obligatoire · Contrôle pédagogique fort" : "0–50% · Mandatory content coverage · Strong pedagogical control"}</text>
-        <text x={startX + (2 * (stepW + gap) - gap + stepW * 0.5) / 2} y={stepY + stepH + 62} textAnchor="middle" fontSize="7" fill="#64748b" fontFamily="'JetBrains Mono', monospace">{isFr ? "L'IA adapte le ton, pas le contenu" : "AI adapts tone, not content"}</text>
+        {/* ── Edugami bracket ── */}
+        {(() => {
+          const eduW = 2 * (stepW + gap) - gap + stepW * 0.5;
+          return (
+            <g>
+              <rect x={startX} y={stepY + stepH + 24} width={eduW} height="70" rx="5" fill="#eff6ff" stroke="#0891b2" strokeWidth="2" />
+              <text x={startX + eduW / 2} y={stepY + stepH + 46} textAnchor="middle" fontSize="12" fontWeight="700" fill="#0891b2" fontFamily="'JetBrains Mono', monospace">
+                EDUGAMI — {isFr ? "Mode Pédagogique" : "Pedagogical Mode"}
+              </text>
+              <text x={startX + eduW / 2} y={stepY + stepH + 64} textAnchor="middle" fontSize="11" fill="#475569">
+                {isFr ? "0–50% · Couverture contenu obligatoire · Contrôle pédagogique fort" : "0–50% · Mandatory content coverage · Strong pedagogical control"}
+              </text>
+              <text x={startX + eduW / 2} y={stepY + stepH + 82} textAnchor="middle" fontSize="10" fill="#64748b" fontFamily="'JetBrains Mono', monospace">
+                {isFr ? "L'IA adapte le ton, pas le contenu" : "AI adapts tone, not content"}
+              </text>
+            </g>
+          );
+        })()}
 
-        {/* Storygami bracket */}
+        {/* ── Storygami bracket ── */}
         {(() => {
           const storyStartX = startX + 2 * (stepW + gap);
           const storyWidth = 2 * (stepW + gap) + stepW - gap;
           return (
             <g>
-              <rect x={storyStartX} y={stepY + stepH + 18} width={storyWidth} height="52" rx="4" fill="#fffbeb" stroke="#d97706" strokeWidth="1.5" />
-              <text x={storyStartX + storyWidth / 2} y={stepY + stepH + 34} textAnchor="middle" fontSize="8" fontWeight="700" fill="#d97706" fontFamily="'JetBrains Mono', monospace">STORYGAMI — {isFr ? "Mode Narratif" : "Narrative Mode"}</text>
-              <text x={storyStartX + storyWidth / 2} y={stepY + stepH + 48} textAnchor="middle" fontSize="7.5" fill="#475569">{isFr ? "50–90%+ · Limites de sujet seulement · Personnalité du personnage" : "50–90%+ · Topic boundaries only · Character personality"}</text>
-              <text x={storyStartX + storyWidth / 2} y={stepY + stepH + 62} textAnchor="middle" fontSize="7" fill="#64748b" fontFamily="'JetBrains Mono', monospace">{isFr ? "L'IA pilote l'évolution narrative" : "AI drives narrative evolution"}</text>
+              <rect x={storyStartX} y={stepY + stepH + 24} width={storyWidth} height="70" rx="5" fill="#fffbeb" stroke="#d97706" strokeWidth="2" />
+              <text x={storyStartX + storyWidth / 2} y={stepY + stepH + 46} textAnchor="middle" fontSize="12" fontWeight="700" fill="#d97706" fontFamily="'JetBrains Mono', monospace">
+                STORYGAMI — {isFr ? "Mode Narratif" : "Narrative Mode"}
+              </text>
+              <text x={storyStartX + storyWidth / 2} y={stepY + stepH + 64} textAnchor="middle" fontSize="11" fill="#475569">
+                {isFr ? "50–90%+ · Limites de sujet seulement · Personnalité du personnage" : "50–90%+ · Topic boundaries only · Character personality"}
+              </text>
+              <text x={storyStartX + storyWidth / 2} y={stepY + stepH + 82} textAnchor="middle" fontSize="10" fill="#64748b" fontFamily="'JetBrains Mono', monospace">
+                {isFr ? "L'IA pilote l'évolution narrative" : "AI drives narrative evolution"}
+              </text>
             </g>
           );
         })()}
 
         {/* ── Research challenge note ── */}
-        <rect x={startX} y={stepY + stepH + 82} width={steps.length * (stepW + gap) - gap} height="30" rx="3" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1" />
-        <text x="410" y={stepY + stepH + 97} textAnchor="middle" fontSize="7.5" fill="#475569">
+        <rect x={startX} y={stepY + stepH + 108} width={totalW} height="40" rx="4" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1.5" />
+        <text x={(totalW + startX * 2) / 2} y={stepY + stepH + 126} textAnchor="middle" fontSize="11" fill="#475569">
           {isFr
-            ? "Défi R&D : garantir la couverture du contenu obligatoire (déterministe) tout en maintenant la naturalité conversationnelle (organique) — sans dégrader l'une ou l'autre"
-            : "R&D challenge: guarantee mandatory content coverage (deterministic) while maintaining conversational naturalness (organic) — without degrading either dimension"}
+            ? "Défi R&D : garantir la couverture du contenu obligatoire (déterministe) tout en maintenant la naturalité conversationnelle (organique)"
+            : "R&D challenge: guarantee mandatory content coverage (deterministic) while maintaining conversational naturalness (organic)"}
         </text>
-        <text x="410" y={stepY + stepH + 110} textAnchor="middle" fontSize="7" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
+        <text x={(totalW + startX * 2) / 2} y={stepY + stepH + 142} textAnchor="middle" fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
           {isFr ? "Hypothèse H4 — Axe 3 IDIAP" : "Hypothesis H4 — Axis 3 IDIAP"}
         </text>
       </svg>

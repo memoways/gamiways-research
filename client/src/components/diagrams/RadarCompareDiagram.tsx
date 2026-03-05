@@ -31,18 +31,18 @@ export default function RadarCompareDiagram() {
     ? ["Qualité visuelle", "Latence", "Coût/accessibilité", "Souveraineté", "Conversation IA", "Langage corporel"]
     : ["Visual quality", "Latency", "Cost/accessibility", "Sovereignty", "AI conversation", "Body language"];
 
-  const CX = 200;
-  const CY = 190;
-  const R = 130;
+  const CX = 270;
+  const CY = 257;
+  const R = 176;
   const N = axes.length;
   const angleStep = 360 / N;
   const gridLevels = [2, 4, 6, 8, 10];
 
   return (
     <div className="w-full overflow-x-auto">
-      <svg viewBox="0 0 580 400" width="100%" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+      <svg viewBox="0 0 783 540" width="100%" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
         {/* Title */}
-        <text x="20" y="18" fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace" letterSpacing="1">
+        <text x="20" y="22" fontSize="13" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace" letterSpacing="1">
           {isFr ? "COMPARATIF RADAR — PLATEFORMES AVATAR" : "RADAR COMPARISON — AVATAR PLATFORMS"}
         </text>
 
@@ -56,7 +56,7 @@ export default function RadarCompareDiagram() {
           return (
             <g key={level}>
               <polygon points={points} fill="none" stroke="#e2e8f0" strokeWidth="1" />
-              <text x={CX + 3} y={CY - r + 3} fontSize="8" fill="#cbd5e1" fontFamily="'JetBrains Mono', monospace">{level}</text>
+              <text x={CX + 3} y={CY - r + 3} fontSize="10" fill="#cbd5e1" fontFamily="'JetBrains Mono', monospace">{level}</text>
             </g>
           );
         })}
@@ -64,11 +64,11 @@ export default function RadarCompareDiagram() {
         {/* Axis lines + labels */}
         {axes.map((axis, i) => {
           const pt = polarToCart(i * angleStep, R, CX, CY);
-          const labelPt = polarToCart(i * angleStep, R + 22, CX, CY);
+          const labelPt = polarToCart(i * angleStep, R + 30, CX, CY);
           return (
             <g key={axis}>
               <line x1={CX} y1={CY} x2={pt.x} y2={pt.y} stroke="#e2e8f0" strokeWidth="1" />
-              <text x={labelPt.x} y={labelPt.y} textAnchor="middle" dominantBaseline="middle" fontSize="9" fill="#64748b" fontWeight="500">
+              <text x={labelPt.x} y={labelPt.y} textAnchor="middle" dominantBaseline="middle" fontSize="12" fill="#64748b" fontWeight="500">
                 {axis}
               </text>
             </g>
@@ -99,8 +99,8 @@ export default function RadarCompareDiagram() {
         })}
 
         {/* Legend */}
-        <g transform="translate(420, 60)">
-          <text x="0" y="0" fontSize="10" fontWeight="600" fill="#0f172a">
+        <g transform="translate(570, 80)">
+          <text x="0" y="0" fontSize="13" fontWeight="600" fill="#0f172a">
             {isFr ? "Légende" : "Legend"}
           </text>
           {platforms.map((p, i) => {
@@ -109,22 +109,22 @@ export default function RadarCompareDiagram() {
               <g key={p.name} transform={`translate(0, ${20 + i * 24})`}>
                 <line x1="0" y1="8" x2="20" y2="8" stroke={p.color} strokeWidth={isDD ? 2.5 : 1.5} strokeDasharray={isDD ? undefined : "4,2"} />
                 <circle cx="10" cy="8" r={isDD ? 4 : 3} fill={p.color} fillOpacity={isDD ? 1 : 0.5} />
-                <text x="26" y="12" fontSize="10" fill="#374151" fontWeight={isDD ? "600" : "400"}>
+                <text x="26" y="12" fontSize="13" fill="#374151" fontWeight={isDD ? "600" : "400"}>
                   {isFr ? p.nameFr : p.name}
                 </text>
               </g>
             );
           })}
-          <text x="0" y={20 + platforms.length * 24 + 20} fontSize="8" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
+          <text x="0" y={20 + platforms.length * 24 + 20} fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
             {isFr ? "DigiDouble = cible R&D" : "DigiDouble = R&D target"}
           </text>
-          <text x="0" y={20 + platforms.length * 24 + 34} fontSize="8" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
+          <text x="0" y={20 + platforms.length * 24 + 34} fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
             {isFr ? "(pas encore atteinte)" : "(not yet achieved)"}
           </text>
         </g>
 
         {/* Bottom note */}
-        <text x={CX} y={380} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
+        <text x={CX} y={510} textAnchor="middle" fontSize="11" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
           {isFr
             ? "Scores normalisés /10 · Évaluation qualitative · Latence = score inversé (10 = <100ms)"
             : "Normalized scores /10 · Qualitative assessment · Latency = inverted score (10 = <100ms)"}

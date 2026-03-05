@@ -7,8 +7,8 @@ import { useLang } from "@/contexts/LangContext";
 export default function ProductArchDiagram() {
   const { lang } = useLang();
   const isFr = lang === "fr";
-  const W = 760;
-  const H = 340;
+  const W = 1026;
+  const H = 459;
 
   const engineComponents = [
     { x: 60,  label: isFr ? "Éditeur de Nœuds" : "Node Editor",      sub: isFr ? "Graphe conversationnel" : "Conversational graph",  color: "#0891b2" },

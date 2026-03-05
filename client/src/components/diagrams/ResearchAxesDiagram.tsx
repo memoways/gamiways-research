@@ -157,13 +157,13 @@ export default function ResearchAxesDiagram() {
           style={{ borderTopColor: axis.color, borderTopWidth: "3px" }}
         >
           {/* Header */}
-          <div className="p-5">
+          <div className="p-6">
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-3">
                 {axis.icon}
                 <div>
-                  <div className="text-xs font-mono text-slate-400">{axis.number}</div>
-                  <div className="font-bold text-slate-900 text-sm leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <div className="text-sm font-mono text-slate-400">{axis.number}</div>
+                  <div className="font-bold text-slate-900 text-base leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     {isFr ? axis.titleFr : axis.title}
                   </div>
                 </div>
@@ -172,21 +172,21 @@ export default function ResearchAxesDiagram() {
 
             {/* Key metric */}
             <div className="mb-3 p-3 rounded" style={{ background: `oklch(from ${axis.color} l c h / 0.06)` }}>
-              <div className="text-2xl font-bold font-mono" style={{ color: axis.color }}>{axis.metric}</div>
-              <div className="text-xs text-slate-500 font-mono">{isFr ? axis.metricLabelFr : axis.metricLabel}</div>
+              <div className="text-3xl font-bold font-mono" style={{ color: axis.color }}>{axis.metric}</div>
+              <div className="text-sm text-slate-500 font-mono">{isFr ? axis.metricLabelFr : axis.metricLabel}</div>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            <p className="text-sm text-slate-600 leading-relaxed mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr ? axis.summaryFr : axis.summary}
             </p>
 
-            <div className="text-xs text-slate-400 font-mono mb-3">{axis.researcher}</div>
+            <div className="text-sm text-slate-400 font-mono mb-3">{axis.researcher}</div>
 
             {/* Hypotheses */}
             {axis.hypotheses.map((h) => (
               <div key={h.id} className="flex gap-2 mb-1">
-                <span className="text-xs font-bold font-mono shrink-0" style={{ color: axis.color }}>{h.id}</span>
-                <span className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                <span className="text-sm font-bold font-mono shrink-0" style={{ color: axis.color }}>{h.id}</span>
+                <span className="text-sm text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
                   {isFr ? h.textFr : h.text}
                 </span>
               </div>
@@ -196,7 +196,7 @@ export default function ResearchAxesDiagram() {
           {/* Accordion toggle */}
           <button
             onClick={() => setExpanded(expanded === i ? null : i)}
-            className="w-full flex items-center justify-between px-5 py-2.5 border-t border-slate-100 text-xs font-medium transition-colors hover:bg-slate-50"
+            className="w-full flex items-center justify-between px-5 py-3 border-t border-slate-100 text-sm font-medium transition-colors hover:bg-slate-50"
             style={{ fontFamily: "'Space Grotesk', sans-serif", color: axis.color }}
           >
             <span>{isFr ? "Détails techniques" : "Technical details"}</span>
@@ -208,8 +208,8 @@ export default function ResearchAxesDiagram() {
               <ul className="mt-3 space-y-2">
                 {(isFr ? axis.detailsFr : axis.details).map((d, j) => (
                   <li key={j} className="flex gap-2">
-                    <span className="text-xs shrink-0 mt-0.5" style={{ color: axis.color }}>·</span>
-                    <span className="text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>{d}</span>
+                    <span className="text-sm shrink-0 mt-0.5" style={{ color: axis.color }}>·</span>
+                    <span className="text-sm text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>{d}</span>
                   </li>
                 ))}
               </ul>

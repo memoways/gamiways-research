@@ -1,14 +1,15 @@
 /*
  * MemoryArchDiagram — 3-layer conversational memory architecture
  * i18n: EN (default) / FR via useLang
+ * Size: +35% from original
  */
 import { useLang } from "@/contexts/LangContext";
 
 export default function MemoryArchDiagram() {
   const { lang } = useLang();
   const isFr = lang === "fr";
-  const W = 760;
-  const H = 320;
+  const W = 1020;
+  const H = 430;
 
   const layers = [
     {
@@ -39,7 +40,7 @@ export default function MemoryArchDiagram() {
         : ["Visited node path", "Progression score", "Summarized history"],
       color: "#d97706",
       bg: "#fffbeb",
-      x: 280,
+      x: 375,
     },
     {
       id: "L3",
@@ -54,26 +55,26 @@ export default function MemoryArchDiagram() {
         : ["Learning profile", "Historical sessions", "Cross-session patterns"],
       color: "#16a34a",
       bg: "#f0fdf4",
-      x: 520,
+      x: 710,
     },
   ];
 
-  const BOX_W = 200;
-  const BOX_H = 200;
-  const Y_BOX = 60;
+  const BOX_W = 270;
+  const BOX_H = 270;
+  const Y_BOX = 80;
 
   return (
     <div className="w-full overflow-x-auto">
       <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
         {/* Title */}
-        <text x="20" y="18" fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace" letterSpacing="1">
+        <text x="20" y="24" fontSize="13" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace" letterSpacing="1">
           {isFr ? "ARCHITECTURE MÉMOIRE CONVERSATIONNELLE — 3 COUCHES" : "CONVERSATIONAL MEMORY ARCHITECTURE — 3 LAYERS"}
         </text>
 
         {/* LLM central node */}
-        <rect x={W / 2 - 55} y={Y_BOX + 70} width={110} height={44} rx={4} fill="#0f172a" stroke="#334155" strokeWidth="1" />
-        <text x={W / 2} y={Y_BOX + 88} textAnchor="middle" fontSize="11" fontWeight="700" fill="#f8fafc">LLM / Agent</text>
-        <text x={W / 2} y={Y_BOX + 102} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
+        <rect x={W / 2 - 74} y={Y_BOX + 94} width={148} height={60} rx={5} fill="#0f172a" stroke="#334155" strokeWidth="1.5" />
+        <text x={W / 2} y={Y_BOX + 120} textAnchor="middle" fontSize="15" fontWeight="700" fill="#f8fafc">LLM / Agent</text>
+        <text x={W / 2} y={Y_BOX + 138} textAnchor="middle" fontSize="12" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
           {isFr ? "Orchestrateur" : "Orchestrator"}
         </text>
 
@@ -86,50 +87,50 @@ export default function MemoryArchDiagram() {
           let arrowTip = { x: 0, y: 0, dir: "left" as "left" | "right" | "up" };
 
           if (i === 0) {
-            arrowPath = `M ${llmCx - 55} ${Y_BOX + 92} L ${boxRight} ${Y_BOX + 92}`;
-            arrowTip = { x: boxRight, y: Y_BOX + 92, dir: "right" };
+            arrowPath = `M ${llmCx - 74} ${Y_BOX + 124} L ${boxRight} ${Y_BOX + 124}`;
+            arrowTip = { x: boxRight, y: Y_BOX + 124, dir: "right" };
           } else if (i === 1) {
-            arrowPath = `M ${llmCx} ${Y_BOX + 114} L ${llmCx} ${Y_BOX + BOX_H + 20} L ${boxMid} ${Y_BOX + BOX_H + 20} L ${boxMid} ${Y_BOX + BOX_H}`;
+            arrowPath = `M ${llmCx} ${Y_BOX + 154} L ${llmCx} ${Y_BOX + BOX_H + 26} L ${boxMid} ${Y_BOX + BOX_H + 26} L ${boxMid} ${Y_BOX + BOX_H}`;
             arrowTip = { x: boxMid, y: Y_BOX + BOX_H, dir: "up" };
           } else {
-            arrowPath = `M ${llmCx + 55} ${Y_BOX + 92} L ${boxLeft} ${Y_BOX + 92}`;
-            arrowTip = { x: boxLeft, y: Y_BOX + 92, dir: "left" };
+            arrowPath = `M ${llmCx + 74} ${Y_BOX + 124} L ${boxLeft} ${Y_BOX + 124}`;
+            arrowTip = { x: boxLeft, y: Y_BOX + 124, dir: "left" };
           }
 
           return (
             <g key={layer.id}>
-              <path d={arrowPath} stroke={layer.color} strokeWidth="1.5" fill="none" strokeDasharray="5,3" opacity="0.6" />
+              <path d={arrowPath} stroke={layer.color} strokeWidth="2" fill="none" strokeDasharray="6,4" opacity="0.6" />
               {arrowTip.dir === "right" && (
-                <polygon points={`${arrowTip.x - 6},${arrowTip.y - 4} ${arrowTip.x},${arrowTip.y} ${arrowTip.x - 6},${arrowTip.y + 4}`} fill={layer.color} opacity="0.6" />
+                <polygon points={`${arrowTip.x - 8},${arrowTip.y - 5} ${arrowTip.x},${arrowTip.y} ${arrowTip.x - 8},${arrowTip.y + 5}`} fill={layer.color} opacity="0.6" />
               )}
               {arrowTip.dir === "left" && (
-                <polygon points={`${arrowTip.x + 6},${arrowTip.y - 4} ${arrowTip.x},${arrowTip.y} ${arrowTip.x + 6},${arrowTip.y + 4}`} fill={layer.color} opacity="0.6" />
+                <polygon points={`${arrowTip.x + 8},${arrowTip.y - 5} ${arrowTip.x},${arrowTip.y} ${arrowTip.x + 8},${arrowTip.y + 5}`} fill={layer.color} opacity="0.6" />
               )}
               {arrowTip.dir === "up" && (
-                <polygon points={`${arrowTip.x - 4},${arrowTip.y + 6} ${arrowTip.x},${arrowTip.y} ${arrowTip.x + 4},${arrowTip.y + 6}`} fill={layer.color} opacity="0.6" />
+                <polygon points={`${arrowTip.x - 5},${arrowTip.y + 8} ${arrowTip.x},${arrowTip.y} ${arrowTip.x + 5},${arrowTip.y + 8}`} fill={layer.color} opacity="0.6" />
               )}
 
-              <rect x={layer.x} y={Y_BOX} width={BOX_W} height={BOX_H} rx={4} fill={layer.bg} stroke={layer.color} strokeWidth="1.5" />
-              <rect x={layer.x} y={Y_BOX} width={4} height={BOX_H} rx={2} fill={layer.color} />
-              <text x={layer.x + 14} y={Y_BOX + 18} fontSize="10" fontWeight="700" fill={layer.color} fontFamily="'JetBrains Mono', monospace">{layer.id}</text>
-              <text x={layer.x + 14} y={Y_BOX + 34} fontSize="11" fontWeight="600" fill="#0f172a">{layer.sublabel}</text>
-              <text x={layer.x + 14} y={Y_BOX + 48} fontSize="9" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">{layer.type}</text>
-              <line x1={layer.x + 10} y1={Y_BOX + 56} x2={layer.x + BOX_W - 10} y2={Y_BOX + 56} stroke="#e2e8f0" strokeWidth="1" />
+              <rect x={layer.x} y={Y_BOX} width={BOX_W} height={BOX_H} rx={5} fill={layer.bg} stroke={layer.color} strokeWidth="2" />
+              <rect x={layer.x} y={Y_BOX} width={5} height={BOX_H} rx={3} fill={layer.color} />
+              <text x={layer.x + 18} y={Y_BOX + 24} fontSize="13" fontWeight="700" fill={layer.color} fontFamily="'JetBrains Mono', monospace">{layer.id}</text>
+              <text x={layer.x + 18} y={Y_BOX + 46} fontSize="14" fontWeight="600" fill="#0f172a">{layer.sublabel}</text>
+              <text x={layer.x + 18} y={Y_BOX + 64} fontSize="12" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">{layer.type}</text>
+              <line x1={layer.x + 12} y1={Y_BOX + 74} x2={layer.x + BOX_W - 12} y2={Y_BOX + 74} stroke="#e2e8f0" strokeWidth="1.5" />
               {layer.items.map((item, j) => (
                 <g key={item}>
-                  <circle cx={layer.x + 18} cy={Y_BOX + 70 + j * 20} r={2.5} fill={layer.color} opacity="0.7" />
-                  <text x={layer.x + 26} y={Y_BOX + 74 + j * 20} fontSize="9" fill="#475569">{item}</text>
+                  <circle cx={layer.x + 24} cy={Y_BOX + 94 + j * 27} r={3.5} fill={layer.color} opacity="0.7" />
+                  <text x={layer.x + 36} y={Y_BOX + 99 + j * 27} fontSize="12" fill="#475569">{item}</text>
                 </g>
               ))}
-              <rect x={layer.x + 10} y={Y_BOX + BOX_H - 46} width={BOX_W - 20} height={18} rx={3} fill="#f1f5f9" />
-              <text x={layer.x + BOX_W / 2} y={Y_BOX + BOX_H - 33} textAnchor="middle" fontSize="9" fill="#64748b" fontFamily="'JetBrains Mono', monospace">{layer.storage}</text>
-              <text x={layer.x + BOX_W / 2} y={Y_BOX + BOX_H - 10} textAnchor="middle" fontSize="9" fontWeight="700" fill={layer.costColor} fontFamily="'JetBrains Mono', monospace">{layer.cost}</text>
+              <rect x={layer.x + 12} y={Y_BOX + BOX_H - 62} width={BOX_W - 24} height={24} rx={4} fill="#f1f5f9" />
+              <text x={layer.x + BOX_W / 2} y={Y_BOX + BOX_H - 44} textAnchor="middle" fontSize="12" fill="#64748b" fontFamily="'JetBrains Mono', monospace">{layer.storage}</text>
+              <text x={layer.x + BOX_W / 2} y={Y_BOX + BOX_H - 14} textAnchor="middle" fontSize="12" fontWeight="700" fill={layer.costColor} fontFamily="'JetBrains Mono', monospace">{layer.cost}</text>
             </g>
           );
         })}
 
         {/* Bottom note */}
-        <text x={W / 2} y={H - 10} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
+        <text x={W / 2} y={H - 12} textAnchor="middle" fontSize="12" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
           {isFr
             ? "Objectif: -90% tokens context window · +26% précision (Mem0, 2025)"
             : "Goal: -90% context window tokens · +26% accuracy (Mem0, 2025)"}

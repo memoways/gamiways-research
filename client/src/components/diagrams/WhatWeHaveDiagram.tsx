@@ -39,25 +39,27 @@ export default function WhatWeHaveDiagram() {
 
   return (
     <div className="w-full overflow-x-auto">
-      <svg viewBox="0 0 900 320" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 700 }}>
+      <svg viewBox="0 0 1215 432" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 945 }}>
+        <g transform="scale(1.35) translate(0, 0)">
 
         {/* ── Background zones ── */}
         {/* Available zone (green) */}
-        <rect x="100" y="60" width="155" height="200" rx="6" fill="#d4edda" stroke="#28a745" strokeWidth="1.5" />
-        <text x="177" y="52" textAnchor="middle" fontSize="7" fontWeight="700" letterSpacing="1" fill="#155724" fontFamily="'JetBrains Mono', monospace">✅ {labels.available}</text>
+        <rect x="135" y="81" width="209" height="270" rx="8" fill="#d4edda" stroke="#28a745" strokeWidth="2" />
+        <text x="239" y="70" textAnchor="middle" fontSize="9.5" fontWeight="700" letterSpacing="1" fill="#155724" fontFamily="'JetBrains Mono', monospace">✅ {labels.available}</text>
 
         {/* GAP zone (blue) */}
-        <rect x="275" y="60" width="370" height="200" rx="6" fill="#cce5ff" stroke="#004085" strokeWidth="1.5" />
-        <text x="460" y="52" textAnchor="middle" fontSize="7" fontWeight="700" letterSpacing="1" fill="#004085" fontFamily="'JetBrains Mono', monospace">🔴 {labels.gap}</text>
+        <rect x="371" y="81" width="500" height="270" rx="8" fill="#cce5ff" stroke="#004085" strokeWidth="2" />
+        <text x="621" y="70" textAnchor="middle" fontSize="9.5" fontWeight="700" letterSpacing="1" fill="#004085" fontFamily="'JetBrains Mono', monospace">🔴 {labels.gap}</text>
 
         {/* Internal zone (yellow) */}
-        <rect x="665" y="60" width="155" height="200" rx="6" fill="#fff3cd" stroke="#856404" strokeWidth="1.5" />
-        <text x="742" y="52" textAnchor="middle" fontSize="7" fontWeight="700" letterSpacing="1" fill="#856404" fontFamily="'JetBrains Mono', monospace">✅ {labels.internal}</text>
+        <rect x="898" y="81" width="209" height="270" rx="8" fill="#fff3cd" stroke="#856404" strokeWidth="2" />
+        <text x="1002" y="70" textAnchor="middle" fontSize="9.5" fontWeight="700" letterSpacing="1" fill="#856404" fontFamily="'JetBrains Mono', monospace">✅ {labels.internal}</text>
 
         {/* ── USER node ── */}
-        <rect x="10" y="120" width="72" height="60" rx="4" fill="#f8fafc" stroke="#0f172a" strokeWidth="1.5" />
-        <text x="46" y="143" textAnchor="middle" fontSize="9" fontWeight="700" fill="#0f172a">{labels.user}</text>
-        <text x="46" y="157" textAnchor="middle" fontSize="7" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">{labels.userSub}</text>
+        <rect x="13" y="162" width="97" height="81" rx="5" fill="#f8fafc" stroke="#0f172a" strokeWidth="2" />
+        <text x="61" y="193" textAnchor="middle" fontSize="12" fontWeight="700" fill="#0f172a">{labels.user}</text>
+        <text x="61" y="211" textAnchor="middle" fontSize="9.5" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">{labels.userSub}</text>
+        {/* Scale note: viewBox already scaled 1.35x from original 900x320 */}
 
         {/* Arrow USER → ASR */}
         <line x1="82" y1="150" x2="108" y2="150" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arr)" />
@@ -158,6 +160,7 @@ export default function WhatWeHaveDiagram() {
             <path d="M0,0 L6,3 L0,6 Z" fill="#0891b2" />
           </marker>
         </defs>
+        </g>
       </svg>
     </div>
   );

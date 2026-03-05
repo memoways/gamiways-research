@@ -152,13 +152,13 @@ export default function BeforeAfterDiagram() {
     <div className="w-full">
       <div className="grid md:grid-cols-2 gap-6">
         {/* BEFORE */}
-        <div className="border border-slate-200 rounded-lg p-5">
+        <div className="border border-slate-200 rounded-lg p-7">
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-xs font-bold font-mono px-2 py-0.5 rounded" style={{ background: "oklch(0.98 0.02 25)", color: "oklch(0.60 0.20 25)" }}>
+            <span className="text-sm font-bold font-mono px-2 py-0.5 rounded" style={{ background: "oklch(0.98 0.02 25)", color: "oklch(0.60 0.20 25)" }}>
               {isFr ? "ÉTAT ACTUEL" : "CURRENT STATE"}
             </span>
-            <span className="text-lg font-bold font-mono" style={{ color: "oklch(0.60 0.20 25)" }}>6–12s</span>
-            <span className="text-xs text-slate-400 font-mono">{isFr ? "par échange" : "per exchange"}</span>
+            <span className="text-2xl font-bold font-mono" style={{ color: "oklch(0.60 0.20 25)" }}>6–12s</span>
+            <span className="text-sm text-slate-400 font-mono">{isFr ? "par échange" : "per exchange"}</span>
           </div>
           <div className="flex items-center flex-wrap gap-1">
             {beforeSteps.map((step, i) => (
@@ -169,10 +169,10 @@ export default function BeforeAfterDiagram() {
             ))}
           </div>
           <div className="mt-4 flex items-start gap-2">
-            <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: "oklch(0.98 0.02 25)", color: "oklch(0.60 0.20 25)" }}>
+            <span className="text-sm font-mono px-1.5 py-0.5 rounded" style={{ background: "oklch(0.98 0.02 25)", color: "oklch(0.60 0.20 25)" }}>
               ⚠
             </span>
-            <p className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            <p className="text-sm text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
                 ? "Le goulot est la génération vidéo avatar (5–10s). Les autres composants sont déjà dans les cibles."
                 : "The bottleneck is avatar video generation (5–10s). All other components are already within targets."}
@@ -201,7 +201,7 @@ export default function BeforeAfterDiagram() {
             <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: "oklch(0.97 0.05 145)", color: "oklch(0.45 0.18 145)" }}>
               ✓
             </span>
-            <p className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            <p className="text-sm text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
                 ? "Réduction 6–10× via distillation avatar + pipeline streaming + cache intelligent."
                 : "6–10× reduction via avatar distillation + streaming pipeline + intelligent cache."}

@@ -115,24 +115,24 @@ export default function GapMatrixDiagram() {
 
   return (
     <div className="w-full overflow-x-auto">
-      <table className="w-full border-collapse" style={{ minWidth: "520px" }}>
+      <table className="w-full border-collapse" style={{ minWidth: "700px" }}>
         <thead>
           <tr>
-            <th className="text-left py-2 pr-4 text-xs font-mono text-slate-400 font-normal w-32">
+            <th className="text-left py-3 pr-4 text-sm font-mono text-slate-400 font-normal w-40">
               {isFr ? "Solution" : "Solution"}
             </th>
             {criteria.map((c) => (
               <th
                 key={c.id}
-                className="text-center py-2 px-2 relative cursor-default"
+                className="text-center py-3 px-3 relative cursor-default"
                 onMouseEnter={() => setHoveredCrit(c.id)}
                 onMouseLeave={() => setHoveredCrit(null)}
               >
-                <div className="text-xs font-semibold text-slate-700 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                <div className="text-sm font-semibold text-slate-700 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {isFr ? c.labelFr : c.label}
                 </div>
                 {hoveredCrit === c.id && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-20 w-44 rounded border border-slate-200 bg-white shadow-lg p-2 text-xs text-slate-600 text-left font-normal"
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-20 w-52 rounded border border-slate-200 bg-white shadow-lg p-2 text-sm text-slate-600 text-left font-normal"
                     style={{ fontFamily: "'Source Serif 4', serif" }}>
                     {isFr ? c.tooltipFr : c.tooltip}
                   </div>
@@ -145,14 +145,14 @@ export default function GapMatrixDiagram() {
           {solutions.map((sol) => (
             <tr
               key={sol.name}
-              className={sol.name === "DigiDouble" ? "border-t-2" : ""}
+              className={sol.name === "DigiDouble" ? "border-t-2" : "border-t border-slate-100"}
               style={sol.name === "DigiDouble" ? { borderTopColor: "oklch(0.60 0.20 25)" } : {}}
             >
-              <td className="py-2 pr-4">
-                <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <td className="py-3 pr-4">
+                <div className="font-semibold text-slate-900 text-base" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {sol.name}
                 </div>
-                <div className="text-xs text-slate-400 font-mono">{isFr ? sol.categoryFr : sol.category}</div>
+                <div className="text-sm text-slate-400 font-mono">{isFr ? sol.categoryFr : sol.category}</div>
               </td>
               {criteria.map((c) => {
                 const val = sol.cells[c.id];
@@ -161,12 +161,12 @@ export default function GapMatrixDiagram() {
                 return (
                   <td
                     key={c.id}
-                    className="text-center py-2 px-2 relative cursor-default"
+                    className="text-center py-3 px-3 relative cursor-default"
                     onMouseEnter={() => setHoveredCell({ sol: sol.name, crit: c.id })}
                     onMouseLeave={() => setHoveredCell(null)}
                   >
                     <div
-                      className="inline-flex items-center justify-center w-8 h-8 rounded text-sm font-bold transition-all duration-150"
+                      className="inline-flex items-center justify-center w-12 h-12 rounded text-lg font-bold transition-all duration-150"
                       style={{
                         color: cfg.color,
                         background: isHov ? cfg.bg : "transparent",
@@ -176,7 +176,7 @@ export default function GapMatrixDiagram() {
                       {cfg.icon}
                     </div>
                     {isHov && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-20 w-36 rounded border border-slate-200 bg-white shadow-lg p-2 text-xs text-slate-600 text-left"
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 z-20 w-44 rounded border border-slate-200 bg-white shadow-lg p-2 text-sm text-slate-600 text-left"
                         style={{ fontFamily: "'Source Serif 4', serif" }}>
                         <span className="font-bold" style={{ color: cfg.color }}>{isFr ? cfg.labelFr : cfg.label}</span>
                         {val === "rd" && <span> — {isFr ? "Objectif de recherche" : "Research objective"}</span>}
@@ -192,11 +192,11 @@ export default function GapMatrixDiagram() {
       </table>
 
       {/* Legend */}
-      <div className="flex gap-4 mt-4 flex-wrap">
+      <div className="flex gap-5 mt-5 flex-wrap">
         {(Object.entries(cellConfig) as [CellValue, typeof cellConfig[CellValue]][]).map(([key, cfg]) => (
-          <div key={key} className="flex items-center gap-1.5">
-            <span className="text-sm" style={{ color: cfg.color }}>{cfg.icon}</span>
-            <span className="text-xs text-slate-500 font-mono">{isFr ? cfg.labelFr : cfg.label}</span>
+          <div key={key} className="flex items-center gap-2">
+            <span className="text-lg" style={{ color: cfg.color }}>{cfg.icon}</span>
+            <span className="text-sm text-slate-500 font-mono">{isFr ? cfg.labelFr : cfg.label}</span>
           </div>
         ))}
       </div>

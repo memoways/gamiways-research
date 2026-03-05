@@ -139,19 +139,19 @@ export default function TechStackDiagram() {
               onMouseEnter={() => setHoveredId(layer.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
-              <div className="flex items-center justify-between px-4 py-3">
+              <div className="flex items-center justify-between px-5 py-4">
                 <div className="flex items-center gap-4 flex-1 min-w-0">
                   <div className="min-w-0">
-                    <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    <div className="font-semibold text-slate-900 text-base" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                       {isFr ? layer.labelFr : layer.label}
                     </div>
-                    <div className="text-xs text-slate-400 font-mono truncate">{isFr ? layer.techFr : layer.tech}</div>
+                    <div className="text-sm text-slate-400 font-mono truncate">{isFr ? layer.techFr : layer.tech}</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
                   {layer.sovereign && <span className="text-xs font-mono text-slate-400">🇨🇭</span>}
-                  <span className="text-xs font-bold font-mono" style={{ color: cfg.color }}>{layer.latency}</span>
-                  <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ color: cfg.color, background: cfg.bg }}>
+                  <span className="text-sm font-bold font-mono" style={{ color: cfg.color }}>{layer.latency}</span>
+                  <span className="text-sm font-mono px-2 py-1 rounded" style={{ color: cfg.color, background: cfg.bg }}>
                     {isFr ? cfg.labelFr : cfg.label}
                   </span>
                 </div>
@@ -160,7 +160,7 @@ export default function TechStackDiagram() {
               {/* Hover tooltip */}
               {isHovered && (
                 <div className="px-4 pb-3 border-t" style={{ borderColor: `${cfg.color}30` }}>
-                  <p className="text-xs text-slate-600 leading-relaxed pt-2" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  <p className="text-sm text-slate-600 leading-relaxed pt-2" style={{ fontFamily: "'Source Serif 4', serif" }}>
                     {isFr ? layer.tooltipFr : layer.tooltip}
                   </p>
                 </div>
@@ -171,14 +171,14 @@ export default function TechStackDiagram() {
       </div>
 
       {/* Total latency */}
-      <div className="mt-4 flex items-center justify-between p-3 rounded border-2" style={{ borderColor: "oklch(0.65 0.18 145 / 0.4)", background: "oklch(0.97 0.05 145)" }}>
-        <div className="text-sm font-semibold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+      <div className="mt-4 flex items-center justify-between p-4 rounded border-2" style={{ borderColor: "oklch(0.65 0.18 145 / 0.4)", background: "oklch(0.97 0.05 145)" }}>
+          <div className="text-base font-semibold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
           {isFr ? "Latence totale cible" : "Total target latency"}
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400 font-mono line-through">6–12s</span>
+          <span className="text-sm text-slate-400 font-mono line-through">6–12s</span>
           <svg width="20" height="10" viewBox="0 0 20 10"><line x1="0" y1="5" x2="14" y2="5" stroke="oklch(0.65 0.18 145)" strokeWidth="1.5" /><polygon points="14,2 20,5 14,8" fill="oklch(0.65 0.18 145)" /></svg>
-          <span className="text-lg font-bold font-mono" style={{ color: "oklch(0.45 0.18 145)" }}>&lt;2s</span>
+          <span className="text-2xl font-bold font-mono" style={{ color: "oklch(0.45 0.18 145)" }}>&lt;2s</span>
         </div>
       </div>
     </div>

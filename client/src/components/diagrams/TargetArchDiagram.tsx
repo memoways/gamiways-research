@@ -11,7 +11,8 @@ export default function TargetArchDiagram() {
 
   return (
     <div className="w-full overflow-x-auto">
-      <svg viewBox="0 0 860 340" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 680 }}>
+      <svg viewBox="0 0 1161 459" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 918 }}>
+        <g transform="scale(1.35)">
 
         {/* ── Legend ── */}
         <rect x="10" y="8" width="10" height="10" rx="2" fill="#d4edda" stroke="#28a745" strokeWidth="1" />
@@ -121,6 +122,7 @@ export default function TargetArchDiagram() {
             <path d="M0,0 L6,3 L0,6 Z" fill="#0891b2" />
           </marker>
         </defs>
+        </g>
       </svg>
     </div>
   );
