@@ -162,6 +162,27 @@ export default function StateOfArt() {
         : ["Very strong censorship", "No creator control", "No professional use"],
       score: { quality: 7, latency: 6, cost: 7, sovereignty: 1 },
     },
+    {
+      name: "Tavus Phoenix-4",
+      category: isFr ? "Avatar comportemental" : "Behavioral avatar",
+      realtime: true,
+      bodyLanguage: isFr ? "Oui (tête complète)" : "Yes (full head)",
+      conversation: true,
+      sovereignty: false,
+      latency: "40 FPS @ 1080p",
+      pricing: isFr ? "API / Enterprise" : "API / Enterprise",
+      censorship: isFr ? "Moyen" : "Medium",
+      notes: isFr
+        ? "Premier modèle avec comportement actif d'écoute, contrôle émotionnel complet et boucle perception-expression (Raven-1). Architecture diffusion causale + Gaussian Splatting implicite. Stack comportemental complet : Phoenix-4 + Sparrow-1 + Raven-1."
+        : "First model with active listening behavior, full emotional control, and perception-expression loop (Raven-1). Causal diffusion + implicit Gaussian Splatting architecture. Full behavioral stack: Phoenix-4 + Sparrow-1 + Raven-1.",
+      strengths: isFr
+        ? ["Comportement d'écoute actif", "Contrôle émotionnel complet", "40 FPS @ 1080p", "Boucle perception-expression", "Gaussian Splatting implicite"]
+        : ["Active listening behavior", "Full emotional control", "40 FPS @ 1080p", "Perception-expression loop", "Implicit Gaussian Splatting"],
+      weaknesses: isFr
+        ? ["Pas de mémoire persistante", "Pas de souveraineté", "Pas d'orchestration narrative", "Dépendance cloud Tavus"]
+        : ["No persistent memory", "No sovereignty", "No narrative orchestration", "Tavus cloud dependency"],
+      score: { quality: 10, latency: 10, cost: 3, sovereignty: 1 },
+    },
   ];
 
   const openSourceSolutions = [
@@ -840,6 +861,178 @@ export default function StateOfArt() {
                     : <><strong>Note:</strong> Open-source solutions enable data sovereignty and freedom from censorship, at the cost of dedicated GPU infrastructure and significant technical investment. DigiDouble uses HeyGem OS on Exoscale (Swiss GPU) with a 30% performance gain via Arch Linux.</>
                   }
                 </p>
+              </div>
+
+              {/* Tavus Phoenix-4 deep dive */}
+              <div className="mt-6 border-2 border-cyan-200 rounded-lg overflow-hidden">
+                <div className="bg-cyan-50 px-5 py-3 flex items-center justify-between border-b border-cyan-200">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.72 0.18 200)", color: "white" }}>KEY REFERENCE</span>
+                    <h3 className="font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      Tavus Phoenix-4 — {isFr ? "Analyse approfondie" : "Deep Dive"}
+                    </h3>
+                  </div>
+                  <a href="https://www.tavus.io/post/phoenix-4-real-time-human-rendering-with-emotional-intelligence" target="_blank" rel="noopener noreferrer"
+                    className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
+                    tavus.io ↗
+                  </a>
+                </div>
+                <div className="p-5">
+                  <p className="text-sm text-slate-600 leading-relaxed mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Phoenix-4 est le premier modèle d'avatar temps réel à atteindre le \"réalisme comportemental\" — pas seulement visuel. La distinction clé : animer le comportement en continu (y compris pendant l'écoute et les silences), pas seulement pendant la parole. C'est la référence de l'état de l'art commercial pour l'Axe 2 (Avatar) de DigiDouble."
+                      : "Phoenix-4 is the first real-time avatar model to achieve \"behavioral realism\" — not just visual realism. The key distinction: animating behavior continuously (including while listening and during silence), not just when speaking. It is the commercial state-of-the-art reference for DigiDouble's Axis 2 (Avatar)."
+                    }
+                  </p>
+
+                  {/* Official comparison table */}
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Tableau comparatif officiel (source : Tavus)" : "Official feature comparison (source: Tavus)"}
+                  </h4>
+                  <div className="overflow-x-auto mb-5">
+                    <table className="data-table text-xs">
+                      <thead>
+                        <tr>
+                          <th>{isFr ? "Plateforme" : "Platform"}</th>
+                          <th>{isFr ? "Temps réel" : "True Real-Time"}</th>
+                          <th>{isFr ? "Tête complète" : "Full Head"}</th>
+                          <th>{isFr ? "Contr. émotion" : "Emotion Control"}</th>
+                          <th>{isFr ? "Écoute active" : "Active Listening"}</th>
+                          <th>{isFr ? "Pose tête" : "Headpose"}</th>
+                          <th>{isFr ? "Performance" : "Performance"}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { name: "Tavus Phoenix-4", rt: true, head: true, emo: true, listen: true, pose: true, perf: "40 FPS @ 1080p" },
+                          { name: "Tavus Phoenix-3", rt: true, head: true, emo: false, listen: false, pose: false, perf: "30 FPS @ 1080p" },
+                          { name: "Anam CARA III", rt: true, head: true, emo: false, listen: false, pose: true, perf: "~25 FPS @ 480p" },
+                          { name: "HeyGen LiveAvatar", rt: true, head: false, emo: false, listen: false, pose: false, perf: "Not stated" },
+                          { name: "Synthesia Video Agents", rt: false, head: false, emo: false, listen: false, pose: false, perf: "—" },
+                        ].map((row) => (
+                          <tr key={row.name} style={{ background: row.name === "Tavus Phoenix-4" ? "oklch(0.97 0.02 200)" : undefined }}>
+                            <td><span className="font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.name}</span></td>
+                            <td><span style={{ color: row.rt ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{row.rt ? "✓" : "✗"}</span></td>
+                            <td><span style={{ color: row.head ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{row.head ? "✓" : "✗"}</span></td>
+                            <td><span style={{ color: row.emo ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{row.emo ? "✓" : "✗"}</span></td>
+                            <td><span style={{ color: row.listen ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{row.listen ? "✓" : "✗"}</span></td>
+                            <td><span style={{ color: row.pose ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{row.pose ? "✓" : "✗"}</span></td>
+                            <td><span className="font-mono text-xs text-slate-700">{row.perf}</span></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Architecture highlights */}
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Architecture technique clé" : "Key technical architecture"}
+                  </h4>
+                  <div className="grid sm:grid-cols-3 gap-3 mb-5">
+                    {[
+                      {
+                        label: isFr ? "Rendu" : "Rendering",
+                        value: "3D Gaussian Splatting",
+                        detail: isFr ? "Contrôle implicite (vs mesh explicite Phoenix-3). Plus flexible, moins rigide." : "Implicit control (vs explicit mesh Phoenix-3). More flexible, less rigid.",
+                        color: "oklch(0.72 0.18 200)",
+                      },
+                      {
+                        label: isFr ? "Animation" : "Animation",
+                        value: isFr ? "Diffusion causale" : "Causal diffusion",
+                        detail: isFr ? "DiffPoseTalk-inspired. Architecture causale pour inférence streaming temps réel sans sacrifier la qualité." : "DiffPoseTalk-inspired. Causal architecture for real-time streaming inference without quality sacrifice.",
+                        color: "oklch(0.65 0.18 145)",
+                      },
+                      {
+                        label: isFr ? "Émotions" : "Emotions",
+                        value: isFr ? "Boucle perception-expression" : "Perception-expression loop",
+                        detail: isFr ? "Raven-1 lit le ton/expression utilisateur → Phoenix-4 répond visuellement. Contrôle via tags émotion + directives LLM." : "Raven-1 reads user tone/expression → Phoenix-4 responds visually. Control via emotion tags + LLM directives.",
+                        color: "oklch(0.72 0.18 50)",
+                      },
+                    ].map((item) => (
+                      <div key={item.label} className="border border-slate-200 rounded p-3">
+                        <div className="text-xs font-bold mb-1" style={{ color: item.color, fontFamily: "'Space Grotesk', sans-serif" }}>{item.label}</div>
+                        <div className="text-sm font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</div>
+                        <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Inspirations for DigiDouble */}
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Ce que DigiDouble peut s'inspirer de Phoenix-4" : "What DigiDouble can learn from Phoenix-4"}
+                  </h4>
+                  <div className="grid sm:grid-cols-2 gap-3 mb-4">
+                    {[
+                      {
+                        axis: isFr ? "Axe 2b" : "Axis 2b",
+                        title: isFr ? "Comportement d'écoute actif" : "Active listening behavior",
+                        desc: isFr
+                          ? "L'avatar DigiDouble doit animer en continu, pas seulement pendant la parole. Micro-expressions, mouvements de tête, clignements pendant les silences — c'est ce qui crée la \"présence\"."
+                          : "DigiDouble's avatar must animate continuously, not just when speaking. Micro-expressions, head movements, blinks during silence — this is what creates \"presence\".",
+                        color: "oklch(0.72 0.18 50)",
+                      },
+                      {
+                        axis: isFr ? "Axe 2b" : "Axis 2b",
+                        title: isFr ? "Gaussian Splatting implicite" : "Implicit Gaussian Splatting",
+                        desc: isFr
+                          ? "Contrôle implicite des Gaussians (vs mesh FLAME explicite) = plus de flexibilité pour l'expressivité. À évaluer pour remplacer HeyGem OS à terme."
+                          : "Implicit Gaussian control (vs explicit FLAME mesh) = more flexibility for expressiveness. Worth evaluating to eventually replace HeyGem OS.",
+                        color: "oklch(0.72 0.18 50)",
+                      },
+                      {
+                        axis: isFr ? "Axe 1" : "Axis 1",
+                        title: isFr ? "Distillation pour inférence temps réel" : "Distillation for real-time inference",
+                        desc: isFr
+                          ? "Phoenix-4 utilise la distillation + architecture causale pour maintenir 40 FPS sans sacrifier la qualité. Technique directement applicable à l'Axe 1 (latence) de DigiDouble."
+                          : "Phoenix-4 uses distillation + causal architecture to maintain 40 FPS without quality sacrifice. Technique directly applicable to DigiDouble's Axis 1 (latency).",
+                        color: "oklch(0.72 0.18 200)",
+                      },
+                      {
+                        axis: isFr ? "Axe 3" : "Axis 3",
+                        title: isFr ? "Directives LLM → contrôle émotionnel" : "LLM directives → emotional control",
+                        desc: isFr
+                          ? "Phoenix-4 accepte des directives LLM pour piloter les émotions de l'avatar. L'orchestrateur DigiDouble (Axe 3) pourrait utiliser ce mécanisme pour contrôler l'expression selon le contexte pédagogique."
+                          : "Phoenix-4 accepts LLM directives to drive avatar emotions. DigiDouble's orchestrator (Axis 3) could use this mechanism to control expression based on pedagogical context.",
+                        color: "oklch(0.65 0.18 145)",
+                      },
+                      {
+                        axis: isFr ? "Axe 2a" : "Axis 2a",
+                        title: isFr ? "Stack comportemental complet" : "Full behavioral stack",
+                        desc: isFr
+                          ? "Phoenix-4 + Sparrow-1 (timing) + Raven-1 (perception) = stack end-to-end. DigiDouble doit concevoir un stack équivalent souverain : ASR + LLM + TTS + Avatar + Perception émotionnelle."
+                          : "Phoenix-4 + Sparrow-1 (timing) + Raven-1 (perception) = end-to-end stack. DigiDouble must design an equivalent sovereign stack: ASR + LLM + TTS + Avatar + Emotional perception.",
+                        color: "oklch(0.72 0.18 50)",
+                      },
+                      {
+                        axis: isFr ? "Différenciateur" : "Differentiator",
+                        title: isFr ? "Ce que Phoenix-4 n'a pas" : "What Phoenix-4 doesn't have",
+                        desc: isFr
+                          ? "Mémoire persistante multi-sessions, souveraineté de déploiement, orchestration narrative (playlist vidéo dynamique), séquençage cinématographique Storygami. Ces 4 points sont les différenciateurs clés de DigiDouble."
+                          : "Persistent multi-session memory, deployment sovereignty, narrative orchestration (dynamic video playlist), Storygami cinematographic sequencing. These 4 points are DigiDouble's key differentiators.",
+                        color: "oklch(0.60 0.20 25)",
+                      },
+                    ].map((item) => (
+                      <div key={item.title} className="border border-slate-200 rounded p-3 flex gap-3">
+                        <div className="shrink-0">
+                          <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: item.color + "22", color: item.color }}>{item.axis}</span>
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</div>
+                          <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="callout-warning">
+                    <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                      {isFr
+                        ? <><strong>Conclusion :</strong> Tavus Phoenix-4 définit le nouveau standard du réalisme comportemental pour les avatars conversationnels commerciaux. Il valide l'importance de l'Axe 2 de DigiDouble et fournit des techniques concrètes (diffusion causale, Gaussian Splatting implicite, distillation) à intégrer dans la roadmap R&D. Les gaps restants — mémoire, souveraineté, orchestration narrative — confirment la valeur unique du projet DigiDouble.</>
+                        : <><strong>Conclusion:</strong> Tavus Phoenix-4 sets the new standard for behavioral realism in commercial conversational avatars. It validates the importance of DigiDouble's Axis 2 and provides concrete techniques (causal diffusion, implicit Gaussian Splatting, distillation) to integrate into the R&D roadmap. The remaining gaps — memory, sovereignty, narrative orchestration — confirm DigiDouble's unique value proposition.</>
+                      }
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           )}
