@@ -163,6 +163,27 @@ export default function StateOfArt() {
       score: { quality: 7, latency: 6, cost: 7, sovereignty: 1 },
     },
     {
+      name: "Runway Characters",
+      category: isFr ? "Avatar API temps réel" : "Real-time avatar API",
+      realtime: true,
+      bodyLanguage: isFr ? "Partiel (tête)" : "Partial (head)",
+      conversation: true,
+      sovereignty: false,
+      latency: "<500ms (WebRTC)",
+      pricing: isFr ? "~$0.20/min (API crédits)" : "~$0.20/min (API credits)",
+      censorship: isFr ? "Faible" : "Low",
+      notes: isFr
+        ? "Lancé mars 2026. Avatar depuis une seule image (photorealistic, animé, mascotte). Basé sur GWM-1. Sessions max 5 min (dev) / 30 min (API). Lip-sync + eye movement + gestures. Knowledge base configurable. Pas de mémoire persistante ni de clonage vocal."
+        : "Launched March 2026. Avatar from a single image (photorealistic, animated, mascot). Powered by GWM-1. Sessions max 5 min (dev) / 30 min (API). Lip-sync + eye movement + gestures. Configurable knowledge base. No persistent memory or voice cloning.",
+      strengths: isFr
+        ? ["Image unique → avatar (zero fine-tuning)", "WebRTC natif", "Knowledge base configurable", "API bien documentée", "Tout style visuel (réaliste, animé, mascotte)"]
+        : ["Single image → avatar (zero fine-tuning)", "Native WebRTC", "Configurable knowledge base", "Well-documented API", "Any visual style (realistic, animated, mascot)"],
+      weaknesses: isFr
+        ? ["Session max 5–30 min", "Pas de mémoire persistante", "Pas de clonage vocal", "Pas de souveraineté", "$0.20/min = coût élevé à l'échelle", "Pas d'orchestration narrative"]
+        : ["Max 5–30 min session", "No persistent memory", "No voice cloning", "No sovereignty", "$0.20/min = high cost at scale", "No narrative orchestration"],
+      score: { quality: 8, latency: 9, cost: 4, sovereignty: 2 },
+    },
+    {
       name: "Tavus Phoenix-4",
       category: isFr ? "Avatar comportemental" : "Behavioral avatar",
       realtime: true,
@@ -907,6 +928,7 @@ export default function StateOfArt() {
                           { name: "Tavus Phoenix-4", rt: true, head: true, emo: true, listen: true, pose: true, perf: "40 FPS @ 1080p" },
                           { name: "Tavus Phoenix-3", rt: true, head: true, emo: false, listen: false, pose: false, perf: "30 FPS @ 1080p" },
                           { name: "Anam CARA III", rt: true, head: true, emo: false, listen: false, pose: true, perf: "~25 FPS @ 480p" },
+                          { name: "Runway Characters", rt: true, head: false, emo: false, listen: false, pose: false, perf: "<500ms WebRTC" },
                           { name: "HeyGen LiveAvatar", rt: true, head: false, emo: false, listen: false, pose: false, perf: "Not stated" },
                           { name: "Synthesia Video Agents", rt: false, head: false, emo: false, listen: false, pose: false, perf: "—" },
                         ].map((row) => (
@@ -1029,6 +1051,157 @@ export default function StateOfArt() {
                       {isFr
                         ? <><strong>Conclusion :</strong> Tavus Phoenix-4 définit le nouveau standard du réalisme comportemental pour les avatars conversationnels commerciaux. Il valide l'importance de l'Axe 2 de DigiDouble et fournit des techniques concrètes (diffusion causale, Gaussian Splatting implicite, distillation) à intégrer dans la roadmap R&D. Les gaps restants — mémoire, souveraineté, orchestration narrative — confirment la valeur unique du projet DigiDouble.</>
                         : <><strong>Conclusion:</strong> Tavus Phoenix-4 sets the new standard for behavioral realism in commercial conversational avatars. It validates the importance of DigiDouble's Axis 2 and provides concrete techniques (causal diffusion, implicit Gaussian Splatting, distillation) to integrate into the R&D roadmap. The remaining gaps — memory, sovereignty, narrative orchestration — confirm DigiDouble's unique value proposition.</>
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Runway Characters deep dive */}
+              <div className="mt-6 border-2 border-orange-200 rounded-lg overflow-hidden">
+                <div className="bg-orange-50 px-5 py-3 flex items-center justify-between border-b border-orange-200">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.72 0.18 50)", color: "white" }}>NEW — MARCH 2026</span>
+                    <h3 className="font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      Runway Characters — {isFr ? "Analyse approfondie" : "Deep Dive"}
+                    </h3>
+                  </div>
+                  <a href="https://runwayml.com/news/introducing-runway-characters" target="_blank" rel="noopener noreferrer"
+                    className="text-xs font-mono text-orange-600 hover:text-orange-800 underline">
+                    runwayml.com ↗
+                  </a>
+                </div>
+                <div className="p-5">
+                  <p className="text-sm text-slate-600 leading-relaxed mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Lancé le 10 mars 2026, Runway Characters est une API temps réel permettant de créer un avatar conversationnel depuis une seule image — sans fine-tuning. Basé sur GWM-1 (General World Model), il supporte tout style visuel (photorealistic, animé, mascotte). Le transport est WebRTC natif. C'est la solution la plus accessible du marché pour prototyper rapidement un avatar conversationnel."
+                      : "Launched March 10, 2026, Runway Characters is a real-time API for creating a conversational avatar from a single image — no fine-tuning required. Powered by GWM-1 (General World Model), it supports any visual style (photorealistic, animated, mascot). Transport is native WebRTC. It is the most accessible solution on the market for rapidly prototyping a conversational avatar."
+                    }
+                  </p>
+
+                  {/* Technical specs */}
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Spécifications techniques" : "Technical specifications"}
+                  </h4>
+                  <div className="grid sm:grid-cols-3 gap-3 mb-5">
+                    {[
+                      {
+                        label: isFr ? "Transport" : "Transport",
+                        value: "WebRTC natif",
+                        detail: isFr ? "Sessions temps réel. Credentials one-time-consume. Lifecycle : NOT_READY → READY → RUNNING → COMPLETED." : "Real-time sessions. One-time-consume credentials. Lifecycle: NOT_READY → READY → RUNNING → COMPLETED.",
+                        color: "oklch(0.72 0.18 50)",
+                      },
+                      {
+                        label: isFr ? "Durée session" : "Session duration",
+                        value: isFr ? "5 min (dev) / 30 min (API)" : "5 min (dev) / 30 min (API)",
+                        detail: isFr ? "Limite stricte. Nécessite une nouvelle session après expiration. Problématique pour les expériences longues (Storygami)." : "Hard limit. Requires new session after expiration. Problematic for long experiences (Storygami).",
+                        color: "oklch(0.60 0.20 25)",
+                      },
+                      {
+                        label: isFr ? "Pricing" : "Pricing",
+                        value: "2 credits / 6s",
+                        detail: isFr ? "$0.01/crédit → ~$0.20/min. Plans : Free (125 cr.), Standard $15/mo (625 cr.), Pro $35/mo, Unlimited $95/mo. Coût élevé à l'échelle." : "$0.01/credit → ~$0.20/min. Plans: Free (125 cr.), Standard $15/mo (625 cr.), Pro $35/mo, Unlimited $95/mo. High cost at scale.",
+                        color: "oklch(0.72 0.18 200)",
+                      },
+                    ].map((item) => (
+                      <div key={item.label} className="border border-slate-200 rounded p-3">
+                        <div className="text-xs font-bold mb-1" style={{ color: item.color, fontFamily: "'Space Grotesk', sans-serif" }}>{item.label}</div>
+                        <div className="text-sm font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</div>
+                        <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Strengths & Weaknesses */}
+                  <div className="grid sm:grid-cols-2 gap-4 mb-5">
+                    <div className="border border-green-200 rounded p-4">
+                      <h4 className="text-xs font-bold text-green-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                        {isFr ? "Avantages" : "Strengths"}
+                      </h4>
+                      <ul className="space-y-1.5">
+                        {(isFr
+                          ? ["Image unique → avatar sans fine-tuning (n'importe quel style)", "WebRTC natif — latence <500ms", "Knowledge base configurable par avatar", "API simple et bien documentée (Node.js + Python)", "Voix presets expressives (Clara, Victoria, Vincent)", "Portail développeur avec preview et recordings"]
+                          : ["Single image → avatar, no fine-tuning (any visual style)", "Native WebRTC — <500ms latency", "Per-avatar configurable knowledge base", "Simple, well-documented API (Node.js + Python)", "Expressive voice presets (Clara, Victoria, Vincent)", "Developer portal with preview and session recordings"]
+                        ).map((s) => (
+                          <li key={s} className="flex gap-2 text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                            <span style={{ color: "oklch(0.65 0.18 145)" }}>✓</span> {s}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="border border-red-200 rounded p-4">
+                      <h4 className="text-xs font-bold text-red-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                        {isFr ? "Inconvénients" : "Weaknesses"}
+                      </h4>
+                      <ul className="space-y-1.5">
+                        {(isFr
+                          ? ["Session max 5–30 min — problématique pour Storygami", "Pas de mémoire persistante multi-sessions", "Pas de clonage vocal (voix presets uniquement)", "Pas de contrôle émotionnel avancé (vs Tavus Phoenix-4)", "~$0.20/min = coût élevé à l'échelle", "Pas de souveraineté (cloud Runway US)", "Pas d'orchestration narrative ni de playlist vidéo"]
+                          : ["Max 5–30 min session — problematic for Storygami", "No persistent multi-session memory", "No voice cloning (presets only)", "No advanced emotional control (vs Tavus Phoenix-4)", "~$0.20/min = high cost at scale", "No sovereignty (Runway US cloud)", "No narrative orchestration or video playlist"]
+                        ).map((w) => (
+                          <li key={w} className="flex gap-2 text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                            <span style={{ color: "oklch(0.60 0.20 25)" }}>✗</span> {w}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Relevance for DigiDouble */}
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Pertinence pour DigiDouble" : "Relevance for DigiDouble"}
+                  </h4>
+                  <div className="grid sm:grid-cols-2 gap-3 mb-4">
+                    {[
+                      {
+                        axis: isFr ? "Prototypage" : "Prototyping",
+                        title: isFr ? "Outil de référence pour tests rapides" : "Reference tool for rapid testing",
+                        desc: isFr
+                          ? "Runway Characters est idéal pour prototyper la mécanique conversationnelle de DigiDouble sans infrastructure GPU. Permet de valider les hypothèses H2 (mémoire) et H3 (comportement) avant d'investir en R&D."
+                          : "Runway Characters is ideal for prototyping DigiDouble's conversational mechanics without GPU infrastructure. Enables validating hypotheses H2 (memory) and H3 (behavior) before R&D investment.",
+                        color: "oklch(0.72 0.18 50)",
+                      },
+                      {
+                        axis: isFr ? "Axe 1" : "Axis 1",
+                        title: isFr ? "Benchmark latence WebRTC" : "WebRTC latency benchmark",
+                        desc: isFr
+                          ? "La latence <500ms de Runway Characters via WebRTC natif est un benchmark de référence pour l'Axe 1. DigiDouble doit atteindre des performances comparables avec une stack souveraine."
+                          : "Runway Characters' <500ms latency via native WebRTC is a reference benchmark for Axis 1. DigiDouble must achieve comparable performance with a sovereign stack.",
+                        color: "oklch(0.72 0.18 200)",
+                      },
+                      {
+                        axis: isFr ? "Différenciateur" : "Differentiator",
+                        title: isFr ? "Ce que Runway n'a pas" : "What Runway doesn't have",
+                        desc: isFr
+                          ? "Mémoire persistante, clonage vocal, souveraineté, orchestration narrative (Storygami), playlist vidéo dynamique, sessions longues. Ces 6 points sont les différenciateurs clés de DigiDouble vs Runway Characters."
+                          : "Persistent memory, voice cloning, sovereignty, narrative orchestration (Storygami), dynamic video playlist, long sessions. These 6 points are DigiDouble's key differentiators vs Runway Characters.",
+                        color: "oklch(0.60 0.20 25)",
+                      },
+                      {
+                        axis: isFr ? "Axe 3" : "Axis 3",
+                        title: isFr ? "Architecture API à étudier" : "API architecture worth studying",
+                        desc: isFr
+                          ? "Le modèle Avatar + Session + Knowledge Base de Runway est une architecture API propre à s'inspirer pour l'orchestrateur DigiDouble. La séparation Avatar (persistant) / Session (éphémère) est une bonne pratique."
+                          : "Runway's Avatar + Session + Knowledge Base model is a clean API architecture worth studying for DigiDouble's orchestrator. The Avatar (persistent) / Session (ephemeral) separation is a best practice.",
+                        color: "oklch(0.65 0.18 145)",
+                      },
+                    ].map((item) => (
+                      <div key={item.title} className="border border-slate-200 rounded p-3 flex gap-3">
+                        <div className="shrink-0">
+                          <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: item.color + "22", color: item.color }}>{item.axis}</span>
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</div>
+                          <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="callout-info">
+                    <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                      {isFr
+                        ? <><strong>Conclusion :</strong> Runway Characters est la solution la plus accessible pour prototyper rapidement un avatar conversationnel en mars 2026. Son modèle WebRTC natif et son API simple en font un excellent outil de validation. Cependant, ses limitations (session 5–30 min, pas de mémoire, pas de souveraineté, $0.20/min) confirment la nécessité d'une stack souveraine comme DigiDouble pour les usages professionnels à l'échelle.</>
+                        : <><strong>Conclusion:</strong> Runway Characters is the most accessible solution for rapidly prototyping a conversational avatar in March 2026. Its native WebRTC model and simple API make it an excellent validation tool. However, its limitations (5–30 min session, no memory, no sovereignty, $0.20/min) confirm the need for a sovereign stack like DigiDouble for professional use at scale.</>
                       }
                     </p>
                   </div>
