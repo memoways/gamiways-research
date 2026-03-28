@@ -62,7 +62,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Censure arbitraire", "Coût élevé à l'échelle", "Pas de mémoire conversationnelle", "Dépendance US"]
         : ["Arbitrary censorship", "High cost at scale", "No conversational memory", "US dependency"],
-      score: { quality: 9, latency: 7, cost: 3, sovereignty: 1 },
+      score: { quality: 9, latency: 7, cost: 3, sovereignty: 1, customisation: 7, pricing: 3 },
     },
     {
       name: "Synthesia",
@@ -84,7 +84,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Pas de temps réel", "Pas de conversation", "Censure", "Pas de personnalisation profonde"]
         : ["No real-time", "No conversation", "Censorship", "No deep personalization"],
-      score: { quality: 8, latency: 1, cost: 5, sovereignty: 1 },
+      score: { quality: 8, latency: 1, cost: 5, sovereignty: 1, customisation: 4, pricing: 5 },
     },
     {
       name: isFr ? "D-ID V4 (Visual Agents)" : "D-ID V4 (Visual Agents)",
@@ -106,7 +106,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Pas de SDK haut niveau", "Coût élevé ($0.35/min)", "Pas de mémoire persistante", "Pas de souveraineté totale"]
         : ["No high-level SDK", "High cost ($0.35/min)", "No persistent memory", "No full sovereignty"],
-      score: { quality: 7, latency: 6, cost: 4, sovereignty: 3 },
+      score: { quality: 7, latency: 6, cost: 4, sovereignty: 3, customisation: 6, pricing: 4 },
     },
     {
       name: isFr ? "BeyondPresence (Genesis 2 — bientôt)" : "BeyondPresence (Genesis 2 — coming)",
@@ -128,7 +128,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Coût élevé Agent API", "Pas de mémoire persistante", "Pas de souveraineté", "Genesis 2 pas encore dispo"]
         : ["High Agent API cost", "No persistent memory", "No sovereignty", "Genesis 2 not yet available"],
-      score: { quality: 9, latency: 8, cost: 3, sovereignty: 2 },
+      score: { quality: 9, latency: 8, cost: 3, sovereignty: 2, customisation: 5, pricing: 3 },
     },
     {
       name: "NVIDIA ACE",
@@ -150,7 +150,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Lock-in NVIDIA", "Coût infrastructure", "Pas souverain", "Complexité déploiement"]
         : ["NVIDIA lock-in", "Infrastructure cost", "Not sovereign", "Deployment complexity"],
-      score: { quality: 9, latency: 10, cost: 2, sovereignty: 3 },
+      score: { quality: 9, latency: 10, cost: 2, sovereignty: 3, customisation: 8, pricing: 2 },
     },
     {
       name: "Character.ai / TalkingMachines",
@@ -171,7 +171,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Censure très forte", "Pas de contrôle créateur", "Pas d'usage professionnel"]
         : ["Very strong censorship", "No creator control", "No professional use"],
-      score: { quality: 7, latency: 6, cost: 7, sovereignty: 1 },
+      score: { quality: 7, latency: 6, cost: 7, sovereignty: 1, customisation: 2, pricing: 7 },
     },
     {
       name: "Runway Characters",
@@ -193,7 +193,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Session max 5–30 min", "Pas de mémoire persistante", "Pas de clonage vocal", "Pas de souveraineté", "$0.20/min = coût élevé à l'échelle", "Pas d'orchestration narrative"]
         : ["Max 5–30 min session", "No persistent memory", "No voice cloning", "No sovereignty", "$0.20/min = high cost at scale", "No narrative orchestration"],
-      score: { quality: 8, latency: 9, cost: 4, sovereignty: 2 },
+      score: { quality: 8, latency: 9, cost: 4, sovereignty: 2, customisation: 6, pricing: 4 },
     },
     {
       name: "Simli (Trinity-1)",
@@ -215,7 +215,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Bitrate bas", "Pas de mémoire persistante", "Pas de souveraineté", "Visage uniquement"]
         : ["Low bitrate", "No persistent memory", "No sovereignty", "Face only"],
-      score: { quality: 6, latency: 9, cost: 9, sovereignty: 2 },
+      score: { quality: 6, latency: 9, cost: 9, sovereignty: 2, customisation: 7, pricing: 9 },
     },
     {
       name: "Anam",
@@ -237,7 +237,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Connexion instable faible bande passante", "Pas de mémoire persistante", "Pas de souveraineté", "Coût moyen-élevé"]
         : ["Unstable connection on low bandwidth", "No persistent memory", "No sovereignty", "Medium-high cost"],
-      score: { quality: 8, latency: 7, cost: 4, sovereignty: 2 },
+      score: { quality: 8, latency: 7, cost: 4, sovereignty: 2, customisation: 6, pricing: 5 },
     },
     {
       name: "bitHuman",
@@ -259,7 +259,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Qualité acceptable (pas excellente)", "Modèle Expressive cloud uniquement", "Latence moyenne"]
         : ["Acceptable quality (not excellent)", "Expressive model cloud-only", "Average latency"],
-      score: { quality: 5, latency: 6, cost: 8, sovereignty: 6 },
+      score: { quality: 5, latency: 6, cost: 8, sovereignty: 6, customisation: 5, pricing: 8 },
     },
     {
       name: "Tavus Phoenix-4",
@@ -281,7 +281,7 @@ export default function StateOfArt() {
       weaknesses: isFr
         ? ["Pas de mémoire persistante", "Pas de souveraineté", "Pas d'orchestration narrative", "Dépendance cloud Tavus"]
         : ["No persistent memory", "No sovereignty", "No narrative orchestration", "Tavus cloud dependency"],
-      score: { quality: 10, latency: 10, cost: 3, sovereignty: 1 },
+      score: { quality: 10, latency: 10, cost: 3, sovereignty: 1, customisation: 7, pricing: 3 },
     },
   ];
 
@@ -1048,6 +1048,18 @@ export default function StateOfArt() {
                             <span>{isFr ? "Coût/accessibilité" : "Cost/accessibility"}</span><span>{p.score.cost}/10</span>
                           </div>
                           <ScoreBar value={p.score.cost} color="oklch(0.75 0.16 75)" />
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                            <span>{isFr ? "Customisation" : "Customisation"}</span><span>{(p.score as any).customisation ?? "—"}/10</span>
+                          </div>
+                          <ScoreBar value={(p.score as any).customisation ?? 0} color="oklch(0.60 0.18 280)" />
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                            <span>{isFr ? "Pricing (accessibilité)" : "Pricing (accessibility)"}</span><span>{(p.score as any).pricing ?? "—"}/10</span>
+                          </div>
+                          <ScoreBar value={(p.score as any).pricing ?? 0} color="oklch(0.55 0.18 145)" />
                         </div>
                         <div>
                           <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
