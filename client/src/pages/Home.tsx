@@ -13,6 +13,7 @@ import ResearchAxesDiagram from "@/components/diagrams/ResearchAxesDiagram";
 import TechStackDiagram from "@/components/diagrams/TechStackDiagram";
 import WhatWeHaveDiagram from "@/components/diagrams/WhatWeHaveDiagram";
 import DiagramModal from "@/components/DiagramModal";
+import GapDiagram from "@/components/diagrams/GapDiagram";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 
@@ -227,28 +228,33 @@ export default function Home() {
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? <>
-                    Voir l'analyse comparative complète avec schéma radar et matrice dans la{" "}
-                    <InternalLink to="/project">page Projet</InternalLink>{" "}
-                    et{" "}
-                    <InternalLink to="/state-of-art">État de l'Art</InternalLink>.
+                ? <>3 des 5 critères nécessitent une R&D fondamentale (marqués <span className="font-mono text-xs px-1 rounded text-white" style={{ background: "oklch(0.55 0.18 25)" }}>R&D</span>). Aucune plateforme commerciale, open-source ou prototype académique ne les combine tous.
                   </>
-                : <>
-                    See the full comparative analysis with radar chart and matrix in the{" "}
-                    <InternalLink to="/project">Project</InternalLink>{" "}
-                    and{" "}
-                    <InternalLink to="/state-of-art">State of the Art</InternalLink>{" "}
-                    pages.
+                : <>3 of the 5 criteria require fundamental R&D (marked <span className="font-mono text-xs px-1 rounded text-white" style={{ background: "oklch(0.55 0.18 25)" }}>R&D</span>). No commercial, open-source, or academic prototype combines all of them.
                   </>}
             </p>
           </div>
 
+          {/* Gap Criteria Diagram */}
+          <div className="rounded-lg border border-slate-200 bg-white p-5 mb-4">
+            <GapDiagram />
+          </div>
+
           <ToggleBlock label="Why this gap justifies fundamental research" labelFr="Pourquoi ce gap justifie la recherche fondamentale" isFr={isFr}>
             <div className="pt-3">
-              <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              <p className="text-xs text-slate-600 leading-relaxed mb-2" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
                   ? "La combinaison unique que vise DigiDouble — temps réel + fidélité comportementale + souveraineté + mémoire conversationnelle + contrôle narratif — n'existe dans aucune solution commerciale ou open-source actuelle. Les trois critères marqués R&D correspondent précisément aux frontières de la recherche académique actuelle (NeurIPS 2024, arXiv 2025–2026), ce qui justifie pleinement un programme de recherche fondamentale."
                   : "The unique combination DigiDouble targets — real-time + behavioral fidelity + sovereignty + conversational memory + narrative control — does not exist in any current commercial or open-source solution. The three R&D criteria correspond precisely to the frontiers of current academic research (NeurIPS 2024, arXiv 2025–2026), fully justifying a fundamental research program."}
+              </p>
+              <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? <>
+                      Analyse complète dans la <InternalLink to="/project">page Projet</InternalLink> et l'<InternalLink to="/state-of-art">État de l'Art</InternalLink>.
+                    </>
+                  : <>
+                      Full analysis in the <InternalLink to="/project">Project</InternalLink> and <InternalLink to="/state-of-art">State of the Art</InternalLink> pages.
+                    </>}
               </p>
             </div>
           </ToggleBlock>
