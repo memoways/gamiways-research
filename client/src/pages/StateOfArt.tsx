@@ -975,72 +975,105 @@ export default function StateOfArt() {
                 </table>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {commercialPlatforms.map((p) => (
-                  <div key={p.name} className="border border-slate-200 rounded p-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <div className="font-semibold text-slate-900 text-sm flex items-center gap-1.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                          {(p as any).linkKey ? (
-                            <a href={(SOLUTION_LINKS as any)[(p as any).linkKey]?.homepage} target="_blank" rel="noopener noreferrer" className="hover:text-[#0891b2] transition-colors">{p.name}</a>
-                          ) : p.name}
-                          <SolutionTableCell solutionKey={(p as any).linkKey || ""} />
-                        </div>
-                        <div className="text-xs text-slate-400 font-mono">{p.pricing}</div>
-                      </div>
-                    </div>
-                    <div className="space-y-2 mb-3">
-                      <div>
-                        <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                          <span>{isFr ? "Qualité" : "Quality"}</span><span>{p.score.quality}/10</span>
-                        </div>
-                        <ScoreBar value={p.score.quality} color="oklch(0.72 0.18 200)" />
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                          <span>{isFr ? "Latence" : "Latency"}</span><span>{p.score.latency}/10</span>
-                        </div>
-                        <ScoreBar value={p.score.latency} color="oklch(0.65 0.18 145)" />
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                          <span>{isFr ? "Coût/accessibilité" : "Cost/accessibility"}</span><span>{p.score.cost}/10</span>
-                        </div>
-                        <ScoreBar value={p.score.cost} color="oklch(0.75 0.16 75)" />
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                          <span>{isFr ? "Souveraineté" : "Sovereignty"}</span><span>{p.score.sovereignty}/10</span>
-                        </div>
-                        <ScoreBar value={p.score.sovereignty} color="oklch(0.72 0.18 50)" />
-                      </div>
-                    </div>
-                      <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{p.notes}</p>
-                    {(p as any).linkKey && ["heygen","tavus","synthesia","simli","anam","did","runway","beyond_presence","bithuman","hedra"].includes((p as any).linkKey) && (
-                      <div className="mt-3 pt-3 border-t border-slate-100">
-                        <a
-                          href={`/platform/${(p as any).linkKey}`}
-                          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'instant' }); window.location.href = `/platform/${(p as any).linkKey}`; }}
-                          className="text-xs font-medium hover:underline transition-colors"
-                          style={{ color: 'oklch(0.55 0.20 200)' }}
-                        >
-                          {isFr ? '→ Fiche détaillée (customisation, API, pricing)' : '→ Full details (customisation, API, pricing)'}
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 flex justify-end">
+              {/* CTA Pricing — bien visible au-dessus des cartes */}
+              <div className="mb-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl border" style={{ background: 'oklch(0.97 0.01 240)', borderColor: 'oklch(0.88 0.04 240)' }}>
+                <div>
+                  <p className="text-sm font-semibold text-slate-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? 'Comparer les coûts réels $/minute' : 'Compare real costs $/minute'}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {isFr ? 'Graphique interactif + tableau trié pour toutes les plateformes' : 'Interactive chart + sortable table for all platforms'}
+                  </p>
+                </div>
                 <a
                   href="/pricing"
                   onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'instant' }); window.location.href = '/pricing'; }}
-                  className="inline-flex items-center gap-2 text-sm font-medium border rounded px-4 py-2 transition-colors hover:bg-slate-50"
-                  style={{ color: 'oklch(0.45 0.05 240)', borderColor: 'oklch(0.80 0.03 240)' }}
+                  className="flex-shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-5 py-2.5 transition-all hover:opacity-90 active:scale-95"
+                  style={{ background: 'oklch(0.55 0.20 200)', fontFamily: "'Space Grotesk', sans-serif" }}
                 >
-                  {isFr ? 'Comparer les tarifs $/minute →' : 'Compare pricing $/minute →'}
+                  {isFr ? 'Voir la comparaison tarifaire →' : 'View pricing comparison →'}
                 </a>
               </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {commercialPlatforms.map((p) => {
+                  const allText = [...((p as any).strengths || []), p.notes].join(' ').toLowerCase();
+                  const customTags: string[] = [];
+                  if (allText.includes('knowledge base') || allText.includes('rag')) customTags.push('RAG');
+                  if (allText.includes('custom llm') || allText.includes('llm custom') || allText.includes('llm-connected') || allText.includes('lm-connected')) customTags.push('Custom LLM');
+                  if (allText.includes('emotion') || allText.includes('émot')) customTags.push(isFr ? 'Émotions' : 'Emotions');
+                  if (allText.includes('voice') || allText.includes('vocal') || allText.includes('voix')) customTags.push(isFr ? 'Voix' : 'Voice');
+                  if (allText.includes('on-prem') || allText.includes('self-host') || allText.includes('souverain')) customTags.push('On-premise');
+                  if (allText.includes('single image') || allText.includes('image unique')) customTags.push(isFr ? 'Avatar perso.' : 'Custom avatar');
+                  if (allText.includes('behavior') || allText.includes('comportement') || allText.includes('listening')) customTags.push(isFr ? 'Comportement' : 'Behavior');
+                  const hasDetailPage = (p as any).linkKey && ["heygen","tavus","synthesia","simli","anam","did","runway","beyond_presence","bithuman","hedra"].includes((p as any).linkKey);
+                  return (
+                    <div key={p.name} className="border border-slate-200 rounded-xl p-4 flex flex-col">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="font-semibold text-slate-900 text-sm flex items-center gap-1.5 flex-wrap" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                            {(p as any).linkKey ? (
+                              <a href={(SOLUTION_LINKS as any)[(p as any).linkKey]?.homepage} target="_blank" rel="noopener noreferrer" className="hover:text-[#0891b2] transition-colors">{p.name}</a>
+                            ) : p.name}
+                            <SolutionTableCell solutionKey={(p as any).linkKey || ""} />
+                          </div>
+                          <div className="mt-1 inline-flex items-center gap-1 text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: 'oklch(0.95 0.04 145)', color: 'oklch(0.35 0.14 145)' }}>
+                            {p.pricing}
+                          </div>
+                        </div>
+                      </div>
+                      {customTags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mb-3">
+                          {customTags.map((tag) => (
+                            <span key={tag} className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: 'oklch(0.93 0.05 260)', color: 'oklch(0.35 0.15 260)', fontFamily: "'Space Grotesk', sans-serif" }}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <div className="space-y-2 mb-3">
+                        <div>
+                          <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                            <span>{isFr ? "Qualité" : "Quality"}</span><span>{p.score.quality}/10</span>
+                          </div>
+                          <ScoreBar value={p.score.quality} color="oklch(0.72 0.18 200)" />
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                            <span>{isFr ? "Latence" : "Latency"}</span><span>{p.score.latency}/10</span>
+                          </div>
+                          <ScoreBar value={p.score.latency} color="oklch(0.65 0.18 145)" />
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                            <span>{isFr ? "Coût/accessibilité" : "Cost/accessibility"}</span><span>{p.score.cost}/10</span>
+                          </div>
+                          <ScoreBar value={p.score.cost} color="oklch(0.75 0.16 75)" />
+                        </div>
+                        <div>
+                          <div className="flex justify-between text-xs text-slate-500 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                            <span>{isFr ? "Souveraineté" : "Sovereignty"}</span><span>{p.score.sovereignty}/10</span>
+                          </div>
+                          <ScoreBar value={p.score.sovereignty} color="oklch(0.72 0.18 50)" />
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-500 leading-relaxed flex-1" style={{ fontFamily: "'Source Serif 4', serif" }}>{p.notes}</p>
+                      {hasDetailPage && (
+                        <div className="mt-4">
+                          <a
+                            href={`/platform/${(p as any).linkKey}`}
+                            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'instant' }); window.location.href = `/platform/${(p as any).linkKey}`; }}
+                            className="w-full flex items-center justify-center gap-2 text-sm font-semibold rounded-lg px-4 py-2.5 transition-all hover:opacity-90 active:scale-95"
+                            style={{ background: 'oklch(0.20 0.04 240)', color: 'white', fontFamily: "'Space Grotesk', sans-serif" }}
+                          >
+                            {isFr ? 'Fiche complète : customisation, API, pricing →' : 'Full details: customisation, API, pricing →'}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
             </div>
           )}
           {/* Open source */}
