@@ -14,6 +14,8 @@ import DiagramModal from "@/components/DiagramModal";
 import PositioningDiagram from "@/components/diagrams/PositioningDiagram";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
+import { SolutionTableCell } from "@/components/SolutionBadge";
+import { SOLUTION_LINKS } from "@/lib/solutionLinks";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -42,6 +44,7 @@ export default function StateOfArt() {
   const commercialPlatforms = [
     {
       name: "HeyGen",
+      linkKey: "heygen",
       category: isFr ? "Avatar commercial" : "Commercial avatar",
       realtime: true,
       bodyLanguage: isFr ? "Partiel" : "Partial",
@@ -63,6 +66,7 @@ export default function StateOfArt() {
     },
     {
       name: "Synthesia",
+      linkKey: "synthesia",
       category: isFr ? "Avatar corporate" : "Corporate avatar",
       realtime: false,
       bodyLanguage: isFr ? "Non" : "No",
@@ -84,6 +88,7 @@ export default function StateOfArt() {
     },
     {
       name: isFr ? "D-ID V4 (Visual Agents)" : "D-ID V4 (Visual Agents)",
+      linkKey: "did",
       category: isFr ? "Animation faciale enterprise" : "Enterprise facial animation",
       realtime: true,
       bodyLanguage: isFr ? "Non" : "No",
@@ -105,6 +110,7 @@ export default function StateOfArt() {
     },
     {
       name: isFr ? "BeyondPresence (Genesis 2 — bientôt)" : "BeyondPresence (Genesis 2 — coming)",
+      linkKey: "beyond_presence",
       category: isFr ? "Avatar hyper-réaliste" : "Hyper-realistic avatar",
       realtime: true,
       bodyLanguage: isFr ? "Oui (tête)" : "Yes (head)",
@@ -126,6 +132,7 @@ export default function StateOfArt() {
     },
     {
       name: "NVIDIA ACE",
+      linkKey: "nvidia_ace",
       category: isFr ? "Suite gaming" : "Gaming suite",
       realtime: true,
       bodyLanguage: isFr ? "Oui" : "Yes",
@@ -168,6 +175,7 @@ export default function StateOfArt() {
     },
     {
       name: "Runway Characters",
+      linkKey: "runway",
       category: isFr ? "Avatar API temps réel" : "Real-time avatar API",
       realtime: true,
       bodyLanguage: isFr ? "Partiel (tête)" : "Partial (head)",
@@ -189,6 +197,7 @@ export default function StateOfArt() {
     },
     {
       name: "Simli (Trinity-1)",
+      linkKey: "simli",
       category: isFr ? "Infrastructure avatar" : "Avatar infrastructure",
       realtime: true,
       bodyLanguage: isFr ? "Non" : "No",
@@ -210,6 +219,7 @@ export default function StateOfArt() {
     },
     {
       name: "Anam",
+      linkKey: "anam",
       category: isFr ? "Avatar émotionnel" : "Emotional avatar",
       realtime: true,
       bodyLanguage: isFr ? "Non" : "No",
@@ -231,6 +241,7 @@ export default function StateOfArt() {
     },
     {
       name: "bitHuman",
+      linkKey: "bithuman",
       category: isFr ? "Avatar edge/CPU" : "Edge/CPU avatar",
       realtime: true,
       bodyLanguage: isFr ? "Non" : "No",
@@ -252,6 +263,7 @@ export default function StateOfArt() {
     },
     {
       name: "Tavus Phoenix-4",
+      linkKey: "tavus",
       category: isFr ? "Avatar comportemental" : "Behavioral avatar",
       realtime: true,
       bodyLanguage: isFr ? "Oui (tête complète)" : "Yes (full head)",
@@ -276,6 +288,7 @@ export default function StateOfArt() {
   const openSourceSolutions = [
     {
       name: "HeyGem OS",
+      linkKey: "heygem",
       type: "Avatar",
       latency: "5–15s",
       quality: isFr ? "Bonne" : "Good",
@@ -288,6 +301,7 @@ export default function StateOfArt() {
     },
     {
       name: "SadTalker",
+      linkKey: "sadtalker",
       type: "Talking Head",
       latency: "2–10s",
       quality: isFr ? "Bonne" : "Good",
@@ -312,6 +326,7 @@ export default function StateOfArt() {
     },
     {
       name: "Wav2Lip",
+      linkKey: "wav2lip",
       type: "Lip-sync",
       latency: "500ms–2s",
       quality: isFr ? "Moyenne" : "Average",
@@ -891,6 +906,7 @@ export default function StateOfArt() {
                       <th>{isFr ? "Latence" : "Latency"}</th>
                       <th>{isFr ? "Souveraineté" : "Sovereignty"}</th>
                       <th>{isFr ? "Censure" : "Censorship"}</th>
+                      <th>{isFr ? "Liens" : "Links"}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -915,6 +931,7 @@ export default function StateOfArt() {
                             {p.censorship}
                           </span>
                         </td>
+                        <td><SolutionTableCell solutionKey={(p as any).linkKey || ""} /></td>
                       </tr>
                     ))}
                   </tbody>
@@ -926,7 +943,12 @@ export default function StateOfArt() {
                   <div key={p.name} className="border border-slate-200 rounded p-4">
                     <div className="flex items-start justify-between mb-3">
                       <div>
-                        <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{p.name}</div>
+                        <div className="font-semibold text-slate-900 text-sm flex items-center gap-1.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {(p as any).linkKey ? (
+                            <a href={(SOLUTION_LINKS as any)[(p as any).linkKey]?.homepage} target="_blank" rel="noopener noreferrer" className="hover:text-[#0891b2] transition-colors">{p.name}</a>
+                          ) : p.name}
+                          <SolutionTableCell solutionKey={(p as any).linkKey || ""} />
+                        </div>
                         <div className="text-xs text-slate-400 font-mono">{p.pricing}</div>
                       </div>
                     </div>
@@ -979,12 +1001,19 @@ export default function StateOfArt() {
                       <th>{isFr ? "Déploiement" : "Deployment"}</th>
                       <th>{isFr ? "Licence" : "License"}</th>
                       <th>{isFr ? "Utilisé par DD" : "Used by DD"}</th>
+                      <th>{isFr ? "Liens" : "Links"}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {openSourceSolutions.map((s) => (
                       <tr key={s.name}>
-                        <td><div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{s.name}</div></td>
+                        <td>
+                          <div className="font-semibold text-slate-900 text-sm flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                            {(s as any).linkKey && SOLUTION_LINKS[(s as any).linkKey]?.homepage ? (
+                              <a href={SOLUTION_LINKS[(s as any).linkKey]!.homepage} target="_blank" rel="noopener noreferrer" className="hover:text-[#0891b2] transition-colors">{s.name}</a>
+                            ) : s.name}
+                          </div>
+                        </td>
                         <td><span className="text-xs text-slate-600 font-mono">{s.type}</span></td>
                         <td>
                           <span className="text-xs font-mono" style={{
@@ -1002,6 +1031,7 @@ export default function StateOfArt() {
                             : <span className="text-xs text-slate-300 font-mono">—</span>
                           }
                         </td>
+                        <td><SolutionTableCell solutionKey={(s as any).linkKey || ""} /></td>
                       </tr>
                     ))}
                   </tbody>

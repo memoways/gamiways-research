@@ -13,6 +13,8 @@ import DiagramModal from "@/components/DiagramModal";
 import StatusBadge from "@/components/StatusBadge";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
+import { SolutionBadge } from "@/components/SolutionBadge";
+import { SOLUTION_LINKS } from "@/lib/solutionLinks";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
   return (
@@ -157,9 +159,23 @@ export default function Project() {
             {isFr ? "Projet DigiDouble" : "DigiDouble Project"}
           </h1>
           <p className="text-base text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
-            {isFr
-              ? "Collaboration entre Memoways (Genève, 14 ans d'expertise vidéo interactive) et Gamilab (startup voice-first AI, SDK Audiogami)."
-              : "Collaboration between Memoways (Geneva, 14 years of interactive video expertise) and Gamilab (voice-first AI startup, Audiogami SDK)."}
+            {isFr ? (
+              <>
+                Collaboration entre{" "}
+                <a href="https://memoways.com" target="_blank" rel="noopener noreferrer" className="text-[#0891b2] hover:underline">Memoways</a>
+                {" "}(Genève, 14 ans d’expertise vidéo interactive) et{" "}
+                <a href="https://gamilab.ch" target="_blank" rel="noopener noreferrer" className="text-[#0891b2] hover:underline">Gamilab</a>
+                {" "}(startup voice-first AI, SDK Audiogami).
+              </>
+            ) : (
+              <>
+                Collaboration between{" "}
+                <a href="https://memoways.com" target="_blank" rel="noopener noreferrer" className="text-[#0891b2] hover:underline">Memoways</a>
+                {" "}(Geneva, 14 years of interactive video expertise) and{" "}
+                <a href="https://gamilab.ch" target="_blank" rel="noopener noreferrer" className="text-[#0891b2] hover:underline">Gamilab</a>
+                {" "}(voice-first AI startup, Audiogami SDK).
+              </>
+            )}
           </p>
           {/* Innosuisse badge — mention 1/3 */}
           <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded border text-xs font-mono" style={{ borderColor: "oklch(0.72 0.18 200)40", background: "oklch(0.97 0.02 200)", color: "oklch(0.45 0.18 200)" }}>
@@ -247,8 +263,12 @@ export default function Project() {
                 <thead>
                   <tr>
                     <th className="text-left py-2 pr-4 text-xs font-mono text-slate-400 font-normal">{isFr ? "Critère" : "Criterion"}</th>
-                    <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">HeyGen</th>
-                    <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">Synthesia</th>
+                    <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">
+                      <a href={SOLUTION_LINKS.heygen.homepage} target="_blank" rel="noopener noreferrer" className="hover:text-[#0891b2] transition-colors">HeyGen</a>
+                    </th>
+                    <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">
+                      <a href={SOLUTION_LINKS.synthesia.homepage} target="_blank" rel="noopener noreferrer" className="hover:text-[#0891b2] transition-colors">Synthesia</a>
+                    </th>
                     <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">Flowise</th>
                     <th className="text-center py-2 px-2 text-xs font-mono font-bold" style={{ color: "oklch(0.45 0.18 200)" }}>DigiDouble</th>
                   </tr>

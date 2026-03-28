@@ -24,6 +24,8 @@ import OrchestrationDiagram from "@/components/diagrams/OrchestrationDiagram";
 import DiagramModal from "@/components/DiagramModal";
 import PositioningDiagram from "@/components/diagrams/PositioningDiagram";
 import { useLang } from "@/contexts/LangContext";
+import { SolutionTableCell } from "@/components/SolutionBadge";
+import { SOLUTION_LINKS } from "@/lib/solutionLinks";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
   return (
@@ -523,20 +525,43 @@ export default function Research() {
                   <th>{isFr ? "Souverain" : "Sovereign"}</th>
                   <th>{isFr ? "Coût" : "Cost"}</th>
                   <th>{isFr ? "Note" : "Note"}</th>
+                  <th>{isFr ? "Liens" : "Links"}</th>
                 </tr>
               </thead>
               <tbody>
-                {competitorLatencyBenchmark.map((c) => (
+                {competitorLatencyBenchmark.map((c) => {
+                  // Map solution name to link key
+                  const linkKeyMap: Record<string, string> = {
+                    "Beyond Presence": "beyond_presence",
+                    "NVIDIA ACE": "nvidia_ace",
+                    "Simli Trinity-1": "simli",
+                    "Anam": "anam",
+                    "Runway Characters": "runway",
+                    "D-ID V4": "did",
+                    "HeyGen": "heygen",
+                    "SoulX-FlashTalk": "soulx",
+                    "AvatarForcing": "avatarforcing",
+                  };
+                  const lk = Object.entries(linkKeyMap).find(([k]) => c.name.includes(k))?.[1] || "";
+                  return (
                   <tr key={c.name} style={{
                     background: c.name.includes("DigiDouble") && c.name.includes(isFr ? "cible" : "target")
                       ? "oklch(0.97 0.03 145)"
                       : c.name.includes("DigiDouble") ? "oklch(0.97 0.03 25)" : undefined,
                   }}>
                     <td>
-                      <span className="text-sm font-semibold" style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
-                        color: c.name.includes("DigiDouble") ? "oklch(0.45 0.18 200)" : undefined,
-                      }}>{c.name}</span>
+                      {lk && SOLUTION_LINKS[lk]?.homepage ? (
+                        <a href={SOLUTION_LINKS[lk]!.homepage} target="_blank" rel="noopener noreferrer"
+                          className="text-sm font-semibold hover:text-[#0891b2] transition-colors"
+                          style={{ fontFamily: "'Space Grotesk', sans-serif", color: c.name.includes("DigiDouble") ? "oklch(0.45 0.18 200)" : undefined }}>
+                          {c.name}
+                        </a>
+                      ) : (
+                        <span className="text-sm font-semibold" style={{
+                          fontFamily: "'Space Grotesk', sans-serif",
+                          color: c.name.includes("DigiDouble") ? "oklch(0.45 0.18 200)" : undefined,
+                        }}>{c.name}</span>
+                      )}
                     </td>
                     <td>
                       <span className="text-xs font-bold font-mono" style={{
@@ -551,8 +576,10 @@ export default function Research() {
                     <td><span style={{ color: c.sovereign ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{c.sovereign ? "✓" : "✗"}</span></td>
                     <td><span className="text-xs font-mono text-slate-600">{c.cost}</span></td>
                     <td><span className="text-xs text-slate-400 font-mono">{c.note}</span></td>
+                    <td><SolutionTableCell solutionKey={lk} /></td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
