@@ -1577,24 +1577,21 @@ export default function StateOfArt() {
             </div>
           </div>
 
-          {/* Diagrams grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            <div>
-              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "Matrice Urgence × Difficulté" : "Urgency × Difficulty Matrix"}
-              </h3>
-              <DiagramModal title="Research Gap Matrix — Urgency × Difficulty">
-                <ResearchGapDiagram />
-              </DiagramModal>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "3 Axes de Recherche" : "3 Research Axes"}
-              </h3>
-              <DiagramModal title="3 Research Axes — Latency, Memory, Avatar">
-                <ResearchAxesDiagram />
-              </DiagramModal>
-            </div>
+          {/* Urgency × Difficulty Matrix — full width, above research axes */}
+          <div className="mb-8">
+            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Matrice Urgence × Difficulté" : "Urgency × Difficulty Matrix"}
+            </h3>
+            <ResearchGapDiagram />
+          </div>
+          {/* 3 Research Axes — full width below */}
+          <div className="mb-6">
+            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "3 Axes de Recherche" : "3 Research Axes"}
+            </h3>
+            <DiagramModal title="3 Research Axes — Latency, Memory, Avatar">
+              <ResearchAxesDiagram />
+            </DiagramModal>
           </div>
 
           <div className="overflow-x-auto">
