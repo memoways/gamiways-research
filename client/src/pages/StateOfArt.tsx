@@ -35,6 +35,8 @@ export default function StateOfArt() {
 
   // ─── Data (translated) ──────────────────────────────────────────────────────
 
+  // ─── Updated March 2026: added Simli Trinity-1, BeyondPresence Genesis 2, bitHuman, Lemon Slice, Hedra, Anam, Soul Machines, UneeQ
+  // ─── D-ID updated to V4 (launched March 16, 2026)
   const commercialPlatforms = [
     {
       name: "HeyGen",
@@ -79,46 +81,46 @@ export default function StateOfArt() {
       score: { quality: 8, latency: 1, cost: 5, sovereignty: 1 },
     },
     {
-      name: "D-ID",
-      category: isFr ? "Animation faciale" : "Facial animation",
+      name: isFr ? "D-ID V4 (Visual Agents)" : "D-ID V4 (Visual Agents)",
+      category: isFr ? "Animation faciale enterprise" : "Enterprise facial animation",
       realtime: true,
       bodyLanguage: isFr ? "Non" : "No",
-      conversation: false,
+      conversation: true,
       sovereignty: false,
-      latency: "500ms–2s",
-      pricing: isFr ? "Moyen" : "Medium",
+      latency: isFr ? "Améliorée V4 (mars 2026)" : "Improved V4 (March 2026)",
+      pricing: isFr ? "~$0.35/min" : "~$0.35/min",
       censorship: isFr ? "Risque moyen" : "Medium risk",
       notes: isFr
-        ? "Animation faciale depuis image statique. Lip-sync temps réel capable. Qualité inférieure à HeyGen."
-        : "Facial animation from static image. Real-time lip-sync capable. Lower quality than HeyGen.",
+        ? "V4 lancé 16 mars 2026. Diffusion-powered expressive delivery, consistent identity. Agents LLM connectés. Transport WebRTC (Janus). Option VPC/on-prem disponible. Pas de SDK haut niveau."
+        : "V4 launched March 16, 2026. Diffusion-powered expressive delivery, consistent identity. LLM-connected agents. WebRTC transport (Janus). VPC/on-prem option available. No high-level SDK.",
       strengths: isFr
-        ? ["API accessible", "Lip-sync temps réel", "Depuis image statique"]
-        : ["Accessible API", "Real-time lip-sync", "From static image"],
+        ? ["Agents LLM connectés", "Option VPC/on-prem", "Consistent identity V4", "Enterprise scale"]
+        : ["LLM-connected agents", "VPC/on-prem option", "Consistent identity V4", "Enterprise scale"],
       weaknesses: isFr
-        ? ["Qualité inférieure", "Visage uniquement", "Pas de mémoire"]
-        : ["Lower quality", "Face only", "No memory"],
-      score: { quality: 6, latency: 7, cost: 6, sovereignty: 2 },
+        ? ["Pas de SDK haut niveau", "Coût élevé ($0.35/min)", "Pas de mémoire persistante", "Pas de souveraineté totale"]
+        : ["No high-level SDK", "High cost ($0.35/min)", "No persistent memory", "No full sovereignty"],
+      score: { quality: 7, latency: 6, cost: 4, sovereignty: 3 },
     },
     {
-      name: "Beyond Presence (Genesis 2.0)",
-      category: isFr ? "Avatar enterprise" : "Enterprise avatar",
+      name: isFr ? "BeyondPresence (Genesis 2 — bientôt)" : "BeyondPresence (Genesis 2 — coming)",
+      category: isFr ? "Avatar hyper-réaliste" : "Hyper-realistic avatar",
       realtime: true,
-      bodyLanguage: isFr ? "Partiel" : "Partial",
-      conversation: false,
+      bodyLanguage: isFr ? "Oui (tête)" : "Yes (head)",
+      conversation: true,
       sovereignty: false,
-      latency: "<100ms",
-      pricing: "Enterprise",
+      latency: isFr ? "Bonne (WebRTC LiveKit)" : "Good (WebRTC LiveKit)",
+      pricing: isFr ? "~$0.085/min (A2V) / ~$0.35/min (Agent)" : "~$0.085/min (A2V) / ~$0.35/min (Agent)",
       censorship: isFr ? "Risque moyen" : "Medium risk",
       notes: isFr
-        ? "Latence <100ms, hyper-réaliste. Streaming inference. Focus enterprise. Pas de contrôle narratif."
-        : "<100ms latency, hyper-realistic. Streaming inference. Enterprise focus. No narrative control.",
+        ? "Fondé 2024. 1080p haute résolution. Genesis 2 annoncé (world's most advanced expressive real-time avatar model). Transport WebRTC (LiveKit). Frameworks LiveKit + Pipecat. Focus sales, HR, coaching."
+        : "Founded 2024. 1080p high resolution. Genesis 2 announced (world's most advanced expressive real-time avatar model). WebRTC transport (LiveKit). LiveKit + Pipecat frameworks. Focus sales, HR, coaching.",
       strengths: isFr
-        ? ["<100ms latence", "Hyper-réaliste", "Streaming continu"]
-        : ["<100ms latency", "Hyper-realistic", "Continuous streaming"],
+        ? ["1080p haute résolution", "Hyper-réaliste", "Frameworks LiveKit/Pipecat", "Genesis 2 très prometteur"]
+        : ["1080p high resolution", "Hyper-realistic", "LiveKit/Pipecat frameworks", "Genesis 2 very promising"],
       weaknesses: isFr
-        ? ["Pas de contrôle narratif", "Coût enterprise", "Pas de souveraineté"]
-        : ["No narrative control", "Enterprise cost", "No sovereignty"],
-      score: { quality: 9, latency: 10, cost: 2, sovereignty: 2 },
+        ? ["Coût élevé Agent API", "Pas de mémoire persistante", "Pas de souveraineté", "Genesis 2 pas encore dispo"]
+        : ["High Agent API cost", "No persistent memory", "No sovereignty", "Genesis 2 not yet available"],
+      score: { quality: 9, latency: 8, cost: 3, sovereignty: 2 },
     },
     {
       name: "NVIDIA ACE",
@@ -182,6 +184,69 @@ export default function StateOfArt() {
         ? ["Session max 5–30 min", "Pas de mémoire persistante", "Pas de clonage vocal", "Pas de souveraineté", "$0.20/min = coût élevé à l'échelle", "Pas d'orchestration narrative"]
         : ["Max 5–30 min session", "No persistent memory", "No voice cloning", "No sovereignty", "$0.20/min = high cost at scale", "No narrative orchestration"],
       score: { quality: 8, latency: 9, cost: 4, sovereignty: 2 },
+    },
+    {
+      name: "Simli (Trinity-1)",
+      category: isFr ? "Infrastructure avatar" : "Avatar infrastructure",
+      realtime: true,
+      bodyLanguage: isFr ? "Non" : "No",
+      conversation: true,
+      sovereignty: false,
+      latency: "<300ms (WebRTC)",
+      pricing: isFr ? "$0.009/min (le moins cher)" : "$0.009/min (cheapest)",
+      censorship: isFr ? "Faible" : "Low",
+      notes: isFr
+        ? "Fondé 2023, Y Combinator. Trinity-1 : Gaussian Splatting propriétaire, <300ms latence. Transport WebRTC (Daily) + WebSockets. Frameworks LiveKit + Pipecat. Philosophie 'face layer' pour AI agents. Qualité bonne mais bitrate bas."
+        : "Founded 2023, Y Combinator. Trinity-1: proprietary Gaussian Splatting, <300ms latency. WebRTC (Daily) + WebSockets transport. LiveKit + Pipecat frameworks. 'Face layer' philosophy for AI agents. Good quality but low bitrate.",
+      strengths: isFr
+        ? ["<300ms latence", "$0.009/min — 39× moins cher que D-ID", "Frameworks LiveKit/Pipecat", "Custom avatar depuis image unique"]
+        : ["<300ms latency", "$0.009/min — 39× cheaper than D-ID", "LiveKit/Pipecat frameworks", "Custom avatar from single image"],
+      weaknesses: isFr
+        ? ["Bitrate bas", "Pas de mémoire persistante", "Pas de souveraineté", "Visage uniquement"]
+        : ["Low bitrate", "No persistent memory", "No sovereignty", "Face only"],
+      score: { quality: 6, latency: 9, cost: 9, sovereignty: 2 },
+    },
+    {
+      name: "Anam",
+      category: isFr ? "Avatar émotionnel" : "Emotional avatar",
+      realtime: true,
+      bodyLanguage: isFr ? "Non" : "No",
+      conversation: true,
+      sovereignty: false,
+      latency: isFr ? "Bonne (WebRTC Pion)" : "Good (WebRTC Pion)",
+      pricing: isFr ? "~$0.18/min" : "~$0.18/min",
+      censorship: isFr ? "Faible" : "Low",
+      notes: isFr
+        ? "Fondé 2023, ex-Synthesia (Caoimhe Murphy + Ben Carr). Focus intelligence émotionnelle. Transport WebRTC (Pion). Knowledge base, LLM custom, outils. Qualité très bonne, mais connexion instable sur faible bande passante."
+        : "Founded 2023, ex-Synthesia (Caoimhe Murphy + Ben Carr). Focus emotional intelligence. WebRTC (Pion) transport. Knowledge base, custom LLM, tools. Very good quality, but unstable connection on low bandwidth.",
+      strengths: isFr
+        ? ["Très bonne qualité visuelle", "Intelligence émotionnelle", "Knowledge base + LLM custom", "Custom avatar depuis image unique"]
+        : ["Very good visual quality", "Emotional intelligence", "Knowledge base + custom LLM", "Custom avatar from single image"],
+      weaknesses: isFr
+        ? ["Connexion instable faible bande passante", "Pas de mémoire persistante", "Pas de souveraineté", "Coût moyen-élevé"]
+        : ["Unstable connection on low bandwidth", "No persistent memory", "No sovereignty", "Medium-high cost"],
+      score: { quality: 8, latency: 7, cost: 4, sovereignty: 2 },
+    },
+    {
+      name: "bitHuman",
+      category: isFr ? "Avatar edge/CPU" : "Edge/CPU avatar",
+      realtime: true,
+      bodyLanguage: isFr ? "Non" : "No",
+      conversation: true,
+      sovereignty: true,
+      latency: isFr ? "Moyenne (WebRTC LiveKit)" : "Average (WebRTC LiveKit)",
+      pricing: isFr ? "~$0.04/min cloud / $0.01/min self-hosted" : "~$0.04/min cloud / $0.01/min self-hosted",
+      censorship: isFr ? "Faible" : "Low",
+      notes: isFr
+        ? "Fondé 2023, San Francisco. Premier avatar CPU au monde (déploiement local sans GPU). Modèles : Essential (CPU/cloud) + Expressive (cloud). Transport WebRTC (LiveKit). Souveraineté partielle via self-hosted."
+        : "Founded 2023, San Francisco. World's first CPU avatar (local deployment without GPU). Models: Essential (CPU/cloud) + Expressive (cloud). WebRTC (LiveKit) transport. Partial sovereignty via self-hosted.",
+      strengths: isFr
+        ? ["Déploiement CPU sans GPU", "Self-hosted possible", "$0.01/min self-hosted", "Custom avatar depuis image"]
+        : ["CPU deployment without GPU", "Self-hosted possible", "$0.01/min self-hosted", "Custom avatar from image"],
+      weaknesses: isFr
+        ? ["Qualité acceptable (pas excellente)", "Modèle Expressive cloud uniquement", "Latence moyenne"]
+        : ["Acceptable quality (not excellent)", "Expressive model cloud-only", "Average latency"],
+      score: { quality: 5, latency: 6, cost: 8, sovereignty: 6 },
     },
     {
       name: "Tavus Phoenix-4",
@@ -278,6 +343,30 @@ export default function StateOfArt() {
       notes: isFr
         ? "Décembre 2025. Modèle one-shot, génération parole et écoute naturelle."
         : "December 2025. One-shot model, natural speech generation and listening.",
+    },
+    {
+      name: "AvatarForcing (arXiv 2603.14331)",
+      type: isFr ? "Streaming diffusion 1-step" : "1-step streaming diffusion",
+      latency: isFr ? "Temps réel" : "Real-time",
+      quality: isFr ? "Très bonne" : "Very good",
+      deployment: isFr ? "Recherche (HuggingFace)" : "Research (HuggingFace)",
+      license: isFr ? "Recherche" : "Research",
+      used: false,
+      notes: isFr
+        ? "Mars 2026. One-step streaming diffusion, Local-Future Sliding-Window Denoising. Image unique + audio streaming. Long-form, temps réel. Directement pertinent pour l'Axe 1."
+        : "March 2026. One-step streaming diffusion, Local-Future Sliding-Window Denoising. Single image + streaming audio. Long-form, real-time. Directly relevant for Axis 1.",
+    },
+    {
+      name: "SoulX-FlashTalk (arXiv 2512.23379)",
+      type: isFr ? "Diffusion streaming 14B" : "14B streaming diffusion",
+      latency: "0.87s startup, 32 FPS",
+      quality: isFr ? "Très bonne" : "Very good",
+      deployment: isFr ? "Recherche (8xH800)" : "Research (8xH800)",
+      license: isFr ? "Recherche" : "Research",
+      used: false,
+      notes: isFr
+        ? "Déc 2025. 14B-parameter DiT. Sub-second startup latency (0.87s). 32 FPS sur 8xH800. Streaming infini bidirectionnel. Référence pour les benchmarks latence."
+        : "Dec 2025. 14B-parameter DiT. Sub-second startup latency (0.87s). 32 FPS on 8xH800. Infinite bidirectional streaming. Reference for latency benchmarks.",
     },
   ];
 
@@ -473,7 +562,8 @@ export default function StateOfArt() {
   const marketOpportunity = [
     { segment: "AI Avatar Market", value2025: "$0.80B", valueTarget: "$5.93B (2032)", cagr: "33.1%", source: "MarketsAndMarkets" },
     { segment: "Digital Human AI Avatars", value2025: "~$9.7B", valueTarget: "+$13.5B (2029)", cagr: "44%", source: "Technavio" },
-    { segment: "Digital Human Market", value2025: "$7.96B", valueTarget: "$26.04B (2031)", cagr: "26.76%", source: "Mordor Intelligence" },
+    { segment: "Digital Human Market (2026)", value2025: "$66.98B", valueTarget: "$258.15B (2030)", cagr: "40.1%", source: "Grand View Research 2026" },
+    { segment: "Virtual Humans Market", value2025: "$5.50B", valueTarget: "$14B (2033)", cagr: "14%", source: "Allied Market Research" },
     { segment: "EdTech AI Avatars", value2025: isFr ? "Émergent" : "Emerging", valueTarget: isFr ? "Fort (2029)" : "Strong (2029)", cagr: "N/A", source: isFr ? "Secteur en formation" : "Forming sector" },
   ];
 
@@ -680,6 +770,46 @@ export default function StateOfArt() {
       desc: isFr
         ? "TTS spontané personnalisé et contrôlable zero-shot. Encodeur style de parole + encodeur prosodie locale."
         : "Personalized and controllable zero-shot spontaneous TTS. Speech style encoder + local prosody encoder.",
+      relevance: isFr ? "Très haute" : "Very high",
+    },
+    {
+      ref: "AvatarForcing (arXiv 2603.14331, mars 2026)",
+      venue: "arXiv:2603.14331",
+      desc: isFr
+        ? "One-step streaming diffusion pour avatars parlants. Local-Future Sliding-Window Denoising. Image unique + audio streaming → vidéo temps réel long-form. Directement applicable à l'Axe 1 (latence)."
+        : "One-step streaming diffusion for talking avatars. Local-Future Sliding-Window Denoising. Single image + streaming audio → real-time long-form video. Directly applicable to Axis 1 (latency).",
+      relevance: isFr ? "Très haute" : "Very high",
+    },
+    {
+      ref: "SoulX-FlashTalk (arXiv 2512.23379, déc 2025)",
+      venue: "arXiv:2512.23379",
+      desc: isFr
+        ? "Premier modèle 14B à atteindre <1s startup latency (0.87s) avec 32 FPS sur 8xH800. Streaming infini audio-driven. Bidirectionnel. Référence pour l'Axe 1 (latence)."
+        : "First 14B model to achieve <1s startup latency (0.87s) at 32 FPS on 8xH800. Infinite audio-driven streaming. Bidirectional. Reference for Axis 1 (latency).",
+      relevance: isFr ? "Très haute" : "Very high",
+    },
+    {
+      ref: "Avatar Forcing (arXiv 2601.00664, jan 2026)",
+      venue: "arXiv:2601.00664",
+      desc: isFr
+        ? "Diffusion forcing-based head avatar pour conversation naturelle. Interaction via signaux audio-visuels. Temps réel. Cité 1 fois en 3 mois."
+        : "Diffusion forcing-based head avatar for natural conversation. Interaction via audio-visual signals. Real-time. Cited 1 time in 3 months.",
+      relevance: isFr ? "Haute" : "High",
+    },
+    {
+      ref: "The Latency Wall (arXiv 2601.15914, jan 2026)",
+      venue: "arXiv:2601.15914",
+      desc: isFr
+        ? "Benchmark reconnaissance émotionnelle temps réel pour avatars virtuels. 7 émotions. Trade-off qualité/latence documenté. Référence pour l'Axe 2 (comportement avatar)."
+        : "Real-time emotion recognition benchmark for virtual avatars. 7 emotions. Quality/latency trade-off documented. Reference for Axis 2 (avatar behavior).",
+      relevance: isFr ? "Haute" : "High",
+    },
+    {
+      ref: "Memory Augmented Routing (arXiv 2603.23013, mars 2026)",
+      venue: "arXiv:2603.23013",
+      desc: isFr
+        ? "Hybrid retrieval pour mémoire conversationnelle. Turn-pairs storage. Queries factuelles + contextuelles. Directement applicable à l'architecture mémoire 3 couches DigiDouble."
+        : "Hybrid retrieval for conversational memory. Turn-pairs storage. Factual + contextual queries. Directly applicable to DigiDouble's 3-layer memory architecture.",
       relevance: isFr ? "Très haute" : "Very high",
     },
   ];
@@ -1051,6 +1181,66 @@ export default function StateOfArt() {
                       {isFr
                         ? <><strong>Conclusion :</strong> Tavus Phoenix-4 définit le nouveau standard du réalisme comportemental pour les avatars conversationnels commerciaux. Il valide l'importance de l'Axe 2 de DigiDouble et fournit des techniques concrètes (diffusion causale, Gaussian Splatting implicite, distillation) à intégrer dans la roadmap R&D. Les gaps restants — mémoire, souveraineté, orchestration narrative — confirment la valeur unique du projet DigiDouble.</>
                         : <><strong>Conclusion:</strong> Tavus Phoenix-4 sets the new standard for behavioral realism in commercial conversational avatars. It validates the importance of DigiDouble's Axis 2 and provides concrete techniques (causal diffusion, implicit Gaussian Splatting, distillation) to integrate into the R&D roadmap. The remaining gaps — memory, sovereignty, narrative orchestration — confirm DigiDouble's unique value proposition.</>
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Simli Trinity-1 deep dive */}
+              <div className="mt-6 border-2 border-emerald-200 rounded-lg overflow-hidden">
+                <div className="bg-emerald-50 px-5 py-3 flex items-center justify-between border-b border-emerald-200">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.65 0.18 145)", color: "white" }}>LATENCY LEADER 2026</span>
+                    <h3 className="font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      Simli Trinity-1 — {isFr ? "Analyse approfondie" : "Deep Dive"}
+                    </h3>
+                  </div>
+                  <a href="https://www.simli.com" target="_blank" rel="noopener noreferrer"
+                    className="text-xs font-mono text-emerald-600 hover:text-emerald-800 underline">
+                    simli.com ↗
+                  </a>
+                </div>
+                <div className="p-5">
+                  <p className="text-sm text-slate-600 leading-relaxed mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Simli est la startup 'infrastructure-first' de la génération 2023. Fondée par des anciens de Y Combinator, elle se positionne non pas comme un studio créatif mais comme la 'face layer' pour les AI agents. Son modèle Trinity-1 atteint <300ms de latence avec Gaussian Splatting propriétaire — et son pricing à $0.009/min est 39× moins cher que D-ID. C'est la référence pour le benchmark latence de l'Axe 1 DigiDouble."
+                      : "Simli is the 'infrastructure-first' startup of the 2023 generation. Founded by Y Combinator alumni, it positions itself not as a creative studio but as the 'face layer' for AI agents. Its Trinity-1 model achieves <300ms latency with proprietary Gaussian Splatting — and its $0.009/min pricing is 39× cheaper than D-ID. It is the latency benchmark reference for DigiDouble Axis 1."
+                    }
+                  </p>
+                  <div className="grid sm:grid-cols-3 gap-3 mb-5">
+                    {[
+                      {
+                        label: isFr ? "Latence" : "Latency",
+                        value: "<300ms",
+                        detail: isFr ? "Sub-300ms garanti. WebRTC (Daily infrastructure) + WebSockets. Le plus rapide du marché accessible." : "Sub-300ms guaranteed. WebRTC (Daily infrastructure) + WebSockets. Fastest on the accessible market.",
+                        color: "oklch(0.65 0.18 145)",
+                      },
+                      {
+                        label: "Pricing",
+                        value: "$0.009/min",
+                        detail: isFr ? "Le moins cher du marché. 39× moins cher que D-ID ($0.35/min). 22× moins cher que Runway ($0.20/min). Viable à l'échelle." : "Cheapest on the market. 39× cheaper than D-ID ($0.35/min). 22× cheaper than Runway ($0.20/min). Viable at scale.",
+                        color: "oklch(0.75 0.16 75)",
+                      },
+                      {
+                        label: isFr ? "Modèle" : "Model",
+                        value: "Trinity-1",
+                        detail: isFr ? "Gaussian Splatting propriétaire. Custom avatar depuis image unique. Frameworks LiveKit + Pipecat. Qualité bonne mais bitrate bas." : "Proprietary Gaussian Splatting. Custom avatar from single image. LiveKit + Pipecat frameworks. Good quality but low bitrate.",
+                        color: "oklch(0.72 0.18 200)",
+                      },
+                    ].map((item) => (
+                      <div key={item.label} className="border border-slate-200 rounded p-3">
+                        <div className="text-xs font-bold mb-1" style={{ color: item.color, fontFamily: "'Space Grotesk', sans-serif" }}>{item.label}</div>
+                        <div className="text-sm font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.value}</div>
+                        <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="callout-info">
+                    <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                      {isFr
+                        ? <><strong>Pertinence DigiDouble :</strong> Simli Trinity-1 est la référence de benchmark pour l'Axe 1 (latence). Son architecture Gaussian Splatting + WebRTC est une piste à évaluer pour remplacer HeyGem OS. Son pricing $0.009/min valide qu'un avatar temps réel à coût accessible est possible. Les gaps restants : pas de mémoire, pas de souveraineté, pas d'orchestration narrative — exactement les différenciateurs DigiDouble.</>
+                        : <><strong>DigiDouble relevance:</strong> Simli Trinity-1 is the benchmark reference for Axis 1 (latency). Its Gaussian Splatting + WebRTC architecture is a path to evaluate for replacing HeyGem OS. Its $0.009/min pricing validates that real-time avatar at accessible cost is possible. Remaining gaps: no memory, no sovereignty, no narrative orchestration — exactly DigiDouble's differentiators.</>
                       }
                     </p>
                   </div>
