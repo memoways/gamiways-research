@@ -415,8 +415,9 @@ export default function Research() {
           </h1>
           <p className="text-base text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "Trois axes de recherche, tous convergent vers un objectif central : une expérience conversationnelle fluide, personnalisée et proche du temps réel."
-              : "Three research axes, all converging toward a central goal: a fluid, personalized, near-real-time conversational experience."}
+              ? <>Trois axes de recherche, tous convergent vers un objectif central : une expérience conversationnelle fluide, personnalisée et proche du temps réel. Ces défis seront adressés dans le cadre d'un <strong>projet Innosuisse</strong> avec l'<strong>IDIAP</strong> comme partenaire de recherche (démarrage prévu automne 2026).</>
+              : <>Three research axes, all converging toward a central goal: a fluid, personalized, near-real-time conversational experience. These challenges will be addressed through an <strong>Innosuisse project</strong> with <strong>IDIAP</strong> as research partner (expected start: autumn 2026).</>
+            }
           </p>
           {/* Axis overview pills */}
           <div className="flex flex-wrap gap-2 mt-4">

@@ -161,6 +161,14 @@ export default function Project() {
               ? "Collaboration entre Memoways (Genève, 14 ans d'expertise vidéo interactive) et Gamilab (startup voice-first AI, SDK Audiogami)."
               : "Collaboration between Memoways (Geneva, 14 years of interactive video expertise) and Gamilab (voice-first AI startup, Audiogami SDK)."}
           </p>
+          {/* Innosuisse badge — mention 1/3 */}
+          <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded border text-xs font-mono" style={{ borderColor: "oklch(0.72 0.18 200)40", background: "oklch(0.97 0.02 200)", color: "oklch(0.45 0.18 200)" }}>
+            <span style={{ fontWeight: 700 }}>{isFr ? "PROJET INNOSUISSE (prévu)" : "INNOSUISSE PROJECT (planned)"}</span>
+            <span className="text-slate-400">·</span>
+            <span>{isFr ? "Partenaire recherche : IDIAP" : "Research partner: IDIAP"}</span>
+            <span className="text-slate-400">·</span>
+            <span>{isFr ? "Démarrage prévu automne 2026" : "Expected start: autumn 2026"}</span>
+          </div>
         </div>
       </div>
 

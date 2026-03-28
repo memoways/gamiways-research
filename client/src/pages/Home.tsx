@@ -186,11 +186,11 @@ export default function Home() {
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
                 ? <>
-                    Ces trois axes ne sont pas des problèmes d'ingénierie — ils nécessitent des avancées en recherche fondamentale.{" "}
+                    Ces trois axes ne sont pas des problèmes d'ingénierie — ils nécessitent des avancées en recherche fondamentale, en partenariat avec l'<strong>IDIAP</strong> (partenaire de recherche Innosuisse prévu).{" "}
                     <InternalLink to="/research">Détails des défis de recherche →</InternalLink>
                   </>
                 : <>
-                    These three axes are not engineering problems — they require advances in fundamental research.{" "}
+                    These three axes are not engineering problems — they require advances in fundamental research, in partnership with <strong>IDIAP</strong> (planned Innosuisse research partner).{" "}
                     <InternalLink to="/research">Full Research Challenges →</InternalLink>
                   </>}
             </p>
