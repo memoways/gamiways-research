@@ -4,8 +4,12 @@
  */
 import { useLang } from "@/contexts/LangContext";
 
+const LAST_UPDATED = "28 March 2026";
+const LAST_UPDATED_FR = "28 mars 2026";
+
 export default function Footer() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const isFr = lang === "fr";
   return (
     <footer className="border-t border-slate-200 mt-20">
       <div className="container py-8">
@@ -30,7 +34,10 @@ export default function Footer() {
             <span className="hidden md:inline text-slate-200">|</span>
             <span>Project 2025–2028</span>
             <span className="hidden md:inline text-slate-200">|</span>
-            <span>Sovereign infrastructure Exoscale CH</span>
+            <span>
+              {isFr ? "Dernière mise à jour" : "Last updated"}{" "}
+              <span className="text-slate-600 font-medium">{isFr ? LAST_UPDATED_FR : LAST_UPDATED}</span>
+            </span>
           </div>
         </div>
       </div>

@@ -1678,9 +1678,7 @@ export default function StateOfArt() {
             <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               {isFr ? "3 Axes de Recherche" : "3 Research Axes"}
             </h3>
-            <DiagramModal title="3 Research Axes — Latency, Memory, Avatar">
-              <ResearchAxesDiagram />
-            </DiagramModal>
+            <ResearchAxesDiagram />
           </div>
 
           <div className="overflow-x-auto">

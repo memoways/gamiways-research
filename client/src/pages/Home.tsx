@@ -196,9 +196,7 @@ export default function Home() {
             </p>
           </div>
 
-          <DiagramModal title="Research Axes Overview">
-            <ResearchAxesDiagram />
-          </DiagramModal>
+          <ResearchAxesDiagram />
 
           <ToggleBlock label="Why this is not just engineering" labelFr="Pourquoi ce n'est pas juste de l'ingénierie" isFr={isFr}>
             <div className="pt-3 space-y-2">
