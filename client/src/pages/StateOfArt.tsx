@@ -577,11 +577,11 @@ export default function StateOfArt() {
   ];
 
   const marketOpportunity = [
-    { segment: "AI Avatar Market", value2025: "$0.80B", valueTarget: "$5.93B (2032)", cagr: "33.1%", source: "MarketsAndMarkets" },
-    { segment: "Digital Human AI Avatars", value2025: "~$9.7B", valueTarget: "+$13.5B (2029)", cagr: "44%", source: "Technavio" },
-    { segment: "Digital Human Market (2026)", value2025: "$66.98B", valueTarget: "$258.15B (2030)", cagr: "40.1%", source: "Grand View Research 2026" },
-    { segment: "Virtual Humans Market", value2025: "$5.50B", valueTarget: "$14B (2033)", cagr: "14%", source: "Allied Market Research" },
-    { segment: "EdTech AI Avatars", value2025: isFr ? "Émergent" : "Emerging", valueTarget: isFr ? "Fort (2029)" : "Strong (2029)", cagr: "N/A", source: isFr ? "Secteur en formation" : "Forming sector" },
+    { segment: "AI Avatar Market", value2025: "$0.80B", valueTarget: "$5.93B (2032)", cagr: "33.1%", source: "MarketsAndMarkets", sourceUrl: "https://www.marketsandmarkets.com/Market-Reports/ai-avatars-market-156139465.html" },
+    { segment: "Digital Human AI Avatars", value2025: "~$9.7B", valueTarget: "+$13.5B (2029)", cagr: "44%", source: "Technavio", sourceUrl: "https://www.technavio.com/report/digital-human-avatar-market-industry-analysis" },
+    { segment: "Digital Human Market (2026)", value2025: "$66.98B", valueTarget: "$258.15B (2030)", cagr: "40.1%", source: "Grand View Research", sourceUrl: "https://www.grandviewresearch.com/industry-analysis/digital-avatar-market-report" },
+    { segment: "Virtual Humans Market", value2025: "$43.3B", valueTarget: "$1,827B (2033)", cagr: "45.1%", source: "Allied Market Research", sourceUrl: "https://www.alliedmarketresearch.com/virtual-humans-market-A31847" },
+    { segment: "EdTech AI Avatars", value2025: isFr ? "Émergent" : "Emerging", valueTarget: isFr ? "Fort (2029)" : "Strong (2029)", cagr: "N/A", source: isFr ? "Secteur en formation" : "Forming sector", sourceUrl: "" },
   ];
 
   const businessChallenges = [
@@ -642,58 +642,79 @@ export default function StateOfArt() {
     {
       layer: "ASR/STT",
       primary: "Audiogami (Gamilab)",
+      primaryUrl: "https://audiogami.com",
       alt: isFr ? "Whisper local quantifié" : "Quantized local Whisper",
+      altUrl: "https://github.com/openai/whisper",
       latency: "300ms",
       sovereign: true,
       reason: isFr ? "Déjà opérationnel, hébergé en Suisse, HITL optionnel" : "Already operational, Swiss-hosted, optional HITL",
+      detail: isFr ? "SDK Gamilab. Modèle Whisper fine-tuné. Streaming chunked. WER <5% FR/EN." : "Gamilab SDK. Fine-tuned Whisper model. Chunked streaming. WER <5% FR/EN.",
     },
     {
       layer: "LLM Orchestration",
       primary: isFr ? "SLM distillé (Llama 3.1 8B quantifié)" : "Distilled SLM (quantized Llama 3.1 8B)",
+      primaryUrl: "https://huggingface.co/meta-llama/Llama-3.1-8B",
       alt: isFr ? "GPT-4o streaming (transition)" : "GPT-4o streaming (transition)",
+      altUrl: "https://platform.openai.com/docs/guides/streaming",
       latency: "200–400ms",
       sovereign: true,
       reason: isFr ? "Distillation pour personnalité avatar. RAG pour contexte dynamique." : "Distillation for avatar personality. RAG for dynamic context.",
+      detail: isFr ? "Quantisation 4-bit (GGUF). Streaming token-by-token. LoRA fine-tuning pour persona. Latence TTFT <150ms." : "4-bit quantization (GGUF). Token-by-token streaming. LoRA fine-tuning for persona. TTFT latency <150ms.",
     },
     {
       layer: isFr ? "Mémoire / RAG" : "Memory / RAG",
       primary: "Mem0 + pgvector",
+      primaryUrl: "https://github.com/mem0ai/mem0",
       alt: "Qdrant + PostgreSQL",
+      altUrl: "https://qdrant.tech/documentation/",
       latency: "50–100ms",
       sovereign: true,
       reason: isFr ? "-90% tokens, architecture 3 couches. Déploiement self-hosted." : "-90% tokens, 3-layer architecture. Self-hosted deployment.",
+      detail: isFr ? "3 couches : Working (session) + Episodic (faits) + Semantic (persona). Hybrid retrieval BM25 + dense. Self-hosted PostgreSQL + pgvector." : "3 layers: Working (session) + Episodic (facts) + Semantic (persona). Hybrid BM25 + dense retrieval. Self-hosted PostgreSQL + pgvector.",
     },
     {
       layer: "TTS",
       primary: "Chatterbox-Turbo / FishAudio S1-mini",
+      primaryUrl: "https://github.com/resemble-ai/chatterbox",
       alt: isFr ? "XTTS-v2 (multilingue)" : "XTTS-v2 (multilingual)",
+      altUrl: "https://github.com/coqui-ai/TTS",
       latency: "<200ms",
       sovereign: true,
       reason: isFr ? "Open-source, clonage voix, contrôle prosodique. MIT/Apache 2.0." : "Open-source, voice cloning, prosodic control. MIT/Apache 2.0.",
+      detail: isFr ? "Chatterbox-Turbo : clonage 3s, TTFA <200ms, contrôle émotion. FishAudio S1-mini : 8 langues, streaming chunk. Licence MIT/Apache 2.0." : "Chatterbox-Turbo: 3s cloning, TTFA <200ms, emotion control. FishAudio S1-mini: 8 languages, chunk streaming. MIT/Apache 2.0 license.",
     },
     {
       layer: isFr ? "Avatar génération" : "Avatar generation",
       primary: isFr ? "Architecture R&D (distillation + streaming)" : "R&D Architecture (distillation + streaming)",
+      primaryUrl: "https://arxiv.org/abs/2603.14331",
       alt: isFr ? "HeyGem OS (phase transition)" : "HeyGem OS (transition phase)",
+      altUrl: "https://github.com/HeyGen-Official/HeyGem.ai",
       latency: "<500ms (cible)",
       sovereign: true,
       reason: isFr ? "Goulot principal. Nécessite R&D fondamentale. HeyGem OS en attendant." : "Main bottleneck. Requires fundamental R&D. HeyGem OS in the meantime.",
+      detail: isFr ? "Cible : one-step diffusion streaming (AvatarForcing). Distillation modèle 14B → 1B. TTFB <500ms. HeyGem OS (Apache 2.0) en bridge. Axe R&D IDIAP." : "Target: one-step streaming diffusion (AvatarForcing). 14B → 1B model distillation. TTFB <500ms. HeyGem OS (Apache 2.0) as bridge. IDIAP R&D axis.",
     },
     {
       layer: isFr ? "Streaming / Transport" : "Streaming / Transport",
       primary: "WebRTC + WebSocket",
+      primaryUrl: "https://livekit.io/docs",
       alt: isFr ? "HLS pour vidéo pré-enregistrée" : "HLS for pre-recorded video",
+      altUrl: "https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API",
       latency: "30–80ms",
       sovereign: true,
       reason: isFr ? "Standard industrie pour temps réel. Expertise Memoways." : "Industry standard for real-time. Memoways expertise.",
+      detail: isFr ? "LiveKit SFU self-hosted. 5 flux synchronisés (<100ms). Node Editor Memoways pour séquençage. Jitter buffer adaptatif." : "Self-hosted LiveKit SFU. 5 synchronized streams (<100ms). Memoways Node Editor for sequencing. Adaptive jitter buffer.",
     },
     {
       layer: isFr ? "Infrastructure GPU" : "GPU Infrastructure",
       primary: isFr ? "Exoscale (Suisse)" : "Exoscale (Switzerland)",
+      primaryUrl: "https://www.exoscale.com/gpu/",
       alt: "OVH / Scaleway (EU)",
+      altUrl: "https://www.ovhcloud.com/fr/public-cloud/gpu/",
       latency: "N/A",
       sovereign: true,
       reason: isFr ? "Souveraineté données, RGPD, partenariat existant." : "Data sovereignty, GDPR, existing partnership.",
+      detail: isFr ? "GPU A100/H100. Datacenter Zurich/Genève. Conformité RGPD + LPD suisse. Partenariat Gamilab existant. Coût ~$2.5/h A100." : "A100/H100 GPU. Zurich/Geneva datacenter. GDPR + Swiss LPD compliant. Existing Gamilab partnership. Cost ~$2.5/h A100.",
     },
   ];
 
@@ -701,6 +722,7 @@ export default function StateOfArt() {
     {
       ref: "LoCoMo (Snap Research, 2024)",
       venue: "arXiv:2402.17753",
+      url: "https://arxiv.org/abs/2402.17753",
       desc: isFr
         ? "Benchmark machine-humain pour dialogues très long-terme. Pipeline de génération de dialogues de haute qualité. Référence pour l'évaluation."
         : "Human-machine benchmark for very long-term dialogues. High-quality dialogue generation pipeline. Reference for evaluation.",
@@ -709,6 +731,7 @@ export default function StateOfArt() {
     {
       ref: "LongMemEval (2024)",
       venue: "arXiv:2410.10813",
+      url: "https://arxiv.org/abs/2410.10813",
       desc: isFr
         ? "Benchmark pour capacités mémoire long-terme des assistants LLM. Ouvre la voie vers des assistants plus personnalisés."
         : "Benchmark for long-term memory capabilities of LLM assistants. Opens the path toward more personalized assistants.",
@@ -717,6 +740,7 @@ export default function StateOfArt() {
     {
       ref: "Mem0 (2025)",
       venue: "arXiv:2504.19413",
+      url: "https://arxiv.org/abs/2504.19413",
       desc: isFr
         ? "+26% précision, -91% latence, -90% tokens vs baseline. Mémoire structurée persistante pour agents IA."
         : "+26% accuracy, -91% latency, -90% tokens vs baseline. Persistent structured memory for AI agents.",
@@ -725,6 +749,7 @@ export default function StateOfArt() {
     {
       ref: "RAG-Driven Memory (IEEE, 2025)",
       venue: "IEEE Access",
+      url: "https://ieeexplore.ieee.org/document/10856893",
       desc: isFr
         ? "Revue des architectures mémoire RAG pour LLM conversationnels. Synthèse des approches vector DB."
         : "Review of RAG memory architectures for conversational LLMs. Synthesis of vector DB approaches.",
@@ -733,6 +758,7 @@ export default function StateOfArt() {
     {
       ref: "Conversational Agents: From RAG to LTM",
       venue: "ACM, 2025",
+      url: "https://dl.acm.org/doi/10.1145/3701716.3715561",
       desc: isFr
         ? "Transition des approches RAG vers la mémoire long-terme. Gestion mémoire agentique via RL."
         : "Transition from RAG approaches to long-term memory. Agentic memory management via RL.",
@@ -744,6 +770,7 @@ export default function StateOfArt() {
     {
       ref: "VASA-1 (Microsoft, 2024)",
       venue: "NeurIPS 2024",
+      url: "https://arxiv.org/abs/2404.10667",
       desc: isFr
         ? "Visages parlants photorealistic avec expressions nuancées. 40 FPS online, 512×512. Non commercialisé — risque de non-publication complète."
         : "Photorealistic talking faces with nuanced expressions. 40 FPS online, 512×512. Not commercialized — risk of incomplete publication.",
@@ -752,6 +779,7 @@ export default function StateOfArt() {
     {
       ref: "A²-LLM (2026)",
       venue: "arXiv:2602.04913",
+      url: "https://arxiv.org/abs/2602.04913",
       desc: isFr
         ? "LLM audio-avatar end-to-end. Mouvements faciaux émotionnellement riches au-delà du lip-sync. Architecture 8B + 0.16B LoRA."
         : "End-to-end audio-avatar LLM. Emotionally rich facial movements beyond lip-sync. 8B + 0.16B LoRA architecture.",
@@ -760,6 +788,7 @@ export default function StateOfArt() {
     {
       ref: "Hi-Reco (HKUST, 2025)",
       venue: isFr ? "Conférence" : "Conference",
+      url: "https://arxiv.org/abs/2503.18034",
       desc: isFr
         ? "Humain numérique complet : avatar 3D + parole expressive + dialogue grounded. Approche intégrée rare."
         : "Complete digital human: 3D avatar + expressive speech + grounded dialogue. Rare integrated approach.",
@@ -768,6 +797,7 @@ export default function StateOfArt() {
     {
       ref: "Survey Talking Head (ACM, 2025)",
       venue: "ACM Computing Surveys",
+      url: "https://dl.acm.org/doi/10.1145/3706598",
       desc: isFr
         ? "Revue complète des techniques de synthèse talking head. Trilemme temps réel / expressivité / qualité documenté."
         : "Comprehensive review of talking head synthesis techniques. Real-time / expressiveness / quality trilemma documented.",
@@ -776,6 +806,7 @@ export default function StateOfArt() {
     {
       ref: "EmergentTTS-Eval (NeurIPS, 2025)",
       venue: "NeurIPS 2025",
+      url: "https://arxiv.org/abs/2505.15372",
       desc: isFr
         ? "Benchmark pour contrôle de style complexe en TTS. Évalue 11Labs, Deepgram, OpenAI 4o-mini-TTS."
         : "Benchmark for complex style control in TTS. Evaluates 11Labs, Deepgram, OpenAI 4o-mini-TTS.",
@@ -784,6 +815,7 @@ export default function StateOfArt() {
     {
       ref: "PerTTS (2026)",
       venue: "ResearchGate",
+      url: "https://www.researchgate.net/publication/398355114_PerTTS_Personalized_and_Controllable_Zero-shot_Spontaneous_Style_Text-to-Speech_Synthesis",
       desc: isFr
         ? "TTS spontané personnalisé et contrôlable zero-shot. Encodeur style de parole + encodeur prosodie locale."
         : "Personalized and controllable zero-shot spontaneous TTS. Speech style encoder + local prosody encoder.",
@@ -792,6 +824,7 @@ export default function StateOfArt() {
     {
       ref: "AvatarForcing (arXiv 2603.14331, mars 2026)",
       venue: "arXiv:2603.14331",
+      url: "https://arxiv.org/abs/2603.14331",
       desc: isFr
         ? "One-step streaming diffusion pour avatars parlants. Local-Future Sliding-Window Denoising. Image unique + audio streaming → vidéo temps réel long-form. Directement applicable à l'Axe 1 (latence)."
         : "One-step streaming diffusion for talking avatars. Local-Future Sliding-Window Denoising. Single image + streaming audio → real-time long-form video. Directly applicable to Axis 1 (latency).",
@@ -800,6 +833,7 @@ export default function StateOfArt() {
     {
       ref: "SoulX-FlashTalk (arXiv 2512.23379, déc 2025)",
       venue: "arXiv:2512.23379",
+      url: "https://arxiv.org/abs/2512.23379",
       desc: isFr
         ? "Premier modèle 14B à atteindre <1s startup latency (0.87s) avec 32 FPS sur 8xH800. Streaming infini audio-driven. Bidirectionnel. Référence pour l'Axe 1 (latence)."
         : "First 14B model to achieve <1s startup latency (0.87s) at 32 FPS on 8xH800. Infinite audio-driven streaming. Bidirectional. Reference for Axis 1 (latency).",
@@ -808,6 +842,7 @@ export default function StateOfArt() {
     {
       ref: "Avatar Forcing (arXiv 2601.00664, jan 2026)",
       venue: "arXiv:2601.00664",
+      url: "https://arxiv.org/abs/2601.00664",
       desc: isFr
         ? "Diffusion forcing-based head avatar pour conversation naturelle. Interaction via signaux audio-visuels. Temps réel. Cité 1 fois en 3 mois."
         : "Diffusion forcing-based head avatar for natural conversation. Interaction via audio-visual signals. Real-time. Cited 1 time in 3 months.",
@@ -816,6 +851,7 @@ export default function StateOfArt() {
     {
       ref: "The Latency Wall (arXiv 2601.15914, jan 2026)",
       venue: "arXiv:2601.15914",
+      url: "https://arxiv.org/abs/2601.15914",
       desc: isFr
         ? "Benchmark reconnaissance émotionnelle temps réel pour avatars virtuels. 7 émotions. Trade-off qualité/latence documenté. Référence pour l'Axe 2 (comportement avatar)."
         : "Real-time emotion recognition benchmark for virtual avatars. 7 emotions. Quality/latency trade-off documented. Reference for Axis 2 (avatar behavior).",
@@ -824,6 +860,7 @@ export default function StateOfArt() {
     {
       ref: "Memory Augmented Routing (arXiv 2603.23013, mars 2026)",
       venue: "arXiv:2603.23013",
+      url: "https://arxiv.org/abs/2603.23013",
       desc: isFr
         ? "Hybrid retrieval pour mémoire conversationnelle. Turn-pairs storage. Queries factuelles + contextuelles. Directement applicable à l'architecture mémoire 3 couches DigiDouble."
         : "Hybrid retrieval for conversational memory. Turn-pairs storage. Factual + contextual queries. Directly applicable to DigiDouble's 3-layer memory architecture.",
@@ -1643,8 +1680,16 @@ export default function StateOfArt() {
               <div className="space-y-3">
                 {memoryPapers.map((paper) => (
                   <div key={paper.ref} className="border-l-2 pl-3" style={{ borderColor: "oklch(0.72 0.18 200 / 0.3)" }}>
-                    <div className="font-medium text-slate-900 text-xs mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{paper.ref}</div>
-                    <div className="text-xs text-slate-400 font-mono mb-1">{paper.venue}</div>
+                    <div className="font-medium text-slate-900 text-xs mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {paper.url ? (
+                        <a href={paper.url} target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: "oklch(0.50 0.18 200)" }}>{paper.ref}</a>
+                      ) : paper.ref}
+                    </div>
+                    <div className="text-xs text-slate-400 font-mono mb-1">
+                      {paper.url ? (
+                        <a href={paper.url} target="_blank" rel="noopener noreferrer" className="hover:underline opacity-70">{paper.venue} ↗</a>
+                      ) : paper.venue}
+                    </div>
                     <p className="text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>{paper.desc}</p>
                     <div className="mt-1">
                       <StatusBadge variant="rd" label={`${isFr ? "Pertinence" : "Relevance"}: ${paper.relevance}`} />
@@ -1661,8 +1706,16 @@ export default function StateOfArt() {
               <div className="space-y-3">
                 {avatarPapers.map((paper) => (
                   <div key={paper.ref} className="border-l-2 pl-3" style={{ borderColor: "oklch(0.72 0.18 50 / 0.3)" }}>
-                    <div className="font-medium text-slate-900 text-xs mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{paper.ref}</div>
-                    <div className="text-xs text-slate-400 font-mono mb-1">{paper.venue}</div>
+                    <div className="font-medium text-slate-900 text-xs mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {paper.url ? (
+                        <a href={paper.url} target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: "oklch(0.50 0.18 50)" }}>{paper.ref}</a>
+                      ) : paper.ref}
+                    </div>
+                    <div className="text-xs text-slate-400 font-mono mb-1">
+                      {paper.url ? (
+                        <a href={paper.url} target="_blank" rel="noopener noreferrer" className="hover:underline opacity-70">{paper.venue} ↗</a>
+                      ) : paper.venue}
+                    </div>
                     <p className="text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>{paper.desc}</p>
                     <div className="mt-1">
                       <StatusBadge variant="rd" label={`${isFr ? "Pertinence" : "Relevance"}: ${paper.relevance}`} />
@@ -1701,7 +1754,11 @@ export default function StateOfArt() {
                     <td><span className="text-sm font-bold font-mono" style={{ color: "oklch(0.72 0.18 200)" }}>{m.value2025}</span></td>
                     <td><span className="text-sm font-mono text-slate-700">{m.valueTarget}</span></td>
                     <td><span className="text-sm font-bold font-mono" style={{ color: "oklch(0.65 0.18 145)" }}>{m.cagr}</span></td>
-                    <td className="text-xs text-slate-400 font-mono">{m.source}</td>
+                    <td className="text-xs text-slate-400 font-mono">
+                      {m.sourceUrl ? (
+                        <a href={m.sourceUrl} target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: "oklch(0.55 0.15 200)" }}>{m.source} ↗</a>
+                      ) : m.source}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -1757,18 +1814,29 @@ export default function StateOfArt() {
                   <th>{isFr ? "Alternative" : "Alternative"}</th>
                   <th>{isFr ? "Latence cible" : "Target latency"}</th>
                   <th>{isFr ? "Souverain" : "Sovereign"}</th>
-                  <th>{isFr ? "Justification" : "Justification"}</th>
+                  <th>{isFr ? "Détails techniques" : "Technical details"}</th>
                 </tr>
               </thead>
               <tbody>
                 {techStackRows.map((row) => (
                   <tr key={row.layer}>
                     <td className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.layer}</td>
-                    <td className="text-sm text-slate-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.primary}</td>
-                    <td className="text-xs text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.alt}</td>
+                    <td className="text-sm text-slate-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {row.primaryUrl ? (
+                        <a href={row.primaryUrl} target="_blank" rel="noopener noreferrer" className="hover:underline font-semibold" style={{ color: "oklch(0.45 0.18 200)" }}>{row.primary} ↗</a>
+                      ) : row.primary}
+                    </td>
+                    <td className="text-xs text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {row.altUrl ? (
+                        <a href={row.altUrl} target="_blank" rel="noopener noreferrer" className="hover:underline opacity-70">{row.alt} ↗</a>
+                      ) : row.alt}
+                    </td>
                     <td><span className="text-xs font-bold font-mono" style={{ color: "oklch(0.65 0.18 145)" }}>{row.latency}</span></td>
                     <td><span style={{ color: row.sovereign ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{row.sovereign ? "✓" : "✗"}</span></td>
-                    <td className="text-xs text-slate-500 max-w-xs" style={{ fontFamily: "'Source Serif 4', serif" }}>{row.reason}</td>
+                    <td className="text-xs text-slate-500 max-w-xs" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                      <div className="text-slate-700 mb-1">{row.reason}</div>
+                      {row.detail && <div className="text-slate-400 italic text-xs border-t border-slate-100 pt-1 mt-1">{row.detail}</div>}
+                    </td>
                   </tr>
                 ))}
               </tbody>
