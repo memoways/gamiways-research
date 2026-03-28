@@ -12,6 +12,8 @@ import Home from "./pages/Home";
 import Project from "./pages/Project";
 import Research from "./pages/Research";
 import StateOfArt from "./pages/StateOfArt";
+import PlatformDetail from "./pages/PlatformDetail";
+import PricingComparison from "./pages/PricingComparison";
 
 /** Remonte automatiquement en haut à chaque changement de route */
 function ScrollToTop() {
@@ -32,6 +34,8 @@ function Router() {
         <Route path="/project" component={Project} />
         <Route path="/research" component={Research} />
         <Route path="/state-of-art" component={StateOfArt} />
+        <Route path="/platform/:id" component={PlatformDetail} />
+        <Route path="/pricing" component={PricingComparison} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

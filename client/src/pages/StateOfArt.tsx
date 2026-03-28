@@ -1015,15 +1015,34 @@ export default function StateOfArt() {
                         <ScoreBar value={p.score.sovereignty} color="oklch(0.72 0.18 50)" />
                       </div>
                     </div>
-                    <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{p.notes}</p>
+                      <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{p.notes}</p>
+                    {(p as any).linkKey && ["heygen","tavus","synthesia","simli","anam","did","runway","beyond_presence","bithuman","hedra"].includes((p as any).linkKey) && (
+                      <div className="mt-3 pt-3 border-t border-slate-100">
+                        <a
+                          href={`/platform/${(p as any).linkKey}`}
+                          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'instant' }); window.location.href = `/platform/${(p as any).linkKey}`; }}
+                          className="text-xs font-medium hover:underline transition-colors"
+                          style={{ color: 'oklch(0.55 0.20 200)' }}
+                        >
+                          {isFr ? '→ Fiche détaillée (customisation, API, pricing)' : '→ Full details (customisation, API, pricing)'}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
-
-
+              <div className="mt-4 flex justify-end">
+                <a
+                  href="/pricing"
+                  onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'instant' }); window.location.href = '/pricing'; }}
+                  className="inline-flex items-center gap-2 text-sm font-medium border rounded px-4 py-2 transition-colors hover:bg-slate-50"
+                  style={{ color: 'oklch(0.45 0.05 240)', borderColor: 'oklch(0.80 0.03 240)' }}
+                >
+                  {isFr ? 'Comparer les tarifs $/minute →' : 'Compare pricing $/minute →'}
+                </a>
+              </div>
             </div>
           )}
-
           {/* Open source */}
           {activeTab === "opensource" && (
             <div>
