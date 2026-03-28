@@ -44,7 +44,7 @@ export default function PlatformModeDiagram() {
       id: "avatar",
       label: "Avatar",
       sublabel: isFr ? "Génération vidéo" : "Video generation",
-      tooltip: isFr ? "HeyGem OS → R&D IDIAP. Goulot principal. GPU Exoscale (Suisse)." : "HeyGem OS → IDIAP R&D. Main bottleneck. Exoscale GPU (Switzerland).",
+      tooltip: isFr ? "HeyGem OS → R&D. Goulot principal. GPU Exoscale (Suisse)." : "HeyGem OS → R&D. Main bottleneck. Exoscale GPU (Switzerland).",
       color: "oklch(0.60 0.20 25)",
     },
   ];

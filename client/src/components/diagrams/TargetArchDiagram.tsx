@@ -1,6 +1,6 @@
 /*
  * TargetArchDiagram — DigiDouble Research Portal
- * Shows the target architecture: Gamilab (green) → IDIAP R&D (blue) → Memoways (yellow) → Experience
+ * Shows the target architecture: Gamilab (green) → R&D (blue) → Memoways (yellow) → Experience
  * i18n: EN (default) / FR via useLang
  */
 import { useLang } from "@/contexts/LangContext";
@@ -18,7 +18,7 @@ export default function TargetArchDiagram() {
         <rect x="10" y="8" width="10" height="10" rx="2" fill="#d4edda" stroke="#28a745" strokeWidth="1" />
         <text x="24" y="17" fontSize="7" fill="#155724" fontFamily="'JetBrains Mono', monospace">{isFr ? "Disponible" : "Available"}</text>
         <rect x="90" y="8" width="10" height="10" rx="2" fill="#cce5ff" stroke="#004085" strokeWidth="1" />
-        <text x="104" y="17" fontSize="7" fill="#004085" fontFamily="'JetBrains Mono', monospace">R&D IDIAP</text>
+        <text x="104" y="17" fontSize="7" fill="#004085" fontFamily="'JetBrains Mono', monospace">R&D</text>
         <rect x="175" y="8" width="10" height="10" rx="2" fill="#fff3cd" stroke="#856404" strokeWidth="1" />
         <text x="189" y="17" fontSize="7" fill="#856404" fontFamily="'JetBrains Mono', monospace">{isFr ? "Interne Memoways" : "Memoways Internal"}</text>
         <rect x="300" y="8" width="10" height="10" rx="2" fill="#fef2f2" stroke="#dc2626" strokeWidth="1.5" />
@@ -43,7 +43,7 @@ export default function TargetArchDiagram() {
 
         {/* ── ROW 2: R&D Block ── */}
         <rect x="320" y="30" width="380" height="100" rx="5" fill="#cce5ff" stroke="#004085" strokeWidth="1.5" />
-        <text x="510" y="48" textAnchor="middle" fontSize="7" fontWeight="700" letterSpacing="1" fill="#004085" fontFamily="'JetBrains Mono', monospace">{isFr ? "R&D — IDIAP + INNOSUISSE" : "R&D — IDIAP + INNOSUISSE"}</text>
+        <text x="510" y="48" textAnchor="middle" fontSize="7" fontWeight="700" letterSpacing="1" fill="#004085" fontFamily="'JetBrains Mono', monospace">{isFr ? "R&D" : "R&D"}</text>
 
         {/* Axis 1: Memory */}
         <rect x="330" y="55" width="82" height="65" rx="3" fill="white" stroke="#004085" strokeWidth="1" />
@@ -57,14 +57,14 @@ export default function TargetArchDiagram() {
         <text x="463" y="73" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#004085" fontFamily="'JetBrains Mono', monospace">{isFr ? "AXE 2a" : "AXIS 2a"}</text>
         <text x="463" y="85" textAnchor="middle" fontSize="8" fontWeight="700" fill="#0f172a">{isFr ? "TTS Expressif" : "Expressive TTS"}</text>
         <text x="463" y="97" textAnchor="middle" fontSize="6.5" fill="#475569">{isFr ? "Prosodique perso." : "Personalized prosody"}</text>
-        <text x="463" y="109" textAnchor="middle" fontSize="6" fill="#64748b" fontFamily="'JetBrains Mono', monospace">M. Magimai-Doss</text>
+        <text x="463" y="109" textAnchor="middle" fontSize="6" fill="#64748b" fontFamily="'JetBrains Mono', monospace"></text>
 
         {/* Axis 2b: Avatar — bottleneck */}
         <rect x="514" y="50" width="82" height="75" rx="3" fill="#fef2f2" stroke="#dc2626" strokeWidth="2" />
         <text x="555" y="68" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#dc2626" fontFamily="'JetBrains Mono', monospace">{isFr ? "AXE 2b ⚠" : "AXIS 2b ⚠"}</text>
         <text x="555" y="80" textAnchor="middle" fontSize="8" fontWeight="700" fill="#dc2626">{isFr ? "Génération Avatar" : "Avatar Generation"}</text>
         <text x="555" y="92" textAnchor="middle" fontSize="6.5" fill="#7f1d1d">{isFr ? "Fidélité comportementale" : "Behavioral fidelity"}</text>
-        <text x="555" y="104" textAnchor="middle" fontSize="6" fill="#64748b" fontFamily="'JetBrains Mono', monospace">M. Magimai-Doss</text>
+        <text x="555" y="104" textAnchor="middle" fontSize="6" fill="#64748b" fontFamily="'JetBrains Mono', monospace"></text>
         <text x="555" y="116" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#dc2626" fontFamily="'JetBrains Mono', monospace">⚠ &lt;500ms target</text>
 
         {/* Axis 3: Orchestration */}

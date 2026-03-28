@@ -44,7 +44,7 @@ const axes: Axis[] = [
     color: "oklch(0.60 0.20 25)",
     summary: "Avatar generation is the main bottleneck (5–10s). Target: <2s total via distillation + streaming.",
     summaryFr: "La génération avatar est le goulot principal (5–10s). Cible : <2s total via distillation + streaming.",
-    researcher: "Dr. Petr Motlicek · IDIAP",
+    researcher: "Speech & Audio Processing",
     details: [
       "Current pipeline: ASR (300ms) + LLM (800ms) + TTS (300ms) + Avatar (5–10s) + WebRTC (50ms) = 6–12s",
       "Target: each component under 500ms, avatar under 500ms via R&D",
@@ -80,7 +80,7 @@ const axes: Axis[] = [
     color: "oklch(0.72 0.18 200)",
     summary: "Maintain coherence over 1h+ sessions without exploding LLM context. 3-layer architecture.",
     summaryFr: "Maintenir la cohérence sur des sessions 1h+ sans exploser le contexte LLM. Architecture 3 couches.",
-    researcher: "Dr. Petr Motlicek · IDIAP",
+    researcher: "Speech & Audio Processing",
     details: [
       "Problem: naive approaches fail — full history is too expensive, truncation destroys continuity",
       "Solution: 3-layer memory — Working (in-context), Episodic (vector DB), Semantic (PostgreSQL)",
@@ -122,7 +122,7 @@ const axes: Axis[] = [
     color: "oklch(0.72 0.18 50)",
     summary: "Beyond lip-sync: extract micro-expressions, gestures, posture from video archives.",
     summaryFr: "Au-delà du lip-sync : extraire micro-expressions, gestes, posture depuis les archives vidéo.",
-    researcher: "Dr. Mathew Magimai-Doss · IDIAP",
+    researcher: "Computer Vision & Speech",
     details: [
       "Problem: current avatars look like the person but don't behave like them — uncanny valley of familiarity",
       "Goal: extract behavioral fingerprint from 10min of video (micro-expressions, gestural vocabulary, speech rhythm)",

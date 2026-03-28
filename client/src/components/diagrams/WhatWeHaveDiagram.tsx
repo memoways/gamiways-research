@@ -33,8 +33,8 @@ export default function WhatWeHaveDiagram() {
     multistream: isFr ? "Sync Multi-Stream\n5 flux · <100ms" : "Multi-Stream Sync\n5 streams · <100ms",
     gamilab: "Gamilab",
     memoways: "Memoways",
-    idiap: "IDIAP R&D",
-    innosuisse: "Innosuisse",
+    rnd: "R&D",
+    
   };
 
   return (
@@ -105,11 +105,11 @@ export default function WhatWeHaveDiagram() {
         <text x="599" y="143" textAnchor="middle" fontSize="6.5" fill="#7f1d1d" fontFamily="'JetBrains Mono', monospace">5–15s now</text>
         <text x="599" y="155" textAnchor="middle" fontSize="6.5" fill="#16a34a" fontFamily="'JetBrains Mono', monospace">&lt;500ms target</text>
 
-        {/* IDIAP badge */}
+        
         <rect x="300" y="175" width="55" height="14" rx="3" fill="#cce5ff" stroke="#004085" strokeWidth="0.5" />
-        <text x="327" y="185" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#004085" fontFamily="'JetBrains Mono', monospace">{labels.idiap}</text>
+        <text x="327" y="185" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#004085" fontFamily="'JetBrains Mono', monospace">{labels.rnd}</text>
         <rect x="363" y="175" width="60" height="14" rx="3" fill="#cce5ff" stroke="#004085" strokeWidth="0.5" />
-        <text x="393" y="185" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#004085" fontFamily="'JetBrains Mono', monospace">{labels.innosuisse}</text>
+        <text x="393" y="185" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#004085" fontFamily="'JetBrains Mono', monospace"></text>
 
         {/* Arrows between GAP blocks */}
         <line x1="345" y1="125" x2="353" y2="125" stroke="#94a3b8" strokeWidth="1" markerEnd="url(#arrSm)" />

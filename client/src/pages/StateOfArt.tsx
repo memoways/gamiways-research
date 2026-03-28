@@ -657,7 +657,7 @@ export default function StateOfArt() {
     },
     {
       layer: isFr ? "Avatar génération" : "Avatar generation",
-      primary: isFr ? "Architecture R&D (IDIAP + distillation)" : "R&D Architecture (IDIAP + distillation)",
+      primary: isFr ? "Architecture R&D (distillation + streaming)" : "R&D Architecture (distillation + streaming)",
       alt: isFr ? "HeyGem OS (phase transition)" : "HeyGem OS (transition phase)",
       latency: "<500ms (cible)",
       sovereign: true,
@@ -1704,8 +1704,8 @@ export default function StateOfArt() {
             </p>
             <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? <>La combinaison unique que vise DigiDouble — conversation IA + avatar photorealistic + séquençage vidéo intelligent + contrôle narratif/pédagogique + souveraineté — n'existe dans aucune solution commerciale ou open-source actuelle. Les gaps identifiés (mémoire long-terme, fidélité comportementale, latence avatar) correspondent précisément aux frontières de la recherche académique actuelle, ce qui justifie pleinement une collaboration avec l'IDIAP dans le cadre d'Innosuisse.</>
-                : <>The unique combination DigiDouble targets — AI conversation + photorealistic avatar + intelligent video sequencing + narrative/pedagogical control + sovereignty — does not exist in any current commercial or open-source solution. The identified gaps (long-term memory, behavioral fidelity, avatar latency) correspond precisely to the frontiers of current academic research, fully justifying a collaboration with IDIAP within the Innosuisse framework.</>
+                ? <>La combinaison unique que vise DigiDouble — conversation IA + avatar photorealistic + séquençage vidéo intelligent + contrôle narratif/pédagogique + souveraineté — n'existe dans aucune solution commerciale ou open-source actuelle. Les gaps identifiés (mémoire long-terme, fidélité comportementale, latence avatar) correspondent précisément aux frontières de la recherche académique actuelle, ce qui justifie pleinement un programme de recherche fondamentale.</>
+                : <>The unique combination DigiDouble targets — AI conversation + photorealistic avatar + intelligent video sequencing + narrative/pedagogical control + sovereignty — does not exist in any current commercial or open-source solution. The identified gaps (long-term memory, behavioral fidelity, avatar latency) correspond precisely to the frontiers of current academic research, fully justifying a fundamental research program.</>
               }
             </p>
           </div>

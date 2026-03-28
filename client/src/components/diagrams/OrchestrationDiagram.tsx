@@ -141,7 +141,7 @@ export default function OrchestrationDiagram() {
             : "R&D challenge: guarantee mandatory content coverage (deterministic) while maintaining conversational naturalness (organic)"}
         </text>
         <text x={(totalW + startX * 2) / 2} y={stepY + stepH + 142} textAnchor="middle" fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
-          {isFr ? "Hypothèse H4 — Axe 3 IDIAP" : "Hypothesis H4 — Axis 3 IDIAP"}
+          {isFr ? "Hypothèse H4 — Axe 3" : "Hypothesis H4 — Axis 3"}
         </text>
       </svg>
     </div>

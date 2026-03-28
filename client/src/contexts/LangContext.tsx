@@ -32,7 +32,7 @@ const translations: Record<Lang, Record<string, string>> = {
 
     // Footer
     "footer.collab": "A research collaboration between",
-    "footer.innosuisse": "Innosuisse project",
+    "footer.research": "Research project",
     "footer.rights": "All rights reserved.",
     "footer.portal": "Research Portal",
 
@@ -44,10 +44,10 @@ const translations: Record<Lang, Record<string, string>> = {
 
     // Home page
     "home.label": "RESEARCH PORTAL",
-    "home.badge": "INNOSUISSE / IDIAP",
+    "home.badge": "RESEARCH PORTAL",
     "home.title": "DigiDouble",
     "home.tagline": "Platform for creating interactive conversational experiences with video avatars — combining real-time AI dialogue, photorealistic avatar generation, and intelligent cinematographic sequencing.",
-    "home.desc": "This portal documents the fundamental research challenges for the Memoways × Gamilab × IDIAP collaboration, within an Innosuisse project.",
+    "home.desc": "This portal documents the fundamental research challenges for the DigiDouble project: real-time latency, conversational memory, and behavioral fidelity.",
     "home.cta.project": "Discover the project",
     "home.cta.sota": "State of the Art",
     "home.metric.latency_current": "Current latency",
@@ -68,7 +68,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "home.nav.01.title": "Context & Vision",
     "home.nav.01.desc": "Two founding projects, product architecture, competitive positioning.",
     "home.nav.02.title": "Research Challenges",
-    "home.nav.02.desc": "IDIAP axes: conversational memory, expressive avatar, orchestration.",
+    "home.nav.02.desc": "Research axes: conversational memory, expressive avatar, orchestration.",
     "home.nav.03.title": "State of the Art",
     "home.nav.03.desc": "Comparative analysis, benchmarks, research gaps, opportunities.",
 
@@ -91,7 +91,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "project.s4.subtitle": "Sovereign architecture, Swiss-hosted, privacy by design.",
     "project.s5.number": "05",
     "project.s5.title": "Research Collaboration",
-    "project.s5.subtitle": "Memoways × Gamilab × IDIAP — Innosuisse project.",
+    "project.s5.subtitle": "Memoways × Gamilab — Research collaboration.",
     "project.mode01": "MODE 01 — EDUGAMI",
     "project.mode01.title": "Pedagogical / \"Lean Forward\"",
     "project.mode01.desc": "Avatar tutor interacting with learners in a structured pedagogical environment. The user navigates through a knowledge graph, with the avatar guiding, questioning, and evaluating.",
@@ -107,17 +107,17 @@ const translations: Record<Lang, Record<string, string>> = {
     // Research page
     "research.label": "02 — RESEARCH CHALLENGES",
     "research.title": "Research Challenges",
-    "research.subtitle": "Fundamental research axes for the IDIAP collaboration",
-    "research.intro": "The DigiDouble project raises fundamental research questions at the intersection of several disciplines. These challenges are not mere engineering problems — they require advances in basic research to be solved. This document presents the three main axes identified in collaboration with IDIAP researchers.",
+    "research.subtitle": "Fundamental research axes for the DigiDouble project",
+    "research.intro": "The DigiDouble project raises fundamental research questions at the intersection of several disciplines. These challenges are not mere engineering problems — they require advances in basic research to be solved. This document presents the three main axes identified of the research program.",
     "research.s1.number": "01",
     "research.s1.title": "End-to-End Latency",
     "research.s1.subtitle": "A 6–10× reduction is needed to achieve natural conversational flow. Current estimates are extrapolated from partial component tests — end-to-end benchmarks are planned for spring 2026.",
     "research.s2.number": "02",
     "research.s2.title": "Conversational Memory",
-    "research.s2.subtitle": "Dr. Petr Motlicek · Speech & Audio Processing, IDIAP",
+    "research.s2.subtitle": "Speech & Audio Processing — Conversational AI",
     "research.s3.number": "03",
     "research.s3.title": "Expressive Avatar & Behavioral Fidelity",
-    "research.s3.subtitle": "Dr. Mathew Magimai-Doss · Speech & Audio Processing, IDIAP",
+    "research.s3.subtitle": "Computer Vision & Speech Synthesis — Avatar Generation",
     "research.s4.number": "04",
     "research.s4.title": "Open Research Questions",
     "research.s4.subtitle": "Unresolved questions structuring the research program.",
@@ -187,7 +187,7 @@ const translations: Record<Lang, Record<string, string>> = {
 
     // Footer
     "footer.collab": "Une collaboration de recherche entre",
-    "footer.innosuisse": "Projet Innosuisse",
+    "footer.research": "Projet de recherche",
     "footer.rights": "Tous droits réservés.",
     "footer.portal": "Research Portal",
 
@@ -199,10 +199,10 @@ const translations: Record<Lang, Record<string, string>> = {
 
     // Home page
     "home.label": "RESEARCH PORTAL",
-    "home.badge": "INNOSUISSE / IDIAP",
+    "home.badge": "RESEARCH PORTAL",
     "home.title": "DigiDouble",
     "home.tagline": "Plateforme de création d'expériences conversationnelles interactives avec avatars vidéo — combinant dialogue IA temps réel, génération d'avatar photorealistic et séquençage cinématographique intelligent.",
-    "home.desc": "Ce portail documente les défis de recherche fondamentale pour la collaboration Memoways × Gamilab × IDIAP, dans le cadre d'un projet Innosuisse.",
+    "home.desc": "Ce portail documente les défis de recherche fondamentale pour la projet DigiDouble : latence temps réel, mémoire conversationnelle et fidélité comportementale des avatars vidéo personnalisés.",
     "home.cta.project": "Découvrir le projet",
     "home.cta.sota": "État de l'art",
     "home.metric.latency_current": "Latence actuelle",
@@ -223,7 +223,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "home.nav.01.title": "Contexte & Vision",
     "home.nav.01.desc": "Deux projets fondateurs, architecture produit, positionnement compétitif.",
     "home.nav.02.title": "Défis de Recherche",
-    "home.nav.02.desc": "Axes IDIAP : mémoire conversationnelle, avatar expressif, orchestration.",
+    "home.nav.02.desc": "Axes de recherche : mémoire conversationnelle, avatar expressif, orchestration.",
     "home.nav.03.title": "État de l'Art",
     "home.nav.03.desc": "Analyse comparative, benchmarks, gaps de recherche, opportunités.",
 
@@ -246,7 +246,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "project.s4.subtitle": "Architecture souveraine, hébergée en Suisse, privacy by design.",
     "project.s5.number": "05",
     "project.s5.title": "Collaboration de Recherche",
-    "project.s5.subtitle": "Memoways × Gamilab × IDIAP — Projet Innosuisse.",
+    "project.s5.subtitle": "Memoways × Gamilab — Collaboration de recherche.",
     "project.mode01": "MODE 01 — EDUGAMI",
     "project.mode01.title": "Pédagogique / \"Lean Forward\"",
     "project.mode01.desc": "Avatar tuteur interagissant avec des apprenants dans un environnement pédagogique structuré. L'utilisateur navigue dans un graphe de connaissances, avec l'avatar qui guide, questionne et évalue.",
@@ -262,17 +262,17 @@ const translations: Record<Lang, Record<string, string>> = {
     // Research page
     "research.label": "02 — DÉFIS DE RECHERCHE",
     "research.title": "Défis de Recherche",
-    "research.subtitle": "Axes de recherche fondamentale pour la collaboration IDIAP",
-    "research.intro": "Le projet DigiDouble soulève des questions de recherche fondamentale à l'intersection de plusieurs disciplines. Ces défis ne sont pas de simples problèmes d'ingénierie — ils nécessitent des avancées en recherche fondamentale pour être résolus. Ce document présente les trois axes principaux identifiés en collaboration avec les chercheurs de l'IDIAP.",
+    "research.subtitle": "Axes de recherche fondamentale du projet DigiDouble",
+    "research.intro": "Le projet DigiDouble soulève des questions de recherche fondamentale à l'intersection de plusieurs disciplines. Ces défis ne sont pas de simples problèmes d'ingénierie — ils nécessitent des avancées en recherche fondamentale pour être résolus. Ce document présente les trois axes principaux identifiés du programme de recherche.",
     "research.s1.number": "01",
     "research.s1.title": "Latence End-to-End",
     "research.s1.subtitle": "Une réduction de 6–10× est nécessaire pour atteindre un flux conversationnel naturel. Les estimations actuelles sont extrapolées depuis des tests de composants partiels — les benchmarks end-to-end sont prévus pour le printemps 2026.",
     "research.s2.number": "02",
     "research.s2.title": "Mémoire Conversationnelle",
-    "research.s2.subtitle": "Dr. Petr Motlicek · Speech & Audio Processing, IDIAP",
+    "research.s2.subtitle": "Speech & Audio Processing — Conversational AI",
     "research.s3.number": "03",
     "research.s3.title": "Avatar Expressif & Fidélité Comportementale",
-    "research.s3.subtitle": "Dr. Mathew Magimai-Doss · Speech & Audio Processing, IDIAP",
+    "research.s3.subtitle": "Computer Vision & Speech Synthesis — Avatar Generation",
     "research.s4.number": "04",
     "research.s4.title": "Questions de Recherche Ouvertes",
     "research.s4.subtitle": "Questions non résolues structurant le programme de recherche.",

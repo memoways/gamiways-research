@@ -12,7 +12,7 @@ export default function ProductArchDiagram() {
 
   const engineComponents = [
     { x: 60,  label: isFr ? "Éditeur de Nœuds" : "Node Editor",      sub: isFr ? "Graphe conversationnel" : "Conversational graph",  color: "#0891b2" },
-    { x: 200, label: isFr ? "Mémoire IA" : "AI Memory",               sub: isFr ? "3 couches (R&D IDIAP)" : "3 layers (IDIAP R&D)",   color: "#7c3aed" },
+    { x: 200, label: isFr ? "Mémoire IA" : "AI Memory",               sub: isFr ? "3 couches (R&D)" : "3 layers (R&D)",   color: "#7c3aed" },
     { x: 340, label: isFr ? "Orchestration" : "Orchestration",        sub: isFr ? "Déterministe + Organique" : "Deterministic + Organic", color: "#0f172a" },
     { x: 480, label: "Avatar Engine",                                  sub: isFr ? "Génération temps réel" : "Real-time generation",   color: "#dc2626" },
     { x: 620, label: "Multi-Stream",                                   sub: isFr ? "5 flux synchronisés" : "5 synced streams",         color: "#16a34a" },

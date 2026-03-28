@@ -381,7 +381,7 @@ export default function Research() {
         "Swiss GPU infrastructure — Exoscale partnership for sovereign compute",
       ];
 
-  const idiapExpectations = isFr
+  const researchExpectations = isFr
     ? [
         "Recherche fondamentale sur les architectures mémoire pour IA conversationnelle longue durée",
         "Recherche en synthèse vocale pour TTS personnalisé, expressif, temps réel",
@@ -406,7 +406,7 @@ export default function Research() {
             <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">02</span>
             <span className="text-slate-300">·</span>
             <span className="text-xs font-mono text-slate-400">
-              {isFr ? "Défis de Recherche — IDIAP" : "Research Challenges — IDIAP"}
+              {isFr ? "Défis de Recherche" : "Research Challenges"}
             </span>
           </div>
           <h1 className="text-4xl font-black text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
@@ -414,8 +414,8 @@ export default function Research() {
           </h1>
           <p className="text-base text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "Trois axes pour la collaboration IDIAP, tous convergent vers un objectif central : une expérience conversationnelle fluide, personnalisée et proche du temps réel."
-              : "Three axes for the IDIAP collaboration, all converging toward a central goal: a fluid, personalized, near-real-time conversational experience."}
+              ? "Trois axes de recherche, tous convergent vers un objectif central : une expérience conversationnelle fluide, personnalisée et proche du temps réel."
+              : "Three research axes, all converging toward a central goal: a fluid, personalized, near-real-time conversational experience."}
           </p>
           {/* Axis overview pills */}
           <div className="flex flex-wrap gap-2 mt-4">
@@ -637,7 +637,7 @@ export default function Research() {
             <h2 className="text-2xl font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Mémoire 3 couches : cohérence sans surcharge contexte" : "3-layer memory: coherence without context overload"}
             </h2>
-            <p className="text-sm text-slate-400 font-mono mb-4">Dr. Petr Motlicek · IDIAP</p>
+            <p className="text-sm text-slate-400 font-mono mb-4">Speech & Audio Processing</p>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
                 ? "La mémoire est un sous-problème de la latence : chaque couche de mémoire doit être accessible sans ajouter de délai perceptible. Mem0 (2025) démontre −90% tokens, +26% précision — mais l'impact sur la latence de génération reste à mesurer dans notre contexte."
@@ -724,7 +724,7 @@ export default function Research() {
             <h2 className="text-2xl font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Deux flux indépendants, une sortie dual-stream" : "Two independent streams, one dual-stream output"}
             </h2>
-            <p className="text-sm text-slate-400 font-mono mb-2">Dr. Mathew Magimai-Doss · IDIAP</p>
+            <p className="text-sm text-slate-400 font-mono mb-2">Computer Vision & Speech</p>
             <p className="text-sm text-slate-500 leading-relaxed max-w-3xl mb-2" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
                 ? "Le système sépare strictement l'analyse des sources vidéo (Flux A, offline, non-critique) de la construction de l'avatar (Flux B, R&D principal). La vidéo d'entraînement de l'avatar n'est jamais jouée dans l'expérience. Le défi de l'Axe 2 est de rendre le Flux B assez rapide pour respecter le budget latence de l'Axe 1."
@@ -791,7 +791,7 @@ export default function Research() {
 
         {/* ── SECTION 5: PARTNERSHIP ──────────────────────────────────────── */}
         <section>
-          <SectionDivider number="06" title="IDIAP Partnership — Mutual Contributions" titleFr="Partenariat IDIAP — Apports Mutuels" isFr={isFr} />
+          <SectionDivider number="06" title="Research Collaboration — Mutual Contributions" titleFr="Collaboration de Recherche — Apports Mutuels" isFr={isFr} />
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -807,10 +807,10 @@ export default function Research() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "DigiDouble attend de l'IDIAP" : "DigiDouble expects from IDIAP"}
+                {isFr ? "DigiDouble recherche" : "DigiDouble seeks"}
               </h3>
               <div className="space-y-2">
-                {idiapExpectations.map((item) => (
+                {researchExpectations.map((item) => (
                   <div key={item} className="flex gap-2 p-2 border-l-2 pl-3" style={{ borderColor: "oklch(0.72 0.18 200)" }}>
                     <span className="text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>{item}</span>
                   </div>

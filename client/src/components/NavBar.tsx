@@ -93,15 +93,15 @@ export default function NavBar() {
             </div>
 
             <a
-              href="https://www.idiap.ch"
+              
               target="_blank"
               rel="noopener noreferrer"
               className="hidden md:flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-600 transition-colors no-underline"
               style={{ fontFamily: "'JetBrains Mono', monospace" }}
             >
-              <span>IDIAP</span>
+              
               <span className="text-slate-300">·</span>
-              <span>Innosuisse</span>
+              
             </a>
 
             {/* Mobile menu toggle */}

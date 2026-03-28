@@ -65,7 +65,7 @@ export default function Home() {
             </span>
             <span className="text-slate-300">·</span>
             <span className="text-xs font-mono px-2 py-0.5 rounded border" style={{ borderColor: "oklch(0.72 0.18 200 / 0.4)", color: "oklch(0.45 0.18 200)", background: "oklch(0.97 0.02 200)" }}>
-              INNOSUISSE / IDIAP
+              RESEARCH PORTAL
             </span>
           </div>
           <h1 className="text-5xl font-black text-slate-900 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.04em" }}>
@@ -180,7 +180,7 @@ export default function Home() {
           <SectionDivider number="03" title="3 Research Axes" titleFr="3 Axes de Recherche" isFr={isFr} />
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
-              {isFr ? "Les défis fondamentaux pour l'IDIAP." : "The fundamental challenges for IDIAP."}
+              {isFr ? "Les défis fondamentaux de la recherche." : "The fundamental research challenges."}
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
@@ -231,8 +231,8 @@ export default function Home() {
             <div className="pt-3">
               <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
-                  ? "La combinaison unique que vise DigiDouble — temps réel + fidélité comportementale + souveraineté + mémoire conversationnelle + contrôle narratif — n'existe dans aucune solution commerciale ou open-source actuelle. Les trois critères marqués R&D correspondent précisément aux frontières de la recherche académique actuelle (NeurIPS 2024, arXiv 2025–2026), ce qui justifie pleinement une collaboration avec l'IDIAP dans le cadre d'Innosuisse."
-                  : "The unique combination DigiDouble targets — real-time + behavioral fidelity + sovereignty + conversational memory + narrative control — does not exist in any current commercial or open-source solution. The three R&D criteria correspond precisely to the frontiers of current academic research (NeurIPS 2024, arXiv 2025–2026), fully justifying a collaboration with IDIAP within the Innosuisse framework."}
+                  ? "La combinaison unique que vise DigiDouble — temps réel + fidélité comportementale + souveraineté + mémoire conversationnelle + contrôle narratif — n'existe dans aucune solution commerciale ou open-source actuelle. Les trois critères marqués R&D correspondent précisément aux frontières de la recherche académique actuelle (NeurIPS 2024, arXiv 2025–2026), ce qui justifie pleinement un programme de recherche fondamentale."
+                  : "The unique combination DigiDouble targets — real-time + behavioral fidelity + sovereignty + conversational memory + narrative control — does not exist in any current commercial or open-source solution. The three R&D criteria correspond precisely to the frontiers of current academic research (NeurIPS 2024, arXiv 2025–2026), fully justifying a fundamental research program."}
               </p>
             </div>
           </ToggleBlock>
@@ -275,7 +275,7 @@ export default function Home() {
                 icon: <Layers size={18} />,
                 href: "/research",
                 title: isFr ? "Défis de Recherche" : "Research Challenges",
-                desc: isFr ? "Axes IDIAP : latence, mémoire conversationnelle, avatar expressif." : "IDIAP axes: latency, conversational memory, expressive avatar.",
+                desc: isFr ? "Axes de recherche : latence, mémoire conversationnelle, avatar expressif." : "Research axes: latency, conversational memory, expressive avatar.",
                 color: "oklch(0.60 0.20 25)",
               },
               {

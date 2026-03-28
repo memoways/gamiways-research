@@ -26,7 +26,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4 text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            <span>IDIAP {t("footer.collab").includes("collaboration") ? "collaboration" : "collaboration"} · {t("footer.innosuisse")}</span>
+            <span>{t("footer.portal")}</span>
             <span className="hidden md:inline text-slate-200">|</span>
             <span>Project 2025–2028</span>
             <span className="hidden md:inline text-slate-200">|</span>

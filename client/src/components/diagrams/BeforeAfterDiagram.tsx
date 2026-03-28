@@ -134,10 +134,10 @@ export default function BeforeAfterDiagram() {
     },
     {
       label: "Avatar",
-      sublabel: isFr ? "R&D IDIAP" : "IDIAP R&D",
+      sublabel: isFr ? "R&D" : "R&D",
       latency: "<500ms",
       color: "oklch(0.65 0.18 145)",
-      tooltip: isFr ? "Architecture R&D : distillation + cache intelligent + dégradation gracieuse. Objectif de la collaboration IDIAP." : "R&D architecture: distillation + intelligent cache + graceful degradation. IDIAP collaboration goal.",
+      tooltip: isFr ? "Architecture R&D : distillation + cache intelligent + dégradation gracieuse. Objectif de l'architecture R&D." : "R&D architecture: distillation + intelligent cache + graceful degradation. R&D architecture goal.",
     },
     {
       label: "WebRTC",
