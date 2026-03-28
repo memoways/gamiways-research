@@ -13,6 +13,7 @@ import ResearchGapDiagram from "@/components/diagrams/ResearchGapDiagram";
 import DiagramModal from "@/components/DiagramModal";
 import PositioningDiagram from "@/components/diagrams/PositioningDiagram";
 import { useLang } from "@/contexts/LangContext";
+import InternalLink from "@/components/InternalLink";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -1515,8 +1516,8 @@ export default function StateOfArt() {
             </p>
             <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? <>Il est impossible d'optimiser simultanément les trois dimensions avec les approches actuelles. Les plateformes à faible latence (&lt;100ms) comme Beyond Presence ou NVIDIA ACE nécessitent une infrastructure propriétaire coûteuse. Les solutions open-source souveraines restent à 2–15s. La recherche fondamentale est nécessaire pour trouver des architectures permettant de briser ce trilemme.</>
-                : <>It is impossible to simultaneously optimize all three dimensions with current approaches. Low-latency platforms (&lt;100ms) like Beyond Presence or NVIDIA ACE require costly proprietary infrastructure. Sovereign open-source solutions remain at 2–15s. Fundamental research is needed to find architectures that break this trilemma.</>
+                ? <>Il est impossible d'optimiser simultanément les trois dimensions avec les approches actuelles. Les plateformes à faible latence (&lt;100ms) comme Beyond Presence ou NVIDIA ACE nécessitent une infrastructure propriétaire coûteuse. Les solutions open-source souveraines restent à 2–15s. La recherche fondamentale est nécessaire pour trouver des architectures permettant de briser ce trilemme.{" "}<InternalLink to="/research">Voir les défis de recherche →</InternalLink></>
+                : <>It is impossible to simultaneously optimize all three dimensions with current approaches. Low-latency platforms (&lt;100ms) like Beyond Presence or NVIDIA ACE require costly proprietary infrastructure. Sovereign open-source solutions remain at 2–15s. Fundamental research is needed to find architectures that break this trilemma.{" "}<InternalLink to="/research">See Research Challenges →</InternalLink></>
               }
             </p>
           </div>

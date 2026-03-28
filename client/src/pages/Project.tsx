@@ -12,6 +12,7 @@ import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
 import DiagramModal from "@/components/DiagramModal";
 import StatusBadge from "@/components/StatusBadge";
 import { useLang } from "@/contexts/LangContext";
+import InternalLink from "@/components/InternalLink";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
   return (
@@ -200,7 +201,10 @@ export default function Project() {
               {isFr ? "Aucune solution ne combine les 5 critères." : "No solution combines all 5 criteria."}
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
-              {isFr ? "Hover sur les cellules pour les détails." : "Hover over cells for details."}
+              {isFr
+                ? <>Hover sur les cellules pour les détails. Benchmarks latence complets dans l'<InternalLink to="/state-of-art">État de l'Art</InternalLink>.</>
+                : <>Hover over cells for details. Full latency benchmarks in <InternalLink to="/state-of-art">State of the Art</InternalLink>.</>
+              }
             </p>
           </div>
           <DiagramModal title="Competitive Gap Matrix">
@@ -215,6 +219,12 @@ export default function Project() {
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "HeyGen · Synthesia · Flowise vs DigiDouble" : "HeyGen · Synthesia · Flowise vs DigiDouble"}
             </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? <>Comparaison sur 7 critères. Analyse complète des 11 solutions dans l'<InternalLink to="/state-of-art">État de l'Art</InternalLink>. Défis R&D détaillés dans les <InternalLink to="/research">Défis de Recherche</InternalLink>.</>
+                : <>Comparison on 7 criteria. Full analysis of 11 solutions in <InternalLink to="/state-of-art">State of the Art</InternalLink>. R&D challenges detailed in <InternalLink to="/research">Research Challenges</InternalLink>.</>
+              }
+            </p>
           </div>
 
           {/* Radar */}

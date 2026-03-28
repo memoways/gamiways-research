@@ -14,6 +14,7 @@
  * - Added UX latency metrics: TTFR, TTFA, TTFB
  */
 import { useState } from "react";
+import InternalLink from "@/components/InternalLink";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import MemoryArchDiagram from "@/components/diagrams/MemoryArchDiagram";
 import VideoPipelineDiagram from "@/components/diagrams/VideoPipelineDiagram";
@@ -502,9 +503,15 @@ export default function Research() {
           </div>
 
           {/* Competitor latency benchmark */}
-          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             {isFr ? "Benchmark latence comparatif (mars 2026)" : "Comparative latency benchmark (March 2026)"}
           </h3>
+          <p className="text-xs text-slate-400 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? <>Données issues de l'analyse de 11 solutions. Fiches techniques complètes dans l'<InternalLink to="/state-of-art">État de l'Art</InternalLink>.</>
+              : <>Data from analysis of 11 solutions. Full technical profiles in <InternalLink to="/state-of-art">State of the Art</InternalLink>.</>
+            }
+          </p>
           <div className="overflow-x-auto mb-8">
             <table className="data-table">
               <thead>

@@ -14,6 +14,7 @@ import TechStackDiagram from "@/components/diagrams/TechStackDiagram";
 import WhatWeHaveDiagram from "@/components/diagrams/WhatWeHaveDiagram";
 import DiagramModal from "@/components/DiagramModal";
 import { useLang } from "@/contexts/LangContext";
+import InternalLink from "@/components/InternalLink";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
   return (
@@ -184,8 +185,14 @@ export default function Home() {
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Ces trois axes ne sont pas des problèmes d'ingénierie — ils nécessitent des avancées en recherche fondamentale. Cliquer sur un axe pour les détails."
-                : "These three axes are not engineering problems — they require advances in fundamental research. Click an axis for details."}
+                ? <>
+                    Ces trois axes ne sont pas des problèmes d'ingénierie — ils nécessitent des avancées en recherche fondamentale.{" "}
+                    <InternalLink to="/research">Détails des défis de recherche →</InternalLink>
+                  </>
+                : <>
+                    These three axes are not engineering problems — they require advances in fundamental research.{" "}
+                    <InternalLink to="/research">Full Research Challenges →</InternalLink>
+                  </>}
             </p>
           </div>
 
@@ -222,8 +229,19 @@ export default function Home() {
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Voir l'analyse comparative complète avec schéma radar et matrice dans la page Projet et État de l'Art."
-                : "See the full comparative analysis with radar chart and matrix in the Project and State of the Art pages."}
+                ? <>
+                    Voir l'analyse comparative complète avec schéma radar et matrice dans la{" "}
+                    <InternalLink to="/project">page Projet</InternalLink>{" "}
+                    et{" "}
+                    <InternalLink to="/state-of-art">État de l'Art</InternalLink>.
+                  </>
+                : <>
+                    See the full comparative analysis with radar chart and matrix in the{" "}
+                    <InternalLink to="/project">Project</InternalLink>{" "}
+                    and{" "}
+                    <InternalLink to="/state-of-art">State of the Art</InternalLink>{" "}
+                    pages.
+                  </>}
             </p>
           </div>
 
