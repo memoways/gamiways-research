@@ -39,7 +39,7 @@ export default function RadarCompareDiagram() {
   const gridLevels = [2, 4, 6, 8, 10];
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-hidden">
       <svg viewBox="0 0 783 540" width="100%" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
         {/* Title */}
         <text x="20" y="22" fontSize="13" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace" letterSpacing="1">

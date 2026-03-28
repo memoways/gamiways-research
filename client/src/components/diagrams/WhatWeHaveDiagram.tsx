@@ -38,9 +38,9 @@ export default function WhatWeHaveDiagram() {
   };
 
   return (
-    <div className="w-full overflow-x-auto">
-      <svg viewBox="0 0 1215 432" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 945 }}>
-        <g transform="scale(1.35) translate(0, 0)">
+    <div className="w-full overflow-hidden">
+      <svg viewBox="0 0 900 280" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", display: "block" }}>
+        <g>
 
         {/* ── Background zones ── */}
         {/* Available zone (green) */}

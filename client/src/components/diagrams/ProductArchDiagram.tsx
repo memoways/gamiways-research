@@ -7,8 +7,8 @@ import { useLang } from "@/contexts/LangContext";
 export default function ProductArchDiagram() {
   const { lang } = useLang();
   const isFr = lang === "fr";
-  const W = 1026;
-  const H = 459;
+  const W = 780;
+  const H = 340;
 
   const engineComponents = [
     { x: 60,  label: isFr ? "Éditeur de Nœuds" : "Node Editor",      sub: isFr ? "Graphe conversationnel" : "Conversational graph",  color: "#0891b2" },
@@ -19,8 +19,8 @@ export default function ProductArchDiagram() {
   ];
 
   return (
-    <div className="w-full overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+    <div className="w-full overflow-hidden">
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ fontFamily: "'Space Grotesk', sans-serif", display: "block" }}>
         {/* Title */}
         <text x="20" y="18" fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace" letterSpacing="1">
           {isFr ? "ARCHITECTURE PRODUIT — DEUX MODES, UN MOTEUR PARTAGÉ" : "PRODUCT ARCHITECTURE — TWO MODES, ONE SHARED ENGINE"}
@@ -74,8 +74,8 @@ export default function ProductArchDiagram() {
         <polygon points="566,164 570,170 574,164" fill="#d97706" opacity="0.5" />
 
         {/* Shared engine */}
-        <rect x={40} y={170} width={680} height={130} rx={4} fill="#f8fafc" stroke="#334155" strokeWidth="2" />
-        <text x={380} y={190} textAnchor="middle" fontSize="10" fontWeight="700" fill="#334155" fontFamily="'JetBrains Mono', monospace">
+        <rect x={40} y={170} width={700} height={130} rx={4} fill="#f8fafc" stroke="#334155" strokeWidth="2" />
+        <text x={390} y={190} textAnchor="middle" fontSize="10" fontWeight="700" fill="#334155" fontFamily="'JetBrains Mono', monospace">
           {isFr ? "MOTEUR PARTAGÉ — DigiDouble Core" : "SHARED ENGINE — DigiDouble Core"}
         </text>
 
@@ -104,7 +104,7 @@ export default function ProductArchDiagram() {
         </text>
 
         {/* Bottom note */}
-        <text x={380} y={330} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
+        <text x={390} y={315} textAnchor="middle" fontSize="9" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
           {isFr
             ? "Analogie: Final Cut Pro — puissant ET utilisable par des créateurs non-techniques"
             : "Analogy: Final Cut Pro — powerful AND usable by non-technical creators"}

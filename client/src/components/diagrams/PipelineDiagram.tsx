@@ -27,7 +27,7 @@ export default function PipelineDiagram() {
   const Y_CENTER = 88;
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-hidden">
       <div style={{ minWidth: `${TOTAL_W + 40}px` }}>
         <svg
           viewBox={`0 0 ${TOTAL_W + 40} ${SVG_H}`}

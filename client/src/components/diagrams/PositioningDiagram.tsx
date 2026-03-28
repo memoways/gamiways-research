@@ -244,7 +244,7 @@ export default function PositioningDiagram() {
       </div>
 
       {/* SVG Chart */}
-      <div className="relative w-full overflow-x-auto">
+      <div className="relative w-full overflow-hidden">
         <svg
           viewBox={`0 0 ${W} ${H}`}
           className="w-full max-w-2xl mx-auto"

@@ -61,9 +61,9 @@ export default function VideoPipelineDiagram() {
   };
 
   return (
-    <div className="w-full overflow-x-auto">
-      <svg viewBox="0 0 1242 702" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 1026 }}>
-        <g transform="scale(1.35)">
+    <div className="w-full overflow-hidden">
+      <svg viewBox="0 0 920 450" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", display: "block" }}>
+        <g>
 
         {/* ─────────────────────────────────────────────────────────────────────
             STREAM A — Source Video Analysis (top half)

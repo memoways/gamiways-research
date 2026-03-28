@@ -50,7 +50,7 @@ export default function LatencyBenchmarkDiagram() {
   const targetLine = barW(2000);
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-hidden">
       <svg
         viewBox={`0 0 ${SVG_W} ${SVG_H}`}
         width="100%"

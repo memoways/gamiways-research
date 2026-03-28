@@ -114,7 +114,7 @@ export default function GapMatrixDiagram() {
   const isFr = lang === "fr";
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-hidden">
       <table className="w-full border-collapse" style={{ minWidth: "700px" }}>
         <thead>
           <tr>

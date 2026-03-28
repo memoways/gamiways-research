@@ -52,8 +52,8 @@ export default function OrchestrationDiagram() {
   const totalW = steps.length * (stepW + gap) - gap;
 
   return (
-    <div className="w-full overflow-x-auto">
-      <svg viewBox={`0 0 ${totalW + startX * 2} 420`} className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: 900 }}>
+    <div className="w-full overflow-hidden">
+      <svg viewBox={`0 0 ${totalW + startX * 2} 420`} className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", minWidth: "auto" }}>
 
         {/* ── Title ── */}
         <text x={(totalW + startX * 2) / 2} y="28" textAnchor="middle" fontSize="13" fontWeight="700" fill="#0f172a" fontFamily="'JetBrains Mono', monospace" letterSpacing="0.5">
