@@ -91,7 +91,7 @@ export default function Home() {
               </button>
             </Link>
             <a
-              href="https://d2xsxph8kpxj0f.cloudfront.net/117184650/JCUDa4RfVRrK7WLqtd9JFw/digidouble-technical-brief_8d0c623a.pdf"
+              href="https://d2xsxph8kpxj0f.cloudfront.net/117184650/JCUDa4RfVRrK7WLqtd9JFw/digidouble-technical-brief-v2_82604bce.pdf"
               download="DigiDouble-Technical-Brief.pdf"
               target="_blank"
               rel="noopener noreferrer"
