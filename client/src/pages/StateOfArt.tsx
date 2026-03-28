@@ -11,6 +11,7 @@ import LatencyBenchmarkDiagram from "@/components/diagrams/LatencyBenchmarkDiagr
 import ResearchAxesDiagram from "@/components/diagrams/ResearchAxesDiagram";
 import ResearchGapDiagram from "@/components/diagrams/ResearchGapDiagram";
 import DiagramModal from "@/components/DiagramModal";
+import PositioningDiagram from "@/components/diagrams/PositioningDiagram";
 import { useLang } from "@/contexts/LangContext";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -1530,7 +1531,22 @@ export default function StateOfArt() {
             accent="red"
           />
 
-          {/* Diagrams first */}
+          {/* Positioning diagram — full width */}
+          <div className="mb-6">
+            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Positionnement concurrentiel : Latence × Souveraineté" : "Competitive Positioning: Latency × Sovereignty"}
+            </h3>
+            <div className="border border-slate-200 rounded-lg p-5" style={{ background: "oklch(0.99 0.003 200)" }}>
+              <p className="text-xs text-slate-500 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "Le gap DigiDouble est visible : les solutions rapides n'ont pas de souveraineté, les solutions souveraines ne sont pas rapides. La flèche pointillée matérialise l'objectif R&D Axe 1."
+                  : "The DigiDouble gap is visible: fast solutions have no sovereignty, sovereign solutions are not fast. The dashed arrow materializes the Axis 1 R&D goal."}
+              </p>
+              <PositioningDiagram />
+            </div>
+          </div>
+
+          {/* Diagrams grid */}
           <div className="grid md:grid-cols-2 gap-6 mb-6">
             <div>
               <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>

@@ -21,6 +21,7 @@ import ConversationFlowDiagram from "@/components/diagrams/ConversationFlowDiagr
 import TargetArchDiagram from "@/components/diagrams/TargetArchDiagram";
 import OrchestrationDiagram from "@/components/diagrams/OrchestrationDiagram";
 import DiagramModal from "@/components/DiagramModal";
+import PositioningDiagram from "@/components/diagrams/PositioningDiagram";
 import { useLang } from "@/contexts/LangContext";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
@@ -546,6 +547,19 @@ export default function Research() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Positioning diagram */}
+          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            {isFr ? "Positionnement concurrentiel : Latence × Souveraineté" : "Competitive positioning: Latency × Sovereignty"}
+          </h3>
+          <div className="border border-slate-200 rounded-lg p-5 mb-8" style={{ background: "oklch(0.99 0.003 200)" }}>
+            <p className="text-xs text-slate-500 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Le gap DigiDouble est visible : les solutions rapides n'ont pas de souveraineté, les solutions souveraines ne sont pas rapides. L'objectif R&D est de combler ce gap (flèche pointillée)."
+                : "The DigiDouble gap is visible: fast solutions have no sovereignty, sovereign solutions are not fast. The R&D goal is to bridge this gap (dashed arrow)."}
+            </p>
+            <PositioningDiagram />
           </div>
 
           {/* UX metrics */}
