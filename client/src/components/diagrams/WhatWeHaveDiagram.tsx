@@ -1,167 +1,328 @@
 /*
- * WhatWeHaveDiagram — DigiDouble Research Portal
- * Shows: Available (green) vs Gap/R&D (blue) vs Internal expertise (yellow)
- * Full pipeline: USER → Sovereign ASR → [GAP: Orchestration/Memory/LLM/TTS/Avatar] → Multi-Stream → EXPERIENCE
- * i18n: EN (default) / FR via useLang
+ * WhatWeHaveDiagram — DigiDouble pipeline overview
+ * Design: HTML/CSS responsive (vertical on mobile, horizontal on desktop)
+ * 3 zones:
+ *   GREEN  = Available (Gamilab / Audiogami ASR)
+ *   BLUE   = R&D Innosuisse + IDIAP (Memory, TTS, Avatar)
+ *   YELLOW = R&D interne Memoways (Orchestration wrapping Memory+LLM+TTS, Multi-Stream Sync)
+ * Output: EXPERIENCE (Edugami + Storygami) — Target <2s
  */
+import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 
-export default function WhatWeHaveDiagram() {
-  const { t } = useLang();
-  const isFr = t("nav.home") === "Accueil";
+const C = {
+  available: { border: "#16a34a", bg: "#f0fdf4", text: "#15803d", badge: "#dcfce7" },
+  innosuisse: { border: "#2563eb", bg: "#eff6ff", text: "#1d4ed8", badge: "#dbeafe" },
+  memoways:   { border: "#d97706", bg: "#fffbeb", text: "#b45309", badge: "#fef3c7" },
+  output:     { border: "#0891b2", bg: "#ecfeff", text: "#0e7490", badge: "#cffafe" },
+  bottleneck: { border: "#dc2626", bg: "#fef2f2", text: "#b91c1c", badge: "#fee2e2" },
+  neutral:    { border: "#cbd5e1", bg: "#f8fafc", text: "#334155", badge: "#f1f5f9" },
+};
 
-  const labels = {
-    user: isFr ? "UTILISATEUR" : "USER",
-    userSub: isFr ? "Voix / Texte" : "Voice / Text",
-    available: isFr ? "DISPONIBLE" : "AVAILABLE",
-    gap: isFr ? "GAP — R&D Requis" : "GAP — R&D Required",
-    internal: isFr ? "EXPERTISE INTERNE" : "INTERNAL EXPERTISE",
-    experience: isFr ? "EXPÉRIENCE" : "EXPERIENCE",
-    experienceSub: isFr ? "Cible <2s" : "Target <2s",
-    asr: isFr ? "ASR Souverain\nAudiogami" : "Sovereign ASR\nAudiogami",
-    asrSub: isFr ? "Hébergé CH · Production" : "Swiss-hosted · Production",
-    orch: isFr ? "Orchestration" : "Orchestration",
-    orchSub: isFr ? "Agentique" : "Agentic",
-    mem: isFr ? "Mémoire" : "Memory",
-    memSub: isFr ? "Long terme" : "Long-term",
-    llm: "LLM / SLM",
-    llmSub: isFr ? "Génération" : "Generation",
-    tts: "TTS",
-    ttsSub: isFr ? "Voix expressive" : "Expressive voice",
-    avatar: isFr ? "Avatar" : "Avatar",
-    avatarSub: isFr ? "⚠ Goulot" : "⚠ Bottleneck",
-    multistream: isFr ? "Sync Multi-Stream\n5 flux · <100ms" : "Multi-Stream Sync\n5 streams · <100ms",
-    gamilab: "Gamilab",
-    memoways: "Memoways",
-    rnd: "R&D",
-    
-  };
+interface BlockDef {
+  id: string;
+  label: { en: string; fr: string };
+  sub: { en: string; fr: string };
+  axis?: { en: string; fr: string };
+  zone: keyof typeof C;
+  bottleneck?: boolean;
+  tooltip: { en: string; fr: string };
+}
+
+const BLOCKS: BlockDef[] = [
+  {
+    id: "asr",
+    label: { en: "Sovereign ASR", fr: "ASR Souverain" },
+    sub: { en: "Audiogami · Swiss-hosted · Production", fr: "Audiogami · Hébergé CH · Production" },
+    axis: { en: "Gamilab", fr: "Gamilab" },
+    zone: "available",
+    tooltip: {
+      en: "Production-grade speech-to-text pipeline. Swiss-hosted, HITL optional, API + SDK. Available now.",
+      fr: "Pipeline STT production. Hébergé en Suisse, HITL optionnel, API + SDK. Disponible maintenant.",
+    },
+  },
+  {
+    id: "memory",
+    label: { en: "Memory", fr: "Mémoire" },
+    sub: { en: "Long-term · 3-layer arch.", fr: "Long terme · Archi. 3 couches" },
+    axis: { en: "Axis 1 · IDIAP", fr: "Axe 1 · IDIAP" },
+    zone: "innosuisse",
+    tooltip: {
+      en: "Long-term conversational memory without token explosion. 3-layer architecture. Fundamental research — Innosuisse + IDIAP.",
+      fr: "Mémoire conversationnelle longue durée sans explosion de tokens. Architecture 3 couches. Recherche fondamentale — Innosuisse + IDIAP.",
+    },
+  },
+  {
+    id: "llm",
+    label: { en: "LLM / SLM", fr: "LLM / SLM" },
+    sub: { en: "Generation · Sovereign", fr: "Génération · Souverain" },
+    axis: { en: "Memoways R&D", fr: "R&D Memoways" },
+    zone: "memoways",
+    tooltip: {
+      en: "Language model for response generation. External (GPT-4o, Mistral) or self-hosted SLM on Exoscale GPU. Optimization: Memoways internal R&D.",
+      fr: "Modèle de langage pour la génération de réponses. Externe (GPT-4o, Mistral) ou SLM auto-hébergé sur GPU Exoscale. Optimisation : R&D interne Memoways.",
+    },
+  },
+  {
+    id: "tts",
+    label: { en: "TTS", fr: "TTS" },
+    sub: { en: "Expressive voice · <200ms", fr: "Voix expressive · <200ms" },
+    axis: { en: "Axis 2a · IDIAP", fr: "Axe 2a · IDIAP" },
+    zone: "innosuisse",
+    tooltip: {
+      en: "Personalized prosodic TTS: capture of individual prosodic fingerprint. Target: <200ms. Fundamental research — Innosuisse + IDIAP.",
+      fr: "TTS prosodique personnalisé : capture de l'empreinte prosodique individuelle. Cible : <200ms. Recherche fondamentale — Innosuisse + IDIAP.",
+    },
+  },
+  {
+    id: "avatar",
+    label: { en: "Avatar", fr: "Avatar" },
+    sub: { en: "Real-time · Body language", fr: "Temps réel · Langage corporel" },
+    axis: { en: "Axis 2b · IDIAP ⚠", fr: "Axe 2b · IDIAP ⚠" },
+    zone: "innosuisse",
+    bottleneck: true,
+    tooltip: {
+      en: "Real-time expressive avatar with body language. Critical bottleneck: 6–12s now → <500ms target. Fundamental research — Innosuisse + IDIAP.",
+      fr: "Avatar expressif temps réel avec langage corporel. Goulot critique : 6–12s actuellement → cible <500ms. Recherche fondamentale — Innosuisse + IDIAP.",
+    },
+  },
+  {
+    id: "multistream",
+    label: { en: "Multi-Stream Sync", fr: "Sync Multi-Stream" },
+    sub: { en: "5 streams · <100ms · Node editor", fr: "5 flux · <100ms · Éditeur nœuds" },
+    axis: { en: "Memoways · 14y expertise", fr: "Memoways · 14 ans d'expertise" },
+    zone: "memoways",
+    tooltip: {
+      en: "Sync of 5 media streams (video, audio, subtitles, quiz, nav). Node editor for non-technical creators. 14 years of Memoways multimedia expertise.",
+      fr: "Sync de 5 flux médias (vidéo, audio, sous-titres, quiz, nav). Éditeur de nœuds pour créateurs non-techniques. 14 ans d'expertise multimédia Memoways.",
+    },
+  },
+];
+
+function PipeBlock({ b, isFr, hovered, setHovered }: {
+  b: BlockDef; isFr: boolean;
+  hovered: string | null; setHovered: (id: string | null) => void;
+}) {
+  const isHov = hovered === b.id;
+  const c = b.bottleneck ? C.bottleneck : C[b.zone];
+  return (
+    <button
+      className="flex flex-col gap-0.5 px-3 py-2.5 rounded-lg text-left transition-all duration-150 w-full md:w-auto"
+      style={{
+        border: `1.5px solid ${c.border}`,
+        background: isHov ? c.bg : "white",
+        boxShadow: isHov ? `0 0 0 3px ${c.border}22` : "none",
+        minWidth: "90px",
+        maxWidth: "160px",
+        cursor: "pointer",
+      }}
+      onMouseEnter={() => setHovered(b.id)}
+      onMouseLeave={() => setHovered(null)}
+      onFocus={() => setHovered(b.id)}
+      onBlur={() => setHovered(null)}
+    >
+      <span className="text-sm font-bold leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif", color: c.text }}>
+        {isFr ? b.label.fr : b.label.en}
+      </span>
+      <span className="text-[10px] leading-tight font-mono" style={{ color: "#64748b" }}>
+        {isFr ? b.sub.fr : b.sub.en}
+      </span>
+      {b.axis && (
+        <span className="text-[9px] font-mono font-bold mt-0.5" style={{ color: b.bottleneck ? C.bottleneck.text : c.border }}>
+          {isFr ? b.axis.fr : b.axis.en}
+        </span>
+      )}
+      {b.bottleneck && (
+        <span className="text-[9px] font-mono font-bold" style={{ color: C.bottleneck.text }}>
+          ⚠ 6–12s → &lt;500ms
+        </span>
+      )}
+    </button>
+  );
+}
+
+function Arrow({ vertical = false }: { vertical?: boolean }) {
+  if (vertical) {
+    return (
+      <div className="flex justify-center py-0.5">
+        <svg width="16" height="20" viewBox="0 0 16 20">
+          <line x1="8" y1="1" x2="8" y2="15" stroke="#94a3b8" strokeWidth="1.5" />
+          <polygon points="4,13 8,19 12,13" fill="#94a3b8" />
+        </svg>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center px-0.5 shrink-0">
+      <svg width="22" height="14" viewBox="0 0 22 14">
+        <line x1="1" y1="7" x2="16" y2="7" stroke="#94a3b8" strokeWidth="1.5" />
+        <polygon points="14,3 21,7 14,11" fill="#94a3b8" />
+      </svg>
+    </div>
+  );
+}
+
+export default function WhatWeHaveDiagram() {
+  const { lang } = useLang();
+  const isFr = lang === "fr";
+  const [hovered, setHovered] = useState<string | null>(null);
+
+  const hBlock = hovered ? BLOCKS.find((b) => b.id === hovered) : null;
+
+  const latencyItems = [
+    { label: "ASR+STT", value: "<300ms", zone: "available" as const },
+    { label: isFr ? "Orchestration" : "Orchestration", value: "<200ms", zone: "memoways" as const },
+    { label: "LLM/SLM", value: "<500ms", zone: "memoways" as const },
+    { label: "TTS", value: "<200ms", zone: "innosuisse" as const },
+    { label: isFr ? "Avatar (R&D)" : "Avatar (R&D)", value: "<500ms", zone: "bottleneck" as const },
+    { label: isFr ? "Streaming" : "Streaming", value: "<300ms", zone: "memoways" as const },
+    { label: "= Total", value: "<2s", zone: "output" as const, bold: true },
+  ];
 
   return (
-    <div className="w-full overflow-hidden">
-      <svg viewBox="0 0 900 280" className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif", display: "block" }}>
-        <g>
+    <div className="w-full" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
 
-        {/* ── Background zones ── */}
-        {/* Available zone (green) */}
-        <rect x="135" y="81" width="209" height="270" rx="8" fill="#d4edda" stroke="#28a745" strokeWidth="2" />
-        <text x="239" y="70" textAnchor="middle" fontSize="9.5" fontWeight="700" letterSpacing="1" fill="#155724" fontFamily="'JetBrains Mono', monospace">✅ {labels.available}</text>
+      {/* ── LEGEND ── */}
+      <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-5">
+        {([
+          { zone: "available" as const, en: "Available (Gamilab)", fr: "Disponible (Gamilab)" },
+          { zone: "innosuisse" as const, en: "R&D · Innosuisse + IDIAP", fr: "R&D · Innosuisse + IDIAP" },
+          { zone: "memoways" as const, en: "R&D · Memoways internal", fr: "R&D · Memoways interne" },
+          { zone: "bottleneck" as const, en: "Critical bottleneck", fr: "Goulot critique" },
+        ]).map(({ zone, en, fr }) => (
+          <div key={zone} className="flex items-center gap-1.5 text-[10px] font-mono">
+            <div className="w-3 h-3 rounded-sm border" style={{ borderColor: C[zone].border, background: C[zone].bg }} />
+            <span style={{ color: C[zone].text }}>{isFr ? fr : en}</span>
+          </div>
+        ))}
+      </div>
 
-        {/* GAP zone (blue) */}
-        <rect x="371" y="81" width="500" height="270" rx="8" fill="#cce5ff" stroke="#004085" strokeWidth="2" />
-        <text x="621" y="70" textAnchor="middle" fontSize="9.5" fontWeight="700" letterSpacing="1" fill="#004085" fontFamily="'JetBrains Mono', monospace">🔴 {labels.gap}</text>
+      {/* ── PIPELINE ── */}
+      {/* Mobile: vertical stack | Desktop: horizontal row */}
+      <div className="flex flex-col md:flex-row md:items-stretch md:flex-wrap gap-1 md:gap-0">
 
-        {/* Internal zone (yellow) */}
-        <rect x="898" y="81" width="209" height="270" rx="8" fill="#fff3cd" stroke="#856404" strokeWidth="2" />
-        <text x="1002" y="70" textAnchor="middle" fontSize="9.5" fontWeight="700" letterSpacing="1" fill="#856404" fontFamily="'JetBrains Mono', monospace">✅ {labels.internal}</text>
+        {/* USER */}
+        <div className="flex flex-col items-center justify-center px-3 py-3 rounded-lg border-2 self-center md:self-auto shrink-0"
+          style={{ borderColor: C.neutral.border, background: C.neutral.bg, minWidth: "80px" }}>
+          <span className="text-sm font-bold" style={{ color: C.neutral.text }}>USER</span>
+          <span className="text-[10px] font-mono" style={{ color: "#94a3b8" }}>{isFr ? "Voix / Texte" : "Voice / Text"}</span>
+        </div>
 
-        {/* ── USER node ── */}
-        <rect x="13" y="162" width="97" height="81" rx="5" fill="#f8fafc" stroke="#0f172a" strokeWidth="2" />
-        <text x="61" y="193" textAnchor="middle" fontSize="12" fontWeight="700" fill="#0f172a">{labels.user}</text>
-        <text x="61" y="211" textAnchor="middle" fontSize="9.5" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">{labels.userSub}</text>
-        {/* Scale note: viewBox already scaled 1.35x from original 900x320 */}
+        {/* Mobile arrow */}
+        <div className="md:hidden"><Arrow vertical /></div>
+        {/* Desktop arrow */}
+        <div className="hidden md:flex md:items-center"><Arrow /></div>
 
-        {/* Arrow USER → ASR */}
-        <line x1="82" y1="150" x2="108" y2="150" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arr)" />
+        {/* ASR — Available */}
+        <PipeBlock b={BLOCKS[0]} isFr={isFr} hovered={hovered} setHovered={setHovered} />
 
-        {/* ── ASR block ── */}
-        <rect x="110" y="100" width="133" height="100" rx="4" fill="white" stroke="#28a745" strokeWidth="1.5" />
-        <text x="177" y="128" textAnchor="middle" fontSize="9" fontWeight="700" fill="#155724">Sovereign ASR</text>
-        <text x="177" y="142" textAnchor="middle" fontSize="8" fontWeight="600" fill="#155724">Audiogami</text>
-        <text x="177" y="158" textAnchor="middle" fontSize="7" fill="#475569" fontFamily="'JetBrains Mono', monospace">Swiss-hosted</text>
-        <text x="177" y="170" textAnchor="middle" fontSize="7" fill="#475569" fontFamily="'JetBrains Mono', monospace">Production-grade</text>
-        {/* Gamilab badge */}
-        <rect x="130" y="182" width="94" height="14" rx="3" fill="#d4edda" stroke="#28a745" strokeWidth="0.5" />
-        <text x="177" y="192" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#155724" fontFamily="'JetBrains Mono', monospace">{labels.gamilab}</text>
+        <div className="md:hidden"><Arrow vertical /></div>
+        <div className="hidden md:flex md:items-center"><Arrow /></div>
 
-        {/* Arrow ASR → GAP */}
-        <line x1="243" y1="150" x2="283" y2="150" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arr)" />
+        {/* ORCHESTRATION wrapper (Memoways R&D) containing Memory → LLM → TTS */}
+        <div className="rounded-lg px-3 py-2.5 flex flex-col gap-2"
+          style={{ border: `1.5px dashed ${C.memoways.border}`, background: C.memoways.badge + "88" }}>
+          <div className="text-[9px] font-bold font-mono uppercase tracking-wider" style={{ color: C.memoways.text }}>
+            {isFr ? "Orchestration — R&D Memoways (Axe 3)" : "Orchestration — Memoways R&D (Axis 3)"}
+          </div>
+          {/* Inner pipeline */}
+          <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-0">
+            <PipeBlock b={BLOCKS[1]} isFr={isFr} hovered={hovered} setHovered={setHovered} />
+            <div className="md:hidden"><Arrow vertical /></div>
+            <div className="hidden md:flex md:items-center"><Arrow /></div>
+            <PipeBlock b={BLOCKS[2]} isFr={isFr} hovered={hovered} setHovered={setHovered} />
+            <div className="md:hidden"><Arrow vertical /></div>
+            <div className="hidden md:flex md:items-center"><Arrow /></div>
+            <PipeBlock b={BLOCKS[3]} isFr={isFr} hovered={hovered} setHovered={setHovered} />
+          </div>
+        </div>
 
-        {/* ── GAP blocks (5 sub-blocks) ── */}
-        {/* Orchestration */}
-        <rect x="285" y="90" width="60" height="70" rx="3" fill="white" stroke="#004085" strokeWidth="1" />
-        <text x="315" y="118" textAnchor="middle" fontSize="8" fontWeight="700" fill="#004085">{labels.orch}</text>
-        <text x="315" y="130" textAnchor="middle" fontSize="6.5" fill="#475569" fontFamily="'JetBrains Mono', monospace">{labels.orchSub}</text>
+        <div className="md:hidden"><Arrow vertical /></div>
+        <div className="hidden md:flex md:items-center"><Arrow /></div>
 
-        {/* Memory */}
-        <rect x="355" y="90" width="60" height="70" rx="3" fill="white" stroke="#004085" strokeWidth="1" />
-        <text x="385" y="118" textAnchor="middle" fontSize="8" fontWeight="700" fill="#004085">{labels.mem}</text>
-        <text x="385" y="130" textAnchor="middle" fontSize="6.5" fill="#475569" fontFamily="'JetBrains Mono', monospace">{labels.memSub}</text>
+        {/* AVATAR — bottleneck */}
+        <PipeBlock b={BLOCKS[4]} isFr={isFr} hovered={hovered} setHovered={setHovered} />
 
-        {/* LLM */}
-        <rect x="425" y="90" width="60" height="70" rx="3" fill="white" stroke="#004085" strokeWidth="1" />
-        <text x="455" y="118" textAnchor="middle" fontSize="8" fontWeight="700" fill="#004085">{labels.llm}</text>
-        <text x="455" y="130" textAnchor="middle" fontSize="6.5" fill="#475569" fontFamily="'JetBrains Mono', monospace">{labels.llmSub}</text>
+        <div className="md:hidden"><Arrow vertical /></div>
+        <div className="hidden md:flex md:items-center"><Arrow /></div>
 
-        {/* TTS */}
-        <rect x="495" y="90" width="60" height="70" rx="3" fill="white" stroke="#004085" strokeWidth="1" />
-        <text x="525" y="118" textAnchor="middle" fontSize="8" fontWeight="700" fill="#004085">{labels.tts}</text>
-        <text x="525" y="130" textAnchor="middle" fontSize="6.5" fill="#475569" fontFamily="'JetBrains Mono', monospace">{labels.ttsSub}</text>
+        {/* MULTI-STREAM — Memoways */}
+        <PipeBlock b={BLOCKS[5]} isFr={isFr} hovered={hovered} setHovered={setHovered} />
 
-        {/* Avatar — bottleneck (red) */}
-        <rect x="565" y="85" width="68" height="80" rx="3" fill="#fef2f2" stroke="#dc2626" strokeWidth="2" />
-        <text x="599" y="116" textAnchor="middle" fontSize="8" fontWeight="700" fill="#dc2626">{labels.avatar}</text>
-        <text x="599" y="130" textAnchor="middle" fontSize="7" fontWeight="700" fill="#dc2626" fontFamily="'JetBrains Mono', monospace">{labels.avatarSub}</text>
-        <text x="599" y="143" textAnchor="middle" fontSize="6.5" fill="#7f1d1d" fontFamily="'JetBrains Mono', monospace">5–15s now</text>
-        <text x="599" y="155" textAnchor="middle" fontSize="6.5" fill="#16a34a" fontFamily="'JetBrains Mono', monospace">&lt;500ms target</text>
+        <div className="md:hidden"><Arrow vertical /></div>
+        <div className="hidden md:flex md:items-center">
+          <div className="flex items-center px-0.5 shrink-0">
+            <svg width="22" height="14" viewBox="0 0 22 14">
+              <line x1="1" y1="7" x2="16" y2="7" stroke={C.output.border} strokeWidth="2" />
+              <polygon points="14,3 21,7 14,11" fill={C.output.border} />
+            </svg>
+          </div>
+        </div>
 
-        
-        <rect x="300" y="175" width="55" height="14" rx="3" fill="#cce5ff" stroke="#004085" strokeWidth="0.5" />
-        <text x="327" y="185" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#004085" fontFamily="'JetBrains Mono', monospace">{labels.rnd}</text>
-        <rect x="363" y="175" width="60" height="14" rx="3" fill="#cce5ff" stroke="#004085" strokeWidth="0.5" />
-        <text x="393" y="185" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#004085" fontFamily="'JetBrains Mono', monospace"></text>
+        {/* EXPERIENCE OUTPUT */}
+        <div className="flex flex-col gap-1.5 px-3 py-3 rounded-lg shrink-0 self-center md:self-auto"
+          style={{ border: `2px solid ${C.output.border}`, background: C.output.bg, minWidth: "110px" }}>
+          <span className="text-[9px] font-bold font-mono uppercase tracking-wider" style={{ color: C.output.text }}>
+            {isFr ? "EXPÉRIENCE" : "EXPERIENCE"}
+          </span>
+          <span className="text-sm font-black" style={{ fontFamily: "'Space Grotesk', sans-serif", color: C.output.text }}>
+            {isFr ? "Cible <2s" : "Target <2s"}
+          </span>
+          <div className="flex flex-col gap-1 mt-1 border-t pt-1.5" style={{ borderColor: C.output.border + "44" }}>
+            <div className="flex items-center gap-1.5">
+              <div className="w-2 h-2 rounded-sm shrink-0" style={{ background: "#2563eb" }} />
+              <span className="text-[10px] font-mono font-bold" style={{ color: "#1d4ed8" }}>Edugami</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-2 h-2 rounded-sm shrink-0" style={{ background: "#d97706" }} />
+              <span className="text-[10px] font-mono font-bold" style={{ color: "#b45309" }}>Storygami</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        {/* Arrows between GAP blocks */}
-        <line x1="345" y1="125" x2="353" y2="125" stroke="#94a3b8" strokeWidth="1" markerEnd="url(#arrSm)" />
-        <line x1="415" y1="125" x2="423" y2="125" stroke="#94a3b8" strokeWidth="1" markerEnd="url(#arrSm)" />
-        <line x1="485" y1="125" x2="493" y2="125" stroke="#94a3b8" strokeWidth="1" markerEnd="url(#arrSm)" />
-        <line x1="555" y1="125" x2="563" y2="125" stroke="#dc2626" strokeWidth="1.5" markerEnd="url(#arrRed)" />
+      {/* ── TOOLTIP PANEL ── */}
+      {hBlock && (
+        <div className="mt-4 px-4 py-3 rounded-lg border text-xs leading-relaxed"
+          style={{
+            borderColor: hBlock.bottleneck ? C.bottleneck.border : C[hBlock.zone].border,
+            background: hBlock.bottleneck ? C.bottleneck.bg : C[hBlock.zone].bg,
+            color: "#334155",
+            fontFamily: "'Source Serif 4', serif",
+          }}>
+          <span className="block font-bold font-mono text-[10px] uppercase tracking-wider mb-1"
+            style={{ color: hBlock.bottleneck ? C.bottleneck.text : C[hBlock.zone].text }}>
+            {isFr ? hBlock.label.fr : hBlock.label.en}
+          </span>
+          {isFr ? hBlock.tooltip.fr : hBlock.tooltip.en}
+        </div>
+      )}
 
-        {/* Arrow GAP → Internal */}
-        <line x1="633" y1="150" x2="673" y2="150" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arr)" />
-
-        {/* ── Internal block ── */}
-        <rect x="675" y="100" width="133" height="100" rx="4" fill="white" stroke="#856404" strokeWidth="1.5" />
-        <text x="742" y="128" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#856404">Multi-Stream Sync</text>
-        <text x="742" y="142" textAnchor="middle" fontSize="7.5" fontWeight="600" fill="#856404">5 streams · &lt;100ms</text>
-        <text x="742" y="158" textAnchor="middle" fontSize="7" fill="#475569" fontFamily="'JetBrains Mono', monospace">14y multimedia exp.</text>
-        <text x="742" y="170" textAnchor="middle" fontSize="7" fill="#475569" fontFamily="'JetBrains Mono', monospace">Node editor · Player</text>
-        {/* Memoways badge */}
-        <rect x="695" y="182" width="94" height="14" rx="3" fill="#fff3cd" stroke="#856404" strokeWidth="0.5" />
-        <text x="742" y="192" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#856404" fontFamily="'JetBrains Mono', monospace">{labels.memoways}</text>
-
-        {/* Arrow Internal → EXPERIENCE */}
-        <line x1="808" y1="150" x2="828" y2="150" stroke="#0891b2" strokeWidth="2" markerEnd="url(#arrBlue)" />
-
-        {/* ── EXPERIENCE node ── */}
-        <rect x="830" y="118" width="62" height="64" rx="4" fill="#eff6ff" stroke="#0891b2" strokeWidth="2" />
-        <text x="861" y="143" textAnchor="middle" fontSize="8" fontWeight="700" fill="#0891b2">{labels.experience}</text>
-        <text x="861" y="157" textAnchor="middle" fontSize="7" fontWeight="700" fill="#0891b2" fontFamily="'JetBrains Mono', monospace">{labels.experienceSub}</text>
-
-        {/* ── Research axes labels at bottom ── */}
-        <text x="315" y="220" textAnchor="middle" fontSize="6.5" fill="#004085" fontFamily="'JetBrains Mono', monospace">{isFr ? "Axe 3" : "Axis 3"}</text>
-        <text x="385" y="220" textAnchor="middle" fontSize="6.5" fill="#004085" fontFamily="'JetBrains Mono', monospace">{isFr ? "Axe 1" : "Axis 1"}</text>
-        <text x="455" y="220" textAnchor="middle" fontSize="6.5" fill="#64748b" fontFamily="'JetBrains Mono', monospace">External</text>
-        <text x="525" y="220" textAnchor="middle" fontSize="6.5" fill="#004085" fontFamily="'JetBrains Mono', monospace">{isFr ? "Axe 2a" : "Axis 2a"}</text>
-        <text x="599" y="220" textAnchor="middle" fontSize="6.5" fill="#dc2626" fontFamily="'JetBrains Mono', monospace">{isFr ? "Axe 2b ⚠" : "Axis 2b ⚠"}</text>
-
-        {/* ── Arrow markers ── */}
-        <defs>
-          <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8" />
-          </marker>
-          <marker id="arrSm" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
-            <path d="M0,0 L5,2.5 L0,5 Z" fill="#94a3b8" />
-          </marker>
-          <marker id="arrRed" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L6,3 L0,6 Z" fill="#dc2626" />
-          </marker>
-          <marker id="arrBlue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L6,3 L0,6 Z" fill="#0891b2" />
-          </marker>
-        </defs>
-        </g>
-      </svg>
+      {/* ── LATENCY BUDGET BAR ── */}
+      <div className="mt-5 border border-slate-200 rounded-lg p-3" style={{ background: "#f8fafc" }}>
+        <div className="text-[9px] font-bold font-mono uppercase tracking-wider text-slate-400 mb-3 text-center">
+          {isFr ? "BUDGET LATENCE CIBLE — TOTAL <2s" : "TARGET LATENCY BUDGET — TOTAL <2s"}
+        </div>
+        <div className="flex flex-wrap justify-center gap-2">
+          {latencyItems.map((item) => {
+            const c = C[item.zone];
+            return (
+              <div key={item.label} className="flex flex-col items-center gap-0.5">
+                <span className="text-xs font-bold font-mono px-2 py-1 rounded"
+                  style={{
+                    background: c.badge,
+                    color: c.text,
+                    border: `1px solid ${c.border}`,
+                    fontWeight: (item as { bold?: boolean }).bold ? 900 : 700,
+                  }}>
+                  {item.value}
+                </span>
+                <span className="text-[9px] text-slate-400 font-mono">{item.label}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
