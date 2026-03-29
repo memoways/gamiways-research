@@ -764,96 +764,98 @@ export default function PipelinePhase1() {
         </div>
 
         {activeMode === "cascade" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left: Pipeline blocks */}
-            <div className="lg:col-span-2 space-y-4">
-              {/* Pipeline flow diagram */}
-              <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-                <div className="text-xs font-mono text-slate-400 mb-3 uppercase tracking-wider">
-                  {isFr ? "Flux du pipeline" : "Pipeline flow"}
-                </div>
-                <div className="flex items-center gap-1 flex-wrap">
-                  {cascadeBlocks.map((block, i) => {
-                    const Icon = blockIcons[block.id] || Layers;
-                    const sel = block.options.find((o) => o.id === selections[block.id]);
-                    return (
-                      <div key={block.id} className="flex items-center gap-1">
-                        <button
-                          onClick={() => setActiveBlock(block.id)}
-                          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all border ${
-                            activeBlock === block.id
-                              ? "border-cyan-400 bg-cyan-50 text-cyan-800"
-                              : "border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300"
-                          }`}
-                        >
-          <span style={{ color: block.color } as React.CSSProperties}><Icon className="w-3.5 h-3.5" /></span>
-                          <span className="hidden sm:inline font-mono">{sel?.name.split(" ")[0] || block.label.split(" ")[0]}</span>
-                          <span className="text-slate-400 font-mono">{sel?.latencyBest}ms</span>
-                        </button>
-                        {i < cascadeBlocks.length - 1 && (
-                          <ArrowRight className="w-3 h-3 text-slate-300 flex-shrink-0" />
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Block panels */}
-              <div className="space-y-2">
-                {cascadeBlocks.map((block) => (
-                  <BlockPanel
-                    key={block.id}
-                    block={block}
-                    selectedOption={selections[block.id]}
-                    onSelectOption={(id) => setSelections((prev) => ({ ...prev, [block.id]: id }))}
-                    isFr={isFr}
-                    isActive={activeBlock === block.id}
-                    onActivate={() => setActiveBlock(activeBlock === block.id ? "" : block.id)}
-                  />
-                ))}
-              </div>
-
-              {/* Mode comparison */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[cascadeMode, v2vMode].map((mode) => (
-                  <div key={mode.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 rounded-full" style={{ background: mode.color }} />
-                      <span className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                        {isFr ? mode.labelFr : mode.label}
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-500 mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                      {isFr ? mode.taglineFr : mode.tagline}
-                    </p>
-                    <div className="grid grid-cols-2 gap-2 mb-3">
-                      <div className="bg-slate-50 rounded p-2 text-center">
-                        <div className="text-xs text-slate-400">{isFr ? "Latence min" : "Best"}</div>
-                        <div className="text-base font-bold font-mono text-slate-900">{mode.totalLatencyBest}ms</div>
-                      </div>
-                      <div className="bg-slate-50 rounded p-2 text-center">
-                        <div className="text-xs text-slate-400">{isFr ? "Typique" : "Typical"}</div>
-                        <div className="text-base font-bold font-mono text-slate-900">{mode.totalLatencyTypical}ms</div>
-                      </div>
-                    </div>
-                    <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                      {isFr ? mode.recommendationFr : mode.recommendation}
-                    </p>
-                  </div>
-                ))}
-              </div>
+          <div>
+            {/* ── STICKY LATENCY BAR — full width ── */}
+            <div className="sticky top-14 z-20 mb-6">
+              <CumulativeLatency blocks={cascadeBlocks} selections={selections} isFr={isFr} />
             </div>
 
-            {/* Right: sticky sidebar with Latency + Stacks */}
-            <div className="space-y-4">
-              {/* ── Sticky Latency Panel ── */}
-              <div className="sticky top-20 z-20 space-y-4">
+            {/* ── SCROLLABLE CONTENT ── */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                {/* Cumulative latency — always visible */}
-                <CumulativeLatency blocks={cascadeBlocks} selections={selections} isFr={isFr} />
+              {/* Left col: Pipeline flow + Block panels + Mode comparison */}
+              <div className="lg:col-span-2 space-y-4">
 
-                {/* Stacks header */}
+                {/* Pipeline flow diagram */}
+                <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+                  <div className="text-xs font-mono text-slate-400 mb-3 uppercase tracking-wider">
+                    {isFr ? "Flux du pipeline" : "Pipeline flow"}
+                  </div>
+                  <div className="flex items-center gap-1 flex-wrap">
+                    {cascadeBlocks.map((block, i) => {
+                      const Icon = blockIcons[block.id] || Layers;
+                      const sel = block.options.find((o) => o.id === selections[block.id]);
+                      return (
+                        <div key={block.id} className="flex items-center gap-1">
+                          <button
+                            onClick={() => setActiveBlock(block.id)}
+                            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all border ${
+                              activeBlock === block.id
+                                ? "border-cyan-400 bg-cyan-50 text-cyan-800"
+                                : "border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300"
+                            }`}
+                          >
+                            <span style={{ color: block.color } as React.CSSProperties}><Icon className="w-3.5 h-3.5" /></span>
+                            <span className="hidden sm:inline font-mono">{sel?.name.split(" ")[0] || block.label.split(" ")[0]}</span>
+                            <span className="text-slate-400 font-mono">{sel?.latencyBest}ms</span>
+                          </button>
+                          {i < cascadeBlocks.length - 1 && (
+                            <ArrowRight className="w-3 h-3 text-slate-300 flex-shrink-0" />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Block panels */}
+                <div className="space-y-2">
+                  {cascadeBlocks.map((block) => (
+                    <BlockPanel
+                      key={block.id}
+                      block={block}
+                      selectedOption={selections[block.id]}
+                      onSelectOption={(id) => setSelections((prev) => ({ ...prev, [block.id]: id }))}
+                      isFr={isFr}
+                      isActive={activeBlock === block.id}
+                      onActivate={() => setActiveBlock(activeBlock === block.id ? "" : block.id)}
+                    />
+                  ))}
+                </div>
+
+                {/* Mode comparison */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[cascadeMode, v2vMode].map((mode) => (
+                    <div key={mode.id} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 rounded-full" style={{ background: mode.color }} />
+                        <span className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                          {isFr ? mode.labelFr : mode.label}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-500 mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                        {isFr ? mode.taglineFr : mode.tagline}
+                      </p>
+                      <div className="grid grid-cols-2 gap-2 mb-3">
+                        <div className="bg-slate-50 rounded p-2 text-center">
+                          <div className="text-xs text-slate-400">{isFr ? "Latence min" : "Best"}</div>
+                          <div className="text-base font-bold font-mono text-slate-900">{mode.totalLatencyBest}ms</div>
+                        </div>
+                        <div className="bg-slate-50 rounded p-2 text-center">
+                          <div className="text-xs text-slate-400">{isFr ? "Typique" : "Typical"}</div>
+                          <div className="text-base font-bold font-mono text-slate-900">{mode.totalLatencyTypical}ms</div>
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                        {isFr ? mode.recommendationFr : mode.recommendation}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right col: Stacks + Decision guide + TTS link */}
+              <div className="space-y-4">
                 <div>
                   <h2 className="text-sm font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     {isFr ? "Stacks recommandées" : "Recommended Stacks"}
@@ -909,8 +911,8 @@ export default function PipelinePhase1() {
                     {isFr ? "État de l'Art TTS →" : "TTS State of the Art →"}
                   </InternalLink>
                 </div>
-
               </div>
+
             </div>
           </div>
         )}
