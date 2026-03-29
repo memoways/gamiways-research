@@ -15,6 +15,7 @@ import StateOfArt from "./pages/StateOfArt";
 import PlatformDetail from "./pages/PlatformDetail";
 import PricingComparison from "@/pages/PricingComparison";
 import TTSDetail from "@/pages/TTSDetail";
+import PipelinePhase1 from "@/pages/PipelinePhase1";
 
 /** Remonte automatiquement en haut à chaque changement de route */
 function ScrollToTop() {
@@ -38,6 +39,7 @@ function Router() {
         <Route path="/platform/:id" component={PlatformDetail} />
         <Route path="/pricing" component={PricingComparison} />
         <Route path="/tts/:id" component={TTSDetail} />
+        <Route path="/pipeline" component={PipelinePhase1} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

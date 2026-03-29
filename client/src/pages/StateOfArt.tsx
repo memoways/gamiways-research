@@ -1634,6 +1634,14 @@ export default function StateOfArt() {
                     : <>Phase 1 MVP must choose between two approaches: <strong>(A) Cascading pipeline</strong> (ASR → LLM → TTS, e.g. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — more controllable, voice cloning possible, full sovereignty possible, ~400–800ms latency; or <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — ~100ms latency but less controllable, no voice cloning. <strong>DigiDouble recommendation:</strong> start with (A) using Voxtral TTS (Mistral, March 2026) + Deepgram Nova-3 to validate conversational quality, then evaluate (B) for latency optimization in Phase 2.</>
                   }
                 </p>
+                <div className="mt-4">
+                  <InternalLink
+                    to="/pipeline"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-700 text-white text-sm font-medium transition-all"
+                  >
+                    {isFr ? "→ Diagramme interactif du Pipeline Phase 1" : "→ Interactive Phase 1 Pipeline Diagram"}
+                  </InternalLink>
+                </div>
               </div>
             </div>
           )}
