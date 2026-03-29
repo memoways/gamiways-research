@@ -16,7 +16,8 @@ import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import { SolutionTableCell } from "@/components/SolutionBadge";
 import { SOLUTION_LINKS } from "@/lib/solutionLinks";
-import { getTTSData, getTTSByCategory, type TTSData } from "@/lib/ttsData";
+import { getTTSByCategory, type TTSData } from "@/lib/ttsData";
+import { getSTTByCategory, type STTData } from "@/lib/sttData";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -82,10 +83,14 @@ function TTSCard({ tts, isFr }: { tts: TTSData; isFr: boolean }) {
   );
 }
 
-type TabKey = "commercial" | "opensource" | "tts";
+type AvatarTab = "commercial" | "opensource";
+type TTSTab = "commercial" | "opensource";
+type STTTab = "commercial" | "opensource";
 
 export default function StateOfArt() {
-  const [activeTab, setActiveTab] = useState<TabKey>("commercial");
+  const [avatarTab, setAvatarTab] = useState<AvatarTab>("commercial");
+  const [ttsTab, setTtsTab] = useState<TTSTab>("commercial");
+  const [sttTab, setSttTab] = useState<STTTab>("commercial");
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
@@ -439,10 +444,10 @@ export default function StateOfArt() {
     },
   ];
 
-  const allTTSData = getTTSData();
   const cloudTTS = getTTSByCategory("cloud-api");
   const openTTS = getTTSByCategory("open-source");
-  const v2vTTS = getTTSByCategory("voice-to-voice");
+  const cloudSTT = getSTTByCategory("cloud-api");
+  const openSTT = getSTTByCategory("open-source");
 
   const latencyBenchmarks = [
     { component: isFr ? "ASR/STT (Deepgram low-latency)" : "ASR/STT (Deepgram low-latency)", best: 75, typical: 200, unit: "ms" },
@@ -831,10 +836,9 @@ export default function StateOfArt() {
     },
   ];
 
-  const tabLabels: Record<TabKey, string> = {
-    commercial: isFr ? "Plateformes commerciales" : "Commercial platforms",
-    opensource: isFr ? "Solutions open-source" : "Open-source solutions",
-    tts: isFr ? "TTS & Synthèse vocale" : "TTS & Voice synthesis",
+  const subTabLabels = {
+    commercial: isFr ? "Commercial" : "Commercial",
+    opensource: isFr ? "Open Source" : "Open Source",
   };
 
   return (
@@ -874,26 +878,31 @@ export default function StateOfArt() {
             accent="cyan"
           />
 
-          {/* Tabs */}
-          <div className="flex gap-1 mb-6 border-b border-slate-200">
-            {(["commercial", "opensource", "tts"] as TabKey[]).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors -mb-px ${
-                  activeTab === tab
-                    ? "border-cyan-500 text-cyan-600"
-                    : "border-transparent text-slate-500 hover:text-slate-700"
-                }`}
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
-                {tabLabels[tab]}
-              </button>
-            ))}
-          </div>
+          {/* ═══════════════════════════════════════════════════════════════
+               SECTION A — STREAMING VIDEO AVATAR
+          ═══════════════════════════════════════════════════════════════ */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>A</span>
+              <h2 className="text-lg font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Avatars Vidéo Streaming" : "Streaming Video Avatars"}
+              </h2>
+            </div>
+            {/* Sub-tabs */}
+            <div className="flex gap-1 mb-5 border-b border-slate-200">
+              {(["commercial", "opensource"] as AvatarTab[]).map((tab) => (
+                <button key={tab} onClick={() => setAvatarTab(tab)}
+                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors -mb-px ${
+                    avatarTab === tab ? "border-cyan-500 text-cyan-600" : "border-transparent text-slate-500 hover:text-slate-700"
+                  }`}
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {subTabLabels[tab]}
+                </button>
+              ))}
+            </div>
 
           {/* Commercial platforms */}
-          {activeTab === "commercial" && (
+          {avatarTab === "commercial" && (
             <div>
               <div className="overflow-x-auto mb-6">
                 <table className="data-table">
@@ -1049,8 +1058,8 @@ export default function StateOfArt() {
 
             </div>
           )}
-          {/* Open source */}
-          {activeTab === "opensource" && (
+          {/* Open source Avatar */}
+          {avatarTab === "opensource" && (
             <div>
               <div className="overflow-x-auto mb-4">
                 <table className="data-table">
@@ -1494,8 +1503,32 @@ export default function StateOfArt() {
             </div>
           )}
 
-          {/* TTS & Voice Synthesis — full section */}
-          {activeTab === "tts" && (
+          </div>{/* end avatarTab sections + section A */}
+
+          {/* ═══════════════════════════════════════════════════════════════
+               SECTION B — TTS & VOICE SYNTHESIS
+          ═══════════════════════════════════════════════════════════════ */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.55 0.20 280)", color: "white" }}>B</span>
+              <h2 className="text-lg font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "TTS & Synthèse Vocale" : "TTS & Voice Synthesis"}
+              </h2>
+              <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.55 0.20 280)", color: "white" }}>MVP PHASE 1</span>
+            </div>
+            {/* Sub-tabs */}
+            <div className="flex gap-1 mb-5 border-b border-slate-200">
+              {(["commercial", "opensource"] as TTSTab[]).map((tab) => (
+                <button key={tab} onClick={() => setTtsTab(tab)}
+                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors -mb-px ${
+                    ttsTab === tab ? "border-violet-500 text-violet-600" : "border-transparent text-slate-500 hover:text-slate-700"
+                  }`}
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {subTabLabels[tab]}
+                </button>
+              ))}
+            </div>
+            {ttsTab === "commercial" && (
             <div>
               {/* Context banner */}
               <div className="mb-6 bg-violet-50 border border-violet-200 rounded-lg px-5 py-4">
@@ -1503,126 +1536,51 @@ export default function StateOfArt() {
                   <span className="text-xs font-mono font-bold px-2 py-0.5 rounded mt-0.5" style={{ background: "oklch(0.55 0.20 280)", color: "white" }}>MVP PHASE 1</span>
                   <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                     {isFr
-                      ? <><strong>Voice-to-Voice est le premier livrable de DigiDouble.</strong> Cette section couvre l'ensemble du paysage TTS streaming et V2V end-to-end (2025–2026) — de l'API cloud aux modèles open-source souverains — pour guider le choix d'architecture du pipeline vocal Phase 1.</>
-                      : <><strong>Voice-to-Voice is DigiDouble's first deliverable.</strong> This section covers the full TTS streaming and end-to-end V2V landscape (2025–2026) — from cloud APIs to sovereign open-source models — to guide Phase 1 voice pipeline architecture decisions.</>
+                      ? <><strong>Voice-to-Voice est le premier livrable de DigiDouble.</strong> Cette section couvre les APIs cloud TTS streaming (2025–2026) pour guider le choix d'architecture du pipeline vocal Phase 1.</>
+                      : <><strong>Voice-to-Voice is DigiDouble's first deliverable.</strong> This section covers cloud streaming TTS APIs (2025–2026) to guide Phase 1 voice pipeline architecture decisions.</>
                     }
                   </p>
                 </div>
               </div>
-
-              {/* Master comparison table */}
-              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "Tableau comparatif — 14 solutions (2025–2026)" : "Comparison Table — 14 Solutions (2025–2026)"}
-              </h3>
+              {/* Tableau comparatif Cloud */}
               <div className="overflow-x-auto mb-6">
                 <table className="data-table">
                   <thead>
                     <tr>
                       <th>{isFr ? "Solution" : "Solution"}</th>
-                      <th>{isFr ? "Catégorie" : "Category"}</th>
                       <th>TTFA</th>
                       <th>ELO</th>
                       <th>{isFr ? "Clonage" : "Cloning"}</th>
                       <th>{isFr ? "Émotion" : "Emotion"}</th>
                       <th>{isFr ? "Multilingue" : "Multilingual"}</th>
-                      <th>{isFr ? "Souverain" : "Sovereign"}</th>
                       <th>{isFr ? "Prix/1M" : "Price/1M"}</th>
                       <th>{isFr ? "Fiche" : "Detail"}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {allTTSData.map((t: TTSData) => {
-                      const catColor = t.category === "cloud-api" ? "oklch(0.72 0.18 200)" : t.category === "open-source" ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 280)";
-                      const catLabel = t.category === "cloud-api" ? "Cloud" : t.category === "open-source" ? "Open" : "V2V";
-                      return (
-                        <tr key={t.id}>
-                          <td>
-                            <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{t.name}</div>
-                            <div className="text-xs text-slate-400 font-mono mt-0.5">{t.digiDoubleAxis}</div>
-                          </td>
-                          <td>
-                            <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: catColor + "22", color: catColor }}>{catLabel}</span>
-                          </td>
-                          <td>
-                            <span className="text-xs font-mono" style={{ color: t.ttfaMs <= 100 ? "oklch(0.65 0.18 145)" : t.ttfaMs <= 250 ? "oklch(0.75 0.16 75)" : "oklch(0.60 0.20 25)" }}>
-                              {t.ttfaMs}ms
-                            </span>
-                          </td>
-                          <td>
-                            <span className="text-xs font-mono text-slate-600">{t.eloScore > 0 ? t.eloScore : "—"}</span>
-                          </td>
-                          <td><span style={{ color: t.voiceCloning ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.voiceCloning ? "✓" : "✗"}</span></td>
-                          <td><span style={{ color: t.emotionControl ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.emotionControl ? "✓" : "✗"}</span></td>
-                          <td><span style={{ color: t.multilingual ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.multilingual ? `✓ ${t.languages}` : "✗"}</span></td>
-                          <td><span style={{ color: t.selfHostable ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.selfHostable ? "✓" : "✗"}</span></td>
-                          <td>
-                            <span className="text-xs font-mono text-slate-600">
-                              {t.pricePerMChar > 0 ? `$${t.pricePerMChar}` : isFr ? "Gratuit" : "Free"}
-                            </span>
-                          </td>
-                          <td>
-                            <InternalLink to={`/tts/${t.id}`} className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
-                              {isFr ? "Voir →" : "View →"}
-                            </InternalLink>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {cloudTTS.map((t: TTSData) => (
+                      <tr key={t.id}>
+                        <td>
+                          <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{t.name}</div>
+                          <div className="text-xs text-slate-400 font-mono mt-0.5">{t.digiDoubleAxis}</div>
+                        </td>
+                        <td><span className="text-xs font-mono" style={{ color: t.ttfaMs <= 100 ? "oklch(0.65 0.18 145)" : t.ttfaMs <= 250 ? "oklch(0.75 0.16 75)" : "oklch(0.60 0.20 25)" }}>{t.ttfaMs}ms</span></td>
+                        <td><span className="text-xs font-mono text-slate-600">{t.eloScore > 0 ? t.eloScore : "—"}</span></td>
+                        <td><span style={{ color: t.voiceCloning ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.voiceCloning ? "✓" : "✗"}</span></td>
+                        <td><span style={{ color: t.emotionControl ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.emotionControl ? "✓" : "✗"}</span></td>
+                        <td><span style={{ color: t.multilingual ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.multilingual ? `✓ ${t.languages}` : "✗"}</span></td>
+                        <td><span className="text-xs font-mono text-slate-600">{t.pricePerMChar > 0 ? `$${t.pricePerMChar}` : isFr ? "Gratuit" : "Free"}</span></td>
+                        <td><InternalLink to={`/tts/${t.id}`} className="text-xs font-mono text-violet-600 hover:text-violet-800 underline">{isFr ? "Voir →" : "View →"}</InternalLink></td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-
-              {/* Sub-section: Cloud API */}
-              <div className="mb-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.72 0.18 200)", color: "white" }}>CLOUD API</span>
-                  <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {isFr ? "APIs Cloud — TTS Streaming" : "Cloud APIs — Streaming TTS"}
-                  </h3>
-                </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {cloudTTS.map((t: TTSData) => (
-                    <TTSCard key={t.id} tts={t} isFr={isFr} />
-                  ))}
-                </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {cloudTTS.map((t: TTSData) => (
+                  <TTSCard key={t.id} tts={t} isFr={isFr} />
+                ))}
               </div>
-
-              {/* Sub-section: Open Source */}
-              <div className="mb-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.65 0.18 145)", color: "white" }}>OPEN SOURCE</span>
-                  <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {isFr ? "Modèles Open-Source — Déploiement Souverain" : "Open-Source Models — Sovereign Deployment"}
-                  </h3>
-                </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {openTTS.map((t: TTSData) => (
-                    <TTSCard key={t.id} tts={t} isFr={isFr} />
-                  ))}
-                </div>
-              </div>
-
-              {/* Sub-section: Voice-to-Voice */}
-              <div className="mb-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.60 0.20 280)", color: "white" }}>VOICE-TO-VOICE</span>
-                  <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {isFr ? "Modèles End-to-End — Speech-to-Speech" : "End-to-End Models — Speech-to-Speech"}
-                  </h3>
-                </div>
-                <p className="text-sm text-slate-500 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  {isFr
-                    ? "Les modèles V2V éliminent le pipeline en cascade ASR+LLM+TTS, réduisant la latence de 800ms–2s à ~100ms. Trade-off : moins de contrôlabilité sur la voix et l'émotion."
-                    : "V2V models eliminate the cascading ASR+LLM+TTS pipeline, reducing latency from 800ms–2s to ~100ms. Trade-off: less controllability over voice and emotion."
-                  }
-                </p>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {v2vTTS.map((t: TTSData) => (
-                    <TTSCard key={t.id} tts={t} isFr={isFr} />
-                  ))}
-                </div>
-              </div>
-
               {/* Architecture decision callout */}
               <div className="callout-warning">
                 <p className="text-sm font-semibold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -1635,16 +1593,224 @@ export default function StateOfArt() {
                   }
                 </p>
                 <div className="mt-4">
-                  <InternalLink
-                    to="/pipeline"
-                    className="cta-primary"
-                  >
+                  <InternalLink to="/pipeline" className="cta-primary">
                     {isFr ? "→ Diagramme interactif du Pipeline Phase 1" : "→ Interactive Phase 1 Pipeline Diagram"}
                   </InternalLink>
                 </div>
               </div>
             </div>
-          )}
+            )}
+            {ttsTab === "opensource" && (
+            <div>
+              <div className="mb-4 bg-emerald-50 border border-emerald-200 rounded-lg px-5 py-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded mt-0.5" style={{ background: "oklch(0.65 0.18 145)", color: "white" }}>OPEN SOURCE</span>
+                  <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? <><strong>Modèles open-source souverains</strong> (auto-hébergeables, GDPR-ready) — incluant les modèles Voice-to-Voice end-to-end (Ultravox, Moshi, Voxtral) qui éliminent le pipeline ASR+LLM+TTS.</>
+                      : <><strong>Sovereign open-source models</strong> (self-hostable, GDPR-ready) — including end-to-end Voice-to-Voice models (Ultravox, Moshi, Voxtral) that eliminate the ASR+LLM+TTS pipeline.</>
+                    }
+                  </p>
+                </div>
+              </div>
+              <div className="overflow-x-auto mb-6">
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>{isFr ? "Solution" : "Solution"}</th>
+                      <th>TTFA</th>
+                      <th>ELO</th>
+                      <th>{isFr ? "Clonage" : "Cloning"}</th>
+                      <th>{isFr ? "V2V" : "V2V"}</th>
+                      <th>{isFr ? "Multilingue" : "Multilingual"}</th>
+                      <th>{isFr ? "Licence" : "License"}</th>
+                      <th>{isFr ? "Fiche" : "Detail"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {openTTS.map((t: TTSData) => (
+                      <tr key={t.id}>
+                        <td>
+                          <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{t.name}</div>
+                          <div className="text-xs text-slate-400 font-mono mt-0.5">{t.digiDoubleAxis}</div>
+                        </td>
+                        <td><span className="text-xs font-mono" style={{ color: t.ttfaMs <= 100 ? "oklch(0.65 0.18 145)" : t.ttfaMs <= 250 ? "oklch(0.75 0.16 75)" : "oklch(0.60 0.20 25)" }}>{t.ttfaMs}ms</span></td>
+                        <td><span className="text-xs font-mono text-slate-600">{t.eloScore > 0 ? t.eloScore : "—"}</span></td>
+                        <td><span style={{ color: t.voiceCloning ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.voiceCloning ? "✓" : "✗"}</span></td>
+                        <td><span style={{ color: (t as any).isV2V ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{(t as any).isV2V ? "✓" : "✗"}</span></td>
+                        <td><span style={{ color: t.multilingual ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.multilingual ? `✓ ${t.languages}` : "✗"}</span></td>
+                        <td><span className="text-xs font-mono text-slate-500">{t.license}</span></td>
+                        <td><InternalLink to={`/tts/${t.id}`} className="text-xs font-mono text-emerald-600 hover:text-emerald-800 underline">{isFr ? "Voir →" : "View →"}</InternalLink></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {openTTS.map((t: TTSData) => (
+                  <TTSCard key={t.id} tts={t} isFr={isFr} />
+                ))}
+              </div>
+            </div>
+            )}
+          </div>{/* end section B */}
+
+          {/* ═══════════════════════════════════════════════════════════════
+               SECTION C — STT / SPEECH-TO-TEXT
+          ═══════════════════════════════════════════════════════════════ */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.55 0.20 50)", color: "white" }}>C</span>
+              <h2 className="text-lg font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "STT / Reconnaissance Vocale" : "STT / Speech-to-Text"}
+              </h2>
+            </div>
+            {/* Sub-tabs */}
+            <div className="flex gap-1 mb-5 border-b border-slate-200">
+              {(["commercial", "opensource"] as STTTab[]).map((tab) => (
+                <button key={tab} onClick={() => setSttTab(tab)}
+                  className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors -mb-px ${
+                    sttTab === tab ? "border-orange-500 text-orange-600" : "border-transparent text-slate-500 hover:text-slate-700"
+                  }`}
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {subTabLabels[tab]}
+                </button>
+              ))}
+            </div>
+            {sttTab === "commercial" && (
+            <div>
+              <div className="mb-4 bg-orange-50 border border-orange-200 rounded-lg px-5 py-3">
+                <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? <><strong>APIs STT cloud temps réel</strong> — Deepgram Nova-3 est la référence latence (75ms TTFA). Whisper large-v3 est le standard de qualité open-source. AssemblyAI Universal-2 domine le benchmark WER multilingue.</>
+                    : <><strong>Real-time cloud STT APIs</strong> — Deepgram Nova-3 is the latency reference (75ms TTFA). Whisper large-v3 is the open-source quality standard. AssemblyAI Universal-2 leads the multilingual WER benchmark.</>
+                  }
+                </p>
+              </div>
+              <div className="overflow-x-auto mb-6">
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>{isFr ? "Solution" : "Solution"}</th>
+                      <th>TTFA</th>
+                      <th>WER</th>
+                      <th>{isFr ? "Streaming" : "Streaming"}</th>
+                      <th>{isFr ? "Multilingue" : "Multilingual"}</th>
+                      <th>{isFr ? "Diarisation" : "Diarization"}</th>
+                      <th>{isFr ? "Prix/heure" : "Price/hr"}</th>
+                      <th>{isFr ? "Souverain" : "Sovereign"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cloudSTT.map((s: STTData) => (
+                      <tr key={s.id}>
+                        <td>
+                          <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{s.name}</div>
+                          <div className="text-xs text-slate-400 font-mono mt-0.5">{s.digiDoubleAxis}</div>
+                        </td>
+                        <td><span className="text-xs font-mono" style={{ color: s.latencyMs <= 100 ? "oklch(0.65 0.18 145)" : s.latencyMs <= 250 ? "oklch(0.75 0.16 75)" : "oklch(0.60 0.20 25)" }}>{s.latencyMs}ms</span></td>
+                        <td><span className="text-xs font-mono text-slate-600">{s.wer > 0 ? `${s.wer}%` : "—"}</span></td>
+                        <td><span style={{ color: s.streaming ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{s.streaming ? "✓" : "✗"}</span></td>
+                        <td><span className="text-xs text-slate-600">{s.languages > 0 ? `${s.languages} langs` : "—"}</span></td>
+                        <td><span style={{ color: s.speakerDiarization ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{s.speakerDiarization ? "✓" : "✗"}</span></td>
+                        <td><span className="text-xs font-mono text-slate-600">{s.pricePerHour > 0 ? `$${s.pricePerHour}/hr` : isFr ? "Gratuit" : "Free"}</span></td>
+                        <td><span style={{ color: s.selfHostable ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{s.selfHostable ? "✓" : "✗"}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {cloudSTT.map((s: STTData) => (
+                  <div key={s.id} className="border border-slate-200 rounded-xl p-4">
+                    <div className="font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{s.name}</div>
+                    <div className="text-xs text-slate-400 font-mono mb-3">{s.digiDoubleAxis}</div>
+                    <div className="space-y-2 mb-3">
+                      <div>
+                        <div className="flex justify-between text-xs text-slate-500 mb-1"><span>Latency</span><span>{s.latencyMs}ms</span></div>
+                        <ScoreBar value={s.score.latency} color="oklch(0.72 0.18 200)" />
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs text-slate-500 mb-1"><span>Accuracy</span><span>{s.wer > 0 ? `${s.wer}% WER` : "—"}</span></div>
+                        <ScoreBar value={s.score.accuracy} color="oklch(0.65 0.18 145)" />
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs text-slate-500 mb-1"><span>{isFr ? "Accessibilité prix" : "Price access"}</span><span>{s.score.pricing}/10</span></div>
+                        <ScoreBar value={s.score.pricing} color="oklch(0.75 0.16 75)" />
+                      </div>
+                    </div>
+                    <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{s.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            )}
+            {sttTab === "opensource" && (
+            <div>
+              <div className="mb-4 bg-emerald-50 border border-emerald-200 rounded-lg px-5 py-3">
+                <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? <><strong>Modèles STT open-source</strong> — Whisper large-v3 reste la référence qualité. Whisper.cpp et faster-whisper permettent un déploiement souverain GPU/CPU. Parakeet-TDT-0.6B est le modèle le plus rapide (TTFA 60ms) pour les cas d'usage temps réel.</>
+                    : <><strong>Open-source STT models</strong> — Whisper large-v3 remains the quality reference. Whisper.cpp and faster-whisper enable sovereign GPU/CPU deployment. Parakeet-TDT-0.6B is the fastest model (60ms TTFA) for real-time use cases.</>
+                  }
+                </p>
+              </div>
+              <div className="overflow-x-auto mb-6">
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>{isFr ? "Solution" : "Solution"}</th>
+                      <th>TTFA</th>
+                      <th>WER</th>
+                      <th>{isFr ? "Params" : "Params"}</th>
+                      <th>{isFr ? "Streaming" : "Streaming"}</th>
+                      <th>{isFr ? "Multilingue" : "Multilingual"}</th>
+                      <th>{isFr ? "Licence" : "License"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {openSTT.map((s: STTData) => (
+                      <tr key={s.id}>
+                        <td>
+                          <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{s.name}</div>
+                          <div className="text-xs text-slate-400 font-mono mt-0.5">{s.digiDoubleAxis}</div>
+                        </td>
+                        <td><span className="text-xs font-mono" style={{ color: s.latencyMs <= 100 ? "oklch(0.65 0.18 145)" : s.latencyMs <= 250 ? "oklch(0.75 0.16 75)" : "oklch(0.60 0.20 25)" }}>{s.latencyMs}ms</span></td>
+                        <td><span className="text-xs font-mono text-slate-600">{s.wer > 0 ? `${s.wer}%` : "—"}</span></td>
+                        <td><span className="text-xs font-mono text-slate-500">{s.params}</span></td>
+                        <td><span style={{ color: s.streaming ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{s.streaming ? "✓" : "✗"}</span></td>
+                        <td><span style={{ color: s.multilingual ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{s.multilingual ? `✓ ${s.languages} langs` : "✗"}</span></td>
+                        <td><span className="text-xs font-mono text-slate-500">{s.license}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {openSTT.map((s: STTData) => (
+                  <div key={s.id} className="border border-slate-200 rounded-xl p-4">
+                    <div className="font-semibold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{s.name}</div>
+                    <div className="text-xs text-slate-400 font-mono mb-3">{s.digiDoubleAxis} · {s.params}</div>
+                    <div className="space-y-2 mb-3">
+                      <div>
+                        <div className="flex justify-between text-xs text-slate-500 mb-1"><span>Latency</span><span>{s.latencyMs}ms</span></div>
+                        <ScoreBar value={s.score.latency} color="oklch(0.72 0.18 200)" />
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs text-slate-500 mb-1"><span>Accuracy</span><span>{s.wer > 0 ? `${s.wer}% WER` : "—"}</span></div>
+                        <ScoreBar value={s.score.accuracy} color="oklch(0.65 0.18 145)" />
+                      </div>
+                    </div>
+                    <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{s.description}</p>
+                    <div className="mt-2">
+                      <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ background: "oklch(0.93 0.04 145)", color: "oklch(0.35 0.14 145)" }}>{s.license}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            )}
+          </div>{/* end section C */}
         </section>
 
         {/* Latency Benchmarks */}

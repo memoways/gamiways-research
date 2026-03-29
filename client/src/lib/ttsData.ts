@@ -4,7 +4,7 @@
 // Sources : Artificial Analysis, Inworld benchmark, docs officiels
 // ============================================================
 
-export type TTSCategory = "cloud-api" | "open-source" | "voice-to-voice";
+export type TTSCategory = "cloud-api" | "open-source";
 
 export interface TTSScore {
   quality: number;       // 1–10 (basé ELO normalisé)
@@ -634,7 +634,7 @@ const ttsDatabase: TTSData[] = [
   {
     id: "ultravox",
     name: "Ultravox v0.5",
-    category: "voice-to-voice",
+    category: "open-source",
     tagline: "Speech-to-speech model — ~100ms latency, no ASR/TTS pipeline needed",
     homepageUrl: "https://ultravox.ai",
     docsUrl: "https://docs.ultravox.ai",
@@ -680,7 +680,7 @@ const ttsDatabase: TTSData[] = [
   {
     id: "moshi",
     name: "Moshi (Kyutai)",
-    category: "voice-to-voice",
+    category: "open-source",
     tagline: "Full-duplex spoken dialogue — simultaneous listening and speaking",
     homepageUrl: "https://kyutai.org",
     docsUrl: "https://github.com/kyutai-labs/moshi",
@@ -726,7 +726,7 @@ const ttsDatabase: TTSData[] = [
   {
     id: "voxtral_tts",
     name: "Voxtral TTS (Mistral)",
-    category: "voice-to-voice",
+    category: "open-source",
     tagline: "Open-weights TTS from Mistral — fast, adaptable, 9 languages (Mar 2026)",
     homepageUrl: "https://mistral.ai",
     docsUrl: "https://docs.mistral.ai",
@@ -772,7 +772,7 @@ const ttsDatabase: TTSData[] = [
   {
     id: "openai_realtime",
     name: "OpenAI Realtime API",
-    category: "voice-to-voice",
+    category: "cloud-api",
     tagline: "GPT-4o speech-to-speech — integrated LLM + voice, WebSocket",
     homepageUrl: "https://platform.openai.com/docs/guides/realtime",
     docsUrl: "https://platform.openai.com/docs/guides/realtime",
