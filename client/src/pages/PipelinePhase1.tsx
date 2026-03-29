@@ -454,43 +454,90 @@ function CumulativeLatency({
         </div>
       </div>
 
-      {/* Stacked bar — best case */}
-      <div className="mb-1">
-        <div className="text-xs text-slate-400 mb-1 font-mono">{isFr ? "Meilleur cas" : "Best case"}</div>
-        <div className="flex h-5 rounded-full overflow-hidden bg-slate-100">
-          {segments.map((s, i) => (
-            <div
-              key={i}
-              className="h-full transition-all"
-              style={{
-                width: `${(s.best / totalMax) * 100}%`,
-                background: s.color,
-                minWidth: s.best > 0 ? "2px" : "0",
-              }}
-              title={`${s.label}: ${s.best}ms`}
-            />
-          ))}
-        </div>
-      </div>
+      {/* Target position as % of totalMax */}
+      {(() => {
+        const TARGET_MS = 2000;
+        const targetPct = Math.min((TARGET_MS / totalMax) * 100, 100);
+        const bestOver = cumBest > TARGET_MS;
+        const typicalOver = cumTypical > TARGET_MS;
 
-      {/* Stacked bar — typical */}
-      <div className="mb-3">
-        <div className="text-xs text-slate-400 mb-1 font-mono">{isFr ? "Cas typique" : "Typical"}</div>
-        <div className="flex h-5 rounded-full overflow-hidden bg-slate-100">
-          {segments.map((s, i) => (
-            <div
-              key={i}
-              className="h-full opacity-60 transition-all"
-              style={{
-                width: `${(s.typical / totalMax) * 100}%`,
-                background: s.color,
-                minWidth: s.typical > 0 ? "2px" : "0",
-              }}
-              title={`${s.label}: ${s.typical}ms`}
-            />
-          ))}
-        </div>
-      </div>
+        return (
+          <>
+            {/* Stacked bar — best case */}
+            <div className="mb-1">
+              <div className="text-xs text-slate-400 mb-1 font-mono">{isFr ? "Meilleur cas" : "Best case"}</div>
+              <div className="relative">
+                <div className="flex h-5 rounded-full overflow-hidden bg-slate-100">
+                  {segments.map((s, i) => (
+                    <div
+                      key={i}
+                      className="h-full transition-all duration-300"
+                      style={{
+                        width: `${(s.best / totalMax) * 100}%`,
+                        background: s.color,
+                        minWidth: s.best > 0 ? "2px" : "0",
+                      }}
+                      title={`${s.label}: ${s.best}ms`}
+                    />
+                  ))}
+                </div>
+                {/* 2000ms target line */}
+                <div
+                  className="absolute top-0 bottom-0 flex flex-col items-center pointer-events-none"
+                  style={{ left: `${targetPct}%`, transform: "translateX(-50%)" }}
+                >
+                  <div className={`w-0.5 h-full ${bestOver ? "bg-red-500" : "bg-red-400"}`} />
+                </div>
+              </div>
+            </div>
+
+            {/* Stacked bar — typical */}
+            <div className="mb-1">
+              <div className="text-xs text-slate-400 mb-1 font-mono">{isFr ? "Cas typique" : "Typical"}</div>
+              <div className="relative">
+                <div className="flex h-5 rounded-full overflow-hidden bg-slate-100">
+                  {segments.map((s, i) => (
+                    <div
+                      key={i}
+                      className="h-full opacity-60 transition-all duration-300"
+                      style={{
+                        width: `${(s.typical / totalMax) * 100}%`,
+                        background: s.color,
+                        minWidth: s.typical > 0 ? "2px" : "0",
+                      }}
+                      title={`${s.label}: ${s.typical}ms`}
+                    />
+                  ))}
+                </div>
+                {/* 2000ms target line */}
+                <div
+                  className="absolute top-0 bottom-0 flex flex-col items-center pointer-events-none"
+                  style={{ left: `${targetPct}%`, transform: "translateX(-50%)" }}
+                >
+                  <div className={`w-0.5 h-full ${typicalOver ? "bg-red-500" : "bg-red-400"}`} />
+                </div>
+              </div>
+            </div>
+
+            {/* Target label below bars */}
+            <div className="relative mb-3" style={{ height: "18px" }}>
+              <div
+                className="absolute flex items-center gap-1 pointer-events-none"
+                style={{
+                  left: `${targetPct}%`,
+                  transform: targetPct > 80 ? "translateX(-100%)" : "translateX(-50%)",
+                  top: 0,
+                }}
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
+                <span className="text-xs font-mono font-bold text-red-600 whitespace-nowrap">
+                  {isFr ? "Cible 2s" : "2s target"}
+                </span>
+              </div>
+            </div>
+          </>
+        );
+      })()}
 
       {/* Legend */}
       <div className="flex flex-wrap gap-x-4 gap-y-1">
