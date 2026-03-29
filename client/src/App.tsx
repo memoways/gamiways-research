@@ -13,7 +13,8 @@ import Project from "./pages/Project";
 import Research from "./pages/Research";
 import StateOfArt from "./pages/StateOfArt";
 import PlatformDetail from "./pages/PlatformDetail";
-import PricingComparison from "./pages/PricingComparison";
+import PricingComparison from "@/pages/PricingComparison";
+import TTSDetail from "@/pages/TTSDetail";
 
 /** Remonte automatiquement en haut à chaque changement de route */
 function ScrollToTop() {
@@ -36,6 +37,7 @@ function Router() {
         <Route path="/state-of-art" component={StateOfArt} />
         <Route path="/platform/:id" component={PlatformDetail} />
         <Route path="/pricing" component={PricingComparison} />
+        <Route path="/tts/:id" component={TTSDetail} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

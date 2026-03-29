@@ -16,6 +16,7 @@ import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import { SolutionTableCell } from "@/components/SolutionBadge";
 import { SOLUTION_LINKS } from "@/lib/solutionLinks";
+import { getTTSData, getTTSByCategory, type TTSData } from "@/lib/ttsData";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
@@ -26,6 +27,57 @@ function ScoreBar({ value, max = 10, color }: { value: number; max?: number; col
         <div className="latency-fill" style={{ width: `${(value / max) * 100}%`, background: color }} />
       </div>
       <span className="text-xs font-mono text-slate-500 w-4">{value}</span>
+    </div>
+  );
+}
+
+function TTSCard({ tts, isFr }: { tts: TTSData; isFr: boolean }) {
+  const catColor = tts.category === "cloud-api" ? "oklch(0.72 0.18 200)" : tts.category === "open-source" ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 280)";
+  const catLabel = tts.category === "cloud-api" ? "Cloud API" : tts.category === "open-source" ? "Open Source" : "Voice-to-Voice";
+  const catLabelFr = tts.category === "cloud-api" ? "API Cloud" : tts.category === "open-source" ? "Open Source" : "Voix-\u00e0-Voix";
+  return (
+    <div className="bg-white border border-slate-200 rounded-lg p-4 hover:shadow-md transition-shadow flex flex-col gap-3">
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded mb-1 inline-block" style={{ background: catColor + "22", color: catColor }}>
+            {isFr ? catLabelFr : catLabel}
+          </span>
+          <h4 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{tts.name}</h4>
+          <p className="text-xs text-slate-400 mt-0.5 leading-snug" style={{ fontFamily: "'Source Serif 4', serif" }}>{tts.tagline}</p>
+        </div>
+      </div>
+      {/* Score bars */}
+      <div className="space-y-1.5">
+        {[
+          { label: isFr ? "Qualit\u00e9" : "Quality", value: tts.score.quality, color: "oklch(0.72 0.18 200)" },
+          { label: isFr ? "Latence" : "Latency", value: tts.score.latency, color: "oklch(0.65 0.18 145)" },
+          { label: isFr ? "Clonage" : "Cloning", value: tts.score.voiceCloning, color: "oklch(0.72 0.18 280)" },
+          { label: isFr ? "Souverainet\u00e9" : "Sovereignty", value: tts.score.sovereignty, color: "oklch(0.72 0.18 25)" },
+          { label: isFr ? "Prix" : "Pricing", value: tts.score.pricing, color: "oklch(0.65 0.18 145)" },
+        ].map(({ label, value, color }) => (
+          <div key={label}>
+            <div className="flex justify-between text-xs text-slate-400 mb-0.5">
+              <span style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{label}</span>
+              <span className="font-mono">{value}/10</span>
+            </div>
+            <ScoreBar value={value} color={color} />
+          </div>
+        ))}
+      </div>
+      {/* Key specs */}
+      <div className="flex flex-wrap gap-1.5">
+        <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">{tts.ttfaMs}ms TTFA</span>
+        {tts.eloScore > 0 && <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-amber-50 text-amber-700">ELO {tts.eloScore}</span>}
+        {tts.voiceCloning && <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700">{isFr ? "Clonage" : "Cloning"}</span>}
+        {tts.selfHostable && <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-cyan-50 text-cyan-700">{isFr ? "Souverain" : "Sovereign"}</span>}
+        {tts.lipsyncData && <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-violet-50 text-violet-700">Lip-sync</span>}
+      </div>
+      {/* DigiDouble axis */}
+      <div className="text-xs font-mono text-slate-400 border-t border-slate-100 pt-2">{tts.digiDoubleAxis}</div>
+      {/* Link */}
+      <a href={`/tts/${tts.id}`} className="mt-auto text-xs font-mono font-bold text-cyan-600 hover:text-cyan-800 underline">
+        {isFr ? "Fiche d\u00e9taill\u00e9e \u2192" : "Full details \u2192"}
+      </a>
     </div>
   );
 }
@@ -387,99 +439,10 @@ export default function StateOfArt() {
     },
   ];
 
-  const ttsComparison = [
-    {
-      name: "ElevenLabs",
-      type: isFr ? "Commercial" : "Commercial",
-      latency: "~200ms TTFA",
-      quality: isFr ? "Excellente" : "Excellent",
-      cloning: isFr ? "Oui (court échantillon)" : "Yes (short sample)",
-      prosody: isFr ? "Bonne" : "Good",
-      multilingual: true,
-      sovereignty: false,
-      notes: isFr
-        ? "Référence industrie. Clonage voix haute qualité. Coût élevé à l'échelle."
-        : "Industry reference. High-quality voice cloning. High cost at scale.",
-    },
-    {
-      name: "Inworld TTS",
-      type: isFr ? "Commercial" : "Commercial",
-      latency: "130–250ms P90",
-      quality: isFr ? "Excellente" : "Excellent",
-      cloning: isFr ? "Oui" : "Yes",
-      prosody: isFr ? "Très bonne" : "Very good",
-      multilingual: true,
-      sovereignty: false,
-      notes: isFr
-        ? "ELO 1160 (Artificial Analysis 2026). Meilleur classement benchmarks indépendants."
-        : "ELO 1160 (Artificial Analysis 2026). Top ranking in independent benchmarks.",
-    },
-    {
-      name: "Cartesia",
-      type: isFr ? "Commercial" : "Commercial",
-      latency: "<100ms",
-      quality: isFr ? "Très bonne" : "Very good",
-      cloning: isFr ? "Oui" : "Yes",
-      prosody: isFr ? "Bonne" : "Good",
-      multilingual: true,
-      sovereignty: false,
-      notes: isFr
-        ? "Très faible latence. Bon rapport qualité/vitesse pour agents vocaux."
-        : "Very low latency. Good quality/speed ratio for voice agents.",
-    },
-    {
-      name: "Kokoro (OS)",
-      type: "Open Source",
-      latency: "<100ms",
-      quality: isFr ? "Bonne" : "Good",
-      cloning: isFr ? "Non" : "No",
-      prosody: isFr ? "Limitée" : "Limited",
-      multilingual: false,
-      sovereignty: true,
-      notes: isFr
-        ? "82M params, Apache 2.0. Très rapide, déploiement edge. Pas de clonage voix."
-        : "82M params, Apache 2.0. Very fast, edge deployment. No voice cloning.",
-    },
-    {
-      name: "XTTS-v2 (Coqui)",
-      type: "Open Source",
-      latency: "200–500ms",
-      quality: isFr ? "Bonne" : "Good",
-      cloning: isFr ? "Oui (6s audio)" : "Yes (6s audio)",
-      prosody: isFr ? "Bonne" : "Good",
-      multilingual: true,
-      sovereignty: true,
-      notes: isFr
-        ? "Clonage voix depuis 6 secondes. Multilingue. Déploiement souverain possible."
-        : "Voice cloning from 6 seconds. Multilingual. Sovereign deployment possible.",
-    },
-    {
-      name: "FishAudio S1-mini",
-      type: "Open Source",
-      latency: "300–600ms",
-      quality: isFr ? "Très bonne" : "Very good",
-      cloning: isFr ? "Oui (~10s audio)" : "Yes (~10s audio)",
-      prosody: isFr ? "Très bonne" : "Very good",
-      multilingual: true,
-      sovereignty: true,
-      notes: isFr
-        ? "0.5B params distillé. Expressif, contrôle émotion. 13 langues."
-        : "0.5B distilled params. Expressive, emotion control. 13 languages.",
-    },
-    {
-      name: "Chatterbox-Turbo",
-      type: "Open Source",
-      latency: "<200ms",
-      quality: isFr ? "Très bonne" : "Very good",
-      cloning: isFr ? "Oui" : "Yes",
-      prosody: isFr ? "Bonne" : "Good",
-      multilingual: false,
-      sovereignty: true,
-      notes: isFr
-        ? "MIT. 350M params, 1-step decoder. Contrôle exagération émotionnelle. Benchmark favorable vs ElevenLabs."
-        : "MIT. 350M params, 1-step decoder. Emotional exaggeration control. Favorable benchmark vs ElevenLabs.",
-    },
-  ];
+  const allTTSData = getTTSData();
+  const cloudTTS = getTTSByCategory("cloud-api");
+  const openTTS = getTTSByCategory("open-source");
+  const v2vTTS = getTTSByCategory("voice-to-voice");
 
   const latencyBenchmarks = [
     { component: isFr ? "ASR/STT (Deepgram low-latency)" : "ASR/STT (Deepgram low-latency)", best: 75, typical: 200, unit: "ms" },
@@ -1533,50 +1496,144 @@ export default function StateOfArt() {
             </div>
           )}
 
-          {/* TTS */}
+          {/* TTS & Voice Synthesis — full section */}
           {activeTab === "tts" && (
             <div>
-              <div className="overflow-x-auto mb-4">
+              {/* Context banner */}
+              <div className="mb-6 bg-violet-50 border border-violet-200 rounded-lg px-5 py-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded mt-0.5" style={{ background: "oklch(0.55 0.20 280)", color: "white" }}>MVP PHASE 1</span>
+                  <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? <><strong>Voice-to-Voice est le premier livrable de DigiDouble.</strong> Cette section couvre l'ensemble du paysage TTS streaming et V2V end-to-end (2025–2026) — de l'API cloud aux modèles open-source souverains — pour guider le choix d'architecture du pipeline vocal Phase 1.</>
+                      : <><strong>Voice-to-Voice is DigiDouble's first deliverable.</strong> This section covers the full TTS streaming and end-to-end V2V landscape (2025–2026) — from cloud APIs to sovereign open-source models — to guide Phase 1 voice pipeline architecture decisions.</>
+                    }
+                  </p>
+                </div>
+              </div>
+
+              {/* Master comparison table */}
+              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Tableau comparatif — 14 solutions (2025–2026)" : "Comparison Table — 14 Solutions (2025–2026)"}
+              </h3>
+              <div className="overflow-x-auto mb-6">
                 <table className="data-table">
                   <thead>
                     <tr>
-                      <th>{isFr ? "Modèle TTS" : "TTS Model"}</th>
-                      <th>{isFr ? "Type" : "Type"}</th>
-                      <th>{isFr ? "Latence TTFA" : "TTFA Latency"}</th>
-                      <th>{isFr ? "Qualité" : "Quality"}</th>
-                      <th>{isFr ? "Clonage voix" : "Voice cloning"}</th>
-                      <th>{isFr ? "Prosodie" : "Prosody"}</th>
+                      <th>{isFr ? "Solution" : "Solution"}</th>
+                      <th>{isFr ? "Catégorie" : "Category"}</th>
+                      <th>TTFA</th>
+                      <th>ELO</th>
+                      <th>{isFr ? "Clonage" : "Cloning"}</th>
+                      <th>{isFr ? "Émotion" : "Emotion"}</th>
                       <th>{isFr ? "Multilingue" : "Multilingual"}</th>
                       <th>{isFr ? "Souverain" : "Sovereign"}</th>
+                      <th>{isFr ? "Prix/1M" : "Price/1M"}</th>
+                      <th>{isFr ? "Fiche" : "Detail"}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {ttsComparison.map((tts) => (
-                      <tr key={tts.name}>
-                        <td><div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{tts.name}</div></td>
-                        <td><StatusBadge variant={tts.type === "Commercial" ? "external" : "available"} label={tts.type} /></td>
-                        <td>
-                          <span className="text-xs font-mono" style={{
-                            color: tts.latency.includes("<100") || tts.latency.includes("60") || tts.latency.includes("80") ? "oklch(0.65 0.18 145)"
-                              : tts.latency.includes("200") || tts.latency.includes("130") ? "oklch(0.75 0.16 75)"
-                              : "oklch(0.60 0.20 25)",
-                          }}>{tts.latency}</span>
-                        </td>
-                        <td className="text-xs text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{tts.quality}</td>
-                        <td className="text-xs text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{tts.cloning}</td>
-                        <td className="text-xs text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{tts.prosody}</td>
-                        <td><span style={{ color: tts.multilingual ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{tts.multilingual ? "✓" : "✗"}</span></td>
-                        <td><span style={{ color: tts.sovereignty ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{tts.sovereignty ? "✓" : "✗"}</span></td>
-                      </tr>
-                    ))}
+                    {allTTSData.map((t: TTSData) => {
+                      const catColor = t.category === "cloud-api" ? "oklch(0.72 0.18 200)" : t.category === "open-source" ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 280)";
+                      const catLabel = t.category === "cloud-api" ? "Cloud" : t.category === "open-source" ? "Open" : "V2V";
+                      return (
+                        <tr key={t.id}>
+                          <td>
+                            <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{t.name}</div>
+                            <div className="text-xs text-slate-400 font-mono mt-0.5">{t.digiDoubleAxis}</div>
+                          </td>
+                          <td>
+                            <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: catColor + "22", color: catColor }}>{catLabel}</span>
+                          </td>
+                          <td>
+                            <span className="text-xs font-mono" style={{ color: t.ttfaMs <= 100 ? "oklch(0.65 0.18 145)" : t.ttfaMs <= 250 ? "oklch(0.75 0.16 75)" : "oklch(0.60 0.20 25)" }}>
+                              {t.ttfaMs}ms
+                            </span>
+                          </td>
+                          <td>
+                            <span className="text-xs font-mono text-slate-600">{t.eloScore > 0 ? t.eloScore : "—"}</span>
+                          </td>
+                          <td><span style={{ color: t.voiceCloning ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.voiceCloning ? "✓" : "✗"}</span></td>
+                          <td><span style={{ color: t.emotionControl ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.emotionControl ? "✓" : "✗"}</span></td>
+                          <td><span style={{ color: t.multilingual ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.multilingual ? `✓ ${t.languages}` : "✗"}</span></td>
+                          <td><span style={{ color: t.selfHostable ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{t.selfHostable ? "✓" : "✗"}</span></td>
+                          <td>
+                            <span className="text-xs font-mono text-slate-600">
+                              {t.pricePerMChar > 0 ? `$${t.pricePerMChar}` : isFr ? "Gratuit" : "Free"}
+                            </span>
+                          </td>
+                          <td>
+                            <a href={`/tts/${t.id}`} className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
+                              {isFr ? "Voir →" : "View →"}
+                            </a>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
-              <div className="callout-info">
-                <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
+
+              {/* Sub-section: Cloud API */}
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.72 0.18 200)", color: "white" }}>CLOUD API</span>
+                  <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "APIs Cloud — TTS Streaming" : "Cloud APIs — Streaming TTS"}
+                  </h3>
+                </div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {cloudTTS.map((t: TTSData) => (
+                    <TTSCard key={t.id} tts={t} isFr={isFr} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Sub-section: Open Source */}
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.65 0.18 145)", color: "white" }}>OPEN SOURCE</span>
+                  <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Modèles Open-Source — Déploiement Souverain" : "Open-Source Models — Sovereign Deployment"}
+                  </h3>
+                </div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {openTTS.map((t: TTSData) => (
+                    <TTSCard key={t.id} tts={t} isFr={isFr} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Sub-section: Voice-to-Voice */}
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.60 0.20 280)", color: "white" }}>VOICE-TO-VOICE</span>
+                  <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Modèles End-to-End — Speech-to-Speech" : "End-to-End Models — Speech-to-Speech"}
+                  </h3>
+                </div>
+                <p className="text-sm text-slate-500 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                   {isFr
-                    ? <><strong>Recommandation pour DigiDouble :</strong> Chatterbox-Turbo ou FishAudio S1-mini pour un déploiement souverain avec clonage voix. XTTS-v2 pour le multilingue (FR/EN/DE/IT). ElevenLabs comme référence de qualité pour les phases de validation.</>
-                    : <><strong>Recommendation for DigiDouble:</strong> Chatterbox-Turbo or FishAudio S1-mini for sovereign deployment with voice cloning. XTTS-v2 for multilingual (FR/EN/DE/IT). ElevenLabs as quality reference for validation phases.</>
+                    ? "Les modèles V2V éliminent le pipeline en cascade ASR+LLM+TTS, réduisant la latence de 800ms–2s à ~100ms. Trade-off : moins de contrôlabilité sur la voix et l'émotion."
+                    : "V2V models eliminate the cascading ASR+LLM+TTS pipeline, reducing latency from 800ms–2s to ~100ms. Trade-off: less controllability over voice and emotion."
+                  }
+                </p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {v2vTTS.map((t: TTSData) => (
+                    <TTSCard key={t.id} tts={t} isFr={isFr} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Architecture decision callout */}
+              <div className="callout-warning">
+                <p className="text-sm font-semibold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Décision d'architecture Phase 1 : Cascade vs End-to-End" : "Phase 1 Architecture Decision: Cascade vs End-to-End"}
+                </p>
+                <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? <>Le MVP Phase 1 doit choisir entre deux approches : <strong>(A) Pipeline en cascade</strong> (ASR → LLM → TTS, ex. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — plus contrôlable, clonage vocal possible, souveraineté totale possible, latence ~400–800ms ; ou <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — latence ~100ms mais moins contrôlable, pas de clonage vocal. <strong>Recommandation DigiDouble :</strong> commencer par (A) avec Voxtral TTS (Mistral, mars 2026) + Deepgram Nova-3 pour valider la qualité conversationnelle, puis évaluer (B) pour l'optimisation latence en Phase 2.</>
+                    : <>Phase 1 MVP must choose between two approaches: <strong>(A) Cascading pipeline</strong> (ASR → LLM → TTS, e.g. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — more controllable, voice cloning possible, full sovereignty possible, ~400–800ms latency; or <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — ~100ms latency but less controllable, no voice cloning. <strong>DigiDouble recommendation:</strong> start with (A) using Voxtral TTS (Mistral, March 2026) + Deepgram Nova-3 to validate conversational quality, then evaluate (B) for latency optimization in Phase 2.</>
                   }
                 </p>
               </div>
