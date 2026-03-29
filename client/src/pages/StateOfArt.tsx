@@ -75,9 +75,9 @@ function TTSCard({ tts, isFr }: { tts: TTSData; isFr: boolean }) {
       {/* DigiDouble axis */}
       <div className="text-xs font-mono text-slate-400 border-t border-slate-100 pt-2">{tts.digiDoubleAxis}</div>
       {/* Link */}
-      <a href={`/tts/${tts.id}`} className="mt-auto text-xs font-mono font-bold text-cyan-600 hover:text-cyan-800 underline">
+      <InternalLink to={`/tts/${tts.id}`} className="mt-auto text-xs font-mono font-bold text-cyan-600 hover:text-cyan-800 underline">
         {isFr ? "Fiche d\u00e9taill\u00e9e \u2192" : "Full details \u2192"}
-      </a>
+      </InternalLink>
     </div>
   );
 }
@@ -948,14 +948,13 @@ export default function StateOfArt() {
                     {isFr ? 'Graphique interactif + tableau trié pour toutes les plateformes' : 'Interactive chart + sortable table for all platforms'}
                   </p>
                 </div>
-                <a
-                  href="/pricing"
-                  onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'instant' }); window.location.href = '/pricing'; }}
+                <InternalLink
+                  to="/pricing"
                   className="flex-shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-5 py-2.5 transition-all hover:opacity-90 active:scale-95"
-                  style={{ background: 'oklch(0.55 0.20 200)', fontFamily: "'Space Grotesk', sans-serif" }}
+                  style={{ background: 'oklch(0.55 0.20 200)', fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}
                 >
                   {isFr ? 'Voir la comparaison tarifaire →' : 'View pricing comparison →'}
-                </a>
+                </InternalLink>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {commercialPlatforms.map((p) => {
@@ -1034,14 +1033,13 @@ export default function StateOfArt() {
                       <p className="text-xs text-slate-500 leading-relaxed flex-1" style={{ fontFamily: "'Source Serif 4', serif" }}>{p.notes}</p>
                       {hasDetailPage && (
                         <div className="mt-4">
-                          <a
-                            href={`/platform/${(p as any).linkKey}`}
-                            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'instant' }); window.location.href = `/platform/${(p as any).linkKey}`; }}
+                          <InternalLink
+                            to={`/platform/${(p as any).linkKey}`}
                             className="w-full flex items-center justify-center gap-2 text-sm font-semibold rounded-lg px-4 py-2.5 transition-all hover:opacity-90 active:scale-95"
-                            style={{ background: 'oklch(0.20 0.04 240)', color: 'white', fontFamily: "'Space Grotesk', sans-serif" }}
+                            style={{ background: 'oklch(0.20 0.04 240)', color: 'white', fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}
                           >
-                            {isFr ? 'Fiche complète : customisation, API, pricing →' : 'Full details: customisation, API, pricing →'}
-                          </a>
+                            {isFr ? 'Fiche compl\u00e8te : customisation, API, pricing \u2192' : 'Full details: customisation, API, pricing \u2192'}
+                          </InternalLink>
                         </div>
                       )}
                     </div>
@@ -1563,9 +1561,9 @@ export default function StateOfArt() {
                             </span>
                           </td>
                           <td>
-                            <a href={`/tts/${t.id}`} className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
+                            <InternalLink to={`/tts/${t.id}`} className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
                               {isFr ? "Voir →" : "View →"}
-                            </a>
+                            </InternalLink>
                           </td>
                         </tr>
                       );

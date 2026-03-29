@@ -110,14 +110,21 @@ export default function PlatformDetail() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-6 py-3 flex items-center gap-4">
-          <InternalLink to="/state-of-art" className="flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm transition-colors">
+      <div className="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+        <div className="max-w-5xl mx-auto px-6 py-3 flex items-center gap-3">
+          <InternalLink
+            to="/state-of-art"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-sm font-medium transition-all"
+          >
             <ChevronLeft className="w-4 h-4" />
-            {lang === "fr" ? "État de l'Art" : "State of the Art"}
+            {lang === "fr" ? "Retour" : "Back"}
           </InternalLink>
           <span className="text-slate-300">/</span>
-          <span className="text-sm font-medium text-slate-900">{platform.name}</span>
+          <span className="text-xs font-mono text-slate-500 hidden sm:block">
+            {lang === "fr" ? "État de l'Art" : "State of the Art"}
+          </span>
+          <span className="text-slate-300 hidden sm:block">/</span>
+          <span className="text-sm font-semibold text-slate-900 truncate">{platform.name}</span>
         </div>
       </div>
 

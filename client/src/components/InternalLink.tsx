@@ -1,16 +1,17 @@
 /*
  * InternalLink — navigates to an internal page and always scrolls to top
+ * Uses wouter's navigate() for SPA routing (no full page reload, single history entry)
  * Usage: <InternalLink to="/research">Research Challenges</InternalLink>
  */
 import { useLocation } from "wouter";
+import React from "react";
 
-interface InternalLinkProps {
+interface InternalLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
   to: string;
   children: React.ReactNode;
-  className?: string;
 }
 
-export default function InternalLink({ to, children, className }: InternalLinkProps) {
+export default function InternalLink({ to, children, className, style, ...rest }: InternalLinkProps) {
   const [, navigate] = useLocation();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -27,7 +28,8 @@ export default function InternalLink({ to, children, className }: InternalLinkPr
         className ??
         "inline underline decoration-dotted underline-offset-2 cursor-pointer transition-colors hover:opacity-70"
       }
-      style={className ? undefined : { color: "oklch(0.55 0.18 200)" }}
+      style={style ?? (className ? undefined : { color: "oklch(0.55 0.18 200)" })}
+      {...rest}
     >
       {children}
     </a>
