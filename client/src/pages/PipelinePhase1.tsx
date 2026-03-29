@@ -653,7 +653,7 @@ export default function PipelinePhase1() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <InternalLink
             to="/state-of-art"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-sm font-medium transition-all"
+            className="cta-back"
           >
             <ChevronLeft className="w-4 h-4" />
             {isFr ? "Retour" : "Back"}
@@ -905,14 +905,14 @@ export default function PipelinePhase1() {
         <div className="mt-10 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
           <InternalLink
             to="/state-of-art"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-700 text-white text-sm font-medium transition-all"
+            className="cta-primary"
           >
             <ChevronLeft className="w-4 h-4" />
             {isFr ? "Retour à l'État de l'Art" : "Back to State of the Art"}
           </InternalLink>
           <InternalLink
             to="/research"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 bg-white hover:border-slate-300 text-slate-700 text-sm font-medium transition-all"
+            className="cta-secondary"
           >
             {isFr ? "Défis de Recherche" : "Research Challenges"}
             <ChevronRight className="w-4 h-4" />

@@ -112,7 +112,7 @@ export default function TTSDetail() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <InternalLink
             to="/state-of-art"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-sm font-medium transition-all"
+            className="cta-back"
           >
             <ChevronLeft className="w-4 h-4" />
             {isFr ? "Retour" : "Back"}
@@ -153,12 +153,12 @@ export default function TTSDetail() {
             </div>
             <div className="flex gap-2">
               <a href={tts.homepageUrl} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded border border-slate-200 hover:border-slate-400 text-slate-600 hover:text-slate-900 transition-all">
-                <ExternalLink className="w-3 h-3" /> {isFr ? "Site" : "Website"}
+                className="cta-secondary">
+                <ExternalLink className="w-4 h-4" /> {isFr ? "Site" : "Website"}
               </a>
               <a href={tts.docsUrl} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded bg-slate-900 text-white hover:bg-slate-700 transition-all">
-                <Code2 className="w-3 h-3" /> Docs
+                className="cta-primary">
+                <Code2 className="w-4 h-4" /> Docs
               </a>
             </div>
           </div>

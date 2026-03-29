@@ -1637,7 +1637,7 @@ export default function StateOfArt() {
                 <div className="mt-4">
                   <InternalLink
                     to="/pipeline"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-700 text-white text-sm font-medium transition-all"
+                    className="cta-primary"
                   >
                     {isFr ? "→ Diagramme interactif du Pipeline Phase 1" : "→ Interactive Phase 1 Pipeline Diagram"}
                   </InternalLink>

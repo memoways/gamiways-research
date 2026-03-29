@@ -80,15 +80,15 @@ export default function Home() {
           </p>
           <div className="flex items-center gap-3 flex-wrap">
             <Link href="/project">
-              <button className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium text-white transition-colors" style={{ background: "oklch(0.45 0.18 200)", fontFamily: "'Space Grotesk', sans-serif" }}>
+              <button className="flex items-center gap-2 px-6 py-3 rounded-lg text-base font-semibold text-white shadow-md hover:shadow-lg transition-all hover:scale-[1.02]" style={{ background: "oklch(0.42 0.20 200)", fontFamily: "'Space Grotesk', sans-serif" }}>
                 {isFr ? "Découvrir le projet" : "Discover the project"}
-                <ArrowRight size={14} />
+                <ArrowRight size={16} />
               </button>
             </Link>
             <Link href="/state-of-art">
-              <button className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium border border-slate-300 text-slate-600 hover:border-slate-400 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <button className="flex items-center gap-2 px-6 py-3 rounded-lg text-base font-semibold border-2 border-slate-300 text-slate-700 hover:border-slate-500 hover:text-slate-900 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 {isFr ? "État de l'art" : "State of the Art"}
-                <BarChart2 size={14} />
+                <BarChart2 size={16} />
               </button>
             </Link>
             <a
@@ -96,10 +96,10 @@ export default function Home() {
               download="DigiDouble-Technical-Brief.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded text-sm font-medium border-2 transition-colors"
-              style={{ borderColor: "oklch(0.45 0.18 200)", color: "oklch(0.45 0.18 200)", background: "oklch(0.97 0.02 200)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
+              className="flex items-center gap-2 px-6 py-3 rounded-lg text-base font-semibold border-2 transition-all hover:scale-[1.02]"
+              style={{ borderColor: "oklch(0.42 0.20 200)", color: "oklch(0.35 0.20 200)", background: "oklch(0.96 0.03 200)", fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700 }}
             >
-              <Download size={14} />
+              <Download size={16} />
               {isFr ? "Télécharger le brief technique" : "Download Technical Brief"}
             </a>
           </div>

@@ -114,7 +114,7 @@ export default function PlatformDetail() {
         <div className="max-w-5xl mx-auto px-6 py-3 flex items-center gap-3">
           <InternalLink
             to="/state-of-art"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-sm font-medium transition-all"
+            className="cta-back"
           >
             <ChevronLeft className="w-4 h-4" />
             {lang === "fr" ? "Retour" : "Back"}
@@ -149,7 +149,7 @@ export default function PlatformDetail() {
                 href={platform.homepageUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded hover:bg-slate-700 transition-colors"
+                className="cta-primary"
               >
                 <Globe className="w-4 h-4" />
                 {lang === "fr" ? "Site web" : "Website"}
@@ -158,7 +158,7 @@ export default function PlatformDetail() {
                 href={platform.docsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 text-slate-700 text-sm font-medium rounded hover:border-slate-500 transition-colors"
+                className="cta-secondary"
               >
                 <Code2 className="w-4 h-4" />
                 {lang === "fr" ? "Documentation API" : "API Docs"}
