@@ -752,9 +752,6 @@ export default function PipelinePhase1() {
                 </div>
               </div>
 
-              {/* Cumulative latency */}
-              <CumulativeLatency blocks={cascadeBlocks} selections={selections} isFr={isFr} />
-
               {/* Block panels */}
               <div className="space-y-2">
                 {cascadeBlocks.map((block) => (
@@ -801,61 +798,71 @@ export default function PipelinePhase1() {
               </div>
             </div>
 
-            {/* Right: Recommended stacks */}
+            {/* Right: sticky sidebar with Latency + Stacks */}
             <div className="space-y-4">
-              <div>
-                <h2 className="text-sm font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Stacks recommandées" : "Recommended Stacks"}
-                </h2>
-                <p className="text-xs text-slate-500 mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  {isFr
-                    ? "Cliquez sur 'Appliquer' pour charger les composants dans le configurateur."
-                    : "Click 'Apply' to load components into the configurator."}
-                </p>
-              </div>
-              {recommendedStacks.map((stack) => (
-                <StackCard
-                  key={stack.id}
-                  stack={stack}
-                  isFr={isFr}
-                  onApply={() => applyStack(stack)}
-                />
-              ))}
+              {/* ── Sticky Latency Panel ── */}
+              <div className="sticky top-20 z-20 space-y-4">
 
-              {/* Decision guide */}
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-xs font-bold text-amber-800 mb-1">
-                      {isFr ? "Décision clé : clonage vocal" : "Key decision: voice cloning"}
-                    </p>
-                    <p className="text-xs text-amber-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                      {isFr
-                        ? "Le clonage vocal est critique pour le persona DigiDouble. Options : Cartesia (cloud, 40ms), Chatterbox (local, 150ms, MIT), ElevenLabs (cloud, 75ms, $75/1M). La stack souveraine requiert Chatterbox + Kokoro en combinaison."
-                        : "Voice cloning is critical for DigiDouble persona. Options: Cartesia (cloud, 40ms), Chatterbox (local, 150ms, MIT), ElevenLabs (cloud, 75ms, $75/1M). Sovereign stack requires Chatterbox + Kokoro combination."}
-                    </p>
+                {/* Cumulative latency — always visible */}
+                <CumulativeLatency blocks={cascadeBlocks} selections={selections} isFr={isFr} />
+
+                {/* Stacks header */}
+                <div>
+                  <h2 className="text-sm font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Stacks recommandées" : "Recommended Stacks"}
+                  </h2>
+                  <p className="text-xs text-slate-500 mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Cliquez sur 'Appliquer' pour charger les composants dans le configurateur."
+                      : "Click 'Apply' to load components into the configurator."}
+                  </p>
+                </div>
+
+                {recommendedStacks.map((stack) => (
+                  <StackCard
+                    key={stack.id}
+                    stack={stack}
+                    isFr={isFr}
+                    onApply={() => applyStack(stack)}
+                  />
+                ))}
+
+                {/* Decision guide */}
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs font-bold text-amber-800 mb-1">
+                        {isFr ? "Décision clé : clonage vocal" : "Key decision: voice cloning"}
+                      </p>
+                      <p className="text-xs text-amber-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                        {isFr
+                          ? "Le clonage vocal est critique pour le persona DigiDouble. Options : Cartesia (cloud, 40ms), Chatterbox (local, 150ms, MIT), ElevenLabs (cloud, 75ms, $75/1M). La stack souveraine requiert Chatterbox + Kokoro en combinaison."
+                          : "Voice cloning is critical for DigiDouble persona. Options: Cartesia (cloud, 40ms), Chatterbox (local, 150ms, MIT), ElevenLabs (cloud, 75ms, $75/1M). Sovereign stack requires Chatterbox + Kokoro combination."}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Link to TTS state of art */}
-              <div className="bg-slate-900 rounded-xl p-4 text-white">
-                <p className="text-xs font-bold text-white mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Comparer toutes les solutions TTS" : "Compare all TTS solutions"}
-                </p>
-                <p className="text-xs text-slate-400 mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  {isFr
-                    ? "14 solutions TTS/V2V avec scores comparatifs sur 7 axes."
-                    : "14 TTS/V2V solutions with comparative scores on 7 axes."}
-                </p>
-                <InternalLink
-                  to="/state-of-art"
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-white text-xs font-medium transition-all"
-                >
-                  <ArrowRight className="w-3.5 h-3.5" />
-                  {isFr ? "État de l'Art TTS →" : "TTS State of the Art →"}
-                </InternalLink>
+                {/* Link to TTS state of art */}
+                <div className="bg-slate-900 rounded-xl p-4 text-white">
+                  <p className="text-xs font-bold text-white mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Comparer toutes les solutions TTS" : "Compare all TTS solutions"}
+                  </p>
+                  <p className="text-xs text-slate-400 mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "14 solutions TTS/V2V avec scores comparatifs sur 7 axes."
+                      : "14 TTS/V2V solutions with comparative scores on 7 axes."}
+                  </p>
+                  <InternalLink
+                    to="/state-of-art"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-white text-xs font-medium transition-all"
+                  >
+                    <ArrowRight className="w-3.5 h-3.5" />
+                    {isFr ? "État de l'Art TTS →" : "TTS State of the Art →"}
+                  </InternalLink>
+                </div>
+
               </div>
             </div>
           </div>
