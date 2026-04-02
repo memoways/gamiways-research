@@ -411,18 +411,21 @@ function CumulativeLatency({
 
   let cumBest = 0;
   let cumTypical = 0;
-  const segments: { label: string; best: number; typical: number; color: string }[] = [];
+  let cumCost = 0;
+  const segments: { label: string; best: number; typical: number; color: string; cost: number }[] = [];
 
   blocks.forEach((block, i) => {
     const opt = block.options.find((o) => o.id === selections[block.id]);
     if (opt) {
       cumBest += opt.latencyBest;
       cumTypical += opt.latencyTypical;
+      cumCost += opt.costPerMin || 0;
       segments.push({
         label: isFr ? block.labelFr : block.label,
         best: opt.latencyBest,
         typical: opt.latencyTypical,
         color: blockColors[i] || "oklch(0.55 0.18 200)",
+        cost: opt.costPerMin || 0,
       });
     }
   });
@@ -430,12 +433,13 @@ function CumulativeLatency({
   const totalMax = Math.max(cumTypical * 1.1, 2000);
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
-      <div className="flex items-center justify-between mb-4">
+      <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
         <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          {isFr ? "Latence cumulée estimée" : "Estimated Cumulative Latency"}
+          {isFr ? "Latence & Coût estimés" : "Estimated Latency & Cost"}
         </h3>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          {/* Latency */}
           <div className="text-right">
             <div className="text-xs text-slate-400">{isFr ? "Meilleur cas" : "Best case"}</div>
             <div className="text-xl font-bold font-mono text-emerald-600">{cumBest}ms</div>
@@ -444,6 +448,27 @@ function CumulativeLatency({
             <div className="text-xs text-slate-400">{isFr ? "Cas typique" : "Typical"}</div>
             <div className="text-xl font-bold font-mono text-slate-900">{cumTypical}ms</div>
           </div>
+          {/* Divider */}
+          <div className="w-px h-8 bg-slate-200 hidden sm:block" />
+          {/* Cost */}
+          <div className="text-right">
+            <div className="text-xs text-slate-400">{isFr ? "Coût/min" : "Cost/min"}</div>
+            <div className={`text-xl font-bold font-mono ${
+              cumCost === 0 ? "text-emerald-600" :
+              cumCost < 0.05 ? "text-emerald-600" :
+              cumCost < 0.15 ? "text-amber-600" :
+              "text-red-600"
+            }`}>
+              {cumCost === 0 ? "Free" : `$${cumCost.toFixed(3)}`}
+            </div>
+          </div>
+          <div className={`text-right`}>
+            <div className="text-xs text-slate-400">{isFr ? "Coût/heure" : "Cost/hour"}</div>
+            <div className="text-sm font-bold font-mono text-slate-600">
+              {cumCost === 0 ? "Free" : `$${(cumCost * 60).toFixed(2)}`}
+            </div>
+          </div>
+          {/* Status badge */}
           <div className={`px-3 py-1.5 rounded-lg text-xs font-bold font-mono ${
             cumBest < 600 ? "bg-emerald-100 text-emerald-700" :
             cumBest < 1200 ? "bg-amber-100 text-amber-700" :
@@ -539,15 +564,46 @@ function CumulativeLatency({
         );
       })()}
 
-      {/* Legend */}
-      <div className="flex flex-wrap gap-x-4 gap-y-1">
+      {/* Legend — latency + cost breakdown */}
+      <div className="flex flex-wrap gap-x-4 gap-y-1 mb-3">
         {segments.map((s, i) => (
           <div key={i} className="flex items-center gap-1.5">
             <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: s.color }} />
-            <span className="text-xs text-slate-500 font-mono">{s.label.split(" ")[0]}: {s.best}ms</span>
+            <span className="text-xs text-slate-500 font-mono">
+              {s.label.split(" ")[0]}: {s.best}ms
+              {s.cost > 0 && <span className="text-slate-400"> · ${s.cost.toFixed(3)}/min</span>}
+              {s.cost === 0 && <span className="text-emerald-500"> · free</span>}
+            </span>
           </div>
         ))}
       </div>
+      {/* Cost bar */}
+      {cumCost > 0 && (
+        <div className="mb-3">
+          <div className="text-xs text-slate-400 mb-1 font-mono">{isFr ? "Répartition du coût" : "Cost breakdown"}</div>
+          <div className="flex h-3 rounded-full overflow-hidden bg-slate-100">
+            {segments.filter(s => s.cost > 0).map((s, i) => (
+              <div
+                key={i}
+                className="h-full transition-all duration-300"
+                style={{
+                  width: `${(s.cost / cumCost) * 100}%`,
+                  background: s.color,
+                  minWidth: "2px",
+                }}
+                title={`${s.label}: $${s.cost.toFixed(3)}/min (${Math.round((s.cost / cumCost) * 100)}%)`}
+              />
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-1">
+            {segments.filter(s => s.cost > 0).map((s, i) => (
+              <span key={i} className="text-xs font-mono text-slate-400">
+                <span style={{ color: s.color }}>■</span> {s.label.split(" ")[0]}: {Math.round((s.cost / cumCost) * 100)}%
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Target line annotation */}
       <div className="mt-3 pt-3 border-t border-slate-100 flex items-center gap-2">
