@@ -1,6 +1,6 @@
 /*
  * GapDiagram — DigiDouble Research Portal
- * Visual: 5 required criteria × 4 solution categories — hover for details
+ * Visual: 6 required criteria × 4 solution categories — hover for details
  * Design: same style as ProductArchDiagram — monospace labels, color-coded cells, tooltip on hover
  * Philosophy: editorial minimalism — Bauhaus grid, functional whitespace
  */
@@ -79,6 +79,16 @@ const criteria: Criterion[] = [
     descriptionFr: "Éditeur de nœuds pour des flux conversationnels déterministes + organiques. Modes Edugami / Storygami.",
     rdRequired: false,
   },
+  {
+    id: "emotional_perception",
+    label: "Emotional perception",
+    labelFr: "Perception émotionnelle",
+    icon: "👁️",
+    color: "oklch(0.65 0.18 280)",
+    description: "Real-time multimodal perception: tone, expression, gaze, posture → NL context for LLM. Raven-1 reference: audio < 100ms, AV context < 300ms.",
+    descriptionFr: "Perception multimodale temps réel : ton, expression, regard, posture → contexte NL pour LLM. Référence Raven-1 : audio < 100ms, contexte AV < 300ms.",
+    rdRequired: true,
+  },
 ];
 
 const solutionCategories: SolutionCategory[] = [
@@ -93,9 +103,10 @@ const solutionCategories: SolutionCategory[] = [
       sovereignty: "none",
       memory: "none",
       narrative: "none",
+      emotional_perception: "partial",
     },
-    tooltip: "Good visual quality, but 6–15s latency, no sovereignty, no memory, no narrative control.",
-    tooltipFr: "Bonne qualité visuelle, mais latence 6–15s, aucune souveraineté, pas de mémoire ni de contrôle narratif.",
+    tooltip: "Good visual quality, but 6–15s latency, no sovereignty, no memory, no narrative control. Only Tavus (Raven-1) offers real-time emotional perception among commercial platforms.",
+    tooltipFr: "Bonne qualité visuelle, mais latence 6–15s, aucune souveraineté, pas de mémoire ni de contrôle narratif. Seul Tavus (Raven-1) offre la perception émotionnelle temps réel parmi les plateformes commerciales.",
   },
   {
     id: "opensource",
@@ -108,9 +119,10 @@ const solutionCategories: SolutionCategory[] = [
       sovereignty: "full",
       memory: "none",
       narrative: "none",
+      emotional_perception: "none",
     },
-    tooltip: "Sovereignty possible, partial latency gains, but no memory, no narrative, limited behavioral fidelity.",
-    tooltipFr: "Souveraineté possible, gains de latence partiels, mais pas de mémoire, pas de narratif, fidélité comportementale limitée.",
+    tooltip: "Sovereignty possible, partial latency gains, but no memory, no narrative, limited behavioral fidelity. No open-source equivalent to Raven-1 exists yet.",
+    tooltipFr: "Souveraineté possible, gains de latence partiels, mais pas de mémoire, pas de narratif, fidélité comportementale limitée. Aucun équivalent open-source à Raven-1 n'existe encore.",
   },
   {
     id: "research",
@@ -123,9 +135,10 @@ const solutionCategories: SolutionCategory[] = [
       sovereignty: "partial",
       memory: "partial",
       narrative: "none",
+      emotional_perception: "partial",
     },
-    tooltip: "Strong behavioral fidelity research, but not production-ready, no narrative control, no integrated memory.",
-    tooltipFr: "Forte recherche sur la fidélité comportementale, mais pas prêt pour la production, pas de contrôle narratif, pas de mémoire intégrée.",
+    tooltip: "Strong behavioral fidelity research, but not production-ready, no narrative control, no integrated memory. Some academic work on affective computing (partial).",
+    tooltipFr: "Forte recherche sur la fidélité comportementale, mais pas prêt pour la production, pas de contrôle narratif, pas de mémoire intégrée. Quelques travaux académiques en affective computing (partiel).",
   },
   {
     id: "digidouble",
@@ -138,9 +151,10 @@ const solutionCategories: SolutionCategory[] = [
       sovereignty: "full",
       memory: "full",
       narrative: "full",
+      emotional_perception: "full",
     },
-    tooltip: "The only combination targeting all 5 criteria simultaneously. Requires fundamental R&D on 3 axes.",
-    tooltipFr: "La seule combinaison ciblant les 5 critères simultanément. Nécessite une R&D fondamentale sur 3 axes.",
+    tooltip: "The only combination targeting all 6 criteria simultaneously, including sovereign real-time emotional perception — no existing solution covers this. Requires fundamental R&D on 4 axes.",
+    tooltipFr: "La seule combinaison ciblant les 6 critères simultanément, y compris la perception émotionnelle temps réel souveraine — aucune solution existante ne couvre cela. Nécessite une R&D fondamentale sur 4 axes.",
   },
 ];
 
@@ -207,7 +221,7 @@ export default function GapDiagram() {
       <div className="overflow-x-auto">
         <div style={{ minWidth: "640px" }}>
           {/* Header row — criteria */}
-          <div className="grid mb-1" style={{ gridTemplateColumns: "200px repeat(5, 1fr)", gap: "4px" }}>
+          <div className="grid mb-1" style={{ gridTemplateColumns: "200px repeat(6, 1fr)", gap: "4px" }}>
             {/* Empty top-left */}
             <div />
             {criteria.map((crit) => (
@@ -248,7 +262,7 @@ export default function GapDiagram() {
             <div
               key={cat.id}
               className="grid mb-1"
-              style={{ gridTemplateColumns: "200px repeat(5, 1fr)", gap: "4px" }}
+              style={{ gridTemplateColumns: "200px repeat(6, 1fr)", gap: "4px" }}
             >
               {/* Row label */}
               <div
