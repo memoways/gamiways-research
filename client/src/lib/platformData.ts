@@ -174,18 +174,18 @@ export const platforms: PlatformData[] = [
 
   {
     id: "tavus",
-    name: "Tavus (Phoenix-4)",
-    tagline: "Conversational Video Interface with emotional intelligence",
+    name: "Tavus (Phoenix-4 + Raven-1)",
+    tagline: "Conversational Video Interface with full emotional intelligence stack — Raven-1 perception + Phoenix-4 rendering + Sparrow-1 turn-taking",
     homepageUrl: "https://www.tavus.io",
     docsUrl: "https://docs.tavus.io/api-reference/overview",
     category: "commercial",
-    model: "Phoenix-4 + Raven-1 + Sparrow-1",
+    model: "Phoenix-4 + Raven-1 + Sparrow-1 (CVI Stack 2026)",
     latencyMs: 500,
     costPerMin: 0.32,
     costPerMinNote: "$0.32/min (Growth plan) · $0.37/min (Starter) · Free: 25 min total",
     sovereigntyScore: 1,
     sovereigntyNote: "AWS US. SOC2 Type II + HIPAA (Growth+). No EU hosting.",
-    qualityScore: 9,
+    qualityScore: 10,
     protocol: ["WebRTC", "REST", "Daily SDK"],
 
     customisation: {
@@ -194,9 +194,9 @@ export const platforms: PlatformData[] = [
       behavior: true,
       behaviorDetail: "Persona system_prompt + Objectives (guided conversational goals) + Guardrails (strict behavioral limits). 30+ languages.",
       bodyLanguage: true,
-      bodyLanguageDetail: "Phoenix-4 generates adaptive body language matching conversation tone. Not manually scriptable per gesture, but emotionally coherent.",
+      bodyLanguageDetail: "Phoenix-4 (2026): generates full head, hair, eyes, pose and expression from scratch every frame — no pre-recorded video loops. Active listening: nods, tilts, microexpressions react to what the user says in real time.",
       expressions: true,
-      expressionsDetail: "Emotional intelligence layer: joy, seriousness, surprise. Micro-expressions synchronized with voice inflection.",
+      expressionsDetail: "Phoenix-4 emotional intelligence: smooth transitions between emotional states, emergent microexpressions, no brute-force emotion. Raven-1 perception layer feeds emotional context to Phoenix-4 in real time (context freshness < 300ms).",
       voice: true,
       voiceDetail: "Tone and accent customisation. 30+ languages. Echo mode: drive avatar with external audio stream.",
       personaFineTuning: true,
@@ -226,7 +226,10 @@ export const platforms: PlatformData[] = [
       concurrentSessions: "1 (Free) → 15+ (Growth) → unlimited (Enterprise)",
       rateLimits: "S3 pre-signed URLs required for training media",
       keyFeatures: [
-        "CVI: Raven-1 (perception) + Sparrow-1 (turn-taking) + Phoenix-4 (rendering)",
+        "Raven-1 (2026): multimodal perception — audio-visual fusion, tone + expression + gaze + posture → natural language output for LLMs. Context < 300ms stale. Audio perception < 100ms.",
+        "Phoenix-4 (2026): fully generated face/hair/eyes/pose every frame — no video loops. Active listening behaviors. Smooth emotional transitions with microexpressions.",
+        "Sparrow-1: turn-taking model for natural conversation flow",
+        "Raven-1 tool calling: OpenAI-compatible schema, callbacks on user laughter, emotional thresholds, attention shifts",
         "Echo mode: lip-sync on external audio stream",
         "Text Respond: generate response from text input",
         "Cerebras chip integration for ultra-fast LLM inference",
@@ -263,8 +266,8 @@ export const platforms: PlatformData[] = [
     hosting: "AWS US",
     gdpr: true,
     onPremise: false,
-    digiDoubleRelevance: "Best-in-class for emotional intelligence and native RAG. Guardrails system ideal for educational/professional use cases. HIPAA compliance valuable for healthcare. Main limitation: US hosting and high cost per minute.",
-    digiDoubleScore: 8,
+    digiDoubleRelevance: "As of April 2026, Tavus is the most advanced commercial platform for emotional intelligence in conversational video avatars. The Raven-1 + Phoenix-4 + Sparrow-1 stack is the reference architecture for DigiDouble's target capabilities. Raven-1's perception layer (audio-visual fusion, < 300ms context freshness) directly addresses DigiDouble Axis 3 (Contextual Awareness). Phoenix-4's fully-generated rendering (no video loops, active listening behaviors) sets the quality benchmark. Main limitations for DigiDouble: US-only hosting (GDPR sovereignty concern), high cost ($0.32/min), and no open-source equivalent available yet.",
+    digiDoubleScore: 9,
   },
 
   {

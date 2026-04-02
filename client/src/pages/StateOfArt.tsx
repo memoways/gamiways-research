@@ -1123,25 +1123,31 @@ export default function StateOfArt() {
                   <div className="flex items-center gap-3">
                     <span className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.72 0.18 200)", color: "white" }}>KEY REFERENCE</span>
                     <h3 className="font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      Tavus Phoenix-4 — {isFr ? "Analyse approfondie" : "Deep Dive"}
+                      Tavus Phoenix-4 + Raven-1 — {isFr ? "Analyse approfondie (mise à jour avril 2026)" : "Deep Dive (updated April 2026)"}
                     </h3>
                   </div>
-                  <a href="https://www.tavus.io/post/phoenix-4-real-time-human-rendering-with-emotional-intelligence" target="_blank" rel="noopener noreferrer"
-                    className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
-                    tavus.io ↗
-                  </a>
+                  <div className="flex items-center gap-3">
+                    <a href="https://www.tavus.io/post/raven-1-bringing-emotional-intelligence-to-artificial-intelligence" target="_blank" rel="noopener noreferrer"
+                      className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
+                      Raven-1 ↗
+                    </a>
+                    <a href="https://phoenix.tavuslabs.org/" target="_blank" rel="noopener noreferrer"
+                      className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
+                      Phoenix-4 demo ↗
+                    </a>
+                  </div>
                 </div>
                 <div className="p-5">
                   <p className="text-sm text-slate-600 leading-relaxed mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
                     {isFr
-                      ? "Phoenix-4 est le premier modèle d'avatar temps réel à atteindre le \"réalisme comportemental\" — pas seulement visuel. La distinction clé : animer le comportement en continu (y compris pendant l'écoute et les silences), pas seulement pendant la parole. C'est la référence de l'état de l'art commercial pour l'Axe 2 (Avatar) de DigiDouble."
-                      : "Phoenix-4 is the first real-time avatar model to achieve \"behavioral realism\" — not just visual realism. The key distinction: animating behavior continuously (including while listening and during silence), not just when speaking. It is the commercial state-of-the-art reference for DigiDouble's Axis 2 (Avatar)."
+                      ? "En avril 2026, Tavus a complété son stack CVI (Conversational Video Intelligence) avec le lancement de Raven-1, une couche de perception multimodale qui comprend non seulement ce que dit l'utilisateur, mais comment il le dit et ce que cela signifie. Combiné à Phoenix-4 (rendu comportemental temps réel, aucune boucle vidéo pré-enregistrée) et Sparrow-1 (gestion des tours de parole), Tavus définit désormais la référence commerciale la plus avancée pour les avatars conversationnels émotionnellement intelligents."
+                      : "In April 2026, Tavus completed its CVI (Conversational Video Intelligence) stack with the launch of Raven-1, a multimodal perception layer that understands not just what the user says, but how they say it and what that combination actually means. Combined with Phoenix-4 (real-time behavioral rendering, no pre-recorded video loops) and Sparrow-1 (turn-taking), Tavus now defines the most advanced commercial reference for emotionally intelligent conversational avatars."
                     }
                   </p>
 
                   {/* Official comparison table */}
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {isFr ? "Tableau comparatif officiel (source : Tavus)" : "Official feature comparison (source: Tavus)"}
+                    {isFr ? "Stack CVI Tavus 2026 — 3 modèles complémentaires" : "Tavus CVI Stack 2026 — 3 complementary models"}
                   </h4>
                   <div className="overflow-x-auto mb-5">
                     <table className="data-table text-xs">
@@ -1159,7 +1165,8 @@ export default function StateOfArt() {
                       <tbody>
                         {[
                           { name: "Tavus Phoenix-4", rt: true, head: true, emo: true, listen: true, pose: true, perf: "40 FPS @ 1080p" },
-                          { name: "Tavus Phoenix-3", rt: true, head: true, emo: false, listen: false, pose: false, perf: "30 FPS @ 1080p" },
+                          { name: "Tavus Raven-1", rt: true, head: true, emo: true, listen: true, pose: true, perf: "Audio < 100ms · AV < 300ms" },
+                          { name: "Tavus Sparrow-1", rt: true, head: false, emo: false, listen: true, pose: false, perf: "Turn-taking model" },
                           { name: "Anam CARA III", rt: true, head: true, emo: false, listen: false, pose: true, perf: "~25 FPS @ 480p" },
                           { name: "Runway Characters", rt: true, head: false, emo: false, listen: false, pose: false, perf: "<500ms WebRTC" },
                           { name: "HeyGen LiveAvatar", rt: true, head: false, emo: false, listen: false, pose: false, perf: "Not stated" },
@@ -1181,7 +1188,7 @@ export default function StateOfArt() {
 
                   {/* Architecture highlights */}
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {isFr ? "Architecture technique clé" : "Key technical architecture"}
+                    {isFr ? "Architecture technique clé — Phoenix-4 + Raven-1" : "Key technical architecture — Phoenix-4 + Raven-1"}
                   </h4>
                   <div className="grid sm:grid-cols-3 gap-3 mb-5">
                     {[
@@ -1200,8 +1207,14 @@ export default function StateOfArt() {
                       {
                         label: isFr ? "Émotions" : "Emotions",
                         value: isFr ? "Boucle perception-expression" : "Perception-expression loop",
-                        detail: isFr ? "Raven-1 lit le ton/expression utilisateur → Phoenix-4 répond visuellement. Contrôle via tags émotion + directives LLM." : "Raven-1 reads user tone/expression → Phoenix-4 responds visually. Control via emotion tags + LLM directives.",
+                        detail: isFr ? "Raven-1 : fusion audio-visuelle (ton + expression + regard + posture) → sortie NL pour LLMs. Fraîcheur contexte < 300ms. Perception audio < 100ms. Tool calling OpenAI-compatible (callbacks sur rire, seuils émotionnels, changements d'attention)." : "Raven-1: audio-visual fusion (tone + expression + gaze + posture) → NL output for LLMs. Context freshness < 300ms. Audio perception < 100ms. OpenAI-compatible tool calling (callbacks on laughter, emotional thresholds, attention shifts).",
                         color: "oklch(0.72 0.18 50)",
+                      },
+                      {
+                        label: isFr ? "Perception" : "Perception",
+                        value: "Raven-1 Multimodal",
+                        detail: isFr ? "Nouveau (avril 2026) : modèle de perception multimodale qui comprend ce que dit l'utilisateur, comment il le dit, et ce que cela signifie. Suivi temporel des états émotionnels et attentionnels tout au long de la conversation." : "New (April 2026): multimodal perception model that understands what the user says, how they say it, and what that combination means. Temporal tracking of emotional and attentional states throughout the conversation.",
+                        color: "oklch(0.65 0.18 280)",
                       },
                     ].map((item) => (
                       <div key={item.label} className="border border-slate-200 rounded p-3">
@@ -1282,8 +1295,8 @@ export default function StateOfArt() {
                   <div className="callout-warning">
                     <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
                       {isFr
-                        ? <><strong>Conclusion :</strong> Tavus Phoenix-4 définit le nouveau standard du réalisme comportemental pour les avatars conversationnels commerciaux. Il valide l'importance de l'Axe 2 de DigiDouble et fournit des techniques concrètes (diffusion causale, Gaussian Splatting implicite, distillation) à intégrer dans la roadmap R&D. Les gaps restants — mémoire, souveraineté, orchestration narrative — confirment la valeur unique du projet DigiDouble.</>
-                        : <><strong>Conclusion:</strong> Tavus Phoenix-4 sets the new standard for behavioral realism in commercial conversational avatars. It validates the importance of DigiDouble's Axis 2 and provides concrete techniques (causal diffusion, implicit Gaussian Splatting, distillation) to integrate into the R&D roadmap. The remaining gaps — memory, sovereignty, narrative orchestration — confirm DigiDouble's unique value proposition.</>
+                        ? <><strong>Conclusion (avril 2026) :</strong> Avec Raven-1 + Phoenix-4 + Sparrow-1, Tavus est désormais la plateforme commerciale la plus avancée pour les avatars conversationnels émotionnellement intelligents. Raven-1 adresse directement l'Axe 3 de DigiDouble (Contextual Awareness) avec sa perception audio-visuelle temps réel (&lt; 300ms). Phoenix-4 valide l'Axe 2 (Avatar) avec son rendu entièrement généré sans boucles vidéo. Les gaps restants — mémoire persistante, souveraineté RGPD, orchestration narrative, hébergement EU — confirment la valeur unique du projet DigiDouble.</>
+                        : <><strong>Conclusion (April 2026):</strong> With Raven-1 + Phoenix-4 + Sparrow-1, Tavus is now the most advanced commercial platform for emotionally intelligent conversational avatars. Raven-1 directly addresses DigiDouble's Axis 3 (Contextual Awareness) with real-time audio-visual perception (&lt; 300ms). Phoenix-4 validates Axis 2 (Avatar) with fully generated rendering and no video loops. The remaining gaps — persistent memory, GDPR sovereignty, narrative orchestration, EU hosting — confirm DigiDouble's unique value proposition.</>
                       }
                     </p>
                   </div>
