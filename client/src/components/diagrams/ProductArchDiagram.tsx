@@ -26,10 +26,10 @@ export default function ProductArchDiagram() {
           {isFr ? "ARCHITECTURE PRODUIT — DEUX MODES, UN MOTEUR PARTAGÉ" : "PRODUCT ARCHITECTURE — TWO MODES, ONE SHARED ENGINE"}
         </text>
 
-        {/* Edugami box */}
+        {/* Pedagogical mode box */}
         <rect x={40} y={36} width={300} height={100} rx={4} fill="#eff6ff" stroke="#0891b2" strokeWidth="1.5" />
         <rect x={40} y={36} width={4} height={100} rx={2} fill="#0891b2" />
-        <text x={60} y={56} fontSize="10" fontWeight="700" fill="#0891b2" fontFamily="'JetBrains Mono', monospace">MODE 01 — EDUGAMI</text>
+        <text x={60} y={56} fontSize="10" fontWeight="700" fill="#0891b2" fontFamily="'JetBrains Mono', monospace">{isFr ? "MODE 01 — PÉDAGOGIQUE" : "MODE 01 — PEDAGOGICAL"}</text>
         <text x={60} y={72} fontSize="11" fontWeight="600" fill="#0f172a">
           {isFr ? "Pédagogique / \"Lean Forward\"" : "Pedagogical / \"Lean Forward\""}
         </text>
@@ -43,10 +43,10 @@ export default function ProductArchDiagram() {
           {isFr ? "Contrôle pédagogique: FORT" : "Pedagogical control: STRONG"}
         </text>
 
-        {/* Storygami box */}
+        {/* Narrative mode box */}
         <rect x={420} y={36} width={300} height={100} rx={4} fill="#fffbeb" stroke="#d97706" strokeWidth="1.5" />
         <rect x={420} y={36} width={4} height={100} rx={2} fill="#d97706" />
-        <text x={440} y={56} fontSize="10" fontWeight="700" fill="#d97706" fontFamily="'JetBrains Mono', monospace">MODE 02 — STORYGAMI</text>
+        <text x={440} y={56} fontSize="10" fontWeight="700" fill="#d97706" fontFamily="'JetBrains Mono', monospace">{isFr ? "MODE 02 — NARRATIF" : "MODE 02 — NARRATIVE"}</text>
         <text x={440} y={72} fontSize="11" fontWeight="600" fill="#0f172a">
           {isFr ? "Narratif / \"Lean Back\"" : "Narrative / \"Lean Back\""}
         </text>

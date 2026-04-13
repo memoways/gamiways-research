@@ -532,9 +532,9 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["Dialogue multi-locuteurs ultra-réaliste", "Conditionnement audio pour l'émotion", "Sons non-verbaux", "Apache 2.0 — souveraineté totale", "Design dialogue-first unique"],
     weaknesses: ["Not optimized for real-time streaming", "English only", "~300ms+ TTFA", "No lip-sync data"],
     weaknessesFr: ["Non optimisé pour le streaming temps réel", "Anglais uniquement", "~300ms+ TTFA", "Pas de données lip-sync"],
-    digiDoubleRelevance: "Relevant for Storygami pre-rendered dialogue sequences. Multi-speaker capability useful for generating training data. Not suitable for real-time Phase 1 MVP due to lack of streaming optimization.",
-    digiDoubleRelevanceFr: "Pertinent pour les séquences de dialogue pré-rendues Storygami. Capacité multi-locuteurs utile pour générer des données d'entraînement. Non adapté au MVP Phase 1 temps réel en raison du manque d'optimisation streaming.",
-    digiDoubleAxis: "Storygami — Génération dialogue pré-rendu",
+    digiDoubleRelevance: "Relevant for pre-rendered dialogue sequences (narrative mode). Multi-speaker capability useful for generating training data. Not suitable for real-time Phase 1 MVP due to lack of streaming optimization.",
+    digiDoubleRelevanceFr: "Pertinent pour les séquences de dialogue pré-rendues (mode narratif). Capacité multi-locuteurs utile pour générer des données d'entraînement. Non adapté au MVP Phase 1 temps réel en raison du manque d'optimisation streaming.",
+    digiDoubleAxis: "Mode narratif — Génération dialogue pré-rendu",
     benchmarkRef: "Nari Labs GitHub + VentureBeat, Apr 2025",
   },
   {

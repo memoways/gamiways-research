@@ -1,6 +1,6 @@
 /*
  * PlatformModeDiagram — DigiDouble Research Portal
- * Visual: two product modes (Edugami / Storygami) sharing a common engine
+ * Visual: two product modes (Pedagogical / Narrative) sharing a common engine
  * Design: clear visual split, hover for details on each component
  */
 import { useState } from "react";
@@ -53,10 +53,10 @@ export default function PlatformModeDiagram() {
     <div className="w-full">
       <div className="grid md:grid-cols-3 gap-6 items-start">
 
-        {/* MODE 01 — EDUGAMI */}
+        {/* MODE 01 — PEDAGOGICAL */}
         <div className="border-2 rounded-lg p-6" style={{ borderColor: "oklch(0.72 0.18 200 / 0.5)" }}>
           <div className="text-sm font-bold font-mono mb-2" style={{ color: "oklch(0.72 0.18 200)" }}>MODE 01</div>
-          <div className="font-bold text-slate-900 text-xl mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Edugami</div>
+          <div className="font-bold text-slate-900 text-xl mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Mode pédagogique" : "Pedagogical mode"}</div>
           <div className="text-xs text-slate-500 mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr ? "Pédagogique · \"Lean Forward\"" : "Pedagogical · \"Lean Forward\""}
           </div>
@@ -127,10 +127,10 @@ export default function PlatformModeDiagram() {
           </div>
         </div>
 
-        {/* MODE 02 — STORYGAMI */}
+        {/* MODE 02 — NARRATIVE */}
         <div className="border-2 rounded-lg p-6" style={{ borderColor: "oklch(0.72 0.18 50 / 0.5)" }}>
           <div className="text-sm font-bold font-mono mb-2" style={{ color: "oklch(0.72 0.18 50)" }}>MODE 02</div>
-          <div className="font-bold text-slate-900 text-xl mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Storygami</div>
+          <div className="font-bold text-slate-900 text-xl mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Mode narratif" : "Narrative mode"}</div>
           <div className="text-xs text-slate-500 mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr ? "Narratif · \"Lean Back\"" : "Narrative · \"Lean Back\""}
           </div>

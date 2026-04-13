@@ -1,7 +1,7 @@
 /*
  * OrchestrationDiagram — DigiDouble Research Portal
  * Shows the Orchestration Freedom Degree continuum: 0% (scripted) → 90%+ (open)
- * With Edugami / Storygami mapping and node-level freedom concept
+ * With Pedagogical / Narrative mode mapping and node-level freedom concept
  * i18n: EN (default) / FR via useLang
  * Size: +35% from original
  */
@@ -94,14 +94,14 @@ export default function OrchestrationDiagram() {
           );
         })}
 
-        {/* ── Edugami bracket ── */}
+        {/* ── Pedagogical mode bracket ── */}
         {(() => {
           const eduW = 2 * (stepW + gap) - gap + stepW * 0.5;
           return (
             <g>
               <rect x={startX} y={stepY + stepH + 24} width={eduW} height="70" rx="5" fill="#eff6ff" stroke="#0891b2" strokeWidth="2" />
               <text x={startX + eduW / 2} y={stepY + stepH + 46} textAnchor="middle" fontSize="12" fontWeight="700" fill="#0891b2" fontFamily="'JetBrains Mono', monospace">
-                EDUGAMI — {isFr ? "Mode Pédagogique" : "Pedagogical Mode"}
+                {isFr ? "MODE PÉDAGOGIQUE" : "PEDAGOGICAL MODE"}
               </text>
               <text x={startX + eduW / 2} y={stepY + stepH + 64} textAnchor="middle" fontSize="11" fill="#475569">
                 {isFr ? "0–50% · Couverture contenu obligatoire · Contrôle pédagogique fort" : "0–50% · Mandatory content coverage · Strong pedagogical control"}
@@ -113,7 +113,7 @@ export default function OrchestrationDiagram() {
           );
         })()}
 
-        {/* ── Storygami bracket ── */}
+        {/* ── Narrative mode bracket ── */}
         {(() => {
           const storyStartX = startX + 2 * (stepW + gap);
           const storyWidth = 2 * (stepW + gap) + stepW - gap;
@@ -121,7 +121,7 @@ export default function OrchestrationDiagram() {
             <g>
               <rect x={storyStartX} y={stepY + stepH + 24} width={storyWidth} height="70" rx="5" fill="#fffbeb" stroke="#d97706" strokeWidth="2" />
               <text x={storyStartX + storyWidth / 2} y={stepY + stepH + 46} textAnchor="middle" fontSize="12" fontWeight="700" fill="#d97706" fontFamily="'JetBrains Mono', monospace">
-                STORYGAMI — {isFr ? "Mode Narratif" : "Narrative Mode"}
+                {isFr ? "MODE NARRATIF" : "NARRATIVE MODE"}
               </text>
               <text x={storyStartX + storyWidth / 2} y={stepY + stepH + 64} textAnchor="middle" fontSize="11" fill="#475569">
                 {isFr ? "50–90%+ · Limites de sujet seulement · Personnalité du personnage" : "50–90%+ · Topic boundaries only · Character personality"}

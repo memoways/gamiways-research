@@ -75,8 +75,8 @@ const criteria: Criterion[] = [
     labelFr: "Contrôle narratif",
     icon: "🎬",
     color: "oklch(0.60 0.18 280)",
-    description: "Node editor for deterministic + organic conversation flows. Edugami / Storygami modes.",
-    descriptionFr: "Éditeur de nœuds pour des flux conversationnels déterministes + organiques. Modes Edugami / Storygami.",
+    description: "Node editor for deterministic + organic conversation flows. Pedagogical mode / Narrative mode.",
+    descriptionFr: "Éditeur de nœuds pour des flux conversationnels déterministes + organiques. Mode pédagogique / Mode narratif.",
     rdRequired: false,
   },
   {

@@ -94,7 +94,7 @@ export default function TargetArchDiagram() {
         <text x="765" y="61" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#856404">{isFr ? "Node Editor" : "Node Editor"}</text>
         <text x="765" y="74" textAnchor="middle" fontSize="7.5" fill="#475569">{isFr ? "Graphe conversationnel" : "Conversation graph"}</text>
         <text x="765" y="87" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#856404">{isFr ? "Player Configurable" : "Configurable Player"}</text>
-        <text x="765" y="100" textAnchor="middle" fontSize="7.5" fill="#475569">Edugami / Storygami</text>
+        <text x="765" y="100" textAnchor="middle" fontSize="7.5" fill="#475569">Mode pédagogique / Mode narratif</text>
 
         {/* ── EXPERIENCE ── */}
         <line x1="765" y1="118" x2="765" y2="138" stroke="#0891b2" strokeWidth="2" markerEnd="url(#taBlue)" />

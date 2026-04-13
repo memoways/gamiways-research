@@ -5,7 +5,7 @@
  *   GREEN  = Available (Gamilab / Audiogami ASR)
  *   BLUE   = R&D Innosuisse + IDIAP (Memory, TTS, Avatar)
  *   YELLOW = R&D interne Memoways (Orchestration wrapping Memory+LLM+TTS, Multi-Stream Sync)
- * Output: EXPERIENCE (Edugami + Storygami) — Target <2s
+ * Output: EXPERIENCE (Pedagogical mode + Narrative mode) — Target <2s
  */
 import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
@@ -271,11 +271,11 @@ export default function WhatWeHaveDiagram() {
           <div className="flex flex-col gap-1 mt-1 border-t pt-1.5" style={{ borderColor: C.output.border + "44" }}>
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 rounded-sm shrink-0" style={{ background: "#2563eb" }} />
-              <span className="text-[10px] font-mono font-bold" style={{ color: "#1d4ed8" }}>Edugami</span>
+              <span className="text-[10px] font-mono font-bold" style={{ color: "#1d4ed8" }}>Mode pédagogique</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 rounded-sm shrink-0" style={{ background: "#d97706" }} />
-              <span className="text-[10px] font-mono font-bold" style={{ color: "#b45309" }}>Storygami</span>
+              <span className="text-[10px] font-mono font-bold" style={{ color: "#b45309" }}>Mode narratif</span>
             </div>
           </div>
         </div>

@@ -195,7 +195,7 @@ export default function Project() {
           <SectionDivider number="01" title="Product Vision — Two Modes, One Engine" titleFr="Vision Produit — Deux Modes, Un Moteur" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
-              {isFr ? "Edugami + Storygami, moteur partagé." : "Edugami + Storygami, shared engine."}
+              {isFr ? "Mode pédagogique + Mode narratif, moteur partagé." : "Pedagogical mode + Narrative mode, shared engine."}
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
@@ -203,7 +203,7 @@ export default function Project() {
                 : "Hover over engine components for technical details. Both modes share the same infrastructure."}
             </p>
           </div>
-          <DiagramModal title="Product Architecture — Edugami & Storygami">
+          <DiagramModal title="Product Architecture — Pedagogical & Narrative modes">
             <ProductArchDiagram />
           </DiagramModal>
           <Accordion label="Fundamental differentiation — why this is new" labelFr="Différenciation fondamentale — pourquoi c'est nouveau" isFr={isFr}>

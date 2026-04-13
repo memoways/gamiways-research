@@ -818,10 +818,81 @@ export default function Research() {
                 ? "Chaque nœud de conversation peut définir son propre degré de liberté (0% = scripté, 90%+ = IA libre). Le défi R&D : garantir la couverture du contenu obligatoire tout en maintenant la naturalité conversationnelle — et sans ajouter de latence due à la décision d'orchestration."
                 : "Each conversation node can define its own freedom degree (0% = scripted, 90%+ = free AI). The R&D challenge: guarantee mandatory content coverage while maintaining conversational naturalness — and without adding latency from the orchestration decision."}
             </p>
+
+            {/* Multi-agent architecture note */}
+            <div className="flex items-start gap-3 p-3 rounded border border-slate-200 bg-slate-50 mb-4 max-w-2xl">
+              <span className="text-xs font-bold font-mono mt-0.5 shrink-0" style={{ color: "oklch(0.65 0.18 145)" }}>ARCH</span>
+              <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "L'orchestration repose sur une architecture multi-agents spécialisés, chacun responsable d'une dimension de la conversation (couverture de contenu, progression narrative, évaluation, mémoire). Le défi est de coordonner ces agents sans introduire de latence perceptible ni de divergence comportementale."
+                  : "Orchestration relies on a multi-agent architecture of specialized agents, each responsible for one dimension of the conversation (content coverage, narrative progression, evaluation, memory). The challenge is coordinating these agents without introducing perceptible latency or behavioral divergence."}
+              </p>
+            </div>
           </div>
           <DiagramModal title="Orchestration Freedom Degree — 0% to 90%+">
             <OrchestrationDiagram />
           </DiagramModal>
+        </section>
+
+        {/* ── SECTION 4b: EMOTIONAL TOOLBOX ───────────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="05b" title="Emotional Toolbox & Character Design" titleFr="Boite à Outils Émotionnelle & Design de Personnage" isFr={isFr} />
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Conception de personnage grade cinéma" : "Cinema-grade character design"}
+            </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Un avatar conversationnel ne se réduit pas à un visage qui parle. La fidélité comportementale exige une couche de conception émotionnelle explicite : définir, encoder et activer un répertoire d'états émotionnels cohérents avec la personnalité du personnage, son histoire et le contexte de l'interaction."
+                : "A conversational avatar is not just a talking face. Behavioral fidelity requires an explicit emotional design layer: defining, encoding, and activating a repertoire of emotional states consistent with the character's personality, history, and interaction context."}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            {[
+              {
+                id: "ET1",
+                title: isFr ? "Répertoire émotionnel" : "Emotional repertoire",
+                desc: isFr
+                  ? "Définir un ensemble d'états émotionnels discrets et continus pour chaque personnage. Chaque état encode : expression faciale, prosodie vocale, cadence, posture, micro-comportements."
+                  : "Define a set of discrete and continuous emotional states per character. Each state encodes: facial expression, vocal prosody, cadence, posture, micro-behaviors.",
+                color: "oklch(0.72 0.18 50)",
+              },
+              {
+                id: "ET2",
+                title: isFr ? "Transition & cohérence" : "Transition & coherence",
+                desc: isFr
+                  ? "Les transitions entre états émotionnels doivent être fluides, cohérentes avec la personnalité, et ne pas créer de ruptures perceptibles dans l'expérience. Défi : éviter l'effet 'uncanny valley émotionnel'."
+                  : "Transitions between emotional states must be smooth, personality-consistent, and not create perceptible breaks in the experience. Challenge: avoiding the 'emotional uncanny valley' effect.",
+                color: "oklch(0.65 0.18 145)",
+              },
+              {
+                id: "ET3",
+                title: isFr ? "Activation contextuelle" : "Contextual activation",
+                desc: isFr
+                  ? "L'état émotionnel est activé par le contenu de la conversation, l'historique de l'interaction et les signaux de l'utilisateur (ton, rythme, contenu). Recherche : détection temps réel des signaux émotionnels entrants."
+                  : "Emotional state is activated by conversation content, interaction history, and user signals (tone, rhythm, content). Research: real-time detection of incoming emotional signals.",
+                color: "oklch(0.60 0.20 25)",
+              },
+            ].map((item) => (
+              <div key={item.id} className="border border-slate-200 rounded p-4">
+                <div className="text-xs font-bold mb-1 font-mono" style={{ color: item.color }}>ET-{item.id.slice(2)}</div>
+                <h4 className="font-semibold text-slate-900 mb-2 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</h4>
+                <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-l-4 pl-4 py-2 max-w-2xl" style={{ borderColor: "oklch(0.72 0.18 50)" }}>
+            <p className="text-xs font-semibold text-slate-700 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Dimension clé de différenciation" : "Key differentiation dimension"}
+            </p>
+            <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Aucune plateforme commerciale actuelle ne propose un système de conception émotionnelle explicite et configurable par le créateur. La plupart laissent le LLM décider implicitement de l'état émotionnel, sans contrôle ni cohérence garantie. DigiDouble vise une boite à outils émotionnelle inspirée des méthodes de direction d'acteurs, accessible aux créateurs non-techniques."
+                : "No current commercial platform offers an explicit, creator-configurable emotional design system. Most leave the LLM to implicitly decide emotional state, without guaranteed control or coherence. DigiDouble targets an emotional toolbox inspired by actor direction methods, accessible to non-technical creators."}
+            </p>
+          </div>
         </section>
 
         {/* ── SECTION 5: PARTNERSHIP ──────────────────────────────────────── */}

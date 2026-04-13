@@ -1275,8 +1275,8 @@ export default function StateOfArt() {
                         axis: isFr ? "Différenciateur" : "Differentiator",
                         title: isFr ? "Ce que Phoenix-4 n'a pas" : "What Phoenix-4 doesn't have",
                         desc: isFr
-                          ? "Mémoire persistante multi-sessions, souveraineté de déploiement, orchestration narrative (playlist vidéo dynamique), séquençage cinématographique Storygami. Ces 4 points sont les différenciateurs clés de DigiDouble."
-                          : "Persistent multi-session memory, deployment sovereignty, narrative orchestration (dynamic video playlist), Storygami cinematographic sequencing. These 4 points are DigiDouble's key differentiators.",
+                          ? "Mémoire persistante multi-sessions, souveraineté de déploiement, orchestration narrative (playlist vidéo dynamique), séquençage cinématographique (mode narratif). Ces 4 points sont les différenciateurs clés de DigiDouble."
+                          : "Persistent multi-session memory, deployment sovereignty, narrative orchestration (dynamic video playlist), cinematographic sequencing (narrative mode). These 4 points are DigiDouble's key differentiators.",
                         color: "oklch(0.60 0.20 25)",
                       },
                     ].map((item) => (
@@ -1400,7 +1400,7 @@ export default function StateOfArt() {
                       {
                         label: isFr ? "Durée session" : "Session duration",
                         value: isFr ? "5 min (dev) / 30 min (API)" : "5 min (dev) / 30 min (API)",
-                        detail: isFr ? "Limite stricte. Nécessite une nouvelle session après expiration. Problématique pour les expériences longues (Storygami)." : "Hard limit. Requires new session after expiration. Problematic for long experiences (Storygami).",
+                        detail: isFr ? "Limite stricte. Nécessite une nouvelle session après expiration. Problématique pour les expériences longues (mode narratif)." : "Hard limit. Requires new session after expiration. Problematic for long experiences (narrative mode).",
                         color: "oklch(0.60 0.20 25)",
                       },
                       {
@@ -1441,8 +1441,8 @@ export default function StateOfArt() {
                       </h4>
                       <ul className="space-y-1.5">
                         {(isFr
-                          ? ["Session max 5–30 min — problématique pour Storygami", "Pas de mémoire persistante multi-sessions", "Pas de clonage vocal (voix presets uniquement)", "Pas de contrôle émotionnel avancé (vs Tavus Phoenix-4)", "~$0.20/min = coût élevé à l'échelle", "Pas de souveraineté (cloud Runway US)", "Pas d'orchestration narrative ni de playlist vidéo"]
-                          : ["Max 5–30 min session — problematic for Storygami", "No persistent multi-session memory", "No voice cloning (presets only)", "No advanced emotional control (vs Tavus Phoenix-4)", "~$0.20/min = high cost at scale", "No sovereignty (Runway US cloud)", "No narrative orchestration or video playlist"]
+                          ? ["Session max 5–30 min — problématique pour le mode narratif", "Pas de mémoire persistante multi-sessions", "Pas de clonage vocal (voix presets uniquement)", "Pas de contrôle émotionnel avancé (vs Tavus Phoenix-4)", "~$0.20/min = coût élevé à l'échelle", "Pas de souveraineté (cloud Runway US)", "Pas d'orchestration narrative ni de playlist vidéo"]
+                          : ["Max 5–30 min session — problematic for narrative mode", "No persistent multi-session memory", "No voice cloning (presets only)", "No advanced emotional control (vs Tavus Phoenix-4)", "~$0.20/min = high cost at scale", "No sovereignty (Runway US cloud)", "No narrative orchestration or video playlist"]
                         ).map((w) => (
                           <li key={w} className="flex gap-2 text-xs text-slate-600" style={{ fontFamily: "'Source Serif 4', serif" }}>
                             <span style={{ color: "oklch(0.60 0.20 25)" }}>✗</span> {w}
@@ -1478,8 +1478,8 @@ export default function StateOfArt() {
                         axis: isFr ? "Différenciateur" : "Differentiator",
                         title: isFr ? "Ce que Runway n'a pas" : "What Runway doesn't have",
                         desc: isFr
-                          ? "Mémoire persistante, clonage vocal, souveraineté, orchestration narrative (Storygami), playlist vidéo dynamique, sessions longues. Ces 6 points sont les différenciateurs clés de DigiDouble vs Runway Characters."
-                          : "Persistent memory, voice cloning, sovereignty, narrative orchestration (Storygami), dynamic video playlist, long sessions. These 6 points are DigiDouble's key differentiators vs Runway Characters.",
+                          ? "Mémoire persistante, clonage vocal, souveraineté, orchestration narrative (mode narratif), playlist vidéo dynamique, sessions longues. Ces 6 points sont les différenciateurs clés de DigiDouble vs Runway Characters."
+                          : "Persistent memory, voice cloning, sovereignty, narrative orchestration (narrative mode), dynamic video playlist, long sessions. These 6 points are DigiDouble's key differentiators vs Runway Characters.",
                         color: "oklch(0.60 0.20 25)",
                       },
                       {
