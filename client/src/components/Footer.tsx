@@ -1,11 +1,18 @@
 /*
  * Footer — DigiDouble Research Portal
  * i18n: EN/FR via LangContext
+ * Date is generated dynamically at build time — no manual update needed.
  */
 import { useLang } from "@/contexts/LangContext";
 
-const LAST_UPDATED = "28 March 2026";
-const LAST_UPDATED_FR = "28 mars 2026";
+// Dynamic date — auto-generated at build time, always current
+const BUILD_DATE = new Date();
+
+const MONTHS_EN = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MONTHS_FR = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+
+const LAST_UPDATED    = `${BUILD_DATE.getDate()} ${MONTHS_EN[BUILD_DATE.getMonth()]} ${BUILD_DATE.getFullYear()}`;
+const LAST_UPDATED_FR = `${BUILD_DATE.getDate()} ${MONTHS_FR[BUILD_DATE.getMonth()]} ${BUILD_DATE.getFullYear()}`;
 
 export default function Footer() {
   const { t, lang } = useLang();
