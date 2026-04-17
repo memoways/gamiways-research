@@ -109,6 +109,7 @@ export default function PricingComparison() {
                     : p.costPerMin < 0.30
                     ? "bg-amber-500"
                     : "bg-red-400";
+                const isLemonSlice = p.id === "lemonslice";
                 return (
                   <div key={p.id} className="flex items-center gap-3">
                     <Link href={`/platform/${p.id}`}>
@@ -116,10 +117,17 @@ export default function PricingComparison() {
                         {p.name}
                       </span>
                     </Link>
-                    <div className="flex-1 bg-slate-100 rounded-full h-5 overflow-hidden">
+                    <div className="flex-1 bg-slate-100 rounded-full h-5 overflow-hidden relative">
                       {isAsync ? (
                         <div className="h-full bg-slate-300 rounded-full flex items-center px-2">
                           <span className="text-xs text-slate-500 font-mono">async</span>
+                        </div>
+                      ) : isLemonSlice ? (
+                        <div className="h-full flex">
+                          {/* Self-Managed bar: ~$0.03/min */}
+                          <div className="h-full bg-emerald-400 rounded-l-full" style={{ width: `${Math.max((0.03 / maxCost) * 100, 2)}%` }} />
+                          {/* Hosted bar: $0.21/min */}
+                          <div className="h-full bg-amber-400" style={{ width: `${Math.max(((0.21 - 0.03) / maxCost) * 100, 2)}%` }} />
                         </div>
                       ) : (
                         <div
@@ -128,8 +136,14 @@ export default function PricingComparison() {
                         />
                       )}
                     </div>
-                    <span className="w-28 text-right text-sm font-mono font-bold text-slate-800 flex-shrink-0">
-                      {isAsync ? "~$2+/min" : `$${p.costPerMin.toFixed(3)}/min`}
+                    <span className="w-28 text-right text-sm font-mono font-bold flex-shrink-0">
+                      {isAsync ? (
+                        <span className="text-slate-800">~$2+/min</span>
+                      ) : isLemonSlice ? (
+                        <span className="text-emerald-700">$0.03–$0.21</span>
+                      ) : (
+                        <span className="text-slate-800">${p.costPerMin.toFixed(3)}/min</span>
+                      )}
                     </span>
                   </div>
                 );
@@ -216,9 +230,22 @@ export default function PricingComparison() {
                       </td>
                       <td className="py-3 px-4">
                         <div>
-                          <span className={`font-mono text-sm ${costColor}`}>
-                            {isAsync ? "~$2+/min" : `$${p.costPerMin.toFixed(3)}`}
-                          </span>
+                          {p.id === "lemonslice" ? (
+                            <div className="flex flex-col gap-0.5">
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">Self-Managed</span>
+                                <span className="font-mono text-sm font-bold text-emerald-700">~$0.03/min</span>
+                              </div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">Hosted API</span>
+                                <span className="font-mono text-sm font-bold text-amber-700">$0.21/min</span>
+                              </div>
+                            </div>
+                          ) : (
+                            <span className={`font-mono text-sm ${costColor}`}>
+                              {isAsync ? "~$2+/min" : `$${p.costPerMin.toFixed(3)}`}
+                            </span>
+                          )}
                           <p className="text-xs text-slate-400 mt-0.5 max-w-[160px] leading-tight">{p.costPerMinNote}</p>
                         </div>
                       </td>
@@ -292,6 +319,23 @@ export default function PricingComparison() {
                 })}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        {/* LemonSlice dual-pricing callout */}
+        <div className="bg-purple-50 border border-purple-200 rounded-xl p-5 mb-6 flex items-start gap-3">
+          <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+            <span className="text-purple-700 font-bold text-xs font-mono">LS</span>
+          </div>
+          <div>
+            <p className="text-sm font-bold text-purple-900 mb-1">
+              {lang === "fr" ? "LemonSlice — double modèle tarifaire unique" : "LemonSlice — unique dual pricing model"}
+            </p>
+            <p className="text-sm text-purple-800 leading-relaxed">
+              {lang === "fr"
+                ? "LemonSlice est la seule plateforme à proposer deux modes de déploiement à coûts radicalement différents : Hosted API ($0.21/min, zéro infrastructure) et Self-Managed Pipeline (~$0.03/min sur A100, souveraineté totale). En mode Self-Managed, LemonSlice devient l'option la moins chère après Simli et bitHuman, tout en étant la seule à supporter les avatars multi-style (cartoons, mascottes, animaux)."
+                : "LemonSlice is the only platform offering two deployment modes at radically different costs: Hosted API ($0.21/min, zero infrastructure) and Self-Managed Pipeline (~$0.03/min on A100, full sovereignty). In Self-Managed mode, LemonSlice becomes the cheapest option after Simli and bitHuman, while being the only one to support multi-style avatars (cartoons, mascots, animals)."}
+            </p>
           </div>
         </div>
 
