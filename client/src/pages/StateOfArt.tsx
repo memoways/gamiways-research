@@ -998,7 +998,9 @@ export default function StateOfArt() {
                   if (allText.includes('on-prem') || allText.includes('self-host') || allText.includes('souverain')) customTags.push('On-premise');
                   if (allText.includes('single image') || allText.includes('image unique')) customTags.push(isFr ? 'Avatar perso.' : 'Custom avatar');
                   if (allText.includes('behavior') || allText.includes('comportement') || allText.includes('listening')) customTags.push(isFr ? 'Comportement' : 'Behavior');
-                  const hasDetailPage = (p as any).linkKey && ["heygen","tavus","synthesia","simli","anam","did","runway","beyond_presence","bithuman","hedra"].includes((p as any).linkKey);
+                  const hasDetailPage = (p as any).linkKey && ["heygen","tavus","synthesia","simli","anam","did","runway","beyond_presence","bithuman","hedra","lemon_slice"].includes((p as any).linkKey);
+                  // Map linkKey → platformData id (when they differ)
+                  const platformDetailId = (p as any).linkKey === "lemon_slice" ? "lemonslice" : (p as any).linkKey;
                   return (
                     <div key={p.name} className="border border-slate-200 rounded-xl p-4 flex flex-col">
                       <div className="flex items-start justify-between mb-2">
@@ -1065,7 +1067,7 @@ export default function StateOfArt() {
                       {hasDetailPage && (
                         <div className="mt-4">
                           <InternalLink
-                            to={`/platform/${(p as any).linkKey}`}
+                            to={`/platform/${platformDetailId}`}
                             className="w-full flex items-center justify-center gap-2 text-sm font-semibold rounded-lg px-4 py-2.5 transition-all hover:opacity-90 active:scale-95"
                             style={{ background: 'oklch(0.20 0.04 240)', color: 'white', fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}
                           >
