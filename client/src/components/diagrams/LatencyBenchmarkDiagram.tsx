@@ -26,6 +26,7 @@ const data: BenchmarkEntry[] = [
   { labelEn: "Avatar Beyond Presence",    labelFr: "Avatar Beyond Presence",    best: 80,   typical: 100,  target: 500, unit: "ms" },
   { labelEn: "Avatar HeyGen API",         labelFr: "Avatar HeyGen API",         best: 3000, typical: 8000, target: 500, unit: "ms", isBottleneck: true },
   { labelEn: "Avatar HeyGem OS (GPU)",    labelFr: "Avatar HeyGem OS (GPU)",    best: 2000, typical: 5000, target: 500, unit: "ms", isBottleneck: true },
+  { labelEn: "Avatar LemonSlice (hosted)", labelFr: "Avatar LemonSlice (hosted)", best: 3000, typical: 4000, target: 500, unit: "ms", isBottleneck: true },
   { labelEn: "Network WebRTC",            labelFr: "Réseau WebRTC",             best: 30,   typical: 80,   target: 100, unit: "ms" },
 ];
 
