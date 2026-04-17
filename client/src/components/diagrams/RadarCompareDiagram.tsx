@@ -11,11 +11,13 @@ interface Platform {
   scores: number[];
 }
 
+// Scores: [Visual quality, Latency (inverted, 10=<100ms), Cost/accessibility, Sovereignty, AI conversation, Body language, Multi-style]
 const platforms: Platform[] = [
-  { name: "HeyGen",              nameFr: "HeyGen",              color: "#64748b", scores: [9, 7, 3, 1, 2, 2] },
-  { name: "NVIDIA ACE",          nameFr: "NVIDIA ACE",          color: "#16a34a", scores: [9, 10, 2, 3, 9, 9] },
-  { name: "DigiDouble (target)", nameFr: "DigiDouble (cible)",  color: "#0891b2", scores: [8, 8, 7, 10, 9, 7] },
-  { name: "HeyGem OS",           nameFr: "HeyGem OS",           color: "#d97706", scores: [6, 3, 8, 10, 3, 1] },
+  { name: "HeyGen",              nameFr: "HeyGen",              color: "#64748b", scores: [9, 7, 3, 1, 2, 2, 1] },
+  { name: "NVIDIA ACE",          nameFr: "NVIDIA ACE",          color: "#16a34a", scores: [9, 10, 2, 3, 9, 9, 1] },
+  { name: "DigiDouble (target)", nameFr: "DigiDouble (cible)",  color: "#0891b2", scores: [8, 8, 7, 10, 9, 7, 9] },
+  { name: "HeyGem OS",           nameFr: "HeyGem OS",           color: "#d97706", scores: [6, 3, 8, 10, 3, 1, 3] },
+  { name: "LemonSlice (LS-2.1)", nameFr: "LemonSlice (LS-2.1)", color: "#c026d3", scores: [8, 4, 7, 2, 5, 9, 10] },
 ];
 
 function polarToCart(angle: number, r: number, cx: number, cy: number) {
@@ -28,8 +30,8 @@ export default function RadarCompareDiagram() {
   const isFr = lang === "fr";
 
   const axes = isFr
-    ? ["Qualité visuelle", "Latence", "Coût/accessibilité", "Souveraineté", "Conversation IA", "Langage corporel"]
-    : ["Visual quality", "Latency", "Cost/accessibility", "Sovereignty", "AI conversation", "Body language"];
+    ? ["Qualité visuelle", "Latence", "Coût/accessibilité", "Souveraineté", "Conversation IA", "Langage corporel", "Multi-style"]
+    : ["Visual quality", "Latency", "Cost/accessibility", "Sovereignty", "AI conversation", "Body language", "Multi-style"];
 
   const CX = 270;
   const CY = 257;
