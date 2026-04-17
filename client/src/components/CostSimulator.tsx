@@ -52,6 +52,14 @@ interface SimPlatform {
   latencyMs: number;
   // Use-case tags
   tags: string[];
+  // Required subscription to access streaming avatar (0 = no subscription needed)
+  subscriptionFee: number;
+  subscriptionName: string;
+  subscriptionNameFr: string;
+  // Alternative mode subscription (e.g. Self-Managed plan)
+  altSubscriptionFee?: number;
+  altSubscriptionName?: string;
+  altSubscriptionNameFr?: string;
 }
 
 const SIM_PLATFORMS: SimPlatform[] = [
@@ -90,6 +98,9 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 300,
     tags: ["video-only", "low-latency", "eu-gdpr", "byollm"],
+    subscriptionFee: 0,
+    subscriptionName: "No subscription — pay-as-you-go",
+    subscriptionNameFr: "Pas d'abonnement — PAYG",
   },
   {
     id: "bithuman",
@@ -126,6 +137,9 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 300,
     tags: ["sovereign", "low-latency", "eu-gdpr", "byollm"],
+    subscriptionFee: 0,
+    subscriptionName: "No subscription — free tier includes 100 min/mo",
+    subscriptionNameFr: "Pas d'abonnement — tier gratuit inclut 100 min/mois",
   },
   {
     id: "hedra",
@@ -164,6 +178,9 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 500,
     tags: ["all-in-one", "multi-style", "low-cost"],
+    subscriptionFee: 0,
+    subscriptionName: "No subscription — credits-based, free tier available",
+    subscriptionNameFr: "Pas d'abonnement — basé sur crédits, tier gratuit disponible",
   },
   {
     id: "anam",
@@ -200,6 +217,9 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 180,
     tags: ["all-in-one", "low-latency", "eu-gdpr"],
+    subscriptionFee: 69,
+    subscriptionName: "Starter plan required ($69/mo) — includes 600 min",
+    subscriptionNameFr: "Plan Starter requis ($69/mois) — inclut 600 min",
   },
   {
     id: "beyondpresence",
@@ -236,6 +256,9 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 250,
     tags: ["sovereign", "low-latency", "eu-gdpr", "video-only"],
+    subscriptionFee: 0,
+    subscriptionName: "No subscription — enterprise pricing on request",
+    subscriptionNameFr: "Pas d'abonnement — tarification enterprise sur demande",
   },
   {
     id: "heygen",
@@ -275,6 +298,9 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 400,
     tags: ["all-in-one", "video-only", "byollm"],
+    subscriptionFee: 29,
+    subscriptionName: "Creator plan required ($29/mo) — needed for LiveAvatar API access",
+    subscriptionNameFr: "Plan Creator requis ($29/mois) — nécessaire pour accéder à l'API LiveAvatar",
   },
   {
     id: "runway",
@@ -313,6 +339,9 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: false,
     latencyMs: 400,
     tags: ["video-only", "byollm", "cinematic"],
+    subscriptionFee: 0,
+    subscriptionName: "No subscription — pure pay-as-you-go",
+    subscriptionNameFr: "Pas d'abonnement — PAYG pur",
   },
   {
     id: "lemonslice",
@@ -352,6 +381,12 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 3000,
     tags: ["sovereign", "multi-style", "all-in-one", "byollm"],
+    subscriptionFee: 0,
+    subscriptionName: "Free tier (30 min/mo). Starter: $49/mo. Self-Managed: $499/mo",
+    subscriptionNameFr: "Tier gratuit (30 min/mois). Starter : $49/mois. Self-Managed : $499/mois",
+    altSubscriptionFee: 499,
+    altSubscriptionName: "Self-Managed plan required ($499/mo) — unlimited GPU rendering",
+    altSubscriptionNameFr: "Plan Self-Managed requis ($499/mois) — rendu GPU illimité",
   },
   {
     id: "did",
@@ -388,6 +423,9 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 450,
     tags: ["all-in-one", "sovereign"],
+    subscriptionFee: 0,
+    subscriptionName: "No subscription — free tier limited. Paid plans: Lite $19/mo, Pro $49/mo",
+    subscriptionNameFr: "Pas d'abonnement — tier gratuit limité. Plans payants : Lite $19/mois, Pro $49/mois",
   },
   {
     id: "tavus",
@@ -424,17 +462,33 @@ const SIM_PLATFORMS: SimPlatform[] = [
     gdpr: true,
     latencyMs: 500,
     tags: ["all-in-one", "emotional-ai"],
+    subscriptionFee: 59,
+    subscriptionName: "Starter plan required ($59/mo) — includes 100 min. Growth: $397/mo (1250 min)",
+    subscriptionNameFr: "Plan Starter requis ($59/mois) — inclut 100 min. Growth : $397/mois (1250 min)",
   },
 ];
 
 // ─── Cost calculation ─────────────────────────────────────────────────────────
-function calcCost(p: SimPlatform, minutes: number, includeHidden: boolean, useAlt: boolean) {
+// Fixed cost = subscription fee (required to access the platform)
+function calcFixed(p: SimPlatform, useAlt: boolean): number {
+  if (useAlt && p.altSubscriptionFee !== undefined) return p.altSubscriptionFee;
+  return p.subscriptionFee;
+}
+
+// Variable cost = usage-based (per-minute billing above included minutes)
+function calcVariable(p: SimPlatform, minutes: number, includeHidden: boolean, useAlt: boolean): number {
   const rate = useAlt && p.altCostPerMin !== undefined ? p.altCostPerMin : p.costPerMin;
   const hidden = includeHidden ? p.hiddenCostPerMin : 0;
-  const billable = Math.max(0, minutes - p.includedMinutes);
-  const base = billable * (rate + hidden);
-  const floor = useAlt ? 0 : p.monthlyFloor;
-  return Math.max(base, floor);
+  const sub = calcFixed(p, useAlt);
+  // Minutes already included in the subscription plan
+  const alreadyIncluded = sub > 0 ? p.includedMinutes : p.includedMinutes;
+  const billable = Math.max(0, minutes - alreadyIncluded);
+  return billable * (rate + hidden);
+}
+
+// Total cost = fixed + variable (with floor = subscription fee)
+function calcCost(p: SimPlatform, minutes: number, includeHidden: boolean, useAlt: boolean): number {
+  return calcFixed(p, useAlt) + calcVariable(p, minutes, includeHidden, useAlt);
 }
 
 // ─── Main component ───────────────────────────────────────────────────────────
@@ -541,6 +595,8 @@ export default function CostSimulator() {
   const maxCost = useMemo(() => {
     return Math.max(...sorted.map((p) => calcCost(p, minutes, includeHidden, showAlt[p.id] ?? false)));
   }, [sorted, minutes, includeHidden, showAlt]);
+
+  const hasAnySubscription = useMemo(() => sorted.some((p) => p.subscriptionFee > 0), [sorted]);
 
   const toggleAlt = (id: string) => setShowAlt((prev) => ({ ...prev, [id]: !prev[id] }));
   const toggleExpand = (id: string) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -678,6 +734,25 @@ export default function CostSimulator() {
         </div>
       </div>
 
+      {/* Results header with legend */}
+      <div className="px-6 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+        <p className="text-xs font-mono text-slate-500 uppercase tracking-widest">
+          {isFr ? `${sorted.length} plateforme${sorted.length > 1 ? "s" : ""} — triées par coût total` : `${sorted.length} platform${sorted.length > 1 ? "s" : ""} — sorted by total cost`}
+        </p>
+        {hasAnySubscription && (
+          <div className="flex items-center gap-3 text-xs font-mono">
+            <span className="flex items-center gap-1">
+              <span className="inline-block w-3 h-3 rounded-sm bg-slate-400" />
+              <span className="text-slate-500">{isFr ? "Abonnement fixe" : "Fixed subscription"}</span>
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="inline-block w-3 h-3 rounded-sm bg-slate-700" />
+              <span className="text-slate-500">{isFr ? "Usage variable" : "Variable usage"}</span>
+            </span>
+          </div>
+        )}
+      </div>
+
       {/* Results */}
       <div className="divide-y divide-slate-100">
         {sorted.length === 0 && (
@@ -692,11 +767,16 @@ export default function CostSimulator() {
         )}
         {sorted.map((p, rank) => {
           const isAlt = showAlt[p.id] ?? false;
-          const cost = calcCost(p, minutes, includeHidden, isAlt);
+          const fixedCost = calcFixed(p, isAlt);
+          const variableCost = calcVariable(p, minutes, includeHidden, isAlt);
+          const cost = fixedCost + variableCost;
           const pct = maxCost > 0 ? (cost / maxCost) * 100 : 0;
+          const fixedPct = maxCost > 0 ? (fixedCost / maxCost) * 100 : 0;
+          const variablePct = maxCost > 0 ? (variableCost / maxCost) * 100 : 0;
           const isExpanded = expanded[p.id] ?? false;
           const hasSessionCap = p.sessionCapMin > 0;
           const sessionsPerMonth = hasSessionCap ? Math.ceil(minutes / p.sessionCapMin) : null;
+          const hasSubscription = fixedCost > 0;
 
           return (
             <div key={p.id} className={`px-6 py-4 transition-colors ${rank === 0 ? "bg-emerald-50/40" : ""}`}>
@@ -744,18 +824,49 @@ export default function CostSimulator() {
                     )}
                   </div>
 
-                  {/* Bar */}
+                  {/* Bar — segmented: fixed (slate) + variable (platform color) */}
                   <div className="mt-2 flex items-center gap-3">
-                    <div className="flex-1 bg-slate-100 rounded-full h-3 overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all duration-300"
-                        style={{ width: `${Math.max(pct, 1)}%`, background: p.color }}
-                      />
+                    <div className="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden flex">
+                      {fixedPct > 0 && (
+                        <div
+                          className="h-full transition-all duration-300 flex-shrink-0"
+                          style={{ width: `${Math.max(fixedPct, 1)}%`, background: "#94a3b8" }}
+                          title={isFr ? `Abonnement fixe : ${fmt(fixedCost)}/mois` : `Fixed subscription: ${fmt(fixedCost)}/mo`}
+                        />
+                      )}
+                      {variablePct > 0 && (
+                        <div
+                          className="h-full transition-all duration-300"
+                          style={{ width: `${Math.max(variablePct, 1)}%`, background: p.color }}
+                          title={isFr ? `Usage variable : ${fmt(variableCost)}/mois` : `Variable usage: ${fmt(variableCost)}/mo`}
+                        />
+                      )}
+                      {fixedPct === 0 && variablePct === 0 && (
+                        <div className="h-full w-1 rounded-full" style={{ background: p.color }} />
+                      )}
                     </div>
-                    <span className="text-base font-bold font-mono flex-shrink-0" style={{ color: p.color }}>
-                      {fmt(cost)}<span className="text-xs text-slate-400 font-normal">/mo</span>
-                    </span>
+                    <div className="flex-shrink-0 text-right">
+                      <span className="text-base font-bold font-mono" style={{ color: p.color }}>
+                        {fmt(cost)}
+                      </span>
+                      <span className="text-xs text-slate-400 font-normal">/mo</span>
+                    </div>
                   </div>
+
+                  {/* Cost breakdown line */}
+                  {hasSubscription && (
+                    <div className="mt-1 flex items-center gap-3 text-xs font-mono">
+                      <span className="flex items-center gap-1">
+                        <span className="inline-block w-2 h-2 rounded-sm bg-slate-400" />
+                        <span className="text-slate-500">{isFr ? "Fixe" : "Fixed"}: <strong className="text-slate-700">{fmt(fixedCost)}</strong></span>
+                      </span>
+                      <span className="text-slate-300">+</span>
+                      <span className="flex items-center gap-1">
+                        <span className="inline-block w-2 h-2 rounded-sm" style={{ background: p.color }} />
+                        <span className="text-slate-500">{isFr ? "Variable" : "Variable"}: <strong className="text-slate-700">{fmt(variableCost)}</strong></span>
+                      </span>
+                    </div>
+                  )}
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1 mt-1.5">
@@ -804,6 +915,34 @@ export default function CostSimulator() {
               {/* Expanded details */}
               {isExpanded && (
                 <div className="mt-4 ml-11 space-y-3">
+                  {/* Subscription plan info */}
+                  <div className={`flex items-start gap-2 p-3 rounded-lg border ${
+                    hasSubscription
+                      ? "bg-slate-50 border-slate-200"
+                      : "bg-emerald-50 border-emerald-200"
+                  }`}>
+                    <span className="text-base flex-shrink-0">{hasSubscription ? "💳" : "✅"}</span>
+                    <div>
+                      <p className="text-xs font-bold text-slate-700 mb-0.5">
+                        {isFr ? "Plan d'abonnement requis" : "Required subscription plan"}
+                      </p>
+                      <p className="text-xs text-slate-600">
+                        {isFr
+                          ? (isAlt && p.altSubscriptionNameFr ? p.altSubscriptionNameFr : p.subscriptionNameFr)
+                          : (isAlt && p.altSubscriptionName ? p.altSubscriptionName : p.subscriptionName)
+                        }
+                      </p>
+                      {hasSubscription && (
+                        <p className="text-xs text-slate-500 mt-1">
+                          {isFr
+                            ? `→ Coût fixe mensuel : ${fmt(fixedCost)} (indépendant du volume d'usage)`
+                            : `→ Fixed monthly cost: ${fmt(fixedCost)} (regardless of usage volume)`
+                          }
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
                   {/* Session cap warning */}
                   {hasSessionCap && (
                     <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
