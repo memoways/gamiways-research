@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 import { platforms } from "@/lib/platformData";
 import InternalLink from "@/components/InternalLink";
+import CostSimulator from "@/components/CostSimulator";
 import { Link } from "wouter";
 import {
   DollarSign,
@@ -320,6 +321,19 @@ export default function PricingComparison() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* Cost Simulator */}
+        <div className="mb-8">
+          <div className="mb-4">
+            <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">
+              {lang === "fr" ? "Outil interactif" : "Interactive tool"}
+            </p>
+            <h2 className="text-xl font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {lang === "fr" ? "Simulateur de coûts" : "Cost Simulator"}
+            </h2>
+          </div>
+          <CostSimulator />
         </div>
 
         {/* LemonSlice dual-pricing callout */}
