@@ -15,7 +15,6 @@ import {
   ArrowUpDown,
   Shield,
   Zap,
-  ExternalLink,
   CheckCircle,
   XCircle,
   Info,
@@ -43,8 +42,6 @@ export default function PricingComparison() {
     const vb = b[sortKey] as number;
     return sortDir === "asc" ? va - vb : vb - va;
   });
-
-  const maxCost = Math.max(...platforms.map((p) => p.costPerMin));
 
   const SortBtn = ({ k, label }: { k: SortKey; label: string }) => (
     <button
@@ -89,73 +86,6 @@ export default function PricingComparison() {
               ? "Toutes les plateformes comparées sur la base du coût par minute d'interaction en temps réel. Les coûts cachés (TTS, LLM, infrastructure) sont indiqués séparément."
               : "All platforms compared on the basis of cost per minute of real-time interaction. Hidden costs (TTS, LLM, infrastructure) are noted separately."}
           </p>
-        </div>
-
-        {/* Visual bar chart */}
-        <div className="bg-white border border-slate-200 rounded-xl p-6 mb-8">
-          <h2 className="text-sm font-mono font-bold text-slate-400 uppercase tracking-widest mb-6">
-            {lang === "fr" ? "Coût par minute — vue graphique" : "Cost per minute — visual overview"}
-          </h2>
-          <div className="space-y-3">
-            {[...platforms]
-              .sort((a, b) => a.costPerMin - b.costPerMin)
-              .map((p) => {
-                const pct = (p.costPerMin / maxCost) * 100;
-                const isAsync = p.latencyMs >= 10000;
-                const barColor =
-                  p.costPerMin < 0.05
-                    ? "bg-emerald-500"
-                    : p.costPerMin < 0.15
-                    ? "bg-blue-500"
-                    : p.costPerMin < 0.30
-                    ? "bg-amber-500"
-                    : "bg-red-400";
-                const isLemonSlice = p.id === "lemonslice";
-                return (
-                  <div key={p.id} className="flex items-center gap-3">
-                    <Link href={`/platform/${p.id}`}>
-                      <span className="w-36 text-sm font-medium text-slate-700 hover:text-slate-900 hover:underline cursor-pointer flex-shrink-0 truncate">
-                        {p.name}
-                      </span>
-                    </Link>
-                    <div className="flex-1 bg-slate-100 rounded-full h-5 overflow-hidden relative">
-                      {isAsync ? (
-                        <div className="h-full bg-slate-300 rounded-full flex items-center px-2">
-                          <span className="text-xs text-slate-500 font-mono">async</span>
-                        </div>
-                      ) : isLemonSlice ? (
-                        <div className="h-full flex">
-                          {/* Self-Managed bar: ~$0.03/min */}
-                          <div className="h-full bg-emerald-400 rounded-l-full" style={{ width: `${Math.max((0.03 / maxCost) * 100, 2)}%` }} />
-                          {/* Hosted bar: $0.21/min */}
-                          <div className="h-full bg-amber-400" style={{ width: `${Math.max(((0.21 - 0.03) / maxCost) * 100, 2)}%` }} />
-                        </div>
-                      ) : (
-                        <div
-                          className={`h-full ${barColor} rounded-full transition-all duration-500`}
-                          style={{ width: `${Math.max(pct, 3)}%` }}
-                        />
-                      )}
-                    </div>
-                    <span className="w-28 text-right text-sm font-mono font-bold flex-shrink-0">
-                      {isAsync ? (
-                        <span className="text-slate-800">~$2+/min</span>
-                      ) : isLemonSlice ? (
-                        <span className="text-emerald-700">$0.03–$0.21</span>
-                      ) : (
-                        <span className="text-slate-800">${p.costPerMin.toFixed(3)}/min</span>
-                      )}
-                    </span>
-                  </div>
-                );
-              })}
-          </div>
-          <div className="mt-4 flex gap-4 text-xs text-slate-400">
-            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" /> {lang === "fr" ? "< $0.05" : "< $0.05"}</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-blue-500 inline-block" /> $0.05–$0.15</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-amber-500 inline-block" /> $0.15–$0.30</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-full bg-red-400 inline-block" /> {lang === "fr" ? "> $0.30" : "> $0.30"}</span>
-          </div>
         </div>
 
         {/* Cost Simulator */}
