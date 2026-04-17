@@ -110,7 +110,7 @@ export default function PlatformDetail() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+      <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
         <div className="max-w-5xl mx-auto px-6 py-3 flex items-center gap-3">
           <InternalLink
             to="/state-of-art"
