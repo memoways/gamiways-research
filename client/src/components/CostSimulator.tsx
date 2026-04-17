@@ -50,6 +50,8 @@ interface SimPlatform {
   gdpr: boolean;
   // Latency ms
   latencyMs: number;
+  // Use-case tags
+  tags: string[];
 }
 
 const SIM_PLATFORMS: SimPlatform[] = [
@@ -87,6 +89,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: false,
     gdpr: true,
     latencyMs: 300,
+    tags: ["video-only", "low-latency", "eu-gdpr", "byollm"],
   },
   {
     id: "bithuman",
@@ -122,6 +125,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: true,
     gdpr: true,
     latencyMs: 300,
+    tags: ["sovereign", "low-latency", "eu-gdpr", "byollm"],
   },
   {
     id: "hedra",
@@ -159,6 +163,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: false,
     gdpr: true,
     latencyMs: 500,
+    tags: ["all-in-one", "multi-style", "low-cost"],
   },
   {
     id: "anam",
@@ -194,6 +199,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: false,
     gdpr: true,
     latencyMs: 180,
+    tags: ["all-in-one", "low-latency", "eu-gdpr"],
   },
   {
     id: "beyondpresence",
@@ -229,6 +235,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: true,
     gdpr: true,
     latencyMs: 250,
+    tags: ["sovereign", "low-latency", "eu-gdpr", "video-only"],
   },
   {
     id: "heygen",
@@ -267,6 +274,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: false,
     gdpr: true,
     latencyMs: 400,
+    tags: ["all-in-one", "video-only", "byollm"],
   },
   {
     id: "runway",
@@ -304,6 +312,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: false,
     gdpr: false,
     latencyMs: 400,
+    tags: ["video-only", "byollm", "cinematic"],
   },
   {
     id: "lemonslice",
@@ -342,6 +351,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: true,
     gdpr: true,
     latencyMs: 3000,
+    tags: ["sovereign", "multi-style", "all-in-one", "byollm"],
   },
   {
     id: "did",
@@ -377,6 +387,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: true,
     gdpr: true,
     latencyMs: 450,
+    tags: ["all-in-one", "sovereign"],
   },
   {
     id: "tavus",
@@ -412,6 +423,7 @@ const SIM_PLATFORMS: SimPlatform[] = [
     onPremise: false,
     gdpr: true,
     latencyMs: 500,
+    tags: ["all-in-one", "emotional-ai"],
   },
 ];
 
@@ -434,13 +446,91 @@ export default function CostSimulator() {
   const [includeHidden, setIncludeHidden] = useState(false);
   const [showAlt, setShowAlt] = useState<Record<string, boolean>>({});
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [activeFilter, setActiveFilter] = useState<string>("all");
 
   const MAX_MINUTES = 3000;
   const STEP = 30;
 
+  // Use-case filter definitions
+  const USE_CASE_FILTERS = [
+    {
+      id: "all",
+      label: isFr ? "Tous" : "All",
+      labelFr: "Tous",
+      desc: isFr ? "Toutes les plateformes temps réel" : "All real-time platforms",
+      icon: "⚡",
+      color: "bg-slate-900 text-white border-slate-900",
+      colorInactive: "bg-white text-slate-600 border-slate-200 hover:border-slate-400",
+    },
+    {
+      id: "video-only",
+      label: isFr ? "Vidéo seule" : "Video-only",
+      labelFr: "Vidéo seule",
+      desc: isFr ? "Rendu vidéo uniquement — vous apportez votre LLM/TTS" : "Video rendering only — bring your own LLM/TTS",
+      icon: "🎬",
+      color: "bg-cyan-700 text-white border-cyan-700",
+      colorInactive: "bg-white text-cyan-700 border-cyan-200 hover:border-cyan-400",
+    },
+    {
+      id: "all-in-one",
+      label: isFr ? "Tout-en-un" : "All-in-one",
+      labelFr: "Tout-en-un",
+      desc: isFr ? "LLM + TTS + vidéo intégrés — aucune dépendance externe" : "LLM + TTS + video integrated — no external dependency",
+      icon: "🤖",
+      color: "bg-emerald-700 text-white border-emerald-700",
+      colorInactive: "bg-white text-emerald-700 border-emerald-200 hover:border-emerald-400",
+    },
+    {
+      id: "sovereign",
+      label: isFr ? "Souverain" : "Sovereign",
+      labelFr: "Souverain",
+      desc: isFr ? "On-premise ou EU — données sous contrôle total" : "On-premise or EU — full data control",
+      icon: "🔒",
+      color: "bg-indigo-700 text-white border-indigo-700",
+      colorInactive: "bg-white text-indigo-700 border-indigo-200 hover:border-indigo-400",
+    },
+    {
+      id: "low-latency",
+      label: isFr ? "Basse latence" : "Low-latency",
+      labelFr: "Basse latence",
+      desc: isFr ? "TTFR < 400ms — optimal pour les interactions temps réel" : "TTFR < 400ms — optimal for real-time interactions",
+      icon: "⚡",
+      color: "bg-amber-600 text-white border-amber-600",
+      colorInactive: "bg-white text-amber-600 border-amber-200 hover:border-amber-400",
+    },
+    {
+      id: "eu-gdpr",
+      label: isFr ? "EU / RGPD" : "EU / GDPR",
+      labelFr: "EU / RGPD",
+      desc: isFr ? "Hébergement EU ou juridiction européenne" : "EU hosting or European jurisdiction",
+      icon: "🇪🇺",
+      color: "bg-blue-700 text-white border-blue-700",
+      colorInactive: "bg-white text-blue-700 border-blue-200 hover:border-blue-400",
+    },
+    {
+      id: "multi-style",
+      label: isFr ? "Multi-style" : "Multi-style",
+      labelFr: "Multi-style",
+      desc: isFr ? "Avatars non-humains : cartoons, mascottes, animaux" : "Non-human avatars: cartoons, mascots, animals",
+      icon: "🎨",
+      color: "bg-purple-700 text-white border-purple-700",
+      colorInactive: "bg-white text-purple-700 border-purple-200 hover:border-purple-400",
+    },
+    {
+      id: "emotional-ai",
+      label: isFr ? "IA émotionnelle" : "Emotional AI",
+      labelFr: "IA émotionnelle",
+      desc: isFr ? "Perception et expression émotionnelle avancée" : "Advanced emotional perception and expression",
+      icon: "💡",
+      color: "bg-rose-700 text-white border-rose-700",
+      colorInactive: "bg-white text-rose-700 border-rose-200 hover:border-rose-400",
+    },
+  ];
+
   const sorted = useMemo(() => {
     return [...SIM_PLATFORMS]
       .filter((p) => !p.isAsync)
+      .filter((p) => activeFilter === "all" || p.tags.includes(activeFilter))
       .sort((a, b) => {
         const ca = calcCost(a, minutes, includeHidden, showAlt[a.id] ?? false);
         const cb = calcCost(b, minutes, includeHidden, showAlt[b.id] ?? false);
@@ -539,10 +629,67 @@ export default function CostSimulator() {
               : "Include estimated hidden costs (LLM + TTS for platforms without integrated LLM/TTS)"}
           </span>
         </div>
+
+        {/* Use-case filters */}
+        <div className="mt-5 pt-4 border-t border-slate-200">
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
+            {isFr ? "Filtrer par cas d'usage" : "Filter by use case"}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {USE_CASE_FILTERS.map((f) => {
+              const isActive = activeFilter === f.id;
+              const matchCount = f.id === "all"
+                ? SIM_PLATFORMS.filter((p) => !p.isAsync).length
+                : SIM_PLATFORMS.filter((p) => !p.isAsync && p.tags.includes(f.id)).length;
+              return (
+                <button
+                  key={f.id}
+                  onClick={() => setActiveFilter(f.id)}
+                  title={f.desc}
+                  className={`flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1.5 rounded-full border transition-all ${
+                    isActive ? f.color : f.colorInactive
+                  }`}
+                >
+                  <span>{f.icon}</span>
+                  <span>{f.label}</span>
+                  <span className={`ml-0.5 text-xs rounded-full px-1 ${
+                    isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-400"
+                  }`}>{matchCount}</span>
+                </button>
+              );
+            })}
+          </div>
+          {activeFilter !== "all" && (
+            <div className="mt-2 flex items-center gap-2">
+              <span className="text-xs text-slate-500">
+                {isFr ? "Filtre actif :" : "Active filter:"}
+              </span>
+              <span className="text-xs font-bold text-slate-700">
+                {USE_CASE_FILTERS.find((f) => f.id === activeFilter)?.desc}
+              </span>
+              <button
+                onClick={() => setActiveFilter("all")}
+                className="text-xs text-slate-400 hover:text-slate-600 underline ml-1"
+              >
+                {isFr ? "Effacer" : "Clear"}
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Results */}
       <div className="divide-y divide-slate-100">
+        {sorted.length === 0 && (
+          <div className="px-6 py-10 text-center">
+            <p className="text-slate-400 text-sm">
+              {isFr ? "Aucune plateforme ne correspond à ce filtre." : "No platform matches this filter."}
+            </p>
+            <button onClick={() => setActiveFilter("all")} className="mt-2 text-xs text-cyan-600 underline">
+              {isFr ? "Voir toutes les plateformes" : "Show all platforms"}
+            </button>
+          </div>
+        )}
         {sorted.map((p, rank) => {
           const isAlt = showAlt[p.id] ?? false;
           const cost = calcCost(p, minutes, includeHidden, isAlt);
@@ -608,6 +755,27 @@ export default function CostSimulator() {
                     <span className="text-base font-bold font-mono flex-shrink-0" style={{ color: p.color }}>
                       {fmt(cost)}<span className="text-xs text-slate-400 font-normal">/mo</span>
                     </span>
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1 mt-1.5">
+                    {p.tags.map((tag) => {
+                      const filterDef = USE_CASE_FILTERS.find((f) => f.id === tag);
+                      return (
+                        <button
+                          key={tag}
+                          onClick={() => setActiveFilter(tag)}
+                          title={filterDef?.desc}
+                          className={`text-xs font-mono px-1.5 py-0.5 rounded border transition-all ${
+                            activeFilter === tag
+                              ? (filterDef?.color ?? "bg-slate-900 text-white border-slate-900")
+                              : (filterDef?.colorInactive ?? "bg-white text-slate-500 border-slate-200 hover:border-slate-400")
+                          }`}
+                        >
+                          {filterDef?.icon} {filterDef?.label ?? tag}
+                        </button>
+                      );
+                    })}
                   </div>
 
                   {/* Rate detail */}
