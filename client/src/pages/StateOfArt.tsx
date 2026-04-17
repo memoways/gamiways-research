@@ -340,6 +340,28 @@ export default function StateOfArt() {
         : ["No persistent memory", "No sovereignty", "No narrative orchestration", "Tavus cloud dependency"],
       score: { quality: 10, latency: 10, cost: 3, sovereignty: 1, customisation: 7, pricing: 3 },
     },
+    {
+      name: "LemonSlice (LS-2.1)",
+      linkKey: "lemon_slice",
+      category: isFr ? "Avatar multi-style temps réel" : "Real-time multi-style avatar",
+      realtime: true,
+      bodyLanguage: isFr ? "Oui (corps entier)" : "Yes (full body)",
+      conversation: true,
+      sovereignty: false,
+      latency: isFr ? "~3s (hosted) · 20 FPS" : "~3s (hosted) · 20 FPS",
+      pricing: isFr ? "$0.21/min (hosted) · $7–200/mois" : "$0.21/min (hosted) · $7–200/mo",
+      censorship: isFr ? "Faible" : "Low",
+      notes: isFr
+        ? "Fondé 2024 (ex-Infinity AI). $10.5M seed (YC + Matrix, déc. 2025). Modèle LemonSlice-2 : Video Diffusion Transformer 20B paramètres, 20 FPS sur GPU unique, architecture causale autoregressive, génération infinie sans accumulation d'erreurs. LS-2.1 ajoute déclenchement d'émotions et d'actions en temps réel. Support multi-style unique : humains photoréalistes, cartoons, mascottes, animaux. Custom avatar depuis une seule photo. Intégrations LiveKit, Pipecat. 3 modes déploiement : Widget, Hosted Pipeline, Self-Managed Pipeline. 30+ langues. Clonage vocal inclus. Transport WebRTC (Daily)."
+        : "Founded 2024 (ex-Infinity AI). $10.5M seed (YC + Matrix, Dec 2025). LemonSlice-2 model: 20B-parameter Video Diffusion Transformer, 20 FPS on single GPU, causal autoregressive architecture, infinite generation with zero error accumulation. LS-2.1 adds real-time emotion and action triggering. Unique multi-style support: photorealistic humans, cartoons, mascots, animals. Custom avatar from single photo. LiveKit, Pipecat integrations. 3 deployment modes: Widget, Hosted Pipeline, Self-Managed Pipeline. 30+ languages. Voice cloning included. WebRTC (Daily) transport.",
+      strengths: isFr
+        ? ["Multi-style unique (humains + cartoons + mascottes)", "Custom avatar depuis 1 photo", "Déclenchement émotions/actions temps réel", "Corps entier + gestes mains", "$7/mois — entrée de gamme accessible", "Self-Managed Pipeline (couche avatar seule)"]
+        : ["Unique multi-style (humans + cartoons + mascots)", "Custom avatar from 1 photo", "Real-time emotion/action triggering", "Full body + hand gestures", "$7/mo — accessible entry tier", "Self-Managed Pipeline (avatar layer only)"],
+      weaknesses: isFr
+        ? ["Latence ~3s (hosted) — plus lente que Simli/BeyondPresence", "Pas de souveraineté (cloud US)", "Pas de mémoire narrative", "Pas d'orchestration multi-agents", "Pas de déploiement on-premise", "Transport WebRTC instable en bande passante faible"]
+        : ["~3s latency (hosted) — slower than Simli/BeyondPresence", "No sovereignty (US cloud)", "No narrative memory", "No multi-agent orchestration", "No on-premise deployment", "WebRTC transport unstable on low bandwidth"],
+      score: { quality: 8, latency: 5, cost: 7, sovereignty: 1, customisation: 9, pricing: 7 },
+    },
   ];
 
   const openSourceSolutions = [
