@@ -89,6 +89,16 @@ const criteria: Criterion[] = [
     descriptionFr: "Perception multimodale temps réel : ton, expression, regard, posture → contexte NL pour LLM. Référence Raven-1 : audio < 100ms, contexte AV < 300ms.",
     rdRequired: true,
   },
+  {
+    id: "multi_style",
+    label: "Multi-style avatar",
+    labelFr: "Avatar multi-style",
+    icon: "🎨",
+    color: "oklch(0.55 0.20 320)",
+    description: "Support for non-photorealistic avatar styles: cartoons, mascots, animals, stylized characters — same real-time model. Only LemonSlice (LS-2.1) covers this commercially.",
+    descriptionFr: "Support de styles d'avatars non-photoréalistes : cartoons, mascottes, animaux, personnages stylisés — même modèle temps réel. Seul LemonSlice (LS-2.1) couvre cela commercialement.",
+    rdRequired: false,
+  },
 ];
 
 const solutionCategories: SolutionCategory[] = [
@@ -104,9 +114,10 @@ const solutionCategories: SolutionCategory[] = [
       memory: "none",
       narrative: "none",
       emotional_perception: "partial",
+      multi_style: "none",
     },
-    tooltip: "Good visual quality, but 6–15s latency, no sovereignty, no memory, no narrative control. Only Tavus (Raven-1) offers real-time emotional perception among commercial platforms.",
-    tooltipFr: "Bonne qualité visuelle, mais latence 6–15s, aucune souveraineté, pas de mémoire ni de contrôle narratif. Seul Tavus (Raven-1) offre la perception émotionnelle temps réel parmi les plateformes commerciales.",
+    tooltip: "Good visual quality, but 6–15s latency, no sovereignty, no memory, no narrative control. Only Tavus (Raven-1) offers real-time emotional perception among commercial platforms. None support non-photorealistic styles.",
+    tooltipFr: "Bonne qualité visuelle, mais latence 6–15s, aucune souveraineté, pas de mémoire ni de contrôle narratif. Seul Tavus (Raven-1) offre la perception émotionnelle temps réel. Aucune ne supporte les styles non-photoréalistes.",
   },
   {
     id: "opensource",
@@ -120,9 +131,10 @@ const solutionCategories: SolutionCategory[] = [
       memory: "none",
       narrative: "none",
       emotional_perception: "none",
+      multi_style: "partial",
     },
-    tooltip: "Sovereignty possible, partial latency gains, but no memory, no narrative, limited behavioral fidelity. No open-source equivalent to Raven-1 exists yet.",
-    tooltipFr: "Souveraineté possible, gains de latence partiels, mais pas de mémoire, pas de narratif, fidélité comportementale limitée. Aucun équivalent open-source à Raven-1 n'existe encore.",
+    tooltip: "Sovereignty possible, partial latency gains, but no memory, no narrative, limited behavioral fidelity. Some open-source models support stylized characters (partial).",
+    tooltipFr: "Souveraineté possible, gains de latence partiels, mais pas de mémoire, pas de narratif. Certains modèles open-source supportent des personnages stylisés (partiel).",
   },
   {
     id: "research",
@@ -136,9 +148,27 @@ const solutionCategories: SolutionCategory[] = [
       memory: "partial",
       narrative: "none",
       emotional_perception: "partial",
+      multi_style: "partial",
     },
-    tooltip: "Strong behavioral fidelity research, but not production-ready, no narrative control, no integrated memory. Some academic work on affective computing (partial).",
-    tooltipFr: "Forte recherche sur la fidélité comportementale, mais pas prêt pour la production, pas de contrôle narratif, pas de mémoire intégrée. Quelques travaux académiques en affective computing (partiel).",
+    tooltip: "Strong behavioral fidelity research, but not production-ready, no narrative control, no integrated memory. Some academic work on stylized avatar generation (partial).",
+    tooltipFr: "Forte recherche sur la fidélité comportementale, mais pas prêt pour la production, pas de contrôle narratif. Quelques travaux académiques sur les avatars stylisés (partiel).",
+  },
+  {
+    id: "lemonslice",
+    label: "LemonSlice (LS-2.1)",
+    labelFr: "LemonSlice (LS-2.1)",
+    examples: "Dec 2025 · $10.5M YC+Matrix · 20B DiT · 20 FPS",
+    coverage: {
+      realtime: "partial",
+      behavioral: "partial",
+      sovereignty: "none",
+      memory: "none",
+      narrative: "none",
+      emotional_perception: "partial",
+      multi_style: "full",
+    },
+    tooltip: "LemonSlice-2 (Dec 2025): 20B Video DiT, 20 FPS single GPU, zero-shot from 1 photo. LS-2.1 adds real-time emotion + action triggering. UNIQUE: only commercial platform supporting cartoons, mascots, animals alongside photorealistic humans. ~3s hosted latency. No sovereignty, no memory, no narrative.",
+    tooltipFr: "LemonSlice-2 (déc. 2025) : DiT vidéo 20B, 20 FPS sur GPU unique, zero-shot depuis 1 photo. LS-2.1 ajoute déclenchement émotions + actions temps réel. UNIQUE : seule plateforme commerciale supportant cartoons, mascottes, animaux + humains photoréalistes. Latence ~3s (hosted). Pas de souveraineté, pas de mémoire, pas de narratif.",
   },
   {
     id: "digidouble",
@@ -152,9 +182,10 @@ const solutionCategories: SolutionCategory[] = [
       memory: "full",
       narrative: "full",
       emotional_perception: "full",
+      multi_style: "full",
     },
-    tooltip: "The only combination targeting all 6 criteria simultaneously, including sovereign real-time emotional perception — no existing solution covers this. Requires fundamental R&D on 4 axes.",
-    tooltipFr: "La seule combinaison ciblant les 6 critères simultanément, y compris la perception émotionnelle temps réel souveraine — aucune solution existante ne couvre cela. Nécessite une R&D fondamentale sur 4 axes.",
+    tooltip: "The only combination targeting all 7 criteria simultaneously, including sovereign real-time emotional perception and multi-style avatar support — no existing solution covers this. Requires fundamental R&D on 4 axes.",
+    tooltipFr: "La seule combinaison ciblant les 7 critères simultanément, y compris la perception émotionnelle souveraine et le support multi-style — aucune solution existante ne couvre cela. Nécessite une R&D fondamentale sur 4 axes.",
   },
 ];
 
@@ -221,7 +252,7 @@ export default function GapDiagram() {
       <div className="overflow-x-auto">
         <div style={{ minWidth: "640px" }}>
           {/* Header row — criteria */}
-          <div className="grid mb-1" style={{ gridTemplateColumns: "200px repeat(6, 1fr)", gap: "4px" }}>
+          <div className="grid mb-1" style={{ gridTemplateColumns: "200px repeat(7, 1fr)", gap: "4px" }}>
             {/* Empty top-left */}
             <div />
             {criteria.map((crit) => (
@@ -262,7 +293,7 @@ export default function GapDiagram() {
             <div
               key={cat.id}
               className="grid mb-1"
-              style={{ gridTemplateColumns: "200px repeat(6, 1fr)", gap: "4px" }}
+              style={{ gridTemplateColumns: "200px repeat(7, 1fr)", gap: "4px" }}
             >
               {/* Row label */}
               <div
