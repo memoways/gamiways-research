@@ -158,6 +158,19 @@ export default function PricingComparison() {
           </div>
         </div>
 
+        {/* Cost Simulator */}
+        <div className="mb-8">
+          <div className="mb-4">
+            <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">
+              {lang === "fr" ? "Outil interactif" : "Interactive tool"}
+            </p>
+            <h2 className="text-xl font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {lang === "fr" ? "Simulateur de coûts" : "Cost Simulator"}
+            </h2>
+          </div>
+          <CostSimulator />
+        </div>
+
         {/* Detailed table */}
         <div className="bg-white border border-slate-200 rounded-xl overflow-hidden mb-8">
           <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
@@ -321,19 +334,6 @@ export default function PricingComparison() {
               </tbody>
             </table>
           </div>
-        </div>
-
-        {/* Cost Simulator */}
-        <div className="mb-8">
-          <div className="mb-4">
-            <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mb-1">
-              {lang === "fr" ? "Outil interactif" : "Interactive tool"}
-            </p>
-            <h2 className="text-xl font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {lang === "fr" ? "Simulateur de coûts" : "Cost Simulator"}
-            </h2>
-          </div>
-          <CostSimulator />
         </div>
 
         {/* LemonSlice dual-pricing callout */}
