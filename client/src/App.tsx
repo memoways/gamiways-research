@@ -1,21 +1,39 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch, useLocation } from "wouter";
+import { Route, Switch, useLocation, Redirect } from "wouter";
 import { useEffect } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { LangProvider } from "./contexts/LangContext";
+
+// ── Core pages ─────────────────────────────────────────────────────────────
 import Home from "./pages/Home";
 import Project from "./pages/Project";
 import Research from "./pages/Research";
-import StateOfArt from "./pages/StateOfArt";
 import PlatformDetail from "./pages/PlatformDetail";
-import PricingComparison from "@/pages/PricingComparison";
 import TTSDetail from "@/pages/TTSDetail";
 import PipelinePhase1 from "@/pages/PipelinePhase1";
+
+// ── DigiDouble sub-pages ───────────────────────────────────────────────────
+import DigiDoubleArchitecture from "@/pages/DigiDoubleArchitecture";
+import DigiDoubleGaps from "@/pages/DigiDoubleGaps";
+import DigiDoubleAcademic from "@/pages/DigiDoubleAcademic";
+
+// ── Voice Pipeline pages ───────────────────────────────────────────────────
+import VoiceTTS from "@/pages/VoiceTTS";
+import VoiceSTT from "@/pages/VoiceSTT";
+import VoiceBenchmarks from "@/pages/VoiceBenchmarks";
+import VoiceStack from "@/pages/VoiceStack";
+
+// ── Avatars pages ──────────────────────────────────────────────────────────
+import AvatarsOverview from "@/pages/AvatarsOverview";
+import AvatarsMarket from "@/pages/AvatarsMarket";
+import AvatarsBehavior from "@/pages/AvatarsBehavior";
+import AvatarsEmotional from "@/pages/AvatarsEmotional";
+import PricingComparison from "@/pages/PricingComparison";
 
 /** Remonte automatiquement en haut à chaque changement de route */
 function ScrollToTop() {
@@ -32,14 +50,42 @@ function Router() {
       <ScrollToTop />
       <NavBar />
       <Switch>
+        {/* ── Home ──────────────────────────────────────────────────────── */}
         <Route path="/" component={Home} />
+
+        {/* ── The Project ───────────────────────────────────────────────── */}
         <Route path="/project" component={Project} />
         <Route path="/research" component={Research} />
-        <Route path="/state-of-art" component={StateOfArt} />
-        <Route path="/platform/:id" component={PlatformDetail} />
-        <Route path="/pricing" component={PricingComparison} />
-        <Route path="/tts/:id" component={TTSDetail} />
+        <Route path="/research/architecture" component={DigiDoubleArchitecture} />
+        <Route path="/research/gaps" component={DigiDoubleGaps} />
+        <Route path="/research/academic" component={DigiDoubleAcademic} />
+        {/* Avatar sub-pages also under /research for semantic grouping */}
+        <Route path="/research/behavior" component={AvatarsBehavior} />
+        <Route path="/research/emotional" component={AvatarsEmotional} />
+
+        {/* ── Voice Pipeline ────────────────────────────────────────────── */}
+        <Route path="/voice/tts" component={VoiceTTS} />
+        <Route path="/voice/stt" component={VoiceSTT} />
+        <Route path="/voice/benchmarks" component={VoiceBenchmarks} />
+        <Route path="/voice/stack" component={VoiceStack} />
         <Route path="/pipeline" component={PipelinePhase1} />
+        <Route path="/tts/:id" component={TTSDetail} />
+
+        {/* ── Video Avatars ─────────────────────────────────────────────── */}
+        <Route path="/avatars" component={AvatarsOverview} />
+        <Route path="/avatars/pricing" component={PricingComparison} />
+        <Route path="/avatars/market" component={AvatarsMarket} />
+        <Route path="/platform/:id" component={PlatformDetail} />
+
+        {/* ── Legacy redirects ──────────────────────────────────────────── */}
+        <Route path="/state-of-art">
+          <Redirect to="/avatars" />
+        </Route>
+        <Route path="/pricing">
+          <Redirect to="/avatars/pricing" />
+        </Route>
+
+        {/* ── 404 ───────────────────────────────────────────────────────── */}
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

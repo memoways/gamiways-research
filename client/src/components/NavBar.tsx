@@ -1,24 +1,139 @@
 /*
  * NavBar — DigiDouble Research Portal
- * Design: Space Grotesk, top fixed, minimal, with section indicators
+ * Redesigned: 3 dropdown menus (The Project / Voice Pipeline / Video Avatars)
+ * Mobile: hamburger with grouped sections
+ * Design: Space Grotesk, top fixed, minimal
  * i18n: EN/FR toggle, default EN
  */
 import { Link, useLocation } from "wouter";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Menu, X, ChevronDown, FlaskConical, Mic, Video } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
+
+interface NavDropdownItem {
+  href: string;
+  label: string;
+  labelFr: string;
+  desc?: string;
+  descFr?: string;
+}
+
+interface NavMenu {
+  label: string;
+  labelFr: string;
+  icon: React.ElementType;
+  color: string;
+  activePrefix: string[];
+  items: NavDropdownItem[];
+}
+
+const NAV_MENUS: NavMenu[] = [
+  {
+    label: "The Project",
+    labelFr: "The Project",
+    icon: FlaskConical,
+    color: "oklch(0.55 0.20 200)",
+    activePrefix: ["/project", "/research"],
+    items: [
+      { href: "/project", label: "The Project", labelFr: "Le Projet", desc: "Vision, positioning & roadmap", descFr: "Vision, positionnement & roadmap" },
+      { href: "/research", label: "Research Challenges", labelFr: "Research Challenges", desc: "3 research axes & open questions", descFr: "3 axes de recherche & questions ouvertes" },
+      { href: "/research/architecture", label: "Target Architecture", labelFr: "Architecture Cible", desc: "System design & latency budget", descFr: "Design système & budget latence" },
+      { href: "/research/gaps", label: "Research Gaps", labelFr: "Research Gaps", desc: "Identified gaps & opportunities", descFr: "Gaps identifiés & opportunités" },
+      { href: "/research/academic", label: "Academic Assessment", labelFr: "Assessment Académique", desc: "Key papers 2023–2026", descFr: "Publications clés 2023–2026" },
+    ],
+  },
+  {
+    label: "Voice Pipeline",
+    labelFr: "Voice Pipeline",
+    icon: Mic,
+    color: "oklch(0.55 0.20 200)",
+    activePrefix: ["/voice", "/pipeline"],
+    items: [
+      { href: "/voice/tts", label: "TTS — Speech Synthesis", labelFr: "TTS — Synthèse Vocale", desc: "14+ engines compared", descFr: "14+ moteurs comparés" },
+      { href: "/voice/stt", label: "STT — Speech Recognition", labelFr: "STT — Reconnaissance Vocale", desc: "Cloud & open-source", descFr: "Cloud & open-source" },
+      { href: "/voice/benchmarks", label: "Latency Benchmarks", labelFr: "Benchmarks Latence", desc: "End-to-end timing analysis", descFr: "Analyse des temps end-to-end" },
+      { href: "/voice/stack", label: "Recommended Stack", labelFr: "Stack Recommandé", desc: "Technology recommendations", descFr: "Recommandations technologiques" },
+      { href: "/pipeline", label: "Pipeline Phase 1", labelFr: "Pipeline Phase 1", desc: "Interactive V2V diagram", descFr: "Diagramme V2V interactif" },
+    ],
+  },
+  {
+    label: "Video Avatars",
+    labelFr: "Avatars Vidéo",
+    icon: Video,
+    color: "oklch(0.72 0.18 50)",
+    activePrefix: ["/avatars", "/platform", "/research/behavior", "/research/emotional"],
+    items: [
+      { href: "/avatars", label: "Platform Comparison", labelFr: "Comparatif Plateformes", desc: "11+ streaming avatar platforms", descFr: "11+ plateformes d'avatars streaming" },
+      { href: "/avatars/pricing", label: "Cost Simulator", labelFr: "Simulateur de Coûts", desc: "Interactive pricing calculator", descFr: "Calculateur de prix interactif" },
+      { href: "/avatars/market", label: "Business Challenges", labelFr: "Enjeux Business", desc: "Market & opportunity analysis", descFr: "Analyse de marché & opportunités" },
+      { href: "/research/behavior", label: "Avatar Behavior", labelFr: "Comportement Avatar", desc: "Axis 2 — behavioral fidelity", descFr: "Axe 2 — fidélité comportementale" },
+      { href: "/research/emotional", label: "Emotional Toolbox", labelFr: "Emotional Toolbox", desc: "Character & emotion design", descFr: "Design émotionnel & personnage" },
+    ],
+  },
+];
+
+function DropdownMenu({ menu, isFr, location, onClose }: { menu: NavMenu; isFr: boolean; location: string; onClose: () => void }) {
+  const isActive = menu.activePrefix.some((p) => location.startsWith(p));
+  const Icon = menu.icon;
+
+  return (
+    <div className="relative group">
+      <button
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-sm font-medium transition-colors duration-150 ${
+          isActive
+            ? "text-cyan-600 bg-cyan-50"
+            : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+        }`}
+        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+      >
+        <Icon size={13} />
+        {isFr ? menu.labelFr : menu.label}
+        <ChevronDown size={12} className="opacity-60 group-hover:opacity-100 transition-transform group-hover:rotate-180 duration-200" />
+      </button>
+
+      {/* Dropdown panel */}
+      <div className="absolute top-full left-0 mt-1 w-72 bg-white border border-slate-200 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50 overflow-hidden">
+        <div className="p-1">
+          {menu.items.map((item) => {
+            const itemActive = location === item.href || (item.href !== "/" && location.startsWith(item.href));
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onClose}
+                className={`flex flex-col px-3 py-2.5 rounded-lg transition-colors no-underline ${
+                  itemActive ? "bg-slate-50" : "hover:bg-slate-50"
+                }`}
+              >
+                <span className="text-sm font-semibold text-slate-900 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif", color: itemActive ? menu.color : undefined }}>
+                  {isFr ? item.labelFr : item.label}
+                </span>
+                {(item.desc || item.descFr) && (
+                  <span className="text-xs text-slate-400 mt-0.5 leading-snug" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr ? item.descFr : item.desc}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function NavBar() {
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [expandedMobile, setExpandedMobile] = useState<string | null>(null);
   const { lang, setLang, t } = useLang();
+  const isFr = lang === "fr";
 
-  const navItems = [
-    { href: "/", label: t("nav.home") },
-    { href: "/project", label: t("nav.project") },
-    { href: "/research", label: t("nav.research") },
-    { href: "/state-of-art", label: t("nav.stateofart") },
-  ];
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+    setExpandedMobile(null);
+  }, [location]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200">
@@ -40,25 +155,17 @@ export default function NavBar() {
             </span>
           </Link>
 
-          {/* Desktop Nav */}
+          {/* Desktop Nav — 3 dropdown menus */}
           <nav className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => {
-              const isActive = location === item.href || (item.href !== "/" && location.startsWith(item.href));
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors duration-150 no-underline ${
-                    isActive
-                      ? "text-cyan-600 bg-cyan-50"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                  }`}
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+            {NAV_MENUS.map((menu) => (
+              <DropdownMenu
+                key={menu.label}
+                menu={menu}
+                isFr={isFr}
+                location={location}
+                onClose={() => {}}
+              />
+            ))}
           </nav>
 
           {/* Right side */}
@@ -92,18 +199,6 @@ export default function NavBar() {
               </button>
             </div>
 
-            <a
-              
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-600 transition-colors no-underline"
-              style={{ fontFamily: "'JetBrains Mono', monospace" }}
-            >
-              
-              <span className="text-slate-300">·</span>
-              
-            </a>
-
             {/* Mobile menu toggle */}
             <button
               className="md:hidden p-1.5 rounded text-slate-600 hover:bg-slate-100"
@@ -116,26 +211,62 @@ export default function NavBar() {
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Nav — hamburger with grouped sections */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white">
+        <div className="md:hidden border-t border-slate-200 bg-white max-h-[80vh] overflow-y-auto">
           <nav className="container py-2 flex flex-col gap-0.5">
-            {navItems.map((item) => {
-              const isActive = location === item.href || (item.href !== "/" && location.startsWith(item.href));
+            {/* Home link */}
+            <Link
+              href="/"
+              onClick={() => setMobileOpen(false)}
+              className={`px-3 py-2 rounded text-sm font-medium transition-colors no-underline ${
+                location === "/" ? "text-cyan-600 bg-cyan-50" : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+              }`}
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              {isFr ? "Accueil" : "Home"}
+            </Link>
+
+            {/* Grouped menus */}
+            {NAV_MENUS.map((menu) => {
+              const Icon = menu.icon;
+              const isExpanded = expandedMobile === menu.label;
+              const isActive = menu.activePrefix.some((p) => location.startsWith(p));
               return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={`px-3 py-2 rounded text-sm font-medium transition-colors no-underline ${
-                    isActive
-                      ? "text-cyan-600 bg-cyan-50"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                  }`}
-                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                >
-                  {item.label}
-                </Link>
+                <div key={menu.label}>
+                  <button
+                    onClick={() => setExpandedMobile(isExpanded ? null : menu.label)}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded text-sm font-medium transition-colors ${
+                      isActive ? "text-cyan-600 bg-cyan-50" : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                    }`}
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Icon size={13} />
+                      {isFr ? menu.labelFr : menu.label}
+                    </span>
+                    <ChevronDown size={12} className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
+                  </button>
+                  {isExpanded && (
+                    <div className="ml-4 mt-0.5 mb-1 border-l-2 border-slate-100 pl-3 flex flex-col gap-0.5">
+                      {menu.items.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setMobileOpen(false)}
+                          className={`px-2 py-1.5 rounded text-sm transition-colors no-underline ${
+                            location === item.href || (item.href !== "/" && location.startsWith(item.href))
+                              ? "text-cyan-600 font-semibold"
+                              : "text-slate-600 hover:text-slate-900"
+                          }`}
+                          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                        >
+                          {isFr ? item.labelFr : item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </nav>
