@@ -146,7 +146,7 @@ export default function Project() {
   ];
 
   return (
-    <div className="min-h-screen pt-16">
+    <div className="min-h-screen">
       {/* Page header */}
       <div className="border-b border-slate-200 py-10">
         <div className="container max-w-4xl">

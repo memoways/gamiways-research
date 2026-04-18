@@ -864,7 +864,7 @@ export default function StateOfArt() {
   };
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen">
       {/* Page header */}
       <div className="border-b border-slate-200 py-8">
         <div className="container">

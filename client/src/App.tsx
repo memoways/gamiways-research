@@ -49,47 +49,49 @@ function Router() {
     <>
       <ScrollToTop />
       <NavBar />
-      <Switch>
-        {/* ── Home ──────────────────────────────────────────────────────── */}
-        <Route path="/" component={Home} />
+      <main className="pt-14">
+        <Switch>
+          {/* ── Home ──────────────────────────────────────────────────────── */}
+          <Route path="/" component={Home} />
 
-        {/* ── The Project ───────────────────────────────────────────────── */}
-        <Route path="/project" component={Project} />
-        <Route path="/research" component={Research} />
-        <Route path="/research/architecture" component={DigiDoubleArchitecture} />
-        <Route path="/research/gaps" component={DigiDoubleGaps} />
-        <Route path="/research/academic" component={DigiDoubleAcademic} />
-        {/* Avatar sub-pages also under /research for semantic grouping */}
-        <Route path="/research/behavior" component={AvatarsBehavior} />
-        <Route path="/research/emotional" component={AvatarsEmotional} />
+          {/* ── The Project ───────────────────────────────────────────────── */}
+          <Route path="/project" component={Project} />
+          <Route path="/research" component={Research} />
+          <Route path="/research/architecture" component={DigiDoubleArchitecture} />
+          <Route path="/research/gaps" component={DigiDoubleGaps} />
+          <Route path="/research/academic" component={DigiDoubleAcademic} />
+          {/* Avatar sub-pages also under /research for semantic grouping */}
+          <Route path="/research/behavior" component={AvatarsBehavior} />
+          <Route path="/research/emotional" component={AvatarsEmotional} />
 
-        {/* ── Voice Pipeline ────────────────────────────────────────────── */}
-        <Route path="/voice/tts" component={VoiceTTS} />
-        <Route path="/voice/stt" component={VoiceSTT} />
-        <Route path="/voice/benchmarks" component={VoiceBenchmarks} />
-        <Route path="/voice/stack" component={VoiceStack} />
-        <Route path="/pipeline" component={PipelinePhase1} />
-        <Route path="/tts/:id" component={TTSDetail} />
+          {/* ── Voice Pipeline ────────────────────────────────────────────── */}
+          <Route path="/voice/tts" component={VoiceTTS} />
+          <Route path="/voice/stt" component={VoiceSTT} />
+          <Route path="/voice/benchmarks" component={VoiceBenchmarks} />
+          <Route path="/voice/stack" component={VoiceStack} />
+          <Route path="/pipeline" component={PipelinePhase1} />
+          <Route path="/tts/:id" component={TTSDetail} />
 
-        {/* ── Video Avatars ─────────────────────────────────────────────── */}
-        <Route path="/avatars" component={AvatarsOverview} />
-        <Route path="/avatars/pricing" component={PricingComparison} />
-        <Route path="/avatars/market" component={AvatarsMarket} />
-        <Route path="/platform/:id" component={PlatformDetail} />
+          {/* ── Video Avatars ─────────────────────────────────────────────── */}
+          <Route path="/avatars" component={AvatarsOverview} />
+          <Route path="/avatars/pricing" component={PricingComparison} />
+          <Route path="/avatars/market" component={AvatarsMarket} />
+          <Route path="/platform/:id" component={PlatformDetail} />
 
-        {/* ── Legacy redirects ──────────────────────────────────────────── */}
-        <Route path="/state-of-art">
-          <Redirect to="/avatars" />
-        </Route>
-        <Route path="/pricing">
-          <Redirect to="/avatars/pricing" />
-        </Route>
+          {/* ── Legacy redirects ──────────────────────────────────────────── */}
+          <Route path="/state-of-art">
+            <Redirect to="/avatars" />
+          </Route>
+          <Route path="/pricing">
+            <Redirect to="/avatars/pricing" />
+          </Route>
 
-        {/* ── 404 ───────────────────────────────────────────────────────── */}
-        <Route path="/404" component={NotFound} />
-        <Route component={NotFound} />
-      </Switch>
-      <Footer />
+          {/* ── 404 ───────────────────────────────────────────────────────── */}
+          <Route path="/404" component={NotFound} />
+          <Route component={NotFound} />
+        </Switch>
+        <Footer />
+      </main>
     </>
   );
 }
