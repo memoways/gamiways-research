@@ -142,7 +142,13 @@ export default function VoiceSTT() {
                       <ScoreBar value={s.score.pricing} color="oklch(0.75 0.16 75)" />
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{s.description}</p>
+                  <p className="text-xs text-slate-500 leading-relaxed mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>{s.description}</p>
+                  <InternalLink
+                    to={`/voice/stt/${s.id}`}
+                    className="inline-flex items-center gap-1 text-xs font-medium text-orange-700 hover:text-orange-900 border border-orange-200 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 rounded transition-colors"
+                  >
+                    {isFr ? "Fiche complète →" : "Full details →"}
+                  </InternalLink>
                 </div>
               ))}
             </div>
@@ -205,9 +211,15 @@ export default function VoiceSTT() {
                       <ScoreBar value={s.score.accuracy} color="oklch(0.65 0.18 145)" />
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{s.description}</p>
-                  <div className="mt-2">
+                  <p className="text-xs text-slate-500 leading-relaxed mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>{s.description}</p>
+                  <div className="flex items-center justify-between">
                     <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ background: "oklch(0.93 0.04 145)", color: "oklch(0.35 0.14 145)" }}>{s.license}</span>
+                    <InternalLink
+                      to={`/voice/stt/${s.id}`}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:text-emerald-900 border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded transition-colors"
+                    >
+                      {isFr ? "Fiche complète →" : "Full details →"}
+                    </InternalLink>
                   </div>
                 </div>
               ))}

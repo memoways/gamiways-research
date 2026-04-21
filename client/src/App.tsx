@@ -25,6 +25,7 @@ import DigiDoubleAcademic from "@/pages/DigiDoubleAcademic";
 // ── Voice Pipeline pages ───────────────────────────────────────────────────
 import VoiceTTS from "@/pages/VoiceTTS";
 import VoiceSTT from "@/pages/VoiceSTT";
+import STTDetail from "@/pages/STTDetail";
 import VoiceBenchmarks from "@/pages/VoiceBenchmarks";
 import VoiceStack from "@/pages/VoiceStack";
 
@@ -67,6 +68,7 @@ function Router() {
           {/* ── Voice Pipeline ────────────────────────────────────────────── */}
           <Route path="/voice/tts" component={VoiceTTS} />
           <Route path="/voice/stt" component={VoiceSTT} />
+          <Route path="/voice/stt/:id" component={STTDetail} />
           <Route path="/voice/benchmarks" component={VoiceBenchmarks} />
           <Route path="/voice/stack" component={VoiceStack} />
           <Route path="/pipeline" component={PipelinePhase1} />

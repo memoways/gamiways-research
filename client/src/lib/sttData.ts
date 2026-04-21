@@ -466,8 +466,80 @@ const sttDatabase: STTData[] = [
     digiDoubleAxis: "Phase 1 MVP — Stack Mistral souverain",
     benchmarkRef: "Mistral AI announcement, Mar 26, 2026",
   },
+  // ─── INWORLD STT ─────────────────────────────────────────────
+  {
+    id: "inworld-stt",
+    name: "Inworld STT",
+    category: "cloud-api",
+    tagline: "Voice profiling STT — <100ms, emotion/accent/age detection on every chunk",
+    homepageUrl: "https://inworld.ai/speech-to-text",
+    docsUrl: "https://docs.inworld.ai/stt",
+    wer: 5.0,
+    werNote: "~5% WER (multi-provider routing: Whisper large-v3 + AssemblyAI Universal Streaming). Accuracy depends on selected backend model.",
+    latencyMs: 92,
+    latencyMsTypical: 150,
+    architecture: "Multi-provider router (Whisper large-v3 + AssemblyAI Universal Streaming + proprietary)",
+    params: "N/A (cloud router)",
+    license: "Commercial",
+    selfHostable: false,
+    selfHostNote: "Cloud API only. Zero Data Retention (ZDR) available — audio never stored, processed in real time.",
+    pricePerHour: 0.36,
+    pricePerMin: 0.006,
+    priceNote: "Estimated $0.006–$0.012/min depending on backend model. Growth plan: 40% off TTS & STT rates ($1,500 credits/month). Free tier available.",
+    freeTier: "Free tier available. Growth plan: $1,500 credits/month with 40% off.",
+    streaming: true,
+    streamingDetail: "Bidirectional WebSocket streaming. <100ms documented latency (92ms TTFA). Interim results with voice profile signals on every audio chunk. Semantic + acoustic VAD. Configurable endpointing.",
+    multilingual: true,
+    languages: 100,
+    speakerDiarization: true,
+    wordTimestamps: true,
+    punctuation: true,
+    customVocabulary: true,
+    onPremise: false,
+    onPremiseDetail: "No on-premise. ZDR ensures audio never stored. EU data residency on Enterprise.",
+    gdprCompliant: true,
+    dataResidency: "US (default). EU data residency on Enterprise. ZDR available — audio never stored.",
+    score: { accuracy: 9, latency: 10, multilingual: 10, sovereignty: 3, pricing: 7, streaming: 10 },
+    description: "Inworld STT (2025–2026) is the most feature-rich cloud STT API for interactive voice agents. Sub-100ms documented latency, 100+ languages via multi-provider routing (Whisper large-v3 + AssemblyAI). Unique real-time voice profiling extracts emotion (happy/calm/angry/frustrated), accent, age, pitch, and vocal style on every streaming chunk — enabling downstream routing (Condition Router) and adaptive TTS (Condition TTS). ZDR support. Integrates natively with Inworld TTS, LLM Router, and Realtime API for end-to-end voice pipelines.",
+    descriptionFr: "Inworld STT (2025–2026) est l'API STT cloud la plus riche en fonctionnalités pour les agents vocaux interactifs. Latence documentée <100ms, 100+ langues via routage multi-fournisseur (Whisper large-v3 + AssemblyAI). Voice profiling temps réel unique extrait émotion (heureux/calme/en colère/frustré), accent, âge, pitch et style vocal sur chaque chunk de streaming — permettant le routage aval (Condition Router) et le TTS adaptatif (Condition TTS). Support ZDR. S'intègre nativement avec Inworld TTS, LLM Router et Realtime API.",
+    strengths: [
+      "<100ms documented streaming latency (92ms TTFA)",
+      "Voice profiling: emotion, accent, age, pitch, vocal style",
+      "100+ languages (Whisper large-v3 backend)",
+      "Semantic + acoustic VAD",
+      "ZDR — audio never stored",
+      "Native integration with Inworld TTS + LLM Router",
+      "Condition Router: route by emotion/language/tier"
+    ],
+    strengthsFr: [
+      "<100ms latence streaming documentée (92ms TTFA)",
+      "Voice profiling : émotion, accent, âge, pitch, style vocal",
+      "100+ langues (backend Whisper large-v3)",
+      "VAD sémantique + acoustique",
+      "ZDR — audio jamais stocké",
+      "Intégration native Inworld TTS + LLM Router",
+      "Condition Router : routage par émotion/langue/tier"
+    ],
+    weaknesses: [
+      "Cloud only — no on-premise",
+      "Pricing less transparent than Deepgram",
+      "Multi-provider adds latency variability",
+      "Vendor lock-in risk (full Inworld stack)",
+      "No fine-tuning on custom data"
+    ],
+    weaknessesFr: [
+      "Cloud uniquement — pas d'on-premise",
+      "Tarification moins transparente que Deepgram",
+      "Multi-fournisseur ajoute de la variabilité de latence",
+      "Risque de vendor lock-in (stack Inworld complète)",
+      "Pas de fine-tuning sur données personnalisées"
+    ],
+    digiDoubleRelevance: "High strategic value for DigiDouble Axis 2 (Avatar Behavior) and Emotional Toolbox. Voice profiling enables real-time emotion detection without a separate model — feeding directly into avatar expression selection and LLM prompt conditioning. <100ms latency compatible with Phase 1 target. Evaluate as primary STT if emotion-aware routing is required in Phase 1.",
+    digiDoubleRelevanceFr: "Valeur stratégique élevée pour l'Axe 2 DigiDouble (Comportement Avatar) et l'Emotional Toolbox. Le voice profiling permet la détection d'émotion temps réel sans modèle séparé — alimentant directement la sélection d'expression avatar et le conditionnement des prompts LLM. Latence <100ms compatible avec la cible Phase 1.",
+    digiDoubleAxis: "Phase 1 MVP — STT émotionnel + Axe 2 Avatar Behavior",
+    benchmarkRef: "https://inworld.ai/resources/best-speech-to-text-apis",
+  },
 ];
-
 export function getSTTData(): STTData[] {
   return sttDatabase;
 }
