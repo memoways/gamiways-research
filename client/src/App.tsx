@@ -71,6 +71,7 @@ function Router() {
           <Route path="/voice/stt/:id" component={STTDetail} />
           <Route path="/voice/benchmarks" component={VoiceBenchmarks} />
           <Route path="/voice/stack" component={VoiceStack} />
+          <Route path="/voice/pipeline" component={PipelinePhase1} />
           <Route path="/pipeline" component={PipelinePhase1} />
           <Route path="/tts/:id" component={TTSDetail} />
 

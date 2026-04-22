@@ -78,7 +78,7 @@ export default function Home() {
         { label: "STT", to: "/voice/stt" },
         { label: isFr ? "Benchmarks Latence" : "Latency Benchmarks", to: "/voice/benchmarks" },
         { label: isFr ? "Stack Recommandé" : "Recommended Stack", to: "/voice/stack" },
-        { label: "Pipeline Phase 1", to: "/pipeline" },
+        { label: "Pipeline Phase 1", to: "/voice/pipeline" },
       ],
     },
     {
@@ -283,7 +283,7 @@ export default function Home() {
               <InternalLink to="/avatars/pricing" className="text-xs text-slate-400 hover:text-slate-700 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
                 {isFr ? "Simulateur de coûts" : "Cost simulator"}
               </InternalLink>
-              <InternalLink to="/pipeline" className="text-xs text-slate-400 hover:text-slate-700 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
+              <InternalLink to="/voice/pipeline" className="text-xs text-slate-400 hover:text-slate-700 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
                 Pipeline
               </InternalLink>
             </div>

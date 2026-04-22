@@ -47,13 +47,13 @@ const NAV_MENUS: NavMenu[] = [
     labelFr: "Voice Pipeline",
     icon: Mic,
     color: "oklch(0.55 0.20 200)",
-    activePrefix: ["/voice", "/pipeline"],
+    activePrefix: ["/voice"],
     items: [
       { href: "/voice/tts", label: "TTS — Speech Synthesis", labelFr: "TTS — Synthèse Vocale", desc: "14+ engines compared", descFr: "14+ moteurs comparés" },
       { href: "/voice/stt", label: "STT — Speech Recognition", labelFr: "STT — Reconnaissance Vocale", desc: "Cloud & open-source", descFr: "Cloud & open-source" },
       { href: "/voice/benchmarks", label: "Latency Benchmarks", labelFr: "Benchmarks Latence", desc: "End-to-end timing analysis", descFr: "Analyse des temps end-to-end" },
       { href: "/voice/stack", label: "Recommended Stack", labelFr: "Stack Recommandé", desc: "Technology recommendations", descFr: "Recommandations technologiques" },
-      { href: "/pipeline", label: "Pipeline Phase 1", labelFr: "Pipeline Phase 1", desc: "Interactive V2V diagram", descFr: "Diagramme V2V interactif" },
+      { href: "/voice/pipeline", label: "Pipeline Phase 1", labelFr: "Pipeline Phase 1", desc: "Interactive V2V diagram", descFr: "Diagramme V2V interactif" },
     ],
   },
   {

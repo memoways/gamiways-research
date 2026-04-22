@@ -1630,7 +1630,7 @@ export default function StateOfArt() {
                   }
                 </p>
                 <div className="mt-4">
-                  <InternalLink to="/pipeline" className="cta-primary">
+                  <InternalLink to="/voice/pipeline" className="cta-primary">
                     {isFr ? "→ Diagramme interactif du Pipeline Phase 1" : "→ Interactive Phase 1 Pipeline Diagram"}
                   </InternalLink>
                 </div>

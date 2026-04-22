@@ -85,7 +85,7 @@ export default function DigiDoubleArchitecture() {
             {isFr ? "Architecture Cible" : "Target Architecture"}
           </span>
           <div className="ml-auto">
-            <InternalLink to="/pipeline" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
+            <InternalLink to="/voice/pipeline" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
               {isFr ? "→ Pipeline Phase 1" : "→ Pipeline Phase 1"}
             </InternalLink>
           </div>
@@ -177,7 +177,7 @@ export default function DigiDoubleArchitecture() {
           <InternalLink to="/research" className="inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-4 py-2 transition-all hover:opacity-90" style={{ background: 'oklch(0.55 0.20 200)', fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
             {isFr ? "← Research Challenges" : "← Research Challenges"}
           </InternalLink>
-          <InternalLink to="/pipeline" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
+          <InternalLink to="/voice/pipeline" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
             {isFr ? "Pipeline Phase 1 →" : "Pipeline Phase 1 →"}
           </InternalLink>
           <InternalLink to="/research/gaps" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
