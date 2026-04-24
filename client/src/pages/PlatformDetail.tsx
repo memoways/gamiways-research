@@ -78,7 +78,7 @@ export default function PlatformDetail() {
           <p className="text-slate-500 mb-4">
             {lang === "fr" ? "Plateforme introuvable." : "Platform not found."}
           </p>
-          <InternalLink to="/state-of-art">
+          <InternalLink to="/avatars">
             {lang === "fr" ? "← Retour à l'État de l'Art" : "← Back to State of the Art"}
           </InternalLink>
         </div>
@@ -113,7 +113,7 @@ export default function PlatformDetail() {
       <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
         <div className="max-w-5xl mx-auto px-6 py-3 flex items-center gap-3">
           <InternalLink
-            to="/state-of-art"
+            to="/avatars"
             className="cta-back"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -476,7 +476,7 @@ export default function PlatformDetail() {
               <p className="text-slate-300 leading-relaxed">{platform.digiDoubleRelevance}</p>
             </div>
             <div className="mt-6 pt-4 border-t border-slate-700 flex gap-4">
-              <InternalLink to="/state-of-art" className="text-slate-400 hover:text-white text-sm transition-colors">
+              <InternalLink to="/avatars" className="text-slate-400 hover:text-white text-sm transition-colors">
                 {lang === "fr" ? "← Retour à l'État de l'Art" : "← Back to State of the Art"}
               </InternalLink>
               <InternalLink to="/research" className="text-slate-400 hover:text-white text-sm transition-colors">

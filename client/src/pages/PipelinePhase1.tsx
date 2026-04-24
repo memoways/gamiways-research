@@ -755,7 +755,7 @@ export default function PipelinePhase1() {
       <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <InternalLink
-            to="/state-of-art"
+            to="/voice/tts"
             className="cta-back"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -960,7 +960,7 @@ export default function PipelinePhase1() {
                       : "14 TTS/V2V solutions with comparative scores on 7 axes."}
                   </p>
                   <InternalLink
-                    to="/state-of-art"
+                    to="/voice/tts"
                     className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-white text-xs font-medium transition-all"
                   >
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -1016,7 +1016,7 @@ export default function PipelinePhase1() {
         {/* Bottom navigation */}
         <div className="mt-10 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
           <InternalLink
-            to="/state-of-art"
+            to="/voice/tts"
             className="cta-primary"
           >
             <ChevronLeft className="w-4 h-4" />

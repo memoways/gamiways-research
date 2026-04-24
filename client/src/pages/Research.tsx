@@ -511,8 +511,8 @@ export default function Research() {
           </h3>
           <p className="text-xs text-slate-400 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? <>Données issues de l'analyse de 11 solutions. Fiches techniques complètes dans l'<InternalLink to="/state-of-art">État de l'Art</InternalLink>.</>
-              : <>Data from analysis of 11 solutions. Full technical profiles in <InternalLink to="/state-of-art">State of the Art</InternalLink>.</>
+              ? <>Données issues de l'analyse de 11 solutions. Fiches techniques complètes dans l'<InternalLink to="/avatars">État de l'Art</InternalLink>.</>
+              : <>Data from analysis of 11 solutions. Full technical profiles in <InternalLink to="/avatars">State of the Art</InternalLink>.</>
             }
           </p>
           <div className="overflow-x-auto mb-8">

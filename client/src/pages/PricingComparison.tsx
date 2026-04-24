@@ -60,7 +60,7 @@ export default function PricingComparison() {
       {/* Header */}
       <div className="bg-white border-b border-slate-200 sticky top-14 z-10">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center gap-4">
-          <InternalLink to="/state-of-art" className="flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm transition-colors">
+          <InternalLink to="/avatars" className="flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm transition-colors">
             ← {lang === "fr" ? "État de l'Art" : "State of the Art"}
           </InternalLink>
           <span className="text-slate-300">/</span>

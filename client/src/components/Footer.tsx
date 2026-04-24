@@ -32,7 +32,12 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-              Memoways × Gamilab — Geneva, Switzerland
+              <a href="https://memoways.com/" target="_blank" rel="noopener noreferrer"
+                className="hover:text-slate-700 transition-colors underline underline-offset-2">Memoways</a>
+              {" × "}
+              <a href="https://gamilab.ch/" target="_blank" rel="noopener noreferrer"
+                className="hover:text-slate-700 transition-colors underline underline-offset-2">Gamilab</a>
+              {" — Geneva, Switzerland"}
             </p>
           </div>
 

@@ -226,8 +226,8 @@ export default function Project() {
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? <>Hover sur les cellules pour les détails. Benchmarks latence complets dans l'<InternalLink to="/state-of-art">État de l'Art</InternalLink>.</>
-                : <>Hover over cells for details. Full latency benchmarks in <InternalLink to="/state-of-art">State of the Art</InternalLink>.</>
+                ? <>Hover sur les cellules pour les détails. Benchmarks latence complets dans l'<InternalLink to="/avatars">État de l'Art</InternalLink>.</>
+                : <>Hover over cells for details. Full latency benchmarks in <InternalLink to="/avatars">State of the Art</InternalLink>.</>
               }
             </p>
           </div>
@@ -245,8 +245,8 @@ export default function Project() {
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? <>Comparaison sur 7 critères. Analyse complète des 11 solutions dans l'<InternalLink to="/state-of-art">État de l'Art</InternalLink>. Défis R&D détaillés dans les <InternalLink to="/research">Défis de Recherche</InternalLink>.</>
-                : <>Comparison on 7 criteria. Full analysis of 11 solutions in <InternalLink to="/state-of-art">State of the Art</InternalLink>. R&D challenges detailed in <InternalLink to="/research">Research Challenges</InternalLink>.</>
+                ? <>Comparaison sur 7 critères. Analyse complète des 11 solutions dans l'<InternalLink to="/avatars">État de l'Art</InternalLink>. Défis R&D détaillés dans les <InternalLink to="/research">Défis de Recherche</InternalLink>.</>
+                : <>Comparison on 7 criteria. Full analysis of 11 solutions in <InternalLink to="/avatars">State of the Art</InternalLink>. R&D challenges detailed in <InternalLink to="/research">Research Challenges</InternalLink>.</>
               }
             </p>
           </div>

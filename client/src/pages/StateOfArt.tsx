@@ -980,7 +980,7 @@ export default function StateOfArt() {
                   </p>
                 </div>
                 <InternalLink
-                  to="/pricing"
+                  to="/avatars/pricing"
                   className="flex-shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-5 py-2.5 transition-all hover:opacity-90 active:scale-95"
                   style={{ background: 'oklch(0.55 0.20 200)', fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}
                 >

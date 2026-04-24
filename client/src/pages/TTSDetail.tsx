@@ -86,7 +86,7 @@ export default function TTSDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <p className="text-slate-500 mb-4">{isFr ? "Solution introuvable." : "Solution not found."}</p>
-          <InternalLink to="/state-of-art">
+          <InternalLink to="/voice/tts">
             <span className="text-cyan-600 hover:underline text-sm font-mono">← {isFr ? "Retour à l'État de l'Art" : "Back to State of the Art"}</span>
           </InternalLink>
         </div>
@@ -111,7 +111,7 @@ export default function TTSDetail() {
       <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <InternalLink
-            to="/state-of-art"
+            to="/voice/tts"
             className="cta-back"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -403,7 +403,7 @@ export default function TTSDetail() {
             {/* Back button bottom */}
             <div className="flex items-center justify-between pt-2">
               <InternalLink
-                to="/state-of-art"
+                to="/voice/tts"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-700 text-white text-sm font-medium transition-all"
               >
                 <ChevronLeft className="w-4 h-4" />
