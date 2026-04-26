@@ -54,7 +54,7 @@ export default function AvatarsMarket() {
           </InternalLink>
           <span className="text-slate-300">/</span>
           <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Marché & Enjeux Business" : "Market & Business Challenges"}
+            {isFr ? "Business & Marché" : "Business & Market"}
           </span>
         </div>
       </div>
@@ -132,7 +132,7 @@ export default function AvatarsMarket() {
         {/* Navigation links */}
         <div className="mt-8 flex flex-wrap gap-3">
           <InternalLink to="/avatars" className="inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-4 py-2 transition-all hover:opacity-90" style={{ background: 'oklch(0.55 0.20 200)', fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-            {isFr ? "← Comparatif plateformes" : "← Platform comparison"}
+            {isFr ? "← Avatars Vidéo Streaming" : "← Streaming Video Avatars"}
           </InternalLink>
           <InternalLink to="/avatars/pricing" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
             {isFr ? "Simulateur de coûts →" : "Cost simulator →"}

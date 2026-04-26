@@ -77,8 +77,8 @@ export default function Home() {
         { label: "TTS", to: "/voice/tts" },
         { label: "STT", to: "/voice/stt" },
         { label: isFr ? "Benchmarks Latence" : "Latency Benchmarks", to: "/voice/benchmarks" },
-        { label: isFr ? "Stack Recommandé" : "Recommended Stack", to: "/voice/stack" },
-        { label: "Pipeline Phase 1", to: "/voice/pipeline" },
+        { label: isFr ? "Cadre de Décision" : "Decision Framework", to: "/voice/stack" },
+        { label: isFr ? "Diagramme V2V" : "V2V Diagram", to: "/voice/pipeline" },
       ],
     },
     {
@@ -92,10 +92,10 @@ export default function Home() {
         ? "Comparatif des plateformes commerciales, simulateur de coûts, enjeux business, comportement et design émotionnel."
         : "Comparison of commercial platforms, cost simulator, business challenges, behavior, and emotional design.",
       links: [
-        { label: isFr ? "Comparatif Plateformes" : "Platform Comparison", to: "/avatars" },
+        { label: isFr ? "Avatars Streaming" : "Streaming Avatars", to: "/avatars" },
         { label: isFr ? "Simulateur de Coûts" : "Cost Simulator", to: "/avatars/pricing" },
-        { label: isFr ? "Enjeux Business" : "Business Challenges", to: "/avatars/market" },
-        { label: isFr ? "Comportement Avatar" : "Avatar Behavior", to: "/research/behavior" },
+        { label: isFr ? "Business & Marché" : "Business & Market", to: "/avatars/market" },
+        { label: isFr ? "Comportement & Expressivité" : "Behavior & Expressiveness", to: "/research/behavior" },
         { label: "Emotional Toolbox", to: "/research/emotional" },
       ],
     },

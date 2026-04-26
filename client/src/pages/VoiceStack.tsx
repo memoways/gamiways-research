@@ -293,7 +293,7 @@ export default function VoiceStack() {
           <div className="ml-auto flex gap-2">
             <InternalLink to="/voice/benchmarks" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">← Benchmarks</InternalLink>
             <InternalLink to="/voice/pipeline" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
-              {isFr ? "→ Pipeline" : "→ Pipeline"}
+              {isFr ? "→ Diagramme V2V" : "→ V2V Diagram"}
             </InternalLink>
           </div>
         </div>

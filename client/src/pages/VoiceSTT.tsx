@@ -54,7 +54,7 @@ export default function VoiceSTT() {
               {isFr ? "★ Scoring" : "★ Scoring"}
             </InternalLink>
             <InternalLink to="/voice/pipeline" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
-              {isFr ? "→ Pipeline" : "→ Pipeline"}
+              {isFr ? "→ Diagramme V2V" : "→ V2V Diagram"}
             </InternalLink>
           </div>
         </div>

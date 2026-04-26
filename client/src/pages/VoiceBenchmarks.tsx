@@ -42,7 +42,7 @@ export default function VoiceBenchmarks() {
             <InternalLink to="/voice/tts" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">← TTS</InternalLink>
             <InternalLink to="/voice/stt" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">← STT</InternalLink>
             <InternalLink to="/voice/pipeline" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
-              {isFr ? "→ Pipeline" : "→ Pipeline"}
+              {isFr ? "→ Diagramme V2V" : "→ V2V Diagram"}
             </InternalLink>
           </div>
         </div>

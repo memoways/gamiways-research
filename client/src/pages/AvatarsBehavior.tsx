@@ -100,11 +100,11 @@ export default function AvatarsBehavior() {
           </InternalLink>
           <span className="text-slate-300">/</span>
           <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Axe 2 — Comportement Avatar" : "Axis 2 — Avatar Behavior"}
+            {isFr ? "Comportement & Expressivité" : "Behavior & Expressiveness"}
           </span>
           <div className="ml-auto">
             <InternalLink to="/research/emotional" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
-              {isFr ? "→ Emotional Toolbox" : "→ Emotional Toolbox"}
+              {isFr ? "→ Boîte à Outils Émotionnelle" : "→ Emotional Toolbox"}
             </InternalLink>
           </div>
         </div>
@@ -192,10 +192,10 @@ export default function AvatarsBehavior() {
             {isFr ? "← Research Challenges" : "← Research Challenges"}
           </InternalLink>
           <InternalLink to="/research/emotional" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-            {isFr ? "Emotional Toolbox →" : "Emotional Toolbox →"}
+            {isFr ? "Boîte à Outils Émotionnelle →" : "Emotional Toolbox →"}
           </InternalLink>
           <InternalLink to="/avatars" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-            {isFr ? "Comparatif plateformes →" : "Platform comparison →"}
+            {isFr ? "Avatars Vidéo Streaming →" : "Streaming Video Avatars →"}
           </InternalLink>
         </div>
       </div>

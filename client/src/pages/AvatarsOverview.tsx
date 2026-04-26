@@ -272,7 +272,7 @@ export default function AvatarsOverview() {
           <span className="text-xs font-mono text-slate-400">{isFr ? "Avatars Vidéo" : "Video Avatars"}</span>
           <span className="text-slate-300">/</span>
           <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Comparatif des Plateformes" : "Platform Comparison"}
+            {isFr ? "Avatars Vidéo Streaming" : "Streaming Video Avatars"}
           </span>
           <div className="ml-auto flex gap-4">
             <InternalLink to="/avatars/pricing" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
