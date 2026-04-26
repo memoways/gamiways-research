@@ -16,6 +16,8 @@ interface NavDropdownItem {
   labelFr: string;
   desc?: string;
   descFr?: string;
+  highlight?: boolean; // marks interactive/featured items
+  highlightColor?: string; // custom accent color for highlighted items
 }
 
 interface NavMenu {
@@ -53,7 +55,7 @@ const NAV_MENUS: NavMenu[] = [
       { href: "/voice/stt", label: "STT — Speech Recognition", labelFr: "STT — Reconnaissance Vocale", desc: "Cloud & open-source", descFr: "Cloud & open-source" },
       { href: "/voice/benchmarks", label: "Latency Benchmarks", labelFr: "Benchmarks Latence", desc: "End-to-end timing analysis", descFr: "Analyse des temps end-to-end" },
       { href: "/voice/stack", label: "Recommended Stack", labelFr: "Stack Recommandé", desc: "Technology recommendations", descFr: "Recommandations technologiques" },
-      { href: "/voice/pipeline", label: "Pipeline Phase 1", labelFr: "Pipeline Phase 1", desc: "Interactive V2V diagram", descFr: "Diagramme V2V interactif" },
+      { href: "/voice/pipeline", label: "Pipeline Phase 1", labelFr: "Pipeline Phase 1", desc: "Interactive V2V diagram — select components, visualize latency & cost", descFr: "Diagramme V2V interactif — composants, latence & coût", highlight: true, highlightColor: "oklch(0.55 0.20 200)" },
     ],
   },
   {
@@ -64,7 +66,7 @@ const NAV_MENUS: NavMenu[] = [
     activePrefix: ["/avatars", "/platform", "/research/behavior", "/research/emotional"],
     items: [
       { href: "/avatars", label: "Platform Comparison", labelFr: "Comparatif Plateformes", desc: "11+ streaming avatar platforms", descFr: "11+ plateformes d'avatars streaming" },
-      { href: "/avatars/pricing", label: "Cost Simulator", labelFr: "Simulateur de Coûts", desc: "Interactive pricing calculator", descFr: "Calculateur de prix interactif" },
+      { href: "/avatars/pricing", label: "Cost Simulator", labelFr: "Simulateur de Coûts", desc: "Interactive pricing calculator — slider, filters, fixed vs variable costs", descFr: "Calculateur interactif — slider, filtres, coûts fixes vs variables", highlight: true, highlightColor: "oklch(0.60 0.18 50)" },
       { href: "/avatars/market", label: "Business Challenges", labelFr: "Enjeux Business", desc: "Market & opportunity analysis", descFr: "Analyse de marché & opportunités" },
       { href: "/research/behavior", label: "Avatar Behavior", labelFr: "Comportement Avatar", desc: "Axis 2 — behavioral fidelity", descFr: "Axe 2 — fidélité comportementale" },
       { href: "/research/emotional", label: "Emotional Toolbox", labelFr: "Emotional Toolbox", desc: "Character & emotion design", descFr: "Design émotionnel & personnage" },
@@ -97,23 +99,55 @@ function DropdownMenu({ menu, isFr, location, onClose }: { menu: NavMenu; isFr: 
           {menu.items.map((item) => {
             const itemActive = location === item.href || (item.href !== "/" && location.startsWith(item.href));
             return (
+              <>
+              {/* Separator before highlighted items */}
+              {item.highlight && menu.items.indexOf(item) > 0 && (
+                <div className="mx-3 my-1 border-t border-slate-100" />
+              )}
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
-                className={`flex flex-col px-3 py-2.5 rounded-lg transition-colors no-underline ${
-                  itemActive ? "bg-slate-50" : "hover:bg-slate-50"
+                className={`flex flex-col px-3 py-2.5 rounded-lg transition-all no-underline ${
+                  item.highlight
+                    ? itemActive
+                      ? "bg-opacity-20 border"
+                      : "border hover:opacity-90"
+                    : itemActive
+                    ? "bg-slate-50"
+                    : "hover:bg-slate-50"
                 }`}
+                style={item.highlight ? {
+                  background: itemActive
+                    ? `color-mix(in oklch, ${item.highlightColor} 15%, white)`
+                    : `color-mix(in oklch, ${item.highlightColor} 8%, white)`,
+                  borderColor: `color-mix(in oklch, ${item.highlightColor} 35%, white)`,
+                } : undefined}
               >
-                <span className="text-sm font-semibold text-slate-900 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif", color: itemActive ? menu.color : undefined }}>
+                <span className="flex items-center gap-1.5 text-sm font-semibold leading-tight" style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  color: item.highlight ? item.highlightColor : (itemActive ? menu.color : undefined)
+                }}>
                   {isFr ? item.labelFr : item.label}
+                  {item.highlight && (
+                    <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style={{
+                      background: `color-mix(in oklch, ${item.highlightColor} 20%, white)`,
+                      color: item.highlightColor,
+                      border: `1px solid color-mix(in oklch, ${item.highlightColor} 30%, white)`,
+                      fontFamily: "'JetBrains Mono', monospace"
+                    }}>Interactive</span>
+                  )}
                 </span>
                 {(item.desc || item.descFr) && (
-                  <span className="text-xs text-slate-400 mt-0.5 leading-snug" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  <span className="text-xs mt-0.5 leading-snug" style={{
+                    fontFamily: "'Source Serif 4', serif",
+                    color: item.highlight ? `color-mix(in oklch, ${item.highlightColor} 70%, #64748b)` : "#94a3b8"
+                  }}>
                     {isFr ? item.descFr : item.desc}
                   </span>
                 )}
               </Link>
+              </>  
             );
           })}
         </div>
