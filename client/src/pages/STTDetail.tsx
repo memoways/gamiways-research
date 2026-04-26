@@ -20,6 +20,8 @@ import {
   Layers,
   Cpu,
 } from "lucide-react";
+import { StrategicAnalysis } from "@/components/StrategicAnalysis";
+import { sttStrategicData } from "@/lib/strategicData";
 
 const ScoreBar = ({ value, max = 10, color }: { value: number; max?: number; color: string }) => (
   <div className="relative h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -431,6 +433,13 @@ export default function STTDetail() {
                 <p className="text-xs text-emerald-800 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                   {stt.selfHostNote}
                 </p>
+              </div>
+            )}
+
+            {/* Strategic Analysis */}
+            {sttStrategicData[stt.id] && (
+              <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                <StrategicAnalysis data={sttStrategicData[stt.id]} toolName={stt.name} />
               </div>
             )}
 

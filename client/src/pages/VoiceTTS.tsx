@@ -114,6 +114,58 @@ export default function VoiceTTS() {
           accent="cyan"
         />
 
+        {/* Strategic Framing Banner */}
+        <div className="mb-8 rounded-2xl border border-amber-200 bg-amber-50 overflow-hidden">
+          <div className="px-6 py-4 border-b border-amber-200 flex items-center gap-3">
+            <span className="text-lg">🎯</span>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-amber-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Cadrage stratégique — Au-delà de la latence et du coût" : "Strategic Framing — Beyond Latency & Cost"}
+            </h3>
+          </div>
+          <div className="px-6 py-5 grid md:grid-cols-3 gap-6">
+            <div>
+              <p className="text-xs font-bold text-amber-700 mb-2 uppercase tracking-wider">
+                {isFr ? "La vraie question" : "The Real Question"}
+              </p>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                {isFr
+                  ? "Choisir un TTS ne se résume pas à comparer des benchmarks. La vraie question est : quel niveau de souveraineté des données, de contrôle de l'infrastructure et de flexibilité de déploiement est nécessaire pour votre cas d'usage ?"
+                  : "Choosing a TTS is not just about comparing benchmarks. The real question is: what level of data sovereignty, infrastructure control, and deployment flexibility does your use case require?"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-amber-700 mb-2 uppercase tracking-wider">
+                {isFr ? "Phase 1 vs Phase 2" : "Phase 1 vs Phase 2"}
+              </p>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                {isFr
+                  ? "Phase 1 (MVP) : privilégier la qualité et la vitesse de déploiement (ElevenLabs, Inworld, Cartesia). Phase 2 (production souveraine) : migrer vers on-premise ou open-source auto-hébergé (Inworld on-premise, Chatterbox, Kokoro)."
+                  : "Phase 1 (MVP): prioritize quality and deployment speed (ElevenLabs, Inworld, Cartesia). Phase 2 (sovereign production): migrate to on-premise or self-hosted open-source (Inworld on-premise, Chatterbox, Kokoro)."}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-amber-700 mb-2 uppercase tracking-wider">
+                {isFr ? "Signal marché 2026" : "2026 Market Signal"}
+              </p>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                {isFr
+                  ? "ElevenLabs (11Md$) va off-cloud. Inworld est ELO #1 à 75% moins cher. Chatterbox bat ElevenLabs en tests à l'aveugle. L'écart de qualité entre cloud et open-source se réduit rapidement."
+                  : "ElevenLabs ($11B) is going off-cloud. Inworld is ELO #1 at 75% lower cost. Chatterbox beats ElevenLabs in blind tests. The quality gap between cloud and open-source is closing fast."}
+              </p>
+            </div>
+          </div>
+          <div className="px-6 py-4 border-t border-amber-200 bg-amber-100/50">
+            <p className="text-xs text-amber-700">
+              <span className="font-bold">
+                {isFr ? "Questions clés pour DigiDouble : " : "Key questions for DigiDouble: "}
+              </span>
+              {isFr
+                ? "Quel est le niveau de sensibilité des données vocales traitées ? Quelle est la stratégie de sortie si le fournisseur augmente ses prix de 400% ? L'architecture permet-elle de migrer vers l'open-source sans refonte majeure ?"
+                : "What is the sensitivity level of the voice data being processed? What is the exit strategy if the provider raises prices by 400%? Does the architecture allow migration to open-source without major rework?"}
+            </p>
+          </div>
+        </div>
+
         {/* Sub-tabs */}
         <div className="flex gap-1 mb-5 border-b border-slate-200">
           {(["commercial", "opensource"] as TTSTab[]).map((tab) => (

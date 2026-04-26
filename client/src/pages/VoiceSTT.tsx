@@ -67,6 +67,58 @@ export default function VoiceSTT() {
           accent="orange"
         />
 
+        {/* Strategic Framing Banner */}
+        <div className="mb-8 rounded-2xl border border-orange-200 bg-orange-50 overflow-hidden">
+          <div className="px-6 py-4 border-b border-orange-200 flex items-center gap-3">
+            <span className="text-lg">🎯</span>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-orange-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Cadrage stratégique — STT : bien plus qu'un WER" : "Strategic Framing — STT: Much More Than a WER"}
+            </h3>
+          </div>
+          <div className="px-6 py-5 grid md:grid-cols-3 gap-6">
+            <div>
+              <p className="text-xs font-bold text-orange-700 mb-2 uppercase tracking-wider">
+                {isFr ? "La vraie question" : "The Real Question"}
+              </p>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                {isFr
+                  ? "Le WER (Word Error Rate) ne dit pas tout. La vraie question est : où vos données vocales sont-elles traitées ? Qui y a accès ? Quelle est votre stratégie si le fournisseur augmente ses prix ou est acquis ?"
+                  : "WER doesn't tell the whole story. The real question is: where is your voice data processed? Who has access to it? What is your strategy if the provider raises prices or gets acquired?"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-orange-700 mb-2 uppercase tracking-wider">
+                {isFr ? "Spectre d'infrastructure" : "Infrastructure Spectrum"}
+              </p>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                {isFr
+                  ? "Cloud-only (Google, AssemblyAI) → Cloud+VPC (Deepgram, Azure) → On-premise (Azure containers, Inworld) → Open-source auto-hébergé (Whisper, Voxtral). Chaque étape augmente la souveraineté et réduit le lock-in."
+                  : "Cloud-only (Google, AssemblyAI) → Cloud+VPC (Deepgram, Azure) → On-premise (Azure containers, Inworld) → Self-hosted open-source (Whisper, Voxtral). Each step increases sovereignty and reduces lock-in."}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-bold text-orange-700 mb-2 uppercase tracking-wider">
+                {isFr ? "Signal marché 2026" : "2026 Market Signal"}
+              </p>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                {isFr
+                  ? "Deepgram (1,3Md$) et AssemblyAI (158M$) sont des cibles d'acquisition. Voxtral et Whisper réduisent l'écart de qualité. Inworld STT augmente ses prix de 400%+. Le marché se consolide rapidement."
+                  : "Deepgram ($1.3B) and AssemblyAI ($158M) are acquisition targets. Voxtral and Whisper are closing the quality gap. Inworld STT raised prices 400%+. The market is consolidating fast."}
+              </p>
+            </div>
+          </div>
+          <div className="px-6 py-4 border-t border-orange-200 bg-orange-100/50">
+            <p className="text-xs text-orange-700">
+              <span className="font-bold">
+                {isFr ? "Questions clés pour DigiDouble : " : "Key questions for DigiDouble: "}
+              </span>
+              {isFr
+                ? "Les données vocales de vos utilisateurs sont-elles soumises au RGPD ou au nLPD suisse ? Avez-vous besoin de la diarisation ou de la rédaction PII ? Votre architecture permet-elle de basculer vers Whisper auto-hébergé sans refonte ?"
+                : "Is your users' voice data subject to GDPR or Swiss nLPD? Do you need diarization or PII redaction? Does your architecture allow switching to self-hosted Whisper without major rework?"}
+            </p>
+          </div>
+        </div>
+
         {/* Sub-tabs */}
         <div className="flex gap-1 mb-5 border-b border-slate-200">
           {(["commercial", "opensource"] as STTTab[]).map((tab) => (

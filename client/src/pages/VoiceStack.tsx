@@ -166,6 +166,72 @@ export default function VoiceStack() {
             </tbody>
           </table>
         </div>
+
+        {/* Strategic Decision Framework */}
+        <div className="mt-10 rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+          <div className="px-6 py-4 border-b border-slate-200 bg-slate-900 flex items-center gap-3">
+            <span className="text-lg">🧠</span>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Framework de décision stratégique — Choisir le bon outil" : "Strategic Decision Framework — Choosing the Right Tool"}
+            </h3>
+          </div>
+          <div className="px-6 py-6">
+            <p className="text-sm text-slate-600 leading-relaxed mb-6">
+              {isFr
+                ? "Le choix d'un outil Voice ne se résume pas à la latence, au coût ou à la qualité. Il s'agit d'un choix stratégique qui engage l'architecture, la souveraineté des données et le positionnement go-to-market de DigiDouble pour les 3 prochaines années."
+                : "Choosing a Voice tool is not just about latency, cost, or quality. It is a strategic choice that commits the architecture, data sovereignty, and DigiDouble's go-to-market positioning for the next 3 years."}
+            </p>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                  {isFr ? "Axe 1 : Spectre d'infrastructure" : "Axis 1: Infrastructure Spectrum"}
+                </h4>
+                <div className="space-y-3">
+                  {[
+                    { label: "Cloud-only", desc: isFr ? "Vitesse maximale, zéro souveraineté. Acceptable pour MVP, risqué en production." : "Maximum speed, zero sovereignty. Acceptable for MVP, risky in production.", color: "#dc2626" },
+                    { label: "Cloud + VPC", desc: isFr ? "Bon compromis. Données isolées, mais dépendance au fournisseur." : "Good compromise. Isolated data, but vendor dependency.", color: "#d97706" },
+                    { label: "On-premise", desc: isFr ? "Souveraineté maximale. Nécessite une infrastructure interne ou un partenaire." : "Maximum sovereignty. Requires internal infrastructure or a partner.", color: "#16a34a" },
+                    { label: "Open-source", desc: isFr ? "Contrôle total, coût opérationnel élevé. Idéal Phase 2+." : "Full control, high operational cost. Ideal for Phase 2+.", color: "#2563eb" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-start gap-3">
+                      <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" style={{ background: item.color }} />
+                      <div>
+                        <span className="text-xs font-bold text-slate-800">{item.label}</span>
+                        <span className="text-xs text-slate-500 ml-2">{item.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                  {isFr ? "Axe 2 : Questions stratégiques" : "Axis 2: Strategic Questions"}
+                </h4>
+                <div className="space-y-2">
+                  {(isFr ? [
+                    "Quelle est la sensibilité des données vocales traitées (RGPD, nLPD, HIPAA) ?",
+                    "Quelle est votre stratégie de sortie si le fournisseur est acquis ou augmente ses prix ?",
+                    "L'architecture permet-elle de migrer vers l'open-source sans refonte majeure ?",
+                    "Le fournisseur est-il une cible d'acquisition probable dans les 24 prochains mois ?",
+                    "Le modèle de prix est-il prédictible à l'échelle (100k+ utilisateurs) ?",
+                  ] : [
+                    "What is the sensitivity of the voice data being processed (GDPR, nLPD, HIPAA)?",
+                    "What is your exit strategy if the provider is acquired or raises prices?",
+                    "Does the architecture allow migration to open-source without major rework?",
+                    "Is the provider a likely acquisition target in the next 24 months?",
+                    "Is the pricing model predictable at scale (100k+ users)?",
+                  ]).map((q, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <span className="text-slate-300 mt-0.5 shrink-0 font-mono text-xs">{i + 1}.</span>
+                      <p className="text-xs text-slate-600 leading-relaxed">{q}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

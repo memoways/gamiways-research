@@ -24,6 +24,8 @@ import {
   Radio,
   Cpu,
 } from "lucide-react";
+import { StrategicAnalysis } from "@/components/StrategicAnalysis";
+import { ttsStrategicData } from "@/lib/strategicData";
 
 const ScoreBar = ({ value, max = 10, color }: { value: number; max?: number; color: string }) => (
   <div className="relative h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -399,6 +401,13 @@ export default function TTSDetail() {
                 </div>
               </div>
             </div>
+
+            {/* Strategic Analysis */}
+            {ttsStrategicData[tts.id] && (
+              <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                <StrategicAnalysis data={ttsStrategicData[tts.id]} toolName={tts.name} />
+              </div>
+            )}
 
             {/* Back button bottom */}
             <div className="flex items-center justify-between pt-2">
