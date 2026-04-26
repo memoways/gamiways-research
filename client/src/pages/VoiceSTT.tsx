@@ -65,8 +65,8 @@ export default function VoiceSTT() {
           number="C"
           title={isFr ? "STT / Reconnaissance Vocale" : "STT / Speech-to-Text"}
           subtitle={isFr
-            ? "Comparatif des solutions de reconnaissance vocale pour le pipeline conversationnel DigiDouble (2025–2026)."
-            : "Comparison of speech recognition solutions for the DigiDouble conversational pipeline (2025–2026)."}
+            ? "Comparatif des solutions de reconnaissance vocale pour les pipelines conversationnels (2025–2026). Benchmarks, enjeux stratégiques et questions de décision."
+            : "Comparison of speech recognition solutions for conversational pipelines (2025–2026). Benchmarks, strategic stakes, and decision questions."}
           accent="orange"
         />
 
@@ -113,11 +113,11 @@ export default function VoiceSTT() {
           <div className="px-6 py-4 border-t border-orange-200 bg-orange-100/50">
             <p className="text-xs text-orange-700">
               <span className="font-bold">
-                {isFr ? "Questions clés pour DigiDouble : " : "Key questions for DigiDouble: "}
+                {isFr ? "Questions à se poser avant de choisir : " : "Questions to ask before choosing: "}
               </span>
               {isFr
-                ? "Les données vocales de vos utilisateurs sont-elles soumises au RGPD ou au nLPD suisse ? Avez-vous besoin de la diarisation ou de la rédaction PII ? Votre architecture permet-elle de basculer vers Whisper auto-hébergé sans refonte ?"
-                : "Is your users' voice data subject to GDPR or Swiss nLPD? Do you need diarization or PII redaction? Does your architecture allow switching to self-hosted Whisper without major rework?"}
+                ? "Les données vocales de vos utilisateurs sont-elles soumises au RGPD ou au nLPD suisse ? Avez-vous besoin de la diarisation ou de la rédaction PII ? Votre architecture permet-elle de basculer vers un modèle auto-hébergé sans refonte majeure ? Quel est votre seuil de WER acceptable pour votre domaine spécifique ?"
+                : "Is your users' voice data subject to GDPR or Swiss nLPD? Do you need diarization or PII redaction? Does your architecture allow switching to a self-hosted model without major rework? What is your acceptable WER threshold for your specific domain?"}
             </p>
           </div>
         </div>

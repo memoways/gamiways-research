@@ -112,8 +112,8 @@ export default function VoiceTTS() {
           number="B"
           title={isFr ? "TTS & Synthèse Vocale" : "TTS & Voice Synthesis"}
           subtitle={isFr
-            ? "Comparatif des solutions de synthèse vocale pour le pipeline conversationnel DigiDouble (2025–2026)."
-            : "Comparison of voice synthesis solutions for the DigiDouble conversational pipeline (2025–2026)."}
+            ? "Comparatif des solutions de synthèse vocale pour les pipelines conversationnels (2025–2026). Benchmarks, enjeux stratégiques et questions de décision."
+            : "Comparison of voice synthesis solutions for conversational pipelines (2025–2026). Benchmarks, strategic stakes, and decision questions."}
           accent="cyan"
         />
 
@@ -138,12 +138,12 @@ export default function VoiceTTS() {
             </div>
             <div>
               <p className="text-xs font-bold text-amber-700 mb-2 uppercase tracking-wider">
-                {isFr ? "Phase 1 vs Phase 2" : "Phase 1 vs Phase 2"}
+                {isFr ? "Validation vs Production" : "Validation vs Production"}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">
                 {isFr
-                  ? "Phase 1 (MVP) : privilégier la qualité et la vitesse de déploiement (ElevenLabs, Inworld, Cartesia). Phase 2 (production souveraine) : migrer vers on-premise ou open-source auto-hébergé (Inworld on-premise, Chatterbox, Kokoro)."
-                  : "Phase 1 (MVP): prioritize quality and deployment speed (ElevenLabs, Inworld, Cartesia). Phase 2 (sovereign production): migrate to on-premise or self-hosted open-source (Inworld on-premise, Chatterbox, Kokoro)."}
+                  ? "En phase de validation, les APIs cloud permettent d'itérer rapidement sur la qualité et l'expérience. En phase de production, les enjeux de souveraineté, de coût à l'échelle et de dépendance fournisseur deviennent structurants. La question clé : l'architecture permet-elle de migrer sans refonte majeure ?"
+                  : "In the validation phase, cloud APIs allow rapid iteration on quality and experience. In production, sovereignty, cost at scale, and vendor dependency become structural. The key question: does the architecture allow migration without major rework?"}
               </p>
             </div>
             <div>
@@ -160,11 +160,11 @@ export default function VoiceTTS() {
           <div className="px-6 py-4 border-t border-amber-200 bg-amber-100/50">
             <p className="text-xs text-amber-700">
               <span className="font-bold">
-                {isFr ? "Questions clés pour DigiDouble : " : "Key questions for DigiDouble: "}
+                {isFr ? "Questions à se poser avant de choisir : " : "Questions to ask before choosing: "}
               </span>
               {isFr
-                ? "Quel est le niveau de sensibilité des données vocales traitées ? Quelle est la stratégie de sortie si le fournisseur augmente ses prix de 400% ? L'architecture permet-elle de migrer vers l'open-source sans refonte majeure ?"
-                : "What is the sensitivity level of the voice data being processed? What is the exit strategy if the provider raises prices by 400%? Does the architecture allow migration to open-source without major rework?"}
+                ? "Quel est le niveau de sensibilité des données vocales traitées (RGPD, nLPD, HIPAA) ? Quelle est la stratégie de sortie si le fournisseur augmente ses prix ou est acquis ? L'architecture permet-elle de migrer vers l'open-source sans refonte majeure ?"
+                : "What is the sensitivity level of the voice data being processed (GDPR, nLPD, HIPAA)? What is the exit strategy if the provider raises prices or is acquired? Does the architecture allow migration to open-source without major rework?"}
             </p>
           </div>
         </div>
@@ -187,11 +187,11 @@ export default function VoiceTTS() {
             {/* Context banner */}
             <div className="mb-6 bg-violet-50 border border-violet-200 rounded-lg px-5 py-4">
               <div className="flex items-start gap-3">
-                <span className="text-xs font-mono font-bold px-2 py-0.5 rounded mt-0.5" style={{ background: "oklch(0.55 0.20 280)", color: "white" }}>MVP PHASE 1</span>
+                <span className="text-xs font-mono font-bold px-2 py-0.5 rounded mt-0.5" style={{ background: "oklch(0.55 0.20 280)", color: "white" }}>CLOUD APIs</span>
                 <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                   {isFr
-                    ? <><strong>Voice-to-Voice est le premier livrable de DigiDouble.</strong> Cette section couvre les APIs cloud TTS streaming (2025–2026) pour guider le choix d'architecture du pipeline vocal Phase 1.</>
-                    : <><strong>Voice-to-Voice is DigiDouble's first deliverable.</strong> This section covers cloud streaming TTS APIs (2025–2026) to guide Phase 1 voice pipeline architecture decisions.</>
+                    ? <>Cette section couvre les <strong>APIs cloud TTS streaming</strong> (2025–2026). Elles permettent une intégration rapide et offrent la meilleure qualité actuelle, au prix d'une dépendance fournisseur et de contraintes de souveraineté à évaluer selon le contexte de déploiement.</>
+                    : <>This section covers <strong>cloud streaming TTS APIs</strong> (2025–2026). They enable fast integration and offer current best-in-class quality, at the cost of vendor dependency and sovereignty constraints to evaluate based on deployment context.</>
                   }
                 </p>
               </div>
@@ -238,12 +238,12 @@ export default function VoiceTTS() {
             {/* Architecture decision callout */}
             <div className="callout-warning">
               <p className="text-sm font-semibold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "Décision d'architecture Phase 1 : Cascade vs End-to-End" : "Phase 1 Architecture Decision: Cascade vs End-to-End"}
+                {isFr ? "Question d'architecture : Cascade vs End-to-End Voice-to-Voice" : "Architecture Question: Cascade vs End-to-End Voice-to-Voice"}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
-                  ? <>Le MVP Phase 1 doit choisir entre deux approches : <strong>(A) Pipeline en cascade</strong> (ASR → LLM → TTS, ex. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — plus contrôlable, clonage vocal possible, souveraineté totale possible, latence ~400–800ms ; ou <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — latence ~100ms mais moins contrôlable, pas de clonage vocal. <strong>Recommandation DigiDouble :</strong> commencer par (A) avec Voxtral TTS (Mistral, mars 2026) + Deepgram Nova-3 pour valider la qualité conversationnelle, puis évaluer (B) pour l'optimisation latence en Phase 2.</>
-                  : <>Phase 1 MVP must choose between two approaches: <strong>(A) Cascading pipeline</strong> (ASR → LLM → TTS, e.g. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — more controllable, voice cloning possible, full sovereignty possible, ~400–800ms latency; or <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — ~100ms latency but less controllable, no voice cloning. <strong>DigiDouble recommendation:</strong> start with (A) using Voxtral TTS (Mistral, March 2026) + Deepgram Nova-3 to validate conversational quality, then evaluate (B) for latency optimization in Phase 2.</>
+                  ? <>Deux approches s'affrontent : <strong>(A) Pipeline en cascade</strong> (ASR → LLM → TTS) — plus contrôlable, clonage vocal possible, souveraineté totale possible, latence ~400–800ms ; ou <strong>(B) End-to-end Voice-to-Voice</strong> (Ultravox, Moshi, Sesame) — latence ~100ms mais moins contrôlable, pas de clonage vocal. Le choix dépend des priorités : si le clonage vocal et le contrôle de la persona sont essentiels, (A) est inévitable. Si la latence ultra-faible prime sur tout, (B) mérite d'être évalué. Les deux approches peuvent coexister selon les cas d'usage.</>
+                  : <>Two approaches compete: <strong>(A) Cascading pipeline</strong> (ASR → LLM → TTS) — more controllable, voice cloning possible, full sovereignty possible, ~400–800ms latency; or <strong>(B) End-to-end Voice-to-Voice</strong> (Ultravox, Moshi, Sesame) — ~100ms latency but less controllable, no voice cloning. The choice depends on priorities: if voice cloning and persona control are essential, (A) is unavoidable. If ultra-low latency takes precedence, (B) deserves evaluation. Both approaches can coexist depending on use cases.</>
                 }
               </p>
               <div className="mt-4">

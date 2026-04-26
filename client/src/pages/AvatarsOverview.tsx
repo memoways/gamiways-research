@@ -253,7 +253,7 @@ export default function AvatarsOverview() {
   ];
 
   const openSourceSolutions = [
-    { name: "HeyGem OS", linkKey: "heygem", type: "Avatar", latency: "5–15s", quality: isFr ? "Bonne" : "Good", deployment: "Docker (3 containers)", license: "Open Source", notes: isFr ? "Utilisé par DigiDouble sur Exoscale. Gain 30% perf avec Arch Linux vs Ubuntu." : "Used by DigiDouble on Exoscale. 30% perf gain with Arch Linux vs Ubuntu." },
+    { name: "HeyGem OS", linkKey: "heygem", type: "Avatar", latency: "5–15s", quality: isFr ? "Bonne" : "Good", deployment: "Docker (3 containers)", license: "Open Source", notes: isFr ? "Apache 2.0. Déploiement Docker 3 containers. Gain de performance significatif avec Arch Linux vs Ubuntu (jusqu'à 30%). Infrastructure GPU propre requise." : "Apache 2.0. Docker 3-container deployment. Significant performance gain with Arch Linux vs Ubuntu (up to 30%). Dedicated GPU infrastructure required." },
     { name: "SadTalker", linkKey: "sadtalker", type: "Talking Head", latency: "2–10s", quality: isFr ? "Bonne" : "Good", deployment: "Python/GPU", license: "MIT", notes: isFr ? "CVPR 2023. Coefficients 3D depuis audio." : "CVPR 2023. 3D coefficients from audio." },
     { name: "LivePortrait", type: isFr ? "Animation faciale" : "Facial animation", latency: "1–3s", quality: isFr ? "Très bonne" : "Very good", deployment: "Python/GPU", license: "MIT", notes: isFr ? "Animation haute fidélité depuis image unique." : "High-fidelity animation from single image." },
     { name: "Wav2Lip", linkKey: "wav2lip", type: "Lip-sync", latency: "500ms–2s", quality: isFr ? "Moyenne" : "Average", deployment: "Python/GPU", license: "MIT", notes: isFr ? "Lip-sync précis mais expressions limitées." : "Precise lip-sync but limited expressions." },
@@ -290,8 +290,8 @@ export default function AvatarsOverview() {
           number="A"
           title={isFr ? "Avatars Vidéo Streaming" : "Streaming Video Avatars"}
           subtitle={isFr
-            ? "Comparatif des plateformes d'avatars vidéo conversationnels (2025–2026). Évaluation neutre, indépendante du projet DigiDouble."
-            : "Comparison of conversational video avatar platforms (2025–2026). Neutral evaluation, independent of the DigiDouble project."}
+            ? "Comparatif des plateformes d'avatars vidéo conversationnels (2025–2026). Évaluation neutre des solutions commerciales et open-source."
+            : "Comparison of conversational video avatar platforms (2025–2026). Neutral evaluation of commercial and open-source solutions."}
           accent="cyan"
         />
 
@@ -483,8 +483,8 @@ export default function AvatarsOverview() {
             <div className="callout-info">
               <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
-                  ? <><strong>Note :</strong> Les solutions open-source permettent la souveraineté des données et l'absence de censure, au prix d'une infrastructure GPU propre et d'un investissement technique significatif. DigiDouble utilise HeyGem OS sur Exoscale (GPU suisse) avec un gain de 30% de performance via Arch Linux.</>
-                  : <><strong>Note:</strong> Open-source solutions enable data sovereignty and freedom from censorship, at the cost of dedicated GPU infrastructure and significant technical investment. DigiDouble uses HeyGem OS on Exoscale (Swiss GPU) with a 30% performance gain via Arch Linux.</>
+                  ? <><strong>Note :</strong> Les solutions open-source permettent la souveraineté des données et l'absence de censure, au prix d'une infrastructure GPU propre et d'un investissement technique significatif. La question clé est de déterminer à quel stade du projet l'investissement en infrastructure se justifie par rapport à la vitesse d'itération offerte par les solutions cloud.</>
+                  : <><strong>Note:</strong> Open-source solutions enable data sovereignty and freedom from censorship, at the cost of dedicated GPU infrastructure and significant technical investment. The key question is determining at what project stage the infrastructure investment is justified compared to the iteration speed offered by cloud solutions.</>
                 }
               </p>
             </div>

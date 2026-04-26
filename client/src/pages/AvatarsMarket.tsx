@@ -25,8 +25,8 @@ export default function AvatarsMarket() {
       title: isFr ? "Enjeu souveraineté" : "Sovereignty challenge",
       color: "oklch(0.72 0.18 200)",
       items: isFr
-        ? ["Censure arbitraire des plateformes US (incident OpenAI/AVA)", "RGPD et localisation des données en Europe", "Dépendance aux APIs = fragilité et coût imprévisible", "Infrastructure suisse (Exoscale) comme avantage compétitif"]
-        : ["Arbitrary censorship by US platforms (OpenAI/AVA incident)", "GDPR and data localization in Europe", "API dependency = fragility and unpredictable cost", "Swiss infrastructure (Exoscale) as competitive advantage"],
+        ? ["Censure arbitraire des plateformes US (incident OpenAI/AVA)", "RGPD et localisation des données en Europe", "Dépendance aux APIs = fragilité et coût imprévisible", "Infrastructure EU/CH comme réponse aux enjeux de souveraineté"]
+        : ["Arbitrary censorship by US platforms (OpenAI/AVA incident)", "GDPR and data localization in Europe", "API dependency = fragility and unpredictable cost", "EU/CH infrastructure as a response to sovereignty challenges"],
     },
     {
       title: isFr ? "Enjeu technologique" : "Technology challenge",
@@ -63,7 +63,7 @@ export default function AvatarsMarket() {
         <SectionHeader
           number="G"
           title={isFr ? "Enjeux Business & Opportunités de Marché" : "Business Challenges & Market Opportunities"}
-          subtitle={isFr ? "Contexte économique et positionnement stratégique. Évaluation neutre, indépendante du projet DigiDouble." : "Economic context and strategic positioning. Neutral evaluation, independent of the DigiDouble project."}
+          subtitle={isFr ? "Contexte économique et positionnement stratégique des avatars vidéo conversationnels (2025–2026). Évaluation neutre." : "Economic context and strategic positioning of conversational video avatars (2025–2026). Neutral evaluation."}
           accent="green"
         />
 
@@ -123,8 +123,8 @@ export default function AvatarsMarket() {
           </p>
           <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "La combinaison unique que vise DigiDouble — conversation IA + avatar photorealistic + séquençage vidéo intelligent + contrôle narratif/pédagogique + souveraineté — n'existe dans aucune solution commerciale ou open-source actuelle. Les gaps identifiés (mémoire long-terme, fidélité comportementale, latence avatar) correspondent précisément aux frontières de la recherche académique actuelle, ce qui justifie pleinement un programme de recherche fondamentale."
-              : "The unique combination DigiDouble targets — AI conversation + photorealistic avatar + intelligent video sequencing + narrative/pedagogical control + sovereignty — does not exist in any current commercial or open-source solution. The identified gaps (long-term memory, behavioral fidelity, avatar latency) correspond precisely to the frontiers of current academic research, fully justifying a fundamental research program."
+              ? "La combinaison — conversation IA + avatar photoréaliste + séquençage vidéo intelligent + contrôle narratif/pédagogique + souveraineté — n'existe dans aucune solution commerciale ou open-source actuelle. Les gaps identifiés (mémoire long-terme, fidélité comportementale, latence avatar) correspondent précisément aux frontières de la recherche académique actuelle. Cette convergence entre besoins applicatifs et frontières de la recherche est ce qui justifie un programme de recherche fondamentale dans ce domaine."
+              : "The combination — AI conversation + photorealistic avatar + intelligent video sequencing + narrative/pedagogical control + sovereignty — does not exist in any current commercial or open-source solution. The identified gaps (long-term memory, behavioral fidelity, avatar latency) correspond precisely to the frontiers of current academic research. This convergence between application needs and research frontiers is what justifies a fundamental research program in this domain."
             }
           </p>
         </div>

@@ -65,8 +65,8 @@ export default function AvatarsEmotional() {
           number="05b"
           title={isFr ? "Boîte à Outils Émotionnelle & Design de Personnage" : "Emotional Toolbox & Character Design"}
           subtitle={isFr
-            ? "Conception émotionnelle grade cinéma pour avatars conversationnels. Spécifique au projet DigiDouble."
-            : "Cinema-grade emotional design for conversational avatars. Specific to the DigiDouble project."}
+            ? "Conception émotionnelle grade cinéma pour avatars conversationnels. État de l'art, gaps et questions de conception."
+            : "Cinema-grade emotional design for conversational avatars. State of the art, gaps, and design questions."}
           accent="orange"
         />
 
@@ -103,8 +103,8 @@ export default function AvatarsEmotional() {
           </p>
           <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "Aucune plateforme commerciale actuelle ne propose un système de conception émotionnelle explicite et configurable par le créateur. La plupart laissent le LLM décider implicitement de l'état émotionnel, sans contrôle ni cohérence garantie. DigiDouble vise une boîte à outils émotionnelle inspirée des méthodes de direction d'acteurs, accessible aux créateurs non-techniques."
-              : "No current commercial platform offers an explicit, creator-configurable emotional design system. Most leave the LLM to implicitly decide emotional state, without guaranteed control or coherence. DigiDouble targets an emotional toolbox inspired by actor direction methods, accessible to non-technical creators."}
+              ? "Aucune plateforme commerciale actuelle ne propose un système de conception émotionnelle explicite et configurable par le créateur. La plupart laissent le LLM décider implicitement de l'état émotionnel, sans contrôle ni cohérence garantie. La question est de déterminer si une boîte à outils émotionnelle inspirée des méthodes de direction d'acteurs est techniquement réalisable, et à quel coût de conception et d'implémentation."
+              : "No current commercial platform offers an explicit, creator-configurable emotional design system. Most leave the LLM to implicitly decide emotional state, without guaranteed control or coherence. The question is whether an emotional toolbox inspired by actor direction methods is technically feasible, and at what design and implementation cost."}
           </p>
         </div>
 
@@ -130,7 +130,7 @@ export default function AvatarsEmotional() {
                   { name: "LemonSlice (LS-2.1)", configurable: "✓ Partiel", creator: "✓ API", realtime: "✓", note: isFr ? "Emotion API + Action API, mais pas de design de répertoire" : "Emotion API + Action API, but no repertoire design" },
                   { name: "Anam", configurable: "✓ Partiel", creator: "✗ Implicite", realtime: "✓", note: isFr ? "Intelligence émotionnelle intégrée, non configurable" : "Built-in emotional intelligence, not configurable" },
                   { name: "HeyGen, Simli, D-ID", configurable: "✗", creator: "✗", realtime: "✓", note: isFr ? "Lip-sync uniquement, pas de couche émotionnelle" : "Lip-sync only, no emotional layer" },
-                  { name: "DigiDouble (cible)", configurable: "✓ Complet", creator: "✓ Toolbox", realtime: "✓", note: isFr ? "Répertoire + transitions + activation contextuelle + direction acteur" : "Repertoire + transitions + contextual activation + actor direction" },
+                  { name: isFr ? "Système cible (hypothèse)" : "Target system (hypothesis)", configurable: "✓ Complet", creator: "✓ Toolbox", realtime: "✓", note: isFr ? "Répertoire + transitions + activation contextuelle + direction acteur — à valider par la recherche" : "Repertoire + transitions + contextual activation + actor direction — to be validated by research" },
                 ].map((row) => (
                   <tr key={row.name}>
                     <td className="font-semibold text-sm text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.name}</td>
