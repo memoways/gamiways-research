@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
+import StackDecisionSimulator from "@/components/StackDecisionSimulator";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface LayerDecision {
@@ -316,6 +317,11 @@ export default function VoiceStack() {
               : <>This framework does not prescribe technology choices. It structures the <strong>thinking</strong> required before committing to an architecture. The same technical trade-offs (latency, sovereignty, cost) present differently depending on context: a validation MVP, a regulated deployment, or a commercial scale-up each call for distinct answers. The goal is to ask the right questions at the right time — and to run the tests that will let facts answer them.</>
             }
           </p>
+        </div>
+
+        {/* Decision Simulator */}
+        <div className="mb-8">
+          <StackDecisionSimulator />
         </div>
 
         {/* Layers */}
