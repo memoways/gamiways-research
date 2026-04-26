@@ -5,6 +5,7 @@
  * Design: Space Grotesk, top fixed, minimal
  * i18n: EN/FR toggle, default EN
  */
+import React from "react";
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, ChevronDown, FlaskConical, Mic, Video } from "lucide-react";
@@ -99,13 +100,12 @@ function DropdownMenu({ menu, isFr, location, onClose }: { menu: NavMenu; isFr: 
           {menu.items.map((item) => {
             const itemActive = location === item.href || (item.href !== "/" && location.startsWith(item.href));
             return (
-              <>
+              <React.Fragment key={item.href}>
               {/* Separator before highlighted items */}
               {item.highlight && menu.items.indexOf(item) > 0 && (
                 <div className="mx-3 my-1 border-t border-slate-100" />
               )}
               <Link
-                key={item.href}
                 href={item.href}
                 onClick={onClose}
                 className={`flex flex-col px-3 py-2.5 rounded-lg transition-all no-underline ${
@@ -147,7 +147,7 @@ function DropdownMenu({ menu, isFr, location, onClose }: { menu: NavMenu; isFr: 
                   </span>
                 )}
               </Link>
-              </>  
+              </React.Fragment>
             );
           })}
         </div>
