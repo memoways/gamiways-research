@@ -10,6 +10,7 @@ import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
 import { SolutionTableCell } from "@/components/SolutionBadge";
 import { SOLUTION_LINKS } from "@/lib/solutionLinks";
+import { Home, ChevronRight } from "lucide-react";
 
 function ScoreBar({ value, max = 10, color }: { value: number; max?: number; color: string }) {
   return (
@@ -266,21 +267,17 @@ export default function AvatarsOverview() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Sub-nav */}
-      <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 flex-wrap">
-          <span className="text-xs font-mono text-slate-400">{isFr ? "Avatars Vidéo" : "Video Avatars"}</span>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Avatars Vidéo Streaming" : "Streaming Video Avatars"}
-          </span>
-          <div className="ml-auto flex gap-4">
-            <InternalLink to="/avatars/pricing" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
-              {isFr ? "→ Pricing" : "→ Pricing"}
-            </InternalLink>
-            <InternalLink to="/avatars/market" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
-              {isFr ? "→ Marché" : "→ Market"}
-            </InternalLink>
+      {/* Breadcrumb */}
+      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          <InternalLink to="/" className="text-slate-400 hover:text-slate-700 transition-colors" aria-label={isFr ? "Accueil" : "Home"}><Home size={12} /></InternalLink>
+          <ChevronRight size={11} className="text-slate-300" />
+          <InternalLink to="/avatars" className="text-slate-500 hover:text-slate-800 transition-colors">Video Avatars</InternalLink>
+          <ChevronRight size={11} className="text-slate-300" />
+          <span className="font-semibold" style={{ color: "oklch(0.45 0.15 145)" }}>{isFr ? "Avatars Vidéo Streaming" : "Streaming Video Avatars"}</span>
+          <div className="ml-auto flex gap-2">
+            <InternalLink to="/avatars/pricing" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">→ Pricing</InternalLink>
+            <InternalLink to="/avatars/market" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">{isFr ? "→ Marché" : "→ Market"}</InternalLink>
           </div>
         </div>
       </div>

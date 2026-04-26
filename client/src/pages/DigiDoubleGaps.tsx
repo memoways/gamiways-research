@@ -104,8 +104,8 @@ export default function DigiDoubleGaps() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Sub-nav */}
-      <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 flex-wrap">
+      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs">
           <InternalLink to="/project" className="text-xs font-mono text-slate-400 hover:text-slate-700 transition-colors">
             {isFr ? "← The Project" : "← The Project"}
           </InternalLink>

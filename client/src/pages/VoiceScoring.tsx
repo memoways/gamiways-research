@@ -10,7 +10,7 @@ import InternalLink from "@/components/InternalLink";
 import { getTTSData, type TTSData } from "@/lib/ttsData";
 import { getSTTData, type STTData } from "@/lib/sttData";
 import { ttsStrategicData, sttStrategicData } from "@/lib/strategicData";
-import { ChevronLeft, RotateCcw, Sliders, Trophy, Info, Link2, Check } from "lucide-react";
+import { ChevronLeft, RotateCcw, Sliders, Trophy, Info, Link2, Check, Home, ChevronRight } from "lucide-react";
 
 // ─── Types ──────────────────────────────────────────────────────────────
 
@@ -527,18 +527,14 @@ export default function VoiceScoring() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Sub-nav */}
-      <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 flex-wrap">
-          <InternalLink to="/voice/tts" className="cta-back">
-            <ChevronLeft className="w-4 h-4" />
-            {isFr ? "Voice Pipeline" : "Voice Pipeline"}
-          </InternalLink>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm font-semibold text-slate-900 flex items-center gap-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            <Sliders className="w-4 h-4 text-violet-500" />
-            {isFr ? "Scoring Personnalisé" : "Custom Scoring"}
-          </span>
+      {/* Breadcrumb */}
+      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          <InternalLink to="/" className="text-slate-400 hover:text-slate-700 transition-colors" aria-label={isFr ? "Accueil" : "Home"}><Home size={12} /></InternalLink>
+          <ChevronRight size={11} className="text-slate-300" />
+          <InternalLink to="/voice/tts" className="text-slate-500 hover:text-slate-800 transition-colors">Voice Pipeline</InternalLink>
+          <ChevronRight size={11} className="text-slate-300" />
+          <span className="font-semibold flex items-center gap-1" style={{ color: "oklch(0.45 0.20 280)" }}><Sliders size={11} />{isFr ? "Scoring Personnalisé" : "Custom Scoring"}</span>
         </div>
       </div>
 

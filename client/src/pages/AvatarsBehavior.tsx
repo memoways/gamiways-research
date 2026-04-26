@@ -11,7 +11,7 @@ import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
 import DiagramModal from "@/components/DiagramModal";
 import VideoPipelineDiagram from "@/components/diagrams/VideoPipelineDiagram";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Home, ChevronRight } from "lucide-react";
 
 function Accordion({ label, labelFr, isFr, children }: { label: string; labelFr: string; isFr: boolean; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -92,20 +92,16 @@ export default function AvatarsBehavior() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Sub-nav */}
-      <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 flex-wrap">
-          <InternalLink to="/research" className="text-xs font-mono text-slate-400 hover:text-slate-700 transition-colors">
-            {isFr ? "← Research Challenges" : "← Research Challenges"}
-          </InternalLink>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Comportement & Expressivité" : "Behavior & Expressiveness"}
-          </span>
+      {/* Breadcrumb */}
+      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          <InternalLink to="/" className="text-slate-400 hover:text-slate-700 transition-colors" aria-label={isFr ? "Accueil" : "Home"}><Home size={12} /></InternalLink>
+          <ChevronRight size={11} className="text-slate-300" />
+          <InternalLink to="/avatars" className="text-slate-500 hover:text-slate-800 transition-colors">Video Avatars</InternalLink>
+          <ChevronRight size={11} className="text-slate-300" />
+          <span className="font-semibold" style={{ color: "oklch(0.45 0.15 145)" }}>{isFr ? "Comportement & Expressivité" : "Behavior & Expressiveness"}</span>
           <div className="ml-auto">
-            <InternalLink to="/research/emotional" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
-              {isFr ? "→ Boîte à Outils Émotionnelle" : "→ Emotional Toolbox"}
-            </InternalLink>
+            <InternalLink to="/research/emotional" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">{isFr ? "→ Emotional Toolbox" : "→ Emotional Toolbox"}</InternalLink>
           </div>
         </div>
       </div>
