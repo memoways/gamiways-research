@@ -4,15 +4,15 @@
  * Design: Technical Blueprint — sliders, ranked cards, presets
  * i18n: EN / FR via LangContext
  */
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import { getTTSData, type TTSData } from "@/lib/ttsData";
 import { getSTTData, type STTData } from "@/lib/sttData";
 import { ttsStrategicData, sttStrategicData } from "@/lib/strategicData";
-import { ChevronLeft, RotateCcw, Sliders, Trophy, ExternalLink, Info } from "lucide-react";
+import { ChevronLeft, RotateCcw, Sliders, Trophy, Info, Link2, Check } from "lucide-react";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─── Types ──────────────────────────────────────────────────────────────
 
 interface TTSWeights {
   quality: number;
@@ -44,6 +44,55 @@ interface Preset {
   icon: string;
   ttsWeights: TTSWeights;
   sttWeights: STTWeights;
+}
+
+// ─── Default weights ──────────────────────────────────────────────────────────────
+
+const DEFAULT_TTS_WEIGHTS: TTSWeights = { quality: 5, latency: 5, voiceCloning: 5, expressiveness: 5, sovereignty: 5, pricing: 5, multilingual: 5 };
+const DEFAULT_STT_WEIGHTS: STTWeights = { accuracy: 5, latency: 5, multilingual: 5, sovereignty: 5, pricing: 5, streaming: 5 };
+
+// ─── URL helpers ──────────────────────────────────────────────────────────────
+
+const TTS_KEYS: (keyof TTSWeights)[] = ["quality","latency","voiceCloning","expressiveness","sovereignty","pricing","multilingual"];
+const STT_KEYS: (keyof STTWeights)[] = ["accuracy","latency","multilingual","sovereignty","pricing","streaming"];
+
+function encodeWeights(tts: TTSWeights, stt: STTWeights, mode: PipelineMode): string {
+  const ttsStr = TTS_KEYS.map((k) => tts[k]).join("-");
+  const sttStr = STT_KEYS.map((k) => stt[k]).join("-");
+  const params = new URLSearchParams({ tts: ttsStr, stt: sttStr, mode });
+  return `${window.location.origin}/voice/scoring?${params.toString()}`;
+}
+
+function decodeWeightsFromURL(): { tts: TTSWeights | null; stt: STTWeights | null; mode: PipelineMode | null } {
+  const params = new URLSearchParams(window.location.search);
+  const ttsRaw = params.get("tts");
+  const sttRaw = params.get("stt");
+  const modeRaw = params.get("mode");
+  let tts: TTSWeights | null = null;
+  let stt: STTWeights | null = null;
+  if (ttsRaw) {
+    const vals = ttsRaw.split("-").map(Number);
+    if (vals.length === TTS_KEYS.length && vals.every((v) => !isNaN(v) && v >= 0 && v <= 10)) {
+      tts = Object.fromEntries(TTS_KEYS.map((k, i) => [k, vals[i]])) as unknown as TTSWeights;
+    }
+  }
+  if (sttRaw) {
+    const vals = sttRaw.split("-").map(Number);
+    if (vals.length === STT_KEYS.length && vals.every((v) => !isNaN(v) && v >= 0 && v <= 10)) {
+      stt = Object.fromEntries(STT_KEYS.map((k, i) => [k, vals[i]])) as unknown as STTWeights;
+    }
+  }
+  return { tts, stt, mode: (modeRaw === "tts" || modeRaw === "stt") ? modeRaw : null };
+}
+
+function getInitialState() {
+  const { tts, stt, mode } = decodeWeightsFromURL();
+  return {
+    ttsWeights: tts ?? DEFAULT_TTS_WEIGHTS,
+    sttWeights: stt ?? DEFAULT_STT_WEIGHTS,
+    mode: mode ?? ("tts" as PipelineMode),
+    fromUrl: !!(tts || stt),
+  };
 }
 
 // ─── Presets ─────────────────────────────────────────────────────────────────
@@ -110,9 +159,6 @@ const PRESETS: Preset[] = [
     sttWeights: { accuracy: 8, latency: 8, multilingual: 7, sovereignty: 8, pricing: 5, streaming: 9 },
   },
 ];
-
-const DEFAULT_TTS_WEIGHTS: TTSWeights = { quality: 5, latency: 5, voiceCloning: 5, expressiveness: 5, sovereignty: 5, pricing: 5, multilingual: 5 };
-const DEFAULT_STT_WEIGHTS: STTWeights = { accuracy: 5, latency: 5, multilingual: 5, sovereignty: 5, pricing: 5, streaming: 5 };
 
 // ─── Scoring helpers ──────────────────────────────────────────────────────────
 
@@ -396,10 +442,29 @@ export default function VoiceScoring() {
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
-  const [mode, setMode] = useState<PipelineMode>("tts");
-  const [ttsWeights, setTtsWeights] = useState<TTSWeights>(DEFAULT_TTS_WEIGHTS);
-  const [sttWeights, setSttWeights] = useState<STTWeights>(DEFAULT_STT_WEIGHTS);
+  // ─ Init from URL if present
+  const [mode, setMode] = useState<PipelineMode>(() => getInitialState().mode);
+  const [ttsWeights, setTtsWeights] = useState<TTSWeights>(() => getInitialState().ttsWeights);
+  const [sttWeights, setSttWeights] = useState<STTWeights>(() => getInitialState().sttWeights);
   const [activePreset, setActivePreset] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // Detect if loaded from a shared URL
+  const [fromUrl] = useState(() => getInitialState().fromUrl);
+
+  // Sync URL on weight changes (replace state, no history entry)
+  useEffect(() => {
+    const url = encodeWeights(ttsWeights, sttWeights, mode);
+    window.history.replaceState(null, "", url);
+  }, [ttsWeights, sttWeights, mode]);
+
+  const copyLink = useCallback(() => {
+    const url = encodeWeights(ttsWeights, sttWeights, mode);
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [ttsWeights, sttWeights, mode]);
 
   const allTTS = useMemo(() => getTTSData(), []);
   const allSTT = useMemo(() => getSTTData(), []);
@@ -486,14 +551,41 @@ export default function VoiceScoring() {
               {isFr ? "Outil de scoring" : "Scoring Tool"}
             </span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Classement personnalisé des outils Voice" : "Custom Voice Tool Ranking"}
-          </h1>
-          <p className="text-sm text-slate-500 max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <h1 className="text-2xl font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Classement personnalisé des outils Voice" : "Custom Voice Tool Ranking"}
+            </h1>
+            {/* Copy link button */}
+            <button
+              onClick={copyLink}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all shrink-0 ${
+                copied
+                  ? "bg-green-50 border-green-300 text-green-700"
+                  : "bg-white border-slate-200 text-slate-600 hover:border-violet-300 hover:text-violet-700 hover:bg-violet-50"
+              }`}
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              {copied
+                ? <><Check className="w-4 h-4" />{isFr ? "Lien copié !" : "Link copied!"}</>
+                : <><Link2 className="w-4 h-4" />{isFr ? "Copier le lien" : "Copy link"}</>}
+            </button>
+          </div>
+          <p className="text-sm text-slate-500 max-w-2xl mt-2" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
               ? "Pondérez les critères selon votre contexte (MVP, souveraineté, coût, temps réel) et obtenez un classement dynamique des outils TTS et STT. Utilisez les presets ou personnalisez chaque critère."
               : "Weight the criteria according to your context (MVP, sovereignty, cost, real-time) and get a dynamic ranking of TTS and STT tools. Use presets or customize each criterion."}
           </p>
+          {/* Banner: loaded from shared URL */}
+          {fromUrl && (
+            <div className="mt-3 flex items-center gap-2 px-3 py-2 rounded-lg bg-violet-50 border border-violet-200 text-xs text-violet-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <Link2 className="w-3.5 h-3.5 shrink-0" />
+              <span>
+                {isFr
+                  ? "Configuration chargée depuis un lien partagé. Modifiez les critères ci-dessous pour personnaliser."
+                  : "Configuration loaded from a shared link. Adjust the criteria below to customize."}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Presets */}
