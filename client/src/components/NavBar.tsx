@@ -56,6 +56,7 @@ const NAV_MENUS: NavMenu[] = [
       { href: "/voice/stt", label: "STT — Speech Recognition", labelFr: "STT — Reconnaissance Vocale", desc: "Cloud & open-source", descFr: "Cloud & open-source" },
       { href: "/voice/benchmarks", label: "Latency Benchmarks", labelFr: "Benchmarks Latence", desc: "End-to-end timing analysis", descFr: "Analyse des temps end-to-end" },
       { href: "/voice/stack", label: "Recommended Stack", labelFr: "Stack Recommandé", desc: "Technology recommendations", descFr: "Recommandations technologiques" },
+      { href: "/voice/scoring", label: "Custom Scoring", labelFr: "Scoring Personnalisé", desc: "Weight criteria, get your personalized tool ranking", descFr: "Pondérez les critères, obtenez votre classement personnalisé", highlight: true, highlightColor: "oklch(0.55 0.20 280)" },
       { href: "/voice/pipeline", label: "Pipeline Phase 1", labelFr: "Pipeline Phase 1", desc: "Interactive V2V diagram — select components, visualize latency & cost", descFr: "Diagramme V2V interactif — composants, latence & coût", highlight: true, highlightColor: "oklch(0.55 0.20 200)" },
     ],
   },

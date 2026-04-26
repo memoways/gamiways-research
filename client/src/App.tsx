@@ -28,6 +28,7 @@ import VoiceSTT from "@/pages/VoiceSTT";
 import STTDetail from "@/pages/STTDetail";
 import VoiceBenchmarks from "@/pages/VoiceBenchmarks";
 import VoiceStack from "@/pages/VoiceStack";
+import VoiceScoring from "@/pages/VoiceScoring";
 
 // ── Avatars pages ──────────────────────────────────────────────────────────
 import AvatarsOverview from "@/pages/AvatarsOverview";
@@ -72,6 +73,7 @@ function Router() {
           <Route path="/voice/benchmarks" component={VoiceBenchmarks} />
           <Route path="/voice/stack" component={VoiceStack} />
           <Route path="/voice/pipeline" component={PipelinePhase1} />
+          <Route path="/voice/scoring" component={VoiceScoring} />
           <Route path="/pipeline" component={PipelinePhase1} />
           <Route path="/tts/:id" component={TTSDetail} />
 

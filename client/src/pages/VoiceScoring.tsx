@@ -1,0 +1,650 @@
+/**
+ * VoiceScoring.tsx — DigiDouble Research Portal
+ * Outil de scoring personnalisé : pondérer les critères, obtenir un classement dynamique
+ * Design: Technical Blueprint — sliders, ranked cards, presets
+ * i18n: EN / FR via LangContext
+ */
+import { useState, useMemo } from "react";
+import { useLang } from "@/contexts/LangContext";
+import InternalLink from "@/components/InternalLink";
+import { getTTSData, type TTSData } from "@/lib/ttsData";
+import { getSTTData, type STTData } from "@/lib/sttData";
+import { ttsStrategicData, sttStrategicData } from "@/lib/strategicData";
+import { ChevronLeft, RotateCcw, Sliders, Trophy, ExternalLink, Info } from "lucide-react";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface TTSWeights {
+  quality: number;
+  latency: number;
+  voiceCloning: number;
+  expressiveness: number;
+  sovereignty: number;
+  pricing: number;
+  multilingual: number;
+}
+
+interface STTWeights {
+  accuracy: number;
+  latency: number;
+  multilingual: number;
+  sovereignty: number;
+  pricing: number;
+  streaming: number;
+}
+
+type PipelineMode = "tts" | "stt";
+
+interface Preset {
+  id: string;
+  label: string;
+  labelFr: string;
+  desc: string;
+  descFr: string;
+  icon: string;
+  ttsWeights: TTSWeights;
+  sttWeights: STTWeights;
+}
+
+// ─── Presets ─────────────────────────────────────────────────────────────────
+
+const PRESETS: Preset[] = [
+  {
+    id: "mvp",
+    label: "MVP / Prototype",
+    labelFr: "MVP / Prototype",
+    desc: "Speed to market, quality first, sovereignty secondary",
+    descFr: "Vitesse de mise sur le marché, qualité avant tout, souveraineté secondaire",
+    icon: "🚀",
+    ttsWeights: { quality: 9, latency: 8, voiceCloning: 7, expressiveness: 7, sovereignty: 2, pricing: 5, multilingual: 4 },
+    sttWeights: { accuracy: 8, latency: 9, multilingual: 5, sovereignty: 2, pricing: 5, streaming: 9 },
+  },
+  {
+    id: "sovereign",
+    label: "Sovereign / Regulated",
+    labelFr: "Souverain / Réglementé",
+    desc: "GDPR / nLPD compliance, on-premise, EU data residency",
+    descFr: "Conformité RGPD / nLPD, on-premise, résidence données UE",
+    icon: "🛡️",
+    ttsWeights: { quality: 6, latency: 6, voiceCloning: 5, expressiveness: 4, sovereignty: 10, pricing: 5, multilingual: 4 },
+    sttWeights: { accuracy: 7, latency: 6, multilingual: 4, sovereignty: 10, pricing: 5, streaming: 6 },
+  },
+  {
+    id: "cost",
+    label: "Cost Optimized",
+    labelFr: "Optimisé Coût",
+    desc: "Scale at lowest cost, open-source preferred",
+    descFr: "Mise à l'échelle au coût minimal, open-source privilégié",
+    icon: "💰",
+    ttsWeights: { quality: 5, latency: 5, voiceCloning: 4, expressiveness: 3, sovereignty: 5, pricing: 10, multilingual: 3 },
+    sttWeights: { accuracy: 6, latency: 5, multilingual: 4, sovereignty: 5, pricing: 10, streaming: 5 },
+  },
+  {
+    id: "realtime",
+    label: "Real-time Agent",
+    labelFr: "Agent Temps Réel",
+    desc: "Sub-500ms pipeline, streaming-first, low latency",
+    descFr: "Pipeline <500ms, streaming-first, latence minimale",
+    icon: "⚡",
+    ttsWeights: { quality: 6, latency: 10, voiceCloning: 3, expressiveness: 5, sovereignty: 4, pricing: 5, multilingual: 3 },
+    sttWeights: { accuracy: 6, latency: 10, multilingual: 4, sovereignty: 4, pricing: 5, streaming: 10 },
+  },
+  {
+    id: "multilingual",
+    label: "Multilingual / Global",
+    labelFr: "Multilingue / Global",
+    desc: "Wide language coverage, Swiss German, FR, DE, EN",
+    descFr: "Large couverture linguistique, suisse-allemand, FR, DE, EN",
+    icon: "🌍",
+    ttsWeights: { quality: 7, latency: 5, voiceCloning: 5, expressiveness: 5, sovereignty: 4, pricing: 5, multilingual: 10 },
+    sttWeights: { accuracy: 7, latency: 5, multilingual: 10, sovereignty: 4, pricing: 5, streaming: 6 },
+  },
+  {
+    id: "digidouble",
+    label: "DigiDouble Phase 2",
+    labelFr: "DigiDouble Phase 2",
+    desc: "Balanced: quality + sovereignty + real-time for Swiss deployment",
+    descFr: "Équilibré : qualité + souveraineté + temps réel pour déploiement suisse",
+    icon: "🎯",
+    ttsWeights: { quality: 8, latency: 8, voiceCloning: 9, expressiveness: 7, sovereignty: 8, pricing: 5, multilingual: 6 },
+    sttWeights: { accuracy: 8, latency: 8, multilingual: 7, sovereignty: 8, pricing: 5, streaming: 9 },
+  },
+];
+
+const DEFAULT_TTS_WEIGHTS: TTSWeights = { quality: 5, latency: 5, voiceCloning: 5, expressiveness: 5, sovereignty: 5, pricing: 5, multilingual: 5 };
+const DEFAULT_STT_WEIGHTS: STTWeights = { accuracy: 5, latency: 5, multilingual: 5, sovereignty: 5, pricing: 5, streaming: 5 };
+
+// ─── Scoring helpers ──────────────────────────────────────────────────────────
+
+function computeTTSScore(tts: TTSData, w: TTSWeights): number {
+  const total = w.quality + w.latency + w.voiceCloning + w.expressiveness + w.sovereignty + w.pricing + w.multilingual;
+  if (total === 0) return 0;
+  return (
+    tts.score.quality * w.quality +
+    tts.score.latency * w.latency +
+    tts.score.voiceCloning * w.voiceCloning +
+    tts.score.expressiveness * w.expressiveness +
+    tts.score.sovereignty * w.sovereignty +
+    tts.score.pricing * w.pricing +
+    tts.score.multilingual * w.multilingual
+  ) / total;
+}
+
+function computeSTTScore(stt: STTData, w: STTWeights): number {
+  const total = w.accuracy + w.latency + w.multilingual + w.sovereignty + w.pricing + w.streaming;
+  if (total === 0) return 0;
+  return (
+    stt.score.accuracy * w.accuracy +
+    stt.score.latency * w.latency +
+    stt.score.multilingual * w.multilingual +
+    stt.score.sovereignty * w.sovereignty +
+    stt.score.pricing * w.pricing +
+    stt.score.streaming * w.streaming
+  ) / total;
+}
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+function WeightSlider({
+  label, labelFr, value, onChange, isFr, color,
+}: {
+  label: string; labelFr: string; value: number;
+  onChange: (v: number) => void; isFr: boolean; color: string;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-semibold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          {isFr ? labelFr : label}
+        </span>
+        <span
+          className="text-xs font-bold font-mono w-6 text-right"
+          style={{ color }}
+        >
+          {value}
+        </span>
+      </div>
+      <div className="relative">
+        <input
+          type="range"
+          min={0}
+          max={10}
+          step={1}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, ${color} 0%, ${color} ${value * 10}%, #e2e8f0 ${value * 10}%, #e2e8f0 100%)`,
+            accentColor: color,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function RankBadge({ rank }: { rank: number }) {
+  if (rank === 1) return <span className="text-lg">🥇</span>;
+  if (rank === 2) return <span className="text-lg">🥈</span>;
+  if (rank === 3) return <span className="text-lg">🥉</span>;
+  return (
+    <span className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500 font-mono">
+      {rank}
+    </span>
+  );
+}
+
+function ScoreBar({ value, max = 10, color }: { value: number; max?: number; color: string }) {
+  return (
+    <div className="relative h-1.5 bg-slate-100 rounded-full overflow-hidden flex-1">
+      <div
+        className="absolute left-0 top-0 h-full rounded-full transition-all duration-500"
+        style={{ width: `${(value / max) * 100}%`, background: color }}
+      />
+    </div>
+  );
+}
+
+function StrategicBadge({ toolId, type }: { toolId: string; type: "tts" | "stt" }) {
+  const data = type === "tts" ? ttsStrategicData[toolId] : sttStrategicData[toolId];
+  if (!data) return null;
+  const lockColors = { high: "#dc2626", medium: "#d97706", low: "#16a34a" };
+  const sovColors = { high: "#16a34a", medium: "#d97706", low: "#dc2626" };
+  return (
+    <div className="flex items-center gap-2 flex-wrap mt-1">
+      <span
+        className="text-xs px-1.5 py-0.5 rounded font-medium"
+        style={{ background: `${sovColors[data.sovereigntyFit]}15`, color: sovColors[data.sovereigntyFit], border: `1px solid ${sovColors[data.sovereigntyFit]}30` }}
+      >
+        Sov. {data.sovereigntyFit}
+      </span>
+      <span
+        className="text-xs px-1.5 py-0.5 rounded font-medium"
+        style={{ background: `${lockColors[data.lockInRisk]}15`, color: lockColors[data.lockInRisk], border: `1px solid ${lockColors[data.lockInRisk]}30` }}
+      >
+        Lock-in {data.lockInRisk}
+      </span>
+    </div>
+  );
+}
+
+// ─── TTS Ranked Card ─────────────────────────────────────────────────────────
+
+function TTSRankedCard({ tts, rank, score, weights, isFr }: {
+  tts: TTSData; rank: number; score: number; weights: TTSWeights; isFr: boolean;
+}) {
+  const accentColor = tts.category === "cloud-api" ? "oklch(0.72 0.18 200)" : "oklch(0.65 0.18 145)";
+  const catLabel = tts.category === "cloud-api" ? (isFr ? "API Cloud" : "Cloud API") : "Open Source";
+
+  return (
+    <div
+      className={`bg-white rounded-xl border transition-all duration-300 p-4 ${rank <= 3 ? "shadow-md border-slate-200" : "border-slate-100"}`}
+      style={rank === 1 ? { borderColor: "oklch(0.75 0.15 75)", boxShadow: "0 0 0 2px oklch(0.75 0.15 75 / 0.15)" } : {}}
+    >
+      <div className="flex items-start gap-3">
+        <div className="flex-shrink-0 flex flex-col items-center gap-1 pt-0.5">
+          <RankBadge rank={rank} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2 mb-1">
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: accentColor + "22", color: accentColor }}>
+                  {catLabel}
+                </span>
+                <h4 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {tts.name}
+                </h4>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5 leading-snug" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {tts.tagline}
+              </p>
+              <StrategicBadge toolId={tts.id} type="tts" />
+            </div>
+            <div className="text-right flex-shrink-0">
+              <div className="text-xl font-bold font-mono" style={{ color: accentColor }}>
+                {score.toFixed(1)}
+              </div>
+              <div className="text-xs text-slate-400">/10</div>
+            </div>
+          </div>
+
+          {/* Score breakdown */}
+          <div className="mt-2 space-y-1">
+            {([
+              { key: "quality", label: "Quality", labelFr: "Qualité", color: "oklch(0.72 0.18 200)" },
+              { key: "latency", label: "Latency", labelFr: "Latence", color: "oklch(0.65 0.18 145)" },
+              { key: "voiceCloning", label: "Cloning", labelFr: "Clonage", color: "oklch(0.72 0.18 280)" },
+              { key: "sovereignty", label: "Sovereignty", labelFr: "Souveraineté", color: "oklch(0.72 0.18 25)" },
+              { key: "pricing", label: "Pricing", labelFr: "Prix", color: "oklch(0.65 0.18 145)" },
+            ] as { key: keyof TTSWeights; label: string; labelFr: string; color: string }[]).filter(
+              (c) => weights[c.key] > 0
+            ).map(({ key, label, labelFr, color }) => (
+              <div key={key} className="flex items-center gap-2">
+                <span className="text-xs text-slate-400 w-16 shrink-0" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? labelFr : label}
+                  <span className="text-slate-300 ml-0.5">×{weights[key]}</span>
+                </span>
+                <ScoreBar value={tts.score[key as keyof typeof tts.score] as number} color={color} />
+                <span className="text-xs font-mono text-slate-500 w-4 text-right">
+                  {tts.score[key as keyof typeof tts.score]}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-100">
+            <span className="text-xs font-mono text-slate-400">{tts.ttfaMs}ms TTFA</span>
+            {tts.eloScore > 0 && <span className="text-xs font-mono text-amber-600">ELO {tts.eloScore}</span>}
+            <span className="text-xs font-mono text-slate-300">{tts.license}</span>
+            <div className="ml-auto">
+              <InternalLink to={`/tts/${tts.id}`} className="text-xs font-mono text-cyan-600 hover:text-cyan-800 underline">
+                {isFr ? "Fiche →" : "Details →"}
+              </InternalLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── STT Ranked Card ─────────────────────────────────────────────────────────
+
+function STTRankedCard({ stt, rank, score, weights, isFr }: {
+  stt: STTData; rank: number; score: number; weights: STTWeights; isFr: boolean;
+}) {
+  const accentColor = stt.category === "cloud-api" ? "oklch(0.72 0.18 50)" : "oklch(0.65 0.18 145)";
+  const catLabel = stt.category === "cloud-api" ? (isFr ? "API Cloud" : "Cloud API") : "Open Source";
+
+  return (
+    <div
+      className={`bg-white rounded-xl border transition-all duration-300 p-4 ${rank <= 3 ? "shadow-md border-slate-200" : "border-slate-100"}`}
+      style={rank === 1 ? { borderColor: "oklch(0.75 0.15 50)", boxShadow: "0 0 0 2px oklch(0.75 0.15 50 / 0.15)" } : {}}
+    >
+      <div className="flex items-start gap-3">
+        <div className="flex-shrink-0 flex flex-col items-center gap-1 pt-0.5">
+          <RankBadge rank={rank} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2 mb-1">
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: accentColor + "22", color: accentColor }}>
+                  {catLabel}
+                </span>
+                <h4 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {stt.name}
+                </h4>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5 leading-snug" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {stt.tagline}
+              </p>
+              <StrategicBadge toolId={stt.id} type="stt" />
+            </div>
+            <div className="text-right flex-shrink-0">
+              <div className="text-xl font-bold font-mono" style={{ color: accentColor }}>
+                {score.toFixed(1)}
+              </div>
+              <div className="text-xs text-slate-400">/10</div>
+            </div>
+          </div>
+
+          {/* Score breakdown */}
+          <div className="mt-2 space-y-1">
+            {([
+              { key: "accuracy", label: "Accuracy", labelFr: "Précision", color: "oklch(0.72 0.18 50)" },
+              { key: "latency", label: "Latency", labelFr: "Latence", color: "oklch(0.65 0.18 145)" },
+              { key: "multilingual", label: "Multilingual", labelFr: "Multilingue", color: "oklch(0.72 0.18 230)" },
+              { key: "sovereignty", label: "Sovereignty", labelFr: "Souveraineté", color: "oklch(0.72 0.18 25)" },
+              { key: "pricing", label: "Pricing", labelFr: "Prix", color: "oklch(0.65 0.18 145)" },
+              { key: "streaming", label: "Streaming", labelFr: "Streaming", color: "oklch(0.72 0.18 200)" },
+            ] as { key: keyof STTWeights; label: string; labelFr: string; color: string }[]).filter(
+              (c) => weights[c.key] > 0
+            ).map(({ key, label, labelFr, color }) => (
+              <div key={key} className="flex items-center gap-2">
+                <span className="text-xs text-slate-400 w-16 shrink-0" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? labelFr : label}
+                  <span className="text-slate-300 ml-0.5">×{weights[key]}</span>
+                </span>
+                <ScoreBar value={stt.score[key as keyof typeof stt.score] as number} color={color} />
+                <span className="text-xs font-mono text-slate-500 w-4 text-right">
+                  {stt.score[key as keyof typeof stt.score]}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-100">
+            {stt.wer > 0 && <span className="text-xs font-mono text-slate-400">WER {stt.wer}%</span>}
+            <span className="text-xs font-mono text-slate-400">{stt.latencyMs}ms</span>
+            <div className="ml-auto">
+              <InternalLink to={`/voice/stt/${stt.id}`} className="text-xs font-mono text-orange-600 hover:text-orange-800 underline">
+                {isFr ? "Fiche →" : "Details →"}
+              </InternalLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Page ────────────────────────────────────────────────────────────────
+
+export default function VoiceScoring() {
+  const { t } = useLang();
+  const isFr = t("nav.home") === "Accueil";
+
+  const [mode, setMode] = useState<PipelineMode>("tts");
+  const [ttsWeights, setTtsWeights] = useState<TTSWeights>(DEFAULT_TTS_WEIGHTS);
+  const [sttWeights, setSttWeights] = useState<STTWeights>(DEFAULT_STT_WEIGHTS);
+  const [activePreset, setActivePreset] = useState<string | null>(null);
+
+  const allTTS = useMemo(() => getTTSData(), []);
+  const allSTT = useMemo(() => getSTTData(), []);
+
+  const rankedTTS = useMemo(() => {
+    return [...allTTS]
+      .map((t) => ({ tool: t, score: computeTTSScore(t, ttsWeights) }))
+      .sort((a, b) => b.score - a.score);
+  }, [allTTS, ttsWeights]);
+
+  const rankedSTT = useMemo(() => {
+    return [...allSTT]
+      .map((s) => ({ tool: s, score: computeSTTScore(s, sttWeights) }))
+      .sort((a, b) => b.score - a.score);
+  }, [allSTT, sttWeights]);
+
+  function applyPreset(preset: Preset) {
+    setTtsWeights(preset.ttsWeights);
+    setSttWeights(preset.sttWeights);
+    setActivePreset(preset.id);
+  }
+
+  function resetWeights() {
+    setTtsWeights(DEFAULT_TTS_WEIGHTS);
+    setSttWeights(DEFAULT_STT_WEIGHTS);
+    setActivePreset(null);
+  }
+
+  function updateTTS(key: keyof TTSWeights, value: number) {
+    setTtsWeights((prev) => ({ ...prev, [key]: value }));
+    setActivePreset(null);
+  }
+
+  function updateSTT(key: keyof STTWeights, value: number) {
+    setSttWeights((prev) => ({ ...prev, [key]: value }));
+    setActivePreset(null);
+  }
+
+  const ttsSliders: { key: keyof TTSWeights; label: string; labelFr: string; color: string }[] = [
+    { key: "quality", label: "Voice Quality", labelFr: "Qualité vocale", color: "oklch(0.72 0.18 200)" },
+    { key: "latency", label: "Latency (TTFA)", labelFr: "Latence (TTFA)", color: "oklch(0.65 0.18 145)" },
+    { key: "voiceCloning", label: "Voice Cloning", labelFr: "Clonage vocal", color: "oklch(0.72 0.18 280)" },
+    { key: "expressiveness", label: "Expressiveness", labelFr: "Expressivité", color: "oklch(0.72 0.18 50)" },
+    { key: "sovereignty", label: "Data Sovereignty", labelFr: "Souveraineté données", color: "oklch(0.72 0.18 25)" },
+    { key: "pricing", label: "Cost / Pricing", labelFr: "Coût / Prix", color: "oklch(0.65 0.18 145)" },
+    { key: "multilingual", label: "Multilingual", labelFr: "Multilingue", color: "oklch(0.72 0.18 230)" },
+  ];
+
+  const sttSliders: { key: keyof STTWeights; label: string; labelFr: string; color: string }[] = [
+    { key: "accuracy", label: "Accuracy (WER)", labelFr: "Précision (WER)", color: "oklch(0.72 0.18 50)" },
+    { key: "latency", label: "Latency (streaming)", labelFr: "Latence (streaming)", color: "oklch(0.65 0.18 145)" },
+    { key: "multilingual", label: "Multilingual", labelFr: "Multilingue", color: "oklch(0.72 0.18 230)" },
+    { key: "sovereignty", label: "Data Sovereignty", labelFr: "Souveraineté données", color: "oklch(0.72 0.18 25)" },
+    { key: "pricing", label: "Cost / Pricing", labelFr: "Coût / Prix", color: "oklch(0.65 0.18 145)" },
+    { key: "streaming", label: "Real-time Streaming", labelFr: "Streaming temps réel", color: "oklch(0.72 0.18 200)" },
+  ];
+
+  const currentWeights = mode === "tts" ? ttsWeights : sttWeights;
+  const currentSliders = mode === "tts" ? ttsSliders : sttSliders;
+
+  return (
+    <div className="min-h-screen bg-slate-50">
+      {/* Sub-nav */}
+      <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 flex-wrap">
+          <InternalLink to="/voice/tts" className="cta-back">
+            <ChevronLeft className="w-4 h-4" />
+            {isFr ? "Voice Pipeline" : "Voice Pipeline"}
+          </InternalLink>
+          <span className="text-slate-300">/</span>
+          <span className="text-sm font-semibold text-slate-900 flex items-center gap-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <Sliders className="w-4 h-4 text-violet-500" />
+            {isFr ? "Scoring Personnalisé" : "Custom Scoring"}
+          </span>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-2">
+            <Trophy className="w-5 h-5 text-amber-500" />
+            <span className="text-xs font-bold uppercase tracking-widest text-amber-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Outil de scoring" : "Scoring Tool"}
+            </span>
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            {isFr ? "Classement personnalisé des outils Voice" : "Custom Voice Tool Ranking"}
+          </h1>
+          <p className="text-sm text-slate-500 max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? "Pondérez les critères selon votre contexte (MVP, souveraineté, coût, temps réel) et obtenez un classement dynamique des outils TTS et STT. Utilisez les presets ou personnalisez chaque critère."
+              : "Weight the criteria according to your context (MVP, sovereignty, cost, real-time) and get a dynamic ranking of TTS and STT tools. Use presets or customize each criterion."}
+          </p>
+        </div>
+
+        {/* Presets */}
+        <div className="mb-8">
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            {isFr ? "Profils prédéfinis" : "Preset Profiles"}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {PRESETS.map((preset) => (
+              <button
+                key={preset.id}
+                onClick={() => applyPreset(preset)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+                  activePreset === preset.id
+                    ? "bg-slate-900 text-white border-slate-900 shadow-md"
+                    : "bg-white text-slate-700 border-slate-200 hover:border-slate-400 hover:shadow-sm"
+                }`}
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                <span>{preset.icon}</span>
+                <span>{isFr ? preset.labelFr : preset.label}</span>
+              </button>
+            ))}
+            <button
+              onClick={resetWeights}
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border border-slate-200 bg-white text-slate-500 hover:text-slate-700 hover:border-slate-400 transition-all"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              {isFr ? "Réinitialiser" : "Reset"}
+            </button>
+          </div>
+          {activePreset && (
+            <div className="mt-2 flex items-start gap-2 text-xs text-slate-500">
+              <Info className="w-3.5 h-3.5 mt-0.5 shrink-0 text-violet-400" />
+              <span>
+                {isFr
+                  ? PRESETS.find((p) => p.id === activePreset)?.descFr
+                  : PRESETS.find((p) => p.id === activePreset)?.desc}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Mode tabs */}
+        <div className="flex gap-1 mb-6 border-b border-slate-200">
+          {(["tts", "stt"] as PipelineMode[]).map((m) => (
+            <button
+              key={m}
+              onClick={() => setMode(m)}
+              className={`px-5 py-2.5 text-sm font-semibold border-b-2 transition-colors -mb-px ${
+                mode === m
+                  ? m === "tts" ? "border-violet-500 text-violet-700" : "border-orange-500 text-orange-700"
+                  : "border-transparent text-slate-500 hover:text-slate-700"
+              }`}
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              {m === "tts"
+                ? (isFr ? "TTS — Synthèse Vocale" : "TTS — Voice Synthesis")
+                : (isFr ? "STT — Reconnaissance Vocale" : "STT — Speech Recognition")}
+              <span className="ml-2 text-xs font-mono opacity-60">
+                {m === "tts" ? `${allTTS.length} outils` : `${allSTT.length} outils`}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Main layout: sliders + ranking */}
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6">
+
+          {/* ── Sliders panel ── */}
+          <div className="space-y-4">
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm sticky top-28">
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Pondération des critères" : "Criteria Weights"}
+                </h3>
+                <span className="text-xs text-slate-400 font-mono">0–10</span>
+              </div>
+              <div className="space-y-4">
+                {currentSliders.map(({ key, label, labelFr, color }) => (
+                  <WeightSlider
+                    key={key}
+                    label={label}
+                    labelFr={labelFr}
+                    value={currentWeights[key as keyof typeof currentWeights]}
+                    onChange={(v) => mode === "tts" ? updateTTS(key as keyof TTSWeights, v) : updateSTT(key as keyof STTWeights, v)}
+                    isFr={isFr}
+                    color={color}
+                  />
+                ))}
+              </div>
+              <div className="mt-5 pt-4 border-t border-slate-100">
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  {isFr
+                    ? "Chaque critère est noté de 0 à 10. Un poids de 0 exclut le critère du calcul. Le score final est la moyenne pondérée."
+                    : "Each criterion is scored 0–10. A weight of 0 excludes the criterion from the calculation. The final score is the weighted average."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Ranked results ── */}
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {mode === "tts"
+                  ? (isFr ? `Classement TTS — ${allTTS.length} outils` : `TTS Ranking — ${allTTS.length} tools`)
+                  : (isFr ? `Classement STT — ${allSTT.length} outils` : `STT Ranking — ${allSTT.length} tools`)}
+              </h3>
+              <span className="text-xs text-slate-400 font-mono">
+                {isFr ? "Trié par score pondéré" : "Sorted by weighted score"}
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {mode === "tts"
+                ? rankedTTS.map(({ tool, score }, i) => (
+                    <TTSRankedCard
+                      key={tool.id}
+                      tts={tool}
+                      rank={i + 1}
+                      score={score}
+                      weights={ttsWeights}
+                      isFr={isFr}
+                    />
+                  ))
+                : rankedSTT.map(({ tool, score }, i) => (
+                    <STTRankedCard
+                      key={tool.id}
+                      stt={tool}
+                      rank={i + 1}
+                      score={score}
+                      weights={sttWeights}
+                      isFr={isFr}
+                    />
+                  ))}
+            </div>
+
+            {/* Methodology note */}
+            <div className="mt-6 bg-slate-50 border border-slate-200 rounded-xl p-4">
+              <p className="text-xs text-slate-500 leading-relaxed">
+                <span className="font-semibold text-slate-700">{isFr ? "Méthodologie : " : "Methodology: "}</span>
+                {isFr
+                  ? "Les scores bruts (1–10) sont issus de benchmarks publics (Artificial Analysis ELO, WER Koenecke, TTFA mesurés). La pondération est appliquée via une moyenne pondérée. Les badges souveraineté et lock-in proviennent de l'analyse stratégique DigiDouble."
+                  : "Raw scores (1–10) are sourced from public benchmarks (Artificial Analysis ELO, Koenecke WER, measured TTFA). Weighting is applied via weighted average. Sovereignty and lock-in badges come from the DigiDouble strategic analysis."}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

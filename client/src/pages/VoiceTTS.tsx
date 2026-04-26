@@ -97,6 +97,9 @@ export default function VoiceTTS() {
             <InternalLink to="/voice/stt" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
               {isFr ? "→ STT" : "→ STT"}
             </InternalLink>
+            <InternalLink to="/voice/scoring" className="text-xs font-mono font-bold px-2 py-0.5 rounded transition-colors" style={{ background: "oklch(0.55 0.20 280 / 0.1)", color: "oklch(0.45 0.20 280)" }}>
+              {isFr ? "★ Scoring" : "★ Scoring"}
+            </InternalLink>
             <InternalLink to="/voice/pipeline" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
               {isFr ? "→ Pipeline" : "→ Pipeline"}
             </InternalLink>
