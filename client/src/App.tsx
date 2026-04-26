@@ -7,6 +7,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import Breadcrumb from "./components/Breadcrumb";
 import { LangProvider } from "./contexts/LangContext";
 
 // ── Core pages ─────────────────────────────────────────────────────────────
@@ -52,6 +53,7 @@ function Router() {
       <ScrollToTop />
       <NavBar />
       <main className="pt-14">
+        <Breadcrumb />
         <Switch>
           {/* ── Home ──────────────────────────────────────────────────────── */}
           <Route path="/" component={Home} />

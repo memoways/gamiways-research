@@ -116,10 +116,6 @@ export default function STTDetail() {
             {isFr ? "Retour" : "Back"}
           </InternalLink>
           <span className="text-slate-300">/</span>
-          <span className="text-xs font-mono text-slate-500 hidden sm:block">
-            {isFr ? "Reconnaissance Vocale" : "Speech Recognition"}
-          </span>
-          <span className="text-slate-300 hidden sm:block">/</span>
           <span className="text-sm font-semibold text-slate-900 truncate">{stt.name}</span>
         </div>
       </div>

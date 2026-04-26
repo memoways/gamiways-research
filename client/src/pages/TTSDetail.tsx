@@ -112,18 +112,11 @@ export default function TTSDetail() {
       {/* Header */}
       <div className="bg-white border-b border-slate-200 sticky top-14 z-10 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
-          <InternalLink
-            to="/voice/tts"
-            className="cta-back"
-          >
+          <InternalLink to="/voice/tts" className="cta-back">
             <ChevronLeft className="w-4 h-4" />
             {isFr ? "Retour" : "Back"}
           </InternalLink>
           <span className="text-slate-300">/</span>
-          <span className="text-xs font-mono text-slate-500 hidden sm:block">
-            {isFr ? "État de l'Art" : "State of the Art"}
-          </span>
-          <span className="text-slate-300 hidden sm:block">/</span>
           <span className="text-sm font-semibold text-slate-900 truncate">{tts.name}</span>
         </div>
       </div>
