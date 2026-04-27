@@ -10,6 +10,7 @@ import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
 import StatusBadge from "@/components/StatusBadge";
 import { Home, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
+import GlossaryLink from "@/components/GlossaryLink";
 
 // ─── STT DATA ─────────────────────────────────────────────────────────────────
 const STT_BENCHMARKS = [
@@ -187,18 +188,18 @@ export default function VoiceBenchmarks() {
                 <tr>
                   <th>{isFr ? "Moteur" : "Engine"}</th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("wer")}>
-                    WER % <SortIcon active={sttSort.key === "wer"} dir={sttSort.dir} />
+                    <span className="inline-flex items-center gap-1">WER % <GlossaryLink term="WER" /></span> <SortIcon active={sttSort.key === "wer"} dir={sttSort.dir} />
                   </th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("ttfa")}>
-                    TTFA (ms) <SortIcon active={sttSort.key === "ttfa"} dir={sttSort.dir} />
+                    <span className="inline-flex items-center gap-1">TTFA (ms) <GlossaryLink term="TTFA" /></span> <SortIcon active={sttSort.key === "ttfa"} dir={sttSort.dir} />
                   </th>
                   <th>{isFr ? "Typ." : "Typical"}</th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("priceMin")}>
                     $/min <SortIcon active={sttSort.key === "priceMin"} dir={sttSort.dir} />
                   </th>
                   <th>{isFr ? "Langues" : "Languages"}</th>
-                  <th>{isFr ? "Souveraineté" : "Sovereignty"}</th>
-                  <th>{isFr ? "Streaming" : "Streaming"}</th>
+                  <th><span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span></th>
+                  <th><span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span></th>
                   <th>{isFr ? "Note" : "Note"}</th>
                 </tr>
               </thead>
@@ -259,16 +260,16 @@ export default function VoiceBenchmarks() {
                 <tr>
                   <th>{isFr ? "Moteur" : "Engine"}</th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("ttfa")}>
-                    TTFA (ms) <SortIcon active={ttsSort.key === "ttfa"} dir={ttsSort.dir} />
+                    <span className="inline-flex items-center gap-1">TTFA (ms) <GlossaryLink term="TTFA" /></span> <SortIcon active={ttsSort.key === "ttfa"} dir={ttsSort.dir} />
                   </th>
                   <th>{isFr ? "Typ." : "Typical"}</th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("elo")}>
-                    ELO <SortIcon active={ttsSort.key === "elo"} dir={ttsSort.dir} />
+                    <span className="inline-flex items-center gap-1">ELO <GlossaryLink term="ELO Score" /></span> <SortIcon active={ttsSort.key === "elo"} dir={ttsSort.dir} />
                   </th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("priceMin")}>
                     $/min <SortIcon active={ttsSort.key === "priceMin"} dir={ttsSort.dir} />
                   </th>
-                  <th>{isFr ? "Souveraineté" : "Sovereignty"}</th>
+                  <th><span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span></th>
                   <th>{isFr ? "Note" : "Note"}</th>
                 </tr>
               </thead>

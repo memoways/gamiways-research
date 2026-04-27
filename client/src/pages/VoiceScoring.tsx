@@ -11,6 +11,7 @@ import { getTTSData, type TTSData } from "@/lib/ttsData";
 import { getSTTData, type STTData } from "@/lib/sttData";
 import { ttsStrategicData, sttStrategicData } from "@/lib/strategicData";
 import { ChevronLeft, RotateCcw, Sliders, Trophy, Info, Link2, Check, Home, ChevronRight } from "lucide-react";
+import GlossaryLink from "@/components/GlossaryLink";
 
 // ─── Types ──────────────────────────────────────────────────────────────
 
@@ -192,16 +193,17 @@ function computeSTTScore(stt: STTData, w: STTWeights): number {
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function WeightSlider({
-  label, labelFr, value, onChange, isFr, color,
+  label, labelFr, value, onChange, isFr, color, glossaryTerm,
 }: {
   label: string; labelFr: string; value: number;
-  onChange: (v: number) => void; isFr: boolean; color: string;
+  onChange: (v: number) => void; isFr: boolean; color: string; glossaryTerm?: string;
 }) {
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        <span className="text-xs font-semibold text-slate-700 flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
           {isFr ? labelFr : label}
+          {glossaryTerm && <GlossaryLink term={glossaryTerm} />}
         </span>
         <span
           className="text-xs font-bold font-mono w-6 text-right"
@@ -503,23 +505,23 @@ export default function VoiceScoring() {
     setActivePreset(null);
   }
 
-  const ttsSliders: { key: keyof TTSWeights; label: string; labelFr: string; color: string }[] = [
-    { key: "quality", label: "Voice Quality", labelFr: "Qualité vocale", color: "oklch(0.72 0.18 200)" },
-    { key: "latency", label: "Latency (TTFA)", labelFr: "Latence (TTFA)", color: "oklch(0.65 0.18 145)" },
-    { key: "voiceCloning", label: "Voice Cloning", labelFr: "Clonage vocal", color: "oklch(0.72 0.18 280)" },
-    { key: "expressiveness", label: "Expressiveness", labelFr: "Expressivité", color: "oklch(0.72 0.18 50)" },
-    { key: "sovereignty", label: "Data Sovereignty", labelFr: "Souveraineté données", color: "oklch(0.72 0.18 25)" },
+  const ttsSliders: { key: keyof TTSWeights; label: string; labelFr: string; color: string; glossaryTerm?: string }[] = [
+    { key: "quality", label: "Voice Quality", labelFr: "Qualité vocale", color: "oklch(0.72 0.18 200)", glossaryTerm: "ELO Score" },
+    { key: "latency", label: "Latency (TTFA)", labelFr: "Latence (TTFA)", color: "oklch(0.65 0.18 145)", glossaryTerm: "TTFA" },
+    { key: "voiceCloning", label: "Voice Cloning", labelFr: "Clonage vocal", color: "oklch(0.72 0.18 280)", glossaryTerm: "Voice Cloning" },
+    { key: "expressiveness", label: "Expressiveness", labelFr: "Expressivité", color: "oklch(0.72 0.18 50)", glossaryTerm: "Prosody" },
+    { key: "sovereignty", label: "Data Sovereignty", labelFr: "Souveraineté données", color: "oklch(0.72 0.18 25)", glossaryTerm: "Sovereignty" },
     { key: "pricing", label: "Cost / Pricing", labelFr: "Coût / Prix", color: "oklch(0.65 0.18 145)" },
     { key: "multilingual", label: "Multilingual", labelFr: "Multilingue", color: "oklch(0.72 0.18 230)" },
   ];
 
-  const sttSliders: { key: keyof STTWeights; label: string; labelFr: string; color: string }[] = [
-    { key: "accuracy", label: "Accuracy (WER)", labelFr: "Précision (WER)", color: "oklch(0.72 0.18 50)" },
-    { key: "latency", label: "Latency (streaming)", labelFr: "Latence (streaming)", color: "oklch(0.65 0.18 145)" },
+  const sttSliders: { key: keyof STTWeights; label: string; labelFr: string; color: string; glossaryTerm?: string }[] = [
+    { key: "accuracy", label: "Accuracy (WER)", labelFr: "Précision (WER)", color: "oklch(0.72 0.18 50)", glossaryTerm: "WER" },
+    { key: "latency", label: "Latency (streaming)", labelFr: "Latence (streaming)", color: "oklch(0.65 0.18 145)", glossaryTerm: "TTFA" },
     { key: "multilingual", label: "Multilingual", labelFr: "Multilingue", color: "oklch(0.72 0.18 230)" },
-    { key: "sovereignty", label: "Data Sovereignty", labelFr: "Souveraineté données", color: "oklch(0.72 0.18 25)" },
+    { key: "sovereignty", label: "Data Sovereignty", labelFr: "Souveraineté données", color: "oklch(0.72 0.18 25)", glossaryTerm: "Sovereignty" },
     { key: "pricing", label: "Cost / Pricing", labelFr: "Coût / Prix", color: "oklch(0.65 0.18 145)" },
-    { key: "streaming", label: "Real-time Streaming", labelFr: "Streaming temps réel", color: "oklch(0.72 0.18 200)" },
+    { key: "streaming", label: "Real-time Streaming", labelFr: "Streaming temps réel", color: "oklch(0.72 0.18 200)", glossaryTerm: "Streaming" },
   ];
 
   const currentWeights = mode === "tts" ? ttsWeights : sttWeights;
@@ -662,7 +664,7 @@ export default function VoiceScoring() {
                 <span className="text-xs text-slate-400 font-mono">0–10</span>
               </div>
               <div className="space-y-4">
-                {currentSliders.map(({ key, label, labelFr, color }) => (
+                {currentSliders.map(({ key, label, labelFr, color, glossaryTerm }) => (
                   <WeightSlider
                     key={key}
                     label={label}
@@ -671,6 +673,7 @@ export default function VoiceScoring() {
                     onChange={(v) => mode === "tts" ? updateTTS(key as keyof TTSWeights, v) : updateSTT(key as keyof STTWeights, v)}
                     isFr={isFr}
                     color={color}
+                    glossaryTerm={glossaryTerm}
                   />
                 ))}
               </div>

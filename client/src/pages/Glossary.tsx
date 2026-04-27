@@ -457,8 +457,10 @@ function TermCard({ term, isFr }: { term: GlossaryTerm; isFr: boolean }) {
   const definition = isFr ? term.definitionFr : term.definition;
   const preview = definition.length > 120 ? definition.slice(0, 120) + "…" : definition;
 
+  const slug = term.term.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+
   return (
-    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:border-slate-300 transition-all">
+    <div id={slug} className="bg-white border border-slate-200 rounded-xl overflow-hidden hover:border-slate-300 transition-all scroll-mt-28">
       <button
         className="w-full text-left px-5 py-4 flex items-start justify-between gap-4"
         onClick={() => setOpen(!open)}

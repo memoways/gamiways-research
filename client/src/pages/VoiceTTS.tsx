@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
+import GlossaryLink from "@/components/GlossaryLink";
 import { getTTSByCategory, type TTSData } from "@/lib/ttsData";
 import SectionHeader from "@/components/SectionHeader";
 import { Home, ChevronRight } from "lucide-react";
@@ -197,9 +198,9 @@ export default function VoiceTTS() {
                 <thead>
                   <tr>
                     <th>{isFr ? "Solution" : "Solution"}</th>
-                    <th>TTFA</th>
-                    <th>ELO</th>
-                    <th>{isFr ? "Clonage" : "Cloning"}</th>
+                    <th><span className="inline-flex items-center gap-1">TTFA <GlossaryLink term="TTFA" /></span></th>
+                    <th><span className="inline-flex items-center gap-1">ELO <GlossaryLink term="ELO Score" /></span></th>
+                    <th><span className="inline-flex items-center gap-1">{isFr ? "Clonage" : "Cloning"} <GlossaryLink term="Voice Cloning" /></span></th>
                     <th>{isFr ? "Émotion" : "Emotion"}</th>
                     <th>{isFr ? "Multilingue" : "Multilingual"}</th>
                     <th>{isFr ? "Prix/1M" : "Price/1M"}</th>
@@ -268,10 +269,10 @@ export default function VoiceTTS() {
                 <thead>
                   <tr>
                     <th>{isFr ? "Solution" : "Solution"}</th>
-                    <th>TTFA</th>
-                    <th>ELO</th>
-                    <th>{isFr ? "Clonage" : "Cloning"}</th>
-                    <th>{isFr ? "V2V" : "V2V"}</th>
+                    <th><span className="inline-flex items-center gap-1">TTFA <GlossaryLink term="TTFA" /></span></th>
+                    <th><span className="inline-flex items-center gap-1">ELO <GlossaryLink term="ELO Score" /></span></th>
+                    <th><span className="inline-flex items-center gap-1">{isFr ? "Clonage" : "Cloning"} <GlossaryLink term="Voice Cloning" /></span></th>
+                    <th><span className="inline-flex items-center gap-1">V2V <GlossaryLink term="End-to-End Speech Model" /></span></th>
                     <th>{isFr ? "Multilingue" : "Multilingual"}</th>
                     <th>{isFr ? "Licence" : "License"}</th>
                     <th>{isFr ? "Fiche" : "Detail"}</th>

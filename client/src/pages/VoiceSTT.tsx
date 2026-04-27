@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
+import GlossaryLink from "@/components/GlossaryLink";
 import { getSTTByCategory, type STTData } from "@/lib/sttData";
 import SectionHeader from "@/components/SectionHeader";
 import { Home, ChevronRight } from "lucide-react";
@@ -141,13 +142,13 @@ export default function VoiceSTT() {
                 <thead>
                   <tr>
                     <th>{isFr ? "Solution" : "Solution"}</th>
-                    <th>TTFA</th>
-                    <th>WER</th>
-                    <th>{isFr ? "Streaming" : "Streaming"}</th>
+                    <th><span className="inline-flex items-center gap-1">TTFA <GlossaryLink term="TTFA" /></span></th>
+                    <th><span className="inline-flex items-center gap-1">WER <GlossaryLink term="WER" /></span></th>
+                    <th><span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span></th>
                     <th>{isFr ? "Multilingue" : "Multilingual"}</th>
-                    <th>{isFr ? "Diarisation" : "Diarization"}</th>
+                    <th><span className="inline-flex items-center gap-1">{isFr ? "Diarisation" : "Diarization"} <GlossaryLink term="Diarization" /></span></th>
                     <th>{isFr ? "Prix/heure" : "Price/hr"}</th>
-                    <th>{isFr ? "Souverain" : "Sovereign"}</th>
+                    <th><span className="inline-flex items-center gap-1">{isFr ? "Souverain" : "Sovereign"} <GlossaryLink term="Sovereignty" /></span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -216,10 +217,10 @@ export default function VoiceSTT() {
                 <thead>
                   <tr>
                     <th>{isFr ? "Solution" : "Solution"}</th>
-                    <th>TTFA</th>
-                    <th>WER</th>
+                    <th><span className="inline-flex items-center gap-1">TTFA <GlossaryLink term="TTFA" /></span></th>
+                    <th><span className="inline-flex items-center gap-1">WER <GlossaryLink term="WER" /></span></th>
                     <th>{isFr ? "Params" : "Params"}</th>
-                    <th>{isFr ? "Streaming" : "Streaming"}</th>
+                    <th><span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span></th>
                     <th>{isFr ? "Multilingue" : "Multilingual"}</th>
                     <th>{isFr ? "Licence" : "License"}</th>
                   </tr>
