@@ -8,7 +8,7 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, ChevronDown, FlaskConical, Mic, Video } from "lucide-react";
+import { Menu, X, ChevronDown, FlaskConical, Mic, Video, Info } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 
 interface NavDropdownItem {
@@ -72,6 +72,17 @@ const NAV_MENUS: NavMenu[] = [
       { href: "/avatars/market", label: "Business & Market", labelFr: "Business & Marché", desc: "Business challenges & market opportunities", descFr: "Enjeux business & opportunités de marché" },
       { href: "/research/behavior", label: "Behavior & Expressiveness", labelFr: "Comportement & Expressivité", desc: "Axis 2 — behavioral fidelity & expressiveness", descFr: "Axe 2 — fidélité comportementale & expressivité" },
       { href: "/research/emotional", label: "Emotional Toolbox", labelFr: "Boîte à Outils Émotionnelle", desc: "Character & emotion design", descFr: "Design émotionnel & personnage" },
+    ],
+  },
+  {
+    label: "About",
+    labelFr: "À propos",
+    icon: Info,
+    color: "oklch(0.60 0.20 280)",
+    activePrefix: ["/about", "/glossary"],
+    items: [
+      { href: "/about", label: "About this portal", labelFr: "À propos du portail", desc: "Purpose, editorial philosophy & portal structure", descFr: "Objectifs, philosophie éditoriale & structure du portail" },
+      { href: "/glossary", label: "Technical Glossary", labelFr: "Glossaire Technique", desc: "30+ terms: WER, TTFA, ELO, SSM, sovereignty, lock-in…", descFr: "30+ termes : WER, TTFA, ELO, SSM, souveraineté, lock-in…" },
     ],
   },
 ];

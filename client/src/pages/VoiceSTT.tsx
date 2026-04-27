@@ -47,17 +47,13 @@ export default function VoiceSTT() {
           <InternalLink to="/voice/tts" className="text-slate-500 hover:text-slate-800 transition-colors">Voice Pipeline</InternalLink>
           <ChevronRight size={11} className="text-slate-300" />
           <span className="font-semibold" style={{ color: "oklch(0.45 0.15 200)" }}>{isFr ? "STT / Reconnaissance Vocale" : "STT / Speech-to-Text"}</span>
-          <div className="ml-auto flex gap-2">
-            <InternalLink to="/voice/tts" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">→ TTS</InternalLink>
-            <InternalLink to="/voice/scoring" className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.55 0.20 280 / 0.1)", color: "oklch(0.45 0.20 280)" }}>★ Scoring</InternalLink>
-            <InternalLink to="/voice/pipeline" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">→ V2V</InternalLink>
-          </div>
+
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <SectionHeader
-          number="C"
+          number=""
           title={isFr ? "STT / Reconnaissance Vocale" : "STT / Speech-to-Text"}
           subtitle={isFr
             ? "Comparatif des solutions de reconnaissance vocale pour les pipelines conversationnels (2025–2026). Benchmarks, enjeux stratégiques et questions de décision."
@@ -66,16 +62,16 @@ export default function VoiceSTT() {
         />
 
         {/* Strategic Framing Banner */}
-        <div className="mb-8 rounded-2xl border border-orange-200 bg-orange-50 overflow-hidden">
-          <div className="px-6 py-4 border-b border-orange-200 flex items-center gap-3">
+        <div className="mb-8 rounded-2xl border border-sky-200 bg-sky-50 overflow-hidden">
+          <div className="px-6 py-4 border-b border-sky-200 flex items-center gap-3">
             <span className="text-lg">🎯</span>
-            <h3 className="text-sm font-bold uppercase tracking-widest text-orange-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-sky-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               {isFr ? "Cadrage stratégique — STT : bien plus qu'un WER" : "Strategic Framing — STT: Much More Than a WER"}
             </h3>
           </div>
           <div className="px-6 py-5 grid md:grid-cols-3 gap-6">
             <div>
-              <p className="text-xs font-bold text-orange-700 mb-2 uppercase tracking-wider">
+              <p className="text-xs font-bold text-sky-700 mb-2 uppercase tracking-wider">
                 {isFr ? "La vraie question" : "The Real Question"}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">
@@ -85,7 +81,7 @@ export default function VoiceSTT() {
               </p>
             </div>
             <div>
-              <p className="text-xs font-bold text-orange-700 mb-2 uppercase tracking-wider">
+              <p className="text-xs font-bold text-sky-700 mb-2 uppercase tracking-wider">
                 {isFr ? "Spectre d'infrastructure" : "Infrastructure Spectrum"}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">
@@ -95,7 +91,7 @@ export default function VoiceSTT() {
               </p>
             </div>
             <div>
-              <p className="text-xs font-bold text-orange-700 mb-2 uppercase tracking-wider">
+              <p className="text-xs font-bold text-sky-700 mb-2 uppercase tracking-wider">
                 {isFr ? "Signal marché 2026" : "2026 Market Signal"}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">
@@ -105,8 +101,8 @@ export default function VoiceSTT() {
               </p>
             </div>
           </div>
-          <div className="px-6 py-4 border-t border-orange-200 bg-orange-100/50">
-            <p className="text-xs text-orange-700">
+          <div className="px-6 py-4 border-t border-sky-200 bg-sky-100/50">
+            <p className="text-xs text-sky-700">
               <span className="font-bold">
                 {isFr ? "Questions à se poser avant de choisir : " : "Questions to ask before choosing: "}
               </span>

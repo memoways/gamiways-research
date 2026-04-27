@@ -30,6 +30,10 @@ import VoiceBenchmarks from "@/pages/VoiceBenchmarks";
 import VoiceStack from "@/pages/VoiceStack";
 import VoiceScoring from "@/pages/VoiceScoring";
 
+// ── About pages ───────────────────────────────────────────────────────────
+import About from "@/pages/About";
+import Glossary from "@/pages/Glossary";
+
 // ── Avatars pages ──────────────────────────────────────────────────────────
 import AvatarsOverview from "@/pages/AvatarsOverview";
 import AvatarsMarket from "@/pages/AvatarsMarket";
@@ -82,6 +86,10 @@ function Router() {
           <Route path="/avatars/pricing" component={PricingComparison} />
           <Route path="/avatars/market" component={AvatarsMarket} />
           <Route path="/platform/:id" component={PlatformDetail} />
+
+          {/* ── About & Glossary ──────────────────────────────────────────── */}
+          <Route path="/about" component={About} />
+          <Route path="/glossary" component={Glossary} />
 
           {/* ── Legacy redirects ──────────────────────────────────────────── */}
           <Route path="/state-of-art">

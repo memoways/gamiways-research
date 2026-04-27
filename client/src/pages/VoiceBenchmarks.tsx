@@ -153,12 +153,13 @@ export default function VoiceBenchmarks() {
                       <span className="font-bold font-mono text-sm" style={{ color: latencyColor(p.total, 800) }}>{p.total}ms</span>
                     </td>
                     <td>
-                      {p.total <= 800
-                        ? <StatusBadge variant="available" label={isFr ? "CIBLE OK" : "TARGET OK"} />
-                        : p.total <= 1200
-                        ? <StatusBadge variant="rd" label={isFr ? "ACCEPTABLE" : "ACCEPTABLE"} />
-                        : <StatusBadge variant="gap" label={isFr ? "À RÉDUIRE" : "TO REDUCE"} />
-                      }
+                      {p.total <= 800 ? (
+                        <StatusBadge variant="available" label={isFr ? "CIBLE OK" : "TARGET OK"} />
+                      ) : p.total <= 1200 ? (
+                        <StatusBadge variant="rd" label={isFr ? "ACCEPTABLE" : "ACCEPTABLE"} />
+                      ) : (
+                        <StatusBadge variant="gap" label={isFr ? "À RÉDUIRE" : "TO REDUCE"} />
+                      )}
                     </td>
                   </tr>
                 ))}
