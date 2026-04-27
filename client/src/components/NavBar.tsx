@@ -52,9 +52,9 @@ const NAV_MENUS: NavMenu[] = [
     color: "oklch(0.55 0.20 200)",
     activePrefix: ["/voice"],
     items: [
-      { href: "/voice/tts", label: "TTS — Speech Synthesis", labelFr: "TTS — Synthèse Vocale", desc: "14+ engines compared", descFr: "14+ moteurs comparés" },
-      { href: "/voice/stt", label: "STT — Speech Recognition", labelFr: "STT — Reconnaissance Vocale", desc: "Cloud & open-source", descFr: "Cloud & open-source" },
-      { href: "/voice/benchmarks", label: "Latency Benchmarks", labelFr: "Benchmarks Latence", desc: "End-to-end timing analysis", descFr: "Analyse des temps end-to-end" },
+      { href: "/voice/stt", label: "STT — Speech Recognition", labelFr: "STT — Reconnaissance Vocale", desc: "10 engines — cloud, on-premise & open-source", descFr: "10 moteurs — cloud, on-premise & open-source" },
+      { href: "/voice/tts", label: "TTS — Speech Synthesis", labelFr: "TTS — Synthèse Vocale", desc: "16 engines compared", descFr: "16 moteurs comparés" },
+      { href: "/voice/benchmarks", label: "Audio Synthesis Benchmarks", labelFr: "Benchmarks Synthèse Audio", desc: "STT → TTS — comparative synthesis & key metrics", descFr: "STT → TTS — synthèse comparative & métriques clés" },
       { href: "/voice/stack", label: "Decision Framework", labelFr: "Cadre de Décision", desc: "Layer-by-layer decision guide with simulator", descFr: "Guide de décision par couche avec simulateur" },
       { href: "/voice/scoring", label: "Custom Scoring", labelFr: "Scoring Personnalisé", desc: "Weight criteria, get your personalized tool ranking", descFr: "Pondérez les critères, obtenez votre classement personnalisé", highlight: true, highlightColor: "oklch(0.55 0.20 280)" },
       { href: "/voice/pipeline", label: "V2V Pipeline Diagram", labelFr: "Diagramme Pipeline V2V", desc: "Interactive V2V diagram — select components, visualize latency & cost", descFr: "Diagramme V2V interactif — composants, latence & coût", highlight: true, highlightColor: "oklch(0.55 0.20 200)" },

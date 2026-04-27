@@ -1,33 +1,94 @@
 /**
  * VoiceBenchmarks.tsx — DigiDouble Research Portal
- * Page: Latency Benchmarks — extracted from StateOfArt section D
+ * Page: Audio Synthesis Benchmarks — STT → TTS comparative synthesis
+ * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
  */
+import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
-import LatencyBenchmarkDiagram from "@/components/diagrams/LatencyBenchmarkDiagram";
-import DiagramModal from "@/components/DiagramModal";
 import StatusBadge from "@/components/StatusBadge";
-import { Home, ChevronRight } from "lucide-react";
+import { Home, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
+
+// ─── STT DATA ─────────────────────────────────────────────────────────────────
+const STT_BENCHMARKS = [
+  { id: "deepgram-nova3",    name: "Deepgram Nova-3",             wer: 7.2,  ttfa: 75,  ttfaTyp: 200, priceMin: 0.0036, self: true,  streaming: true,  langs: 36,  notes: "Best latency cloud" },
+  { id: "assemblyai",        name: "AssemblyAI Universal-2",      wer: 4.9,  ttfa: 150, ttfaTyp: 300, priceMin: 0.0062, self: false, streaming: true,  langs: 99,  notes: "Best WER cloud" },
+  { id: "google-stt",        name: "Google Speech-to-Text v2",    wer: 6.8,  ttfa: 200, ttfaTyp: 400, priceMin: 0.006,  self: false, streaming: true,  langs: 125, notes: "Largest language coverage" },
+  { id: "azure-stt",         name: "Azure Speech (Microsoft)",    wer: 5.9,  ttfa: 180, ttfaTyp: 350, priceMin: 0.0167, self: true,  streaming: true,  langs: 100, notes: "EU on-premise available" },
+  { id: "whisper-large-v3",  name: "Whisper Large v3",            wer: 2.7,  ttfa: 300, ttfaTyp: 800, priceMin: 0,      self: true,  streaming: false, langs: 99,  notes: "Best WER overall (open)" },
+  { id: "faster-whisper",    name: "faster-whisper (CTranslate2)",wer: 2.7,  ttfa: 150, ttfaTyp: 300, priceMin: 0,      self: true,  streaming: true,  langs: 99,  notes: "Whisper quality + streaming" },
+  { id: "whisper-turbo",     name: "Whisper Turbo",               wer: 3.0,  ttfa: 100, ttfaTyp: 200, priceMin: 0,      self: true,  streaming: true,  langs: 99,  notes: "Speed/quality balance" },
+  { id: "audiogami",         name: "Audiogami (Gamilab)",         wer: 3.5,  ttfa: 200, ttfaTyp: 400, priceMin: 0,      self: true,  streaming: true,  langs: 5,   notes: "CH-hosted, FR/DE/Swiss-DE" },
+  { id: "voxtral-asr",       name: "Voxtral ASR (Mistral)",       wer: 5.0,  ttfa: 120, ttfaTyp: 250, priceMin: 0.003,  self: true,  streaming: true,  langs: 30,  notes: "EU-sovereign, open-weights" },
+  { id: "inworld-stt",       name: "Inworld STT",                 wer: 5.0,  ttfa: 92,  ttfaTyp: 150, priceMin: 0.006,  self: false, streaming: true,  langs: 20,  notes: "Voice agent optimized" },
+];
+
+// ─── TTS DATA ─────────────────────────────────────────────────────────────────
+const TTS_BENCHMARKS = [
+  { id: "cartesia",       name: "Cartesia Sonic 3",              ttfa: 40,  ttfaTyp: 90,   elo: 1054, priceMin: 0.047, self: false, notes: "Fastest TTFA (SSM arch)" },
+  { id: "kokoro",         name: "Kokoro 82M v1.0",               ttfa: 60,  ttfaTyp: 120,  elo: 1059, priceMin: 0.0007,self: true,  notes: "Best open-source quality/cost" },
+  { id: "elevenlabs",     name: "ElevenLabs v3",                 ttfa: 75,  ttfaTyp: 200,  elo: 1108, priceMin: 0.206, self: false, notes: "Top 3 quality, best cloning" },
+  { id: "deepgram_aura",  name: "Deepgram Aura 2",               ttfa: 80,  ttfaTyp: 150,  elo: 0,    priceMin: 0.015, self: false, notes: "Voice agent optimized" },
+  { id: "hume_octave",    name: "Hume AI Octave 2",              ttfa: 100, ttfaTyp: 200,  elo: 1046, priceMin: 0.0076,self: false, notes: "Emotion-aware TTS" },
+  { id: "kyutai_tts",     name: "Kyutai TTS 1.6B",               ttfa: 100, ttfaTyp: 200,  elo: 0,    priceMin: 0,     self: true,  notes: "Open, multilingual" },
+  { id: "ultravox",       name: "Ultravox v0.5",                 ttfa: 100, ttfaTyp: 300,  elo: 0,    priceMin: 0.05,  self: true,  notes: "End-to-end speech LLM" },
+  { id: "inworld_tts",    name: "Inworld TTS-1.5",               ttfa: 130, ttfaTyp: 250,  elo: 1160, priceMin: 0.01,  self: true,  notes: "ELO #1, low cost, on-premise" },
+  { id: "chatterbox",     name: "Chatterbox (Resemble AI)",      ttfa: 150, ttfaTyp: 300,  elo: 1050, priceMin: 0.04,  self: true,  notes: "Expressive open-source" },
+  { id: "voxtral_tts",    name: "Voxtral TTS (Mistral)",         ttfa: 150, ttfaTyp: 300,  elo: 0,    priceMin: 0.02,  self: true,  notes: "EU-sovereign, open-weights" },
+  { id: "fish_audio",     name: "Fish Audio OpenAudio S1",       ttfa: 200, ttfaTyp: 400,  elo: 1074, priceMin: 0.015, self: false, notes: "Best multilingual cloning" },
+  { id: "moshi",          name: "Moshi (Kyutai)",                ttfa: 200, ttfaTyp: 500,  elo: 0,    priceMin: 0,     self: true,  notes: "Full-duplex end-to-end" },
+  { id: "orpheus",        name: "Orpheus 3B",                    ttfa: 200, ttfaTyp: 500,  elo: 0,    priceMin: 0,     self: true,  notes: "Emotional open-source" },
+  { id: "openai_realtime",name: "OpenAI Realtime API",           ttfa: 300, ttfaTyp: 700,  elo: 1106, priceMin: 0.10,  self: false, notes: "Full-duplex, GPT-4o native" },
+  { id: "dia",            name: "Dia (Nari Labs)",               ttfa: 300, ttfaTyp: 800,  elo: 0,    priceMin: 0,     self: true,  notes: "Multi-speaker dialogue" },
+  { id: "sesame_csm",     name: "Sesame CSM",                    ttfa: 400, ttfaTyp: 1000, elo: 0,    priceMin: 0,     self: true,  notes: "Context-aware prosody" },
+];
+
+// ─── PIPELINE LATENCY BUDGETS ──────────────────────────────────────────────────
+const PIPELINE_BUDGETS = [
+  { profile: "Voice agent (cloud)",     stt: 150, llm: 600, tts: 120, network: 60,  total: 930,  color: "oklch(0.72 0.18 200)" },
+  { profile: "Voice agent (hybrid)",    stt: 100, llm: 400, tts: 80,  network: 50,  total: 630,  color: "oklch(0.65 0.18 145)" },
+  { profile: "Self-hosted sovereign",   stt: 200, llm: 350, tts: 100, network: 40,  total: 690,  color: "oklch(0.72 0.18 50)" },
+  { profile: "End-to-end (Ultravox/Moshi)", stt: 0, llm: 0, tts: 300, network: 60, total: 360,  color: "oklch(0.60 0.20 280)" },
+];
+
+function SortIcon({ active, dir }: { active: boolean; dir: "asc" | "desc" }) {
+  return active
+    ? dir === "asc" ? <ChevronUp size={11} className="inline ml-0.5" /> : <ChevronDown size={11} className="inline ml-0.5" />
+    : <span className="inline-block w-3" />;
+}
 
 export default function VoiceBenchmarks() {
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
-  const latencyBenchmarks = [
-    { component: isFr ? "ASR/STT (Deepgram low-latency)" : "ASR/STT (Deepgram low-latency)", best: 75, typical: 200, unit: "ms" },
-    { component: isFr ? "ASR/STT (Whisper local)" : "ASR/STT (Whisper local)", best: 200, typical: 500, unit: "ms" },
-    { component: isFr ? "LLM (GPT-4o streaming)" : "LLM (GPT-4o streaming)", best: 350, typical: 800, unit: "ms" },
-    { component: isFr ? "LLM (SLM local quantifié)" : "LLM (quantized local SLM)", best: 150, typical: 400, unit: "ms" },
-    { component: isFr ? "TTS (Cartesia streaming)" : "TTS (Cartesia streaming)", best: 80, typical: 150, unit: "ms" },
-    { component: isFr ? "TTS (ElevenLabs streaming)" : "TTS (ElevenLabs streaming)", best: 180, typical: 250, unit: "ms" },
-    { component: isFr ? "TTS (Kokoro local)" : "TTS (Kokoro local)", best: 60, typical: 120, unit: "ms" },
-    { component: isFr ? "Avatar (Beyond Presence)" : "Avatar (Beyond Presence)", best: 80, typical: 100, unit: "ms" },
-    { component: isFr ? "Avatar (HeyGen API)" : "Avatar (HeyGen API)", best: 3000, typical: 8000, unit: "ms" },
-    { component: isFr ? "Avatar (HeyGem OS, GPU)" : "Avatar (HeyGem OS, GPU)", best: 2000, typical: 5000, unit: "ms" },
-    { component: isFr ? "Réseau (WebRTC)" : "Network (WebRTC)", best: 30, typical: 80, unit: "ms" },
-  ];
+  type SttKey = "wer" | "ttfa" | "priceMin";
+  type TtsKey = "ttfa" | "elo" | "priceMin";
+
+  const [sttSort, setSttSort] = useState<{ key: SttKey; dir: "asc" | "desc" }>({ key: "ttfa", dir: "asc" });
+  const [ttsSort, setTtsSort] = useState<{ key: TtsKey; dir: "asc" | "desc" }>({ key: "ttfa", dir: "asc" });
+
+  const sortedStt = [...STT_BENCHMARKS].sort((a, b) => {
+    const v = sttSort.dir === "asc" ? a[sttSort.key] - b[sttSort.key] : b[sttSort.key] - a[sttSort.key];
+    return v;
+  });
+
+  const sortedTts = [...TTS_BENCHMARKS].sort((a, b) => {
+    const v = ttsSort.dir === "asc" ? a[ttsSort.key] - b[ttsSort.key] : b[ttsSort.key] - a[ttsSort.key];
+    return v;
+  });
+
+  function toggleStt(key: SttKey) {
+    setSttSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" });
+  }
+
+  function toggleTts(key: TtsKey) {
+    setTtsSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" });
+  }
+
+  const latencyColor = (ms: number, threshold: number) =>
+    ms <= threshold ? "oklch(0.65 0.18 145)" : ms <= threshold * 2 ? "oklch(0.72 0.18 50)" : "oklch(0.60 0.20 25)";
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -36,83 +97,280 @@ export default function VoiceBenchmarks() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
           <InternalLink to="/" className="text-slate-400 hover:text-slate-700 transition-colors" aria-label={isFr ? "Accueil" : "Home"}><Home size={12} /></InternalLink>
           <ChevronRight size={11} className="text-slate-300" />
-          <InternalLink to="/voice/tts" className="text-slate-500 hover:text-slate-800 transition-colors">Voice Pipeline</InternalLink>
+          <InternalLink to="/voice/stt" className="text-slate-500 hover:text-slate-800 transition-colors">Voice Pipeline</InternalLink>
           <ChevronRight size={11} className="text-slate-300" />
-          <span className="font-semibold" style={{ color: "oklch(0.45 0.15 200)" }}>{isFr ? "Benchmarks de Latence" : "Latency Benchmarks"}</span>
-          <div className="ml-auto flex gap-2">
-            <InternalLink to="/voice/tts" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">← TTS</InternalLink>
+          <span className="font-semibold" style={{ color: "oklch(0.45 0.15 200)" }}>{isFr ? "Benchmarks Synthèse Audio" : "Audio Synthesis Benchmarks"}</span>
+          <div className="ml-auto flex gap-3">
             <InternalLink to="/voice/stt" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">← STT</InternalLink>
-            <InternalLink to="/voice/pipeline" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">→ V2V</InternalLink>
+            <InternalLink to="/voice/tts" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">← TTS</InternalLink>
+            <InternalLink to="/voice/stack" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">→ {isFr ? "Cadre de Décision" : "Decision Framework"}</InternalLink>
           </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-12">
         <SectionHeader
           number="D"
-          title={isFr ? "Benchmarks de Latence" : "Latency Benchmarks"}
+          title={isFr ? "Benchmarks Synthèse Audio — STT → TTS" : "Audio Synthesis Benchmarks — STT → TTS"}
           subtitle={isFr
-            ? "État de l'art des performances par composant du pipeline conversationnel (2025–2026)."
-            : "State-of-the-art performance by component of the conversational pipeline (2025–2026)."}
+            ? "Synthèse comparative des 10 moteurs STT et 16 moteurs TTS évalués. Métriques clés, budgets de latence pipeline et enjeux de décision (2025–2026)."
+            : "Comparative synthesis of 10 STT and 16 TTS engines evaluated. Key metrics, pipeline latency budgets, and decision stakes (2025–2026)."}
           accent="orange"
         />
 
-        {/* Diagram */}
-        <DiagramModal title="Latency Benchmarks by Component (2025–2026)">
-          <LatencyBenchmarkDiagram />
-        </DiagramModal>
-
-        <div className="mb-4 mt-6">
+        {/* ── PIPELINE LATENCY BUDGETS ── */}
+        <section>
+          <h2 className="text-base font-bold mb-1 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
+            {isFr ? "Budgets de latence pipeline" : "Pipeline latency budgets"}
+          </h2>
+          <p className="text-sm text-slate-500 mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? "Décomposition de la latence end-to-end par profil d'architecture (STT + LLM + TTS + réseau). Cible conversationnelle : < 1 000 ms."
+              : "End-to-end latency breakdown by architecture profile (STT + LLM + TTS + network). Conversational target: < 1,000 ms."}
+          </p>
           <div className="overflow-x-auto">
             <table className="data-table">
               <thead>
                 <tr>
-                  <th>{isFr ? "Composant" : "Component"}</th>
-                  <th>Best-case</th>
-                  <th>{isFr ? "Typique" : "Typical"}</th>
-                  <th>{isFr ? "Visualisation" : "Visualization"}</th>
-                  <th>{isFr ? "Statut vs cible DigiDouble" : "Status vs DigiDouble target"}</th>
+                  <th>{isFr ? "Profil" : "Profile"}</th>
+                  <th>STT</th>
+                  <th>LLM</th>
+                  <th>TTS</th>
+                  <th>{isFr ? "Réseau" : "Network"}</th>
+                  <th>{isFr ? "Total estimé" : "Estimated total"}</th>
+                  <th>{isFr ? "Statut" : "Status"}</th>
                 </tr>
               </thead>
               <tbody>
-                {latencyBenchmarks.map((b) => {
-                  const target = b.component.includes("Avatar") ? 500 : b.component.includes("LLM") ? 500 : 300;
-                  const isOnTarget = b.best <= target;
-                  const maxDisplay = 10000;
-                  return (
-                    <tr key={b.component}>
-                      <td className="text-sm font-medium text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{b.component}</td>
-                      <td><span className="text-sm font-bold font-mono" style={{ color: isOnTarget ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }}>{b.best}{b.unit}</span></td>
-                      <td><span className="text-sm font-mono text-slate-500">{b.typical}{b.unit}</span></td>
-                      <td className="w-40">
-                        <div className="latency-bar">
-                          <div className="latency-fill" style={{ width: `${Math.min((b.typical / maxDisplay) * 100, 100)}%`, background: isOnTarget ? "oklch(0.65 0.18 145)" : "oklch(0.60 0.20 25)" }} />
-                        </div>
-                      </td>
-                      <td>
-                        {isOnTarget
-                          ? <StatusBadge variant="available" label="OK" />
-                          : <StatusBadge variant="gap" label={isFr ? "À RÉDUIRE" : "TO REDUCE"} />
-                        }
-                      </td>
-                    </tr>
-                  );
-                })}
+                {PIPELINE_BUDGETS.map((p) => (
+                  <tr key={p.profile}>
+                    <td className="font-semibold text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif", color: p.color }}>{p.profile}</td>
+                    <td><span className="font-mono text-sm">{p.stt > 0 ? `${p.stt}ms` : "—"}</span></td>
+                    <td><span className="font-mono text-sm">{p.llm > 0 ? `${p.llm}ms` : "—"}</span></td>
+                    <td><span className="font-mono text-sm">{p.tts}ms</span></td>
+                    <td><span className="font-mono text-sm">{p.network}ms</span></td>
+                    <td>
+                      <span className="font-bold font-mono text-sm" style={{ color: latencyColor(p.total, 800) }}>{p.total}ms</span>
+                    </td>
+                    <td>
+                      {p.total <= 800
+                        ? <StatusBadge variant="available" label={isFr ? "CIBLE OK" : "TARGET OK"} />
+                        : p.total <= 1200
+                        ? <StatusBadge variant="rd" label={isFr ? "ACCEPTABLE" : "ACCEPTABLE"} />
+                        : <StatusBadge variant="gap" label={isFr ? "À RÉDUIRE" : "TO REDUCE"} />
+                      }
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-        </div>
+          <p className="text-xs text-slate-400 mt-2" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+            {isFr ? "* Estimations best-case. Le profil end-to-end (Ultravox/Moshi) fusionne STT+LLM+TTS en un seul modèle." : "* Best-case estimates. End-to-end profile (Ultravox/Moshi) merges STT+LLM+TTS into a single model."}
+          </p>
+        </section>
 
-        <div className="callout-warning mt-6">
-          <p className="text-sm font-semibold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Analyse : le trilemme Qualité / Latence / Coût" : "Analysis: the Quality / Latency / Cost trilemma"}
-          </p>
-          <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+        {/* ── STT BENCHMARKS ── */}
+        <section>
+          <h2 className="text-base font-bold mb-1 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
+            {isFr ? "STT — Reconnaissance vocale (10 moteurs)" : "STT — Speech Recognition (10 engines)"}
+          </h2>
+          <p className="text-sm text-slate-500 mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? <>Il est impossible d'optimiser simultanément les trois dimensions avec les approches actuelles. Les plateformes à faible latence (&lt;100ms) comme Beyond Presence ou NVIDIA ACE nécessitent une infrastructure propriétaire coûteuse. Les solutions open-source souveraines restent à 2–15s. La recherche fondamentale est nécessaire pour trouver des architectures permettant de briser ce trilemme.{" "}<InternalLink to="/research">Voir les défis de recherche →</InternalLink></>
-              : <>It is impossible to simultaneously optimize all three dimensions with current approaches. Low-latency platforms (&lt;100ms) like Beyond Presence or NVIDIA ACE require costly proprietary infrastructure. Sovereign open-source solutions remain at 2–15s. Fundamental research is needed to find architectures that break this trilemma.{" "}<InternalLink to="/research">See Research Challenges →</InternalLink></>
-            }
+              ? "Cliquez sur les en-têtes pour trier. WER = Word Error Rate (plus bas = meilleur). TTFA = Time to First Audio chunk (latence streaming)."
+              : "Click headers to sort. WER = Word Error Rate (lower = better). TTFA = Time to First Audio chunk (streaming latency)."}
           </p>
+          <div className="overflow-x-auto">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>{isFr ? "Moteur" : "Engine"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("wer")}>
+                    WER % <SortIcon active={sttSort.key === "wer"} dir={sttSort.dir} />
+                  </th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("ttfa")}>
+                    TTFA (ms) <SortIcon active={sttSort.key === "ttfa"} dir={sttSort.dir} />
+                  </th>
+                  <th>{isFr ? "Typ." : "Typical"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("priceMin")}>
+                    $/min <SortIcon active={sttSort.key === "priceMin"} dir={sttSort.dir} />
+                  </th>
+                  <th>{isFr ? "Langues" : "Languages"}</th>
+                  <th>{isFr ? "Souveraineté" : "Sovereignty"}</th>
+                  <th>{isFr ? "Streaming" : "Streaming"}</th>
+                  <th>{isFr ? "Note" : "Note"}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedStt.map((s) => (
+                  <tr key={s.id}>
+                    <td>
+                      <InternalLink to={`/voice/stt/${s.id}`} className="font-semibold text-sm hover:underline" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
+                        {s.name}
+                      </InternalLink>
+                    </td>
+                    <td>
+                      <span className="font-bold font-mono text-sm" style={{ color: latencyColor(s.wer, 4) }}>{s.wer}%</span>
+                    </td>
+                    <td>
+                      <span className="font-bold font-mono text-sm" style={{ color: latencyColor(s.ttfa, 100) }}>{s.ttfa}ms</span>
+                    </td>
+                    <td><span className="font-mono text-xs text-slate-400">{s.ttfaTyp}ms</span></td>
+                    <td>
+                      <span className="font-mono text-sm" style={{ color: s.priceMin === 0 ? "oklch(0.65 0.18 145)" : undefined }}>
+                        {s.priceMin === 0 ? isFr ? "Gratuit" : "Free" : `$${s.priceMin}`}
+                      </span>
+                    </td>
+                    <td><span className="font-mono text-xs text-slate-600">{s.langs}</span></td>
+                    <td>
+                      {s.self
+                        ? <StatusBadge variant="available" label={isFr ? "SELF-HOST" : "SELF-HOST"} />
+                        : <StatusBadge variant="rd" label="CLOUD" />
+                      }
+                    </td>
+                    <td>
+                      {s.streaming
+                        ? <StatusBadge variant="available" label="STREAM" />
+                        : <StatusBadge variant="gap" label="BATCH" />
+                      }
+                    </td>
+                    <td className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>{s.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* ── TTS BENCHMARKS ── */}
+        <section>
+          <h2 className="text-base font-bold mb-1 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
+            {isFr ? "TTS — Synthèse vocale (16 moteurs)" : "TTS — Speech Synthesis (16 engines)"}
+          </h2>
+          <p className="text-sm text-slate-500 mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? "Cliquez sur les en-têtes pour trier. TTFA = Time to First Audio. ELO = score Artificial Analysis (0 = non évalué). Prix = coût par minute de parole générée."
+              : "Click headers to sort. TTFA = Time to First Audio. ELO = Artificial Analysis score (0 = not evaluated). Price = cost per minute of generated speech."}
+          </p>
+          <div className="overflow-x-auto">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>{isFr ? "Moteur" : "Engine"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("ttfa")}>
+                    TTFA (ms) <SortIcon active={ttsSort.key === "ttfa"} dir={ttsSort.dir} />
+                  </th>
+                  <th>{isFr ? "Typ." : "Typical"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("elo")}>
+                    ELO <SortIcon active={ttsSort.key === "elo"} dir={ttsSort.dir} />
+                  </th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("priceMin")}>
+                    $/min <SortIcon active={ttsSort.key === "priceMin"} dir={ttsSort.dir} />
+                  </th>
+                  <th>{isFr ? "Souveraineté" : "Sovereignty"}</th>
+                  <th>{isFr ? "Note" : "Note"}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedTts.map((t) => (
+                  <tr key={t.id}>
+                    <td>
+                      <InternalLink to={`/tts/${t.id}`} className="font-semibold text-sm hover:underline" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
+                        {t.name}
+                      </InternalLink>
+                    </td>
+                    <td>
+                      <span className="font-bold font-mono text-sm" style={{ color: latencyColor(t.ttfa, 100) }}>{t.ttfa}ms</span>
+                    </td>
+                    <td><span className="font-mono text-xs text-slate-400">{t.ttfaTyp}ms</span></td>
+                    <td>
+                      {t.elo > 0
+                        ? <span className="font-bold font-mono text-sm" style={{ color: t.elo >= 1100 ? "oklch(0.65 0.18 145)" : t.elo >= 1050 ? "oklch(0.72 0.18 50)" : undefined }}>{t.elo}</span>
+                        : <span className="text-xs text-slate-300 font-mono">—</span>
+                      }
+                    </td>
+                    <td>
+                      <span className="font-mono text-sm" style={{ color: t.priceMin === 0 ? "oklch(0.65 0.18 145)" : undefined }}>
+                        {t.priceMin === 0 ? isFr ? "Gratuit" : "Free" : `$${t.priceMin}`}
+                      </span>
+                    </td>
+                    <td>
+                      {t.self
+                        ? <StatusBadge variant="available" label={isFr ? "SELF-HOST" : "SELF-HOST"} />
+                        : <StatusBadge variant="rd" label="CLOUD" />
+                      }
+                    </td>
+                    <td className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>{t.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* ── KEY INSIGHTS ── */}
+        <section>
+          <h2 className="text-base font-bold mb-4 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
+            {isFr ? "Points clés de l'analyse" : "Key insights"}
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="callout-warning">
+              <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Le trilemme Qualité / Latence / Coût" : "The Quality / Latency / Cost trilemma"}
+              </p>
+              <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "Il est impossible d'optimiser simultanément les trois dimensions avec les approches actuelles. Cartesia = latence minimale mais qualité moyenne. Whisper = meilleur WER mais pas streaming-natif. Inworld TTS = ELO #1 + faible coût mais cloud US. La recherche fondamentale est nécessaire pour briser ce trilemme."
+                  : "It is impossible to simultaneously optimize all three dimensions with current approaches. Cartesia = minimum latency but average quality. Whisper = best WER but not streaming-native. Inworld TTS = ELO #1 + low cost but US cloud. Fundamental research is needed to break this trilemma."}
+              </p>
+            </div>
+            <div className="callout-success">
+              <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "La fenêtre open-source se referme vite" : "The open-source window is closing fast"}
+              </p>
+              <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "En 2025, les modèles open-source (Whisper, Kokoro, Chatterbox) atteignent 80–90% de la qualité cloud à coût marginal nul. Mais les plateformes cloud investissent massivement : ElevenLabs ($180M), Deepgram ($1.3B valorisation), AssemblyAI ($158M). La parité qualité est probable d'ici 12–18 mois — dans les deux sens."
+                  : "In 2025, open-source models (Whisper, Kokoro, Chatterbox) reach 80–90% of cloud quality at zero marginal cost. But cloud platforms are investing heavily: ElevenLabs ($180M), Deepgram ($1.3B valuation), AssemblyAI ($158M). Quality parity is likely within 12–18 months — in both directions."}
+              </p>
+            </div>
+            <div className="border border-slate-200 rounded-lg p-4 bg-white">
+              <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.55 0.20 200)" }}>
+                {isFr ? "Souveraineté : le critère qui change tout" : "Sovereignty: the criterion that changes everything"}
+              </p>
+              <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "7 des 10 moteurs STT cloud n'ont pas d'option on-premise. 8 des 16 moteurs TTS sont cloud-only. Pour un projet soumis au RGPD ou à la nLPD suisse, le choix se réduit à : Whisper/faster-whisper (STT), Kokoro/Chatterbox/Voxtral (TTS), Audiogami (STT CH-hosted). L'architecture doit être conçue pour switcher sans refactoring majeur."
+                  : "7 of 10 cloud STT engines have no on-premise option. 8 of 16 TTS engines are cloud-only. For a project subject to GDPR or Swiss nLPD, the choice narrows to: Whisper/faster-whisper (STT), Kokoro/Chatterbox/Voxtral (TTS), Audiogami (CH-hosted STT). Architecture must be designed to switch without major refactoring."}
+              </p>
+            </div>
+            <div className="border border-slate-200 rounded-lg p-4 bg-white">
+              <p className="text-sm font-semibold mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.55 0.20 280)" }}>
+                {isFr ? "L'approche end-to-end : un pari sur l'avenir" : "The end-to-end approach: a bet on the future"}
+              </p>
+              <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "Ultravox, Moshi et OpenAI Realtime API fusionnent STT + LLM + TTS en un seul modèle, réduisant la latence totale à 300–400ms. Mais ces approches sacrifient la modularité, la contrôlabilité et la souveraineté. Elles sont pertinentes pour les cas d'usage temps réel pur, mais risquées pour les applications nécessitant un contrôle fin du contenu ou de la personnalité."
+                  : "Ultravox, Moshi, and OpenAI Realtime API merge STT + LLM + TTS into a single model, reducing total latency to 300–400ms. But these approaches sacrifice modularity, controllability, and sovereignty. They are relevant for pure real-time use cases, but risky for applications requiring fine control of content or personality."}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── NAVIGATION ── */}
+        <div className="flex flex-wrap gap-3 pt-2">
+          <InternalLink to="/voice/stt" className="inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-4 py-2 transition-all hover:opacity-90" style={{ background: "oklch(0.55 0.20 200)", fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
+            {isFr ? "← Comparatif STT" : "← STT Comparison"}
+          </InternalLink>
+          <InternalLink to="/voice/tts" className="inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-4 py-2 transition-all hover:opacity-90" style={{ background: "oklch(0.55 0.20 200)", fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
+            {isFr ? "← Comparatif TTS" : "← TTS Comparison"}
+          </InternalLink>
+          <InternalLink to="/voice/scoring" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
+            {isFr ? "Scoring personnalisé →" : "Custom Scoring →"}
+          </InternalLink>
+          <InternalLink to="/voice/stack" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
+            {isFr ? "Cadre de Décision →" : "Decision Framework →"}
+          </InternalLink>
         </div>
       </div>
     </div>
