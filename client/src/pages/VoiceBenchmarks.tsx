@@ -9,7 +9,7 @@ import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
 import StatusBadge from "@/components/StatusBadge";
-import { Home, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
+import { Home, ChevronRight, ChevronDown, ChevronUp, FileText } from "lucide-react";
 import GlossaryLink from "@/components/GlossaryLink";
 
 // ─── STT DATA ─────────────────────────────────────────────────────────────────
@@ -207,9 +207,16 @@ export default function VoiceBenchmarks() {
                 {sortedStt.map((s) => (
                   <tr key={s.id} id={`stt-${s.id}`} className="scroll-mt-28">
                     <td>
-                      <InternalLink to={`/voice/stt/${s.id}`} className="font-semibold text-sm hover:underline" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
-                        {s.name}
-                      </InternalLink>
+                      <div className="flex flex-col gap-1.5">
+                        <span className="font-semibold text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.25 0.05 220)" }}>{s.name}</span>
+                        <InternalLink
+                          to={`/voice/stt/${s.id}`}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium border border-cyan-200 bg-cyan-50 text-cyan-700 hover:bg-cyan-100 transition-colors w-fit"
+                        >
+                          <FileText className="w-3 h-3" />
+                          {isFr ? "Fiche détail" : "Detail sheet"}
+                        </InternalLink>
+                      </div>
                     </td>
                     <td>
                       <span className="font-bold font-mono text-sm" style={{ color: latencyColor(s.wer, 4) }}>{s.wer}%</span>
@@ -277,9 +284,16 @@ export default function VoiceBenchmarks() {
                 {sortedTts.map((t) => (
                   <tr key={t.id} id={`tts-${t.id}`} className="scroll-mt-28">
                     <td>
-                      <InternalLink to={`/tts/${t.id}`} className="font-semibold text-sm hover:underline" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
-                        {t.name}
-                      </InternalLink>
+                      <div className="flex flex-col gap-1.5">
+                        <span className="font-semibold text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.25 0.05 220)" }}>{t.name}</span>
+                        <InternalLink
+                          to={`/tts/${t.id}`}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium border border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100 transition-colors w-fit"
+                        >
+                          <FileText className="w-3 h-3" />
+                          {isFr ? "Fiche détail" : "Detail sheet"}
+                        </InternalLink>
+                      </div>
                     </td>
                     <td>
                       <span className="font-bold font-mono text-sm" style={{ color: latencyColor(t.ttfa, 100) }}>{t.ttfa}ms</span>
