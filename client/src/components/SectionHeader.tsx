@@ -1,8 +1,8 @@
 /*
- * SectionHeader — numbered section titles, Technical Blueprint style
+ * SectionHeader — section titles, Technical Blueprint style
  */
 interface SectionHeaderProps {
-  number: string;
+  number?: string; // kept for backward compatibility but no longer displayed
   title: string;
   subtitle?: string;
   accent?: "cyan" | "orange" | "green" | "red";
@@ -15,22 +15,11 @@ const accentColors = {
   red: "oklch(0.60 0.20 25)",
 };
 
-export default function SectionHeader({ number, title, subtitle, accent = "cyan" }: SectionHeaderProps) {
+export default function SectionHeader({ title, subtitle, accent = "cyan" }: SectionHeaderProps) {
   const color = accentColors[accent];
   return (
     <div className="mb-8">
       <div className="flex items-baseline gap-3 mb-2">
-        <span
-          className="text-4xl font-bold leading-none select-none"
-          style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            color: `${color}`,
-            opacity: 0.25,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {number}
-        </span>
         <h2
           className="text-2xl font-semibold text-slate-900"
           style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}
@@ -39,7 +28,7 @@ export default function SectionHeader({ number, title, subtitle, accent = "cyan"
         </h2>
       </div>
       {subtitle && (
-        <p className="text-slate-500 text-sm ml-[3.5rem]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        <p className="text-slate-500 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
           {subtitle}
         </p>
       )}
