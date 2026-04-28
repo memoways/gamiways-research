@@ -19,6 +19,7 @@ import {
   Brain,
   Layers,
   Cpu,
+  BarChart2,
 } from "lucide-react";
 import { StrategicAnalysis } from "@/components/StrategicAnalysis";
 import GlossaryLink from "@/components/GlossaryLink";
@@ -441,13 +442,20 @@ export default function STTDetail() {
             )}
 
             {/* Back button bottom */}
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
               <InternalLink
                 to="/voice/stt"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-700 text-white text-sm font-medium transition-all"
               >
                 <ChevronLeft className="w-4 h-4" />
                 {isFr ? "Retour à la reconnaissance vocale" : "Back to Speech Recognition"}
+              </InternalLink>
+              <InternalLink
+                to={`/voice/benchmarks#stt-${stt.id}`}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-sm font-medium transition-all shadow-sm"
+              >
+                <BarChart2 className="w-4 h-4 text-cyan-600" />
+                {isFr ? "Voir dans les Benchmarks" : "View in Benchmarks"}
               </InternalLink>
             </div>
 

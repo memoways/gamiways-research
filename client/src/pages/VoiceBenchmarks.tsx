@@ -205,7 +205,7 @@ export default function VoiceBenchmarks() {
               </thead>
               <tbody>
                 {sortedStt.map((s) => (
-                  <tr key={s.id}>
+                  <tr key={s.id} id={`stt-${s.id}`} className="scroll-mt-28">
                     <td>
                       <InternalLink to={`/voice/stt/${s.id}`} className="font-semibold text-sm hover:underline" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
                         {s.name}
@@ -275,7 +275,7 @@ export default function VoiceBenchmarks() {
               </thead>
               <tbody>
                 {sortedTts.map((t) => (
-                  <tr key={t.id}>
+                  <tr key={t.id} id={`tts-${t.id}`} className="scroll-mt-28">
                     <td>
                       <InternalLink to={`/tts/${t.id}`} className="font-semibold text-sm hover:underline" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
                         {t.name}
