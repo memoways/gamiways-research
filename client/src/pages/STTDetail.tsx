@@ -21,6 +21,7 @@ import {
   Cpu,
 } from "lucide-react";
 import { StrategicAnalysis } from "@/components/StrategicAnalysis";
+import GlossaryLink from "@/components/GlossaryLink";
 import { sttStrategicData } from "@/lib/strategicData";
 
 const ScoreBar = ({ value, max = 10, color }: { value: number; max?: number; color: string }) => (
@@ -159,17 +160,17 @@ export default function STTDetail() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-100">
             <div className="text-center">
               <div className="text-xl font-bold font-mono text-slate-900">{stt.latencyMs}ms</div>
-              <div className="text-xs text-slate-400 mt-0.5">{isFr ? "Latence (meilleur cas)" : "Latency (best case)"}</div>
+              <div className="text-xs text-slate-400 mt-0.5 flex items-center justify-center gap-1">{isFr ? "Latence (meilleur cas)" : "Latency (best case)"} <GlossaryLink term="TTFA" /></div>
             </div>
             <div className="text-center">
               <div className="text-xl font-bold font-mono text-slate-900">{stt.latencyMsTypical}ms</div>
-              <div className="text-xs text-slate-400 mt-0.5">{isFr ? "Latence (typique)" : "Latency (typical)"}</div>
+              <div className="text-xs text-slate-400 mt-0.5 flex items-center justify-center gap-1">{isFr ? "Latence (typique)" : "Latency (typical)"} <GlossaryLink term="TTFA" /></div>
             </div>
             <div className="text-center">
               <div className="text-xl font-bold font-mono text-slate-900">
                 {werGeneral > 0 ? `${werGeneral}%` : "—"}
               </div>
-              <div className="text-xs text-slate-400 mt-0.5">WER {isFr ? "(audio général)" : "(general audio)"}</div>
+              <div className="text-xs text-slate-400 mt-0.5 flex items-center justify-center gap-1">WER {isFr ? "(audio général)" : "(general audio)"} <GlossaryLink term="WER" /></div>
             </div>
             <div className="text-center">
               <div className="text-xl font-bold font-mono text-slate-900">
@@ -188,17 +189,17 @@ export default function STTDetail() {
               <SectionTitle icon={Layers} title={isFr ? "Scores comparatifs" : "Comparative Scores"} />
               <div className="space-y-3">
                 {[
-                  { key: "accuracy", label: isFr ? "Précision (WER)" : "Accuracy (WER)", color: scoreColors.accuracy },
-                  { key: "latency", label: isFr ? "Latence streaming" : "Streaming latency", color: scoreColors.latency },
+                  { key: "accuracy", label: isFr ? "Précision (WER)" : "Accuracy (WER)", color: scoreColors.accuracy, glossaryTerm: "WER" },
+                  { key: "latency", label: isFr ? "Latence streaming" : "Streaming latency", color: scoreColors.latency, glossaryTerm: "TTFA" },
                   { key: "multilingual", label: isFr ? "Multilingue" : "Multilingual", color: scoreColors.multilingual },
 
-                  { key: "sovereignty", label: isFr ? "Souveraineté" : "Sovereignty", color: scoreColors.sovereignty },
+                  { key: "sovereignty", label: isFr ? "Souveraineté" : "Sovereignty", color: scoreColors.sovereignty, glossaryTerm: "Sovereignty" },
                   { key: "pricing", label: isFr ? "Accessibilité prix" : "Price accessibility", color: scoreColors.pricing },
-                  { key: "streaming", label: isFr ? "Qualité streaming" : "Streaming quality", color: scoreColors.streaming },
-                ].map(({ key, label, color }) => (
+                  { key: "streaming", label: isFr ? "Qualité streaming" : "Streaming quality", color: scoreColors.streaming, glossaryTerm: "Streaming" },
+                ].map(({ key, label, color, glossaryTerm }) => (
                   <div key={key}>
                     <div className="flex justify-between text-xs text-slate-500 mb-1.5">
-                      <span style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{label}</span>
+                      <span className="flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{label}{glossaryTerm && <GlossaryLink term={glossaryTerm} />}</span>
                       <span className="font-mono">{stt.score[key as keyof typeof stt.score]}/10</span>
                     </div>
                     <ScoreBar value={stt.score[key as keyof typeof stt.score]} color={color} />
@@ -228,11 +229,11 @@ export default function STTDetail() {
                   <BoolBadge value={stt.selfHostable} trueLabel={isFr ? "Oui" : "Yes"} falseLabel="No" />
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Streaming</span>
+                  <span className="text-slate-500 flex items-center gap-1">Streaming <GlossaryLink term="Streaming" /></span>
                   <BoolBadge value={stt.streaming} trueLabel={isFr ? "Oui" : "Yes"} falseLabel="No" />
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">WER {isFr ? "audio propre" : "clean audio"}</span>
+                  <span className="text-slate-500 flex items-center gap-1">WER {isFr ? "audio propre" : "clean audio"} <GlossaryLink term="WER" /></span>
                   <span className="font-mono text-slate-700">{werClean}%</span>
                 </div>
               </div>
@@ -296,8 +297,8 @@ export default function STTDetail() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      Streaming
+                    <span className="text-xs font-bold text-slate-700 flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      Streaming <GlossaryLink term="Streaming" />
                     </span>
                     <BoolBadge value={stt.streaming} trueLabel={isFr ? "Oui" : "Yes"} falseLabel="No" />
                   </div>
@@ -307,8 +308,8 @@ export default function STTDetail() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Diarisation" : "Diarization"}
+                    <span className="text-xs font-bold text-slate-700 flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Diarisation" : "Diarization"} <GlossaryLink term="Diarization" />
                     </span>
                     <BoolBadge value={stt.speakerDiarization} trueLabel={isFr ? "Oui" : "Yes"} falseLabel="No" />
                   </div>
@@ -394,8 +395,8 @@ export default function STTDetail() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      GDPR
+                    <span className="text-xs font-bold text-slate-700 flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      GDPR <GlossaryLink term="GDPR" />
                     </span>
                     <BoolBadge value={stt.gdprCompliant} trueLabel={isFr ? "Conforme" : "Compliant"} falseLabel="No" />
                   </div>

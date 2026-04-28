@@ -25,6 +25,7 @@ import {
   Cpu,
 } from "lucide-react";
 import { StrategicAnalysis } from "@/components/StrategicAnalysis";
+import GlossaryLink from "@/components/GlossaryLink";
 import { ttsStrategicData } from "@/lib/strategicData";
 
 const ScoreBar = ({ value, max = 10, color }: { value: number; max?: number; color: string }) => (
@@ -162,11 +163,11 @@ export default function TTSDetail() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-100">
             <div className="text-center">
               <div className="text-xl font-bold font-mono text-slate-900">{tts.ttfaMs}ms</div>
-              <div className="text-xs text-slate-400 mt-0.5">{isFr ? "TTFA (meilleur cas)" : "TTFA (best case)"}</div>
+              <div className="text-xs text-slate-400 mt-0.5 flex items-center justify-center gap-1">{isFr ? "TTFA (meilleur cas)" : "TTFA (best case)"} <GlossaryLink term="TTFA" /></div>
             </div>
             <div className="text-center">
               <div className="text-xl font-bold font-mono text-slate-900">{tts.ttfaMsTypical}ms</div>
-              <div className="text-xs text-slate-400 mt-0.5">{isFr ? "TTFA (typique)" : "TTFA (typical)"}</div>
+              <div className="text-xs text-slate-400 mt-0.5 flex items-center justify-center gap-1">{isFr ? "TTFA (typique)" : "TTFA (typical)"} <GlossaryLink term="TTFA" /></div>
             </div>
             <div className="text-center">
               <div className="text-xl font-bold font-mono text-slate-900">
@@ -178,7 +179,7 @@ export default function TTSDetail() {
               <div className="text-xl font-bold font-mono text-slate-900">
                 {tts.eloScore > 0 ? tts.eloScore : "—"}
               </div>
-              <div className="text-xs text-slate-400 mt-0.5">ELO Score</div>
+              <div className="text-xs text-slate-400 mt-0.5 flex items-center justify-center gap-1">ELO Score <GlossaryLink term="ELO Score" /></div>
             </div>
           </div>
         </div>
@@ -191,17 +192,17 @@ export default function TTSDetail() {
               <SectionTitle icon={Layers} title={isFr ? "Scores comparatifs" : "Comparative Scores"} />
               <div className="space-y-3">
                 {[
-                  { key: "quality", label: isFr ? "Qualité vocale" : "Voice quality", color: scoreColors.quality },
-                  { key: "latency", label: isFr ? "Latence" : "Latency", color: scoreColors.latency },
-                  { key: "voiceCloning", label: isFr ? "Clonage vocal" : "Voice cloning", color: scoreColors.voiceCloning },
-                  { key: "expressiveness", label: isFr ? "Expressivité" : "Expressiveness", color: scoreColors.expressiveness },
-                  { key: "sovereignty", label: isFr ? "Souveraineté" : "Sovereignty", color: scoreColors.sovereignty },
+                  { key: "quality", label: isFr ? "Qualité vocale" : "Voice quality", color: scoreColors.quality, glossaryTerm: "ELO Score" },
+                  { key: "latency", label: isFr ? "Latence" : "Latency", color: scoreColors.latency, glossaryTerm: "TTFA" },
+                  { key: "voiceCloning", label: isFr ? "Clonage vocal" : "Voice cloning", color: scoreColors.voiceCloning, glossaryTerm: "Voice Cloning" },
+                  { key: "expressiveness", label: isFr ? "Expressivité" : "Expressiveness", color: scoreColors.expressiveness, glossaryTerm: "Prosody" },
+                  { key: "sovereignty", label: isFr ? "Souveraineté" : "Sovereignty", color: scoreColors.sovereignty, glossaryTerm: "Sovereignty" },
                   { key: "pricing", label: isFr ? "Accessibilité prix" : "Price accessibility", color: scoreColors.pricing },
                   { key: "multilingual", label: isFr ? "Multilingue" : "Multilingual", color: scoreColors.multilingual },
-                ].map(({ key, label, color }) => (
+                ].map(({ key, label, color, glossaryTerm }) => (
                   <div key={key}>
                     <div className="flex justify-between text-xs text-slate-500 mb-1.5">
-                      <span style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{label}</span>
+                      <span className="flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{label}{glossaryTerm && <GlossaryLink term={glossaryTerm} />}</span>
                       <span className="font-mono">{tts.score[key as keyof typeof tts.score]}/10</span>
                     </div>
                     <ScoreBar value={tts.score[key as keyof typeof tts.score]} color={color} />
@@ -295,8 +296,8 @@ export default function TTSDetail() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Clonage vocal" : "Voice Cloning"}
+                    <span className="text-xs font-bold text-slate-700 flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Clonage vocal" : "Voice Cloning"} <GlossaryLink term="Voice Cloning" />
                     </span>
                     <BoolBadge value={tts.voiceCloning} trueLabel={isFr ? "Oui" : "Yes"} falseLabel="No" />
                   </div>
@@ -317,8 +318,8 @@ export default function TTSDetail() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      Streaming
+                    <span className="text-xs font-bold text-slate-700 flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      Streaming <GlossaryLink term="Streaming" />
                     </span>
                     <BoolBadge value={tts.streaming} trueLabel={isFr ? "Oui" : "Yes"} falseLabel="No" />
                   </div>
@@ -328,8 +329,8 @@ export default function TTSDetail() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Données lip-sync" : "Lip-sync Data"}
+                    <span className="text-xs font-bold text-slate-700 flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Données lip-sync" : "Lip-sync Data"} <GlossaryLink term="Lip-sync" />
                     </span>
                     <BoolBadge value={tts.lipsyncData} trueLabel={isFr ? "Oui" : "Yes"} falseLabel="No" />
                   </div>
@@ -383,8 +384,8 @@ export default function TTSDetail() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      GDPR
+                    <span className="text-xs font-bold text-slate-700 flex items-center gap-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      GDPR <GlossaryLink term="GDPR" />
                     </span>
                     <BoolBadge value={tts.gdprCompliant} trueLabel={isFr ? "Conforme" : "Compliant"} falseLabel="No" />
                   </div>
