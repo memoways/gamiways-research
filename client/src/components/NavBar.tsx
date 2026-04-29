@@ -38,10 +38,10 @@ const NAV_MENUS: NavMenu[] = [
     color: "oklch(0.55 0.20 200)",
     activePrefix: ["/project", "/research"],
     items: [
-      { href: "/project", label: "The Project", labelFr: "Le Projet", desc: "Vision, positioning & roadmap", descFr: "Vision, positionnement & roadmap" },
+      { href: "/project", label: "DigiDouble Project", labelFr: "Projet DigiDouble", desc: "Vision, positioning & roadmap", descFr: "Vision, positionnement & roadmap" },
       { href: "/research", label: "Research Challenges", labelFr: "Défis de Recherche", desc: "3 research axes & open questions", descFr: "3 axes de recherche & questions ouvertes" },
       { href: "/research/architecture", label: "Target Architecture", labelFr: "Architecture Cible", desc: "DigiDouble system design & latency budget", descFr: "Design système DigiDouble & budget latence" },
-      { href: "/research/gaps", label: "Research Gaps", labelFr: "Gaps de Recherche", desc: "Identified gaps & opportunities", descFr: "Gaps identifiés & opportunités" },
+      { href: "/research/gaps", label: "Research Gaps & Opportunities", labelFr: "Gaps de Recherche & Opportunités", desc: "Identified gaps & opportunities", descFr: "Gaps identifiés & opportunités" },
       { href: "/research/academic", label: "Academic Assessment", labelFr: "Assessment Académique", desc: "Key papers 2023–2026", descFr: "Publications clés 2023–2026" },
     ],
   },
@@ -52,12 +52,12 @@ const NAV_MENUS: NavMenu[] = [
     color: "oklch(0.55 0.20 200)",
     activePrefix: ["/voice"],
     items: [
-      { href: "/voice/stt", label: "STT — Speech Recognition", labelFr: "STT — Reconnaissance Vocale", desc: "10 engines — cloud, on-premise & open-source", descFr: "10 moteurs — cloud, on-premise & open-source" },
-      { href: "/voice/tts", label: "TTS — Speech Synthesis", labelFr: "TTS — Synthèse Vocale", desc: "16 engines compared", descFr: "16 moteurs comparés" },
+      { href: "/voice/stt", label: "STT / Speech-to-Text", labelFr: "STT / Reconnaissance Vocale", desc: "10 engines — cloud, on-premise & open-source", descFr: "10 moteurs — cloud, on-premise & open-source" },
+      { href: "/voice/tts", label: "TTS & Voice Synthesis", labelFr: "TTS & Synthèse Vocale", desc: "16 engines compared", descFr: "16 moteurs comparés" },
       { href: "/voice/benchmarks", label: "Audio Synthesis Benchmarks", labelFr: "Benchmarks Synthèse Audio", desc: "STT → TTS — comparative synthesis & key metrics", descFr: "STT → TTS — synthèse comparative & métriques clés" },
       { href: "/voice/stack", label: "Decision Framework", labelFr: "Cadre de Décision", desc: "Layer-by-layer decision guide with simulator", descFr: "Guide de décision par couche avec simulateur" },
-      { href: "/voice/scoring", label: "Custom Scoring", labelFr: "Scoring Personnalisé", desc: "Weight criteria, get your personalized tool ranking", descFr: "Pondérez les critères, obtenez votre classement personnalisé", highlight: true, highlightColor: "oklch(0.55 0.20 280)" },
-      { href: "/voice/pipeline", label: "V2V Pipeline Diagram", labelFr: "Diagramme Pipeline V2V", desc: "Interactive V2V diagram — select components, visualize latency & cost", descFr: "Diagramme V2V interactif — composants, latence & coût", highlight: true, highlightColor: "oklch(0.55 0.20 200)" },
+      { href: "/voice/scoring", label: "Custom Voice Tool Ranking", labelFr: "Classement Personnalisé Voice", desc: "Weight criteria, get your personalized tool ranking", descFr: "Pondérez les critères, obtenez votre classement personnalisé", highlight: true, highlightColor: "oklch(0.55 0.20 280)" },
+      { href: "/voice/pipeline", label: "Voice-to-Voice Pipeline", labelFr: "Pipeline Vocal Voice-to-Voice", desc: "Interactive V2V diagram — select components, visualize latency & cost", descFr: "Diagramme V2V interactif — composants, latence & coût", highlight: true, highlightColor: "oklch(0.55 0.20 200)" },
     ],
   },
   {
@@ -68,10 +68,10 @@ const NAV_MENUS: NavMenu[] = [
     activePrefix: ["/avatars", "/platform", "/research/behavior", "/research/emotional"],
     items: [
       { href: "/avatars", label: "Streaming Video Avatars", labelFr: "Avatars Vidéo Streaming", desc: "11+ streaming avatar platforms compared", descFr: "11+ plateformes d'avatars streaming comparées" },
-      { href: "/avatars/pricing", label: "Cost Simulator", labelFr: "Simulateur de Coûts", desc: "Interactive pricing calculator — slider, filters, fixed vs variable costs", descFr: "Calculateur interactif — slider, filtres, coûts fixes vs variables", highlight: true, highlightColor: "oklch(0.60 0.18 50)" },
+      { href: "/avatars/pricing", label: "Cost Simulator", labelFr: "Simulateur de coûts", desc: "Interactive pricing calculator — slider, filters, fixed vs variable costs", descFr: "Calculateur interactif — slider, filtres, coûts fixes vs variables", highlight: true, highlightColor: "oklch(0.60 0.18 50)" },
       { href: "/avatars/market", label: "Business & Market", labelFr: "Business & Marché", desc: "Business challenges & market opportunities", descFr: "Enjeux business & opportunités de marché" },
-      { href: "/research/behavior", label: "Behavior & Expressiveness", labelFr: "Comportement & Expressivité", desc: "Axis 2 — behavioral fidelity & expressiveness", descFr: "Axe 2 — fidélité comportementale & expressivité" },
-      { href: "/research/emotional", label: "Emotional Toolbox", labelFr: "Boîte à Outils Émotionnelle", desc: "Character & emotion design", descFr: "Design émotionnel & personnage" },
+      { href: "/research/behavior", label: "Axis 2 — Avatar Behavior & Expressiveness", labelFr: "Axe 2 — Comportement & Expressivité Avatar", desc: "Behavioral fidelity, body language & expressive TTS", descFr: "Fidélité comportementale, langage corporel & TTS expressif" },
+      { href: "/research/emotional", label: "Emotional Toolbox & Character Design", labelFr: "Boîte à Outils Émotionnelle & Design de Personnage", desc: "Cinema-grade emotional design for conversational avatars", descFr: "Design émotionnel grade cinéma pour avatars conversationnels" },
     ],
   },
   {
