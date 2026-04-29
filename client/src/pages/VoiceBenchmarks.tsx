@@ -112,7 +112,7 @@ export default function VoiceBenchmarks() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-12">
         <SectionHeader
           number="D"
-          title={isFr ? "Benchmarks Synthèse Audio — STT → TTS" : "Audio Synthesis Benchmarks — STT → TTS"}
+          title={isFr ? "Benchmarks Synthèse Audio" : "Audio Synthesis Benchmarks"}
           subtitle={isFr
             ? "Synthèse comparative des 10 moteurs STT et 16 moteurs TTS évalués. Métriques clés, budgets de latence pipeline et enjeux de décision (2025–2026)."
             : "Comparative synthesis of 10 STT and 16 TTS engines evaluated. Key metrics, pipeline latency budgets, and decision stakes (2025–2026)."}

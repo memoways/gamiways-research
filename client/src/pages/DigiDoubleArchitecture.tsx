@@ -95,7 +95,7 @@ export default function DigiDoubleArchitecture() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <SectionHeader
           number="01"
-          title={isFr ? "Architecture Cible DigiDouble" : "DigiDouble Target Architecture"}
+          title={isFr ? "Architecture Cible" : "Target Architecture"}
           subtitle={isFr
             ? "Vue d'ensemble des blocs architecturaux : disponibles (vert), R&D requis (bleu), internes Memoways (jaune). Le budget latence <2s structure tous les choix."
             : "Overview of architectural blocks: available (green), R&D required (blue), Memoways internal (yellow). The <2s latency budget structures all choices."}

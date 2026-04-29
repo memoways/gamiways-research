@@ -300,7 +300,7 @@ export default function VoiceStack() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <SectionHeader
           number="H"
-          title={isFr ? "Cadre de Décision par Couche" : "Layer Decision Framework"}
+          title={isFr ? "Cadre de Décision" : "Decision Framework"}
           subtitle={isFr
             ? "Pour chaque couche du pipeline vocal, les enjeux, les questions à se poser, les options disponibles et les tests à conduire avant de choisir."
             : "For each layer of the voice pipeline: the stakes, the questions to ask, the available options, and the tests to run before deciding."}

@@ -65,7 +65,7 @@ export default function PricingComparison() {
           </InternalLink>
           <span className="text-slate-300">/</span>
           <span className="text-sm font-medium text-slate-900">
-            {lang === "fr" ? "Comparaison tarifaire" : "Pricing Comparison"}
+            {lang === "fr" ? "Simulateur de coûts" : "Cost Simulator"}
           </span>
         </div>
       </div>
@@ -78,8 +78,8 @@ export default function PricingComparison() {
           </p>
           <h1 className="text-3xl font-bold text-slate-900 mb-3">
             {lang === "fr"
-              ? "Comparaison tarifaire — $/minute"
-              : "Pricing Comparison — $/minute"}
+              ? "Simulateur de coûts"
+              : "Cost Simulator"}
           </h1>
           <p className="text-slate-500 max-w-2xl">
             {lang === "fr"

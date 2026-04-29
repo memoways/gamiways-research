@@ -61,7 +61,7 @@ export default function AvatarsMarket() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <SectionHeader
           number="G"
-          title={isFr ? "Enjeux Business & Opportunités de Marché" : "Business Challenges & Market Opportunities"}
+          title={isFr ? "Business & Marché" : "Business & Market"}
           subtitle={isFr ? "Contexte économique et positionnement stratégique des avatars vidéo conversationnels (2025–2026). Évaluation neutre." : "Economic context and strategic positioning of conversational video avatars (2025–2026). Neutral evaluation."}
           accent="green"
         />

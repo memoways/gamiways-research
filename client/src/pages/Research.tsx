@@ -413,7 +413,7 @@ export default function Research() {
             </span>
           </div>
           <h1 className="text-4xl font-black text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
-            {isFr ? "Défis de Recherche Fondamentale" : "Fundamental Research Challenges"}
+            {isFr ? "Défis de Recherche" : "Research Challenges"}
           </h1>
           <p className="text-base text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr

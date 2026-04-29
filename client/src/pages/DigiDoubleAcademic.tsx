@@ -166,7 +166,7 @@ export default function DigiDoubleAcademic() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <SectionHeader
           number="06"
-          title={isFr ? "Assessment de la Recherche Académique" : "Academic Research Assessment"}
+          title={isFr ? "Assessment Académique" : "Academic Assessment"}
           subtitle={isFr
             ? "État des publications et travaux récents dans les domaines clés (2023–2026). Spécifique aux besoins du projet DigiDouble."
             : "Status of publications and recent work in key domains (2023–2026). Specific to the DigiDouble project needs."}
