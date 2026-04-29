@@ -580,10 +580,10 @@ export default function VoiceScoring() {
         </div>
 
         {/* Main layout: left panel (presets + mode + sliders) + right results */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(280px,1fr)_2fr] gap-4 items-start">
 
-          {/* ── Left panel: presets + mode + sliders (sticky) ── */}
-          <div className="sticky top-20 space-y-4 max-h-[calc(100vh-6rem)] overflow-y-auto pb-4 pr-1">
+          {/* ── Left panel: presets + mode + sliders (sticky on md+) ── */}
+          <div className="md:sticky md:top-20 space-y-4 md:max-h-[calc(100vh-5.5rem)] md:overflow-y-auto pb-4">
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
 
               {/* Presets */}
@@ -628,25 +628,25 @@ export default function VoiceScoring() {
                 )}
               </div>
 
-              {/* Mode tabs */}
+              {/* Mode tabs — STT first */}
               <div className="flex border-b border-slate-200">
-                {(["tts", "stt"] as PipelineMode[]).map((m) => (
+                {(["stt", "tts"] as PipelineMode[]).map((m) => (
                   <button
                     key={m}
                     onClick={() => setMode(m)}
                     className={`flex-1 px-3 py-2.5 text-xs font-semibold border-b-2 transition-colors -mb-px ${
                       mode === m
-                        ? m === "tts" ? "border-violet-500 text-violet-700 bg-violet-50" : "border-orange-500 text-orange-700 bg-orange-50"
+                        ? m === "stt" ? "border-orange-500 text-orange-700 bg-orange-50" : "border-violet-500 text-violet-700 bg-violet-50"
                         : "border-transparent text-slate-500 hover:text-slate-700 bg-white"
                     }`}
                     style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-                  >
-                    {m === "tts"
-                      ? (isFr ? "TTS — Synthèse" : "TTS — Voice")
-                      : (isFr ? "STT — Reconnaissance" : "STT — Speech")}
-                    <span className="ml-1 font-mono opacity-50">
-                      ({m === "tts" ? allTTS.length : allSTT.length})
-                    </span>
+                    >
+                      {m === "stt"
+                        ? (isFr ? "STT — Reconnaissance" : "STT — Speech")
+                        : (isFr ? "TTS — Synthèse" : "TTS — Voice")}
+                      <span className="ml-1 font-mono opacity-50">
+                        ({m === "stt" ? allSTT.length : allTTS.length})
+                      </span>
                   </button>
                 ))}
               </div>
