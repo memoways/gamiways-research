@@ -540,23 +540,32 @@ export default function VoiceScoring() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-2">
-            <Trophy className="w-5 h-5 text-amber-500" />
-            <span className="text-xs font-bold uppercase tracking-widest text-amber-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {isFr ? "Outil de scoring" : "Scoring Tool"}
-            </span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5">
+        {/* Header compact */}
+        <div className="mb-5 flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center gap-3">
+            <Trophy className="w-5 h-5 text-amber-500 shrink-0" />
+            <div>
+              <h1 className="text-xl font-bold text-slate-900 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Classement personnalisé des outils Voice" : "Custom Voice Tool Ranking"}
+              </h1>
+              <p className="text-xs text-slate-400 mt-0.5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "Pondérez les critères selon votre contexte et obtenez un classement dynamique TTS / STT."
+                  : "Weight criteria to your context and get a dynamic TTS / STT ranking."}
+              </p>
+            </div>
           </div>
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <h1 className="text-2xl font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {isFr ? "Classement personnalisé des outils Voice" : "Custom Voice Tool Ranking"}
-            </h1>
-            {/* Copy link button */}
+          <div className="flex items-center gap-2">
+            {fromUrl && (
+              <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-violet-50 border border-violet-200 text-xs text-violet-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                <Link2 className="w-3 h-3 shrink-0" />
+                <span>{isFr ? "Config. partagée" : "Shared config"}</span>
+              </div>
+            )}
             <button
               onClick={copyLink}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border transition-all shrink-0 ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all shrink-0 ${
                 copied
                   ? "bg-green-50 border-green-300 text-green-700"
                   : "bg-white border-slate-200 text-slate-600 hover:border-violet-300 hover:text-violet-700 hover:bg-violet-50"
@@ -564,125 +573,113 @@ export default function VoiceScoring() {
               style={{ fontFamily: "'Space Grotesk', sans-serif" }}
             >
               {copied
-                ? <><Check className="w-4 h-4" />{isFr ? "Lien copié !" : "Link copied!"}</>
-                : <><Link2 className="w-4 h-4" />{isFr ? "Copier le lien" : "Copy link"}</>}
+                ? <><Check className="w-3.5 h-3.5" />{isFr ? "Copié !" : "Copied!"}</>
+                : <><Link2 className="w-3.5 h-3.5" />{isFr ? "Copier le lien" : "Copy link"}</>}
             </button>
           </div>
-          <p className="text-sm text-slate-500 max-w-2xl mt-2" style={{ fontFamily: "'Source Serif 4', serif" }}>
-            {isFr
-              ? "Pondérez les critères selon votre contexte (MVP, souveraineté, coût, temps réel) et obtenez un classement dynamique des outils TTS et STT. Utilisez les presets ou personnalisez chaque critère."
-              : "Weight the criteria according to your context (MVP, sovereignty, cost, real-time) and get a dynamic ranking of TTS and STT tools. Use presets or customize each criterion."}
-          </p>
-          {/* Banner: loaded from shared URL */}
-          {fromUrl && (
-            <div className="mt-3 flex items-center gap-2 px-3 py-2 rounded-lg bg-violet-50 border border-violet-200 text-xs text-violet-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              <Link2 className="w-3.5 h-3.5 shrink-0" />
-              <span>
-                {isFr
-                  ? "Configuration chargée depuis un lien partagé. Modifiez les critères ci-dessous pour personnaliser."
-                  : "Configuration loaded from a shared link. Adjust the criteria below to customize."}
-              </span>
-            </div>
-          )}
         </div>
 
-        {/* Presets */}
-        <div className="mb-8">
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Profils prédéfinis" : "Preset Profiles"}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {PRESETS.map((preset) => (
-              <button
-                key={preset.id}
-                onClick={() => applyPreset(preset)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
-                  activePreset === preset.id
-                    ? "bg-slate-900 text-white border-slate-900 shadow-md"
-                    : "bg-white text-slate-700 border-slate-200 hover:border-slate-400 hover:shadow-sm"
-                }`}
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
-                <span>{preset.icon}</span>
-                <span>{isFr ? preset.labelFr : preset.label}</span>
-              </button>
-            ))}
-            <button
-              onClick={resetWeights}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border border-slate-200 bg-white text-slate-500 hover:text-slate-700 hover:border-slate-400 transition-all"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              {isFr ? "Réinitialiser" : "Reset"}
-            </button>
-          </div>
-          {activePreset && (
-            <div className="mt-2 flex items-start gap-2 text-xs text-slate-500">
-              <Info className="w-3.5 h-3.5 mt-0.5 shrink-0 text-violet-400" />
-              <span>
-                {isFr
-                  ? PRESETS.find((p) => p.id === activePreset)?.descFr
-                  : PRESETS.find((p) => p.id === activePreset)?.desc}
-              </span>
-            </div>
-          )}
-        </div>
+        {/* Main layout: left panel (presets + mode + sliders) + right results */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 items-start">
 
-        {/* Mode tabs */}
-        <div className="flex gap-1 mb-6 border-b border-slate-200">
-          {(["tts", "stt"] as PipelineMode[]).map((m) => (
-            <button
-              key={m}
-              onClick={() => setMode(m)}
-              className={`px-5 py-2.5 text-sm font-semibold border-b-2 transition-colors -mb-px ${
-                mode === m
-                  ? m === "tts" ? "border-violet-500 text-violet-700" : "border-orange-500 text-orange-700"
-                  : "border-transparent text-slate-500 hover:text-slate-700"
-              }`}
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              {m === "tts"
-                ? (isFr ? "TTS — Synthèse Vocale" : "TTS — Voice Synthesis")
-                : (isFr ? "STT — Reconnaissance Vocale" : "STT — Speech Recognition")}
-              <span className="ml-2 text-xs font-mono opacity-60">
-                {m === "tts" ? `${allTTS.length} outils` : `${allSTT.length} outils`}
-              </span>
-            </button>
-          ))}
-        </div>
+          {/* ── Left panel: presets + mode + sliders (sticky) ── */}
+          <div className="sticky top-20 space-y-4 max-h-[calc(100vh-6rem)] overflow-y-auto pb-4 pr-1">
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
 
-        {/* Main layout: sliders + ranking */}
-        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6">
-
-          {/* ── Sliders panel ── */}
-          <div className="space-y-4">
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm sticky top-28">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Pondération des critères" : "Criteria Weights"}
-                </h3>
-                <span className="text-xs text-slate-400 font-mono">0–10</span>
+              {/* Presets */}
+              <div className="p-4 border-b border-slate-100">
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Profils prédéfinis" : "Preset Profiles"}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {PRESETS.map((preset) => (
+                    <button
+                      key={preset.id}
+                      onClick={() => applyPreset(preset)}
+                      className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all ${
+                        activePreset === preset.id
+                          ? "bg-slate-900 text-white border-slate-900 shadow-md"
+                          : "bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-400 hover:bg-white hover:shadow-sm"
+                      }`}
+                      style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                    >
+                      <span>{preset.icon}</span>
+                      <span>{isFr ? preset.labelFr : preset.label}</span>
+                    </button>
+                  ))}
+                  <button
+                    onClick={resetWeights}
+                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border border-slate-200 bg-slate-50 text-slate-500 hover:text-slate-700 hover:border-slate-400 transition-all"
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    {isFr ? "Réinitialiser" : "Reset"}
+                  </button>
+                </div>
+                {activePreset && (
+                  <div className="mt-2 flex items-start gap-1.5 text-xs text-slate-500">
+                    <Info className="w-3.5 h-3.5 mt-0.5 shrink-0 text-violet-400" />
+                    <span>
+                      {isFr
+                        ? PRESETS.find((p) => p.id === activePreset)?.descFr
+                        : PRESETS.find((p) => p.id === activePreset)?.desc}
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="space-y-4">
-                {currentSliders.map(({ key, label, labelFr, color, glossaryTerm }) => (
-                  <WeightSlider
-                    key={key}
-                    label={label}
-                    labelFr={labelFr}
-                    value={currentWeights[key as keyof typeof currentWeights]}
-                    onChange={(v) => mode === "tts" ? updateTTS(key as keyof TTSWeights, v) : updateSTT(key as keyof STTWeights, v)}
-                    isFr={isFr}
-                    color={color}
-                    glossaryTerm={glossaryTerm}
-                  />
+
+              {/* Mode tabs */}
+              <div className="flex border-b border-slate-200">
+                {(["tts", "stt"] as PipelineMode[]).map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setMode(m)}
+                    className={`flex-1 px-3 py-2.5 text-xs font-semibold border-b-2 transition-colors -mb-px ${
+                      mode === m
+                        ? m === "tts" ? "border-violet-500 text-violet-700 bg-violet-50" : "border-orange-500 text-orange-700 bg-orange-50"
+                        : "border-transparent text-slate-500 hover:text-slate-700 bg-white"
+                    }`}
+                    style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                  >
+                    {m === "tts"
+                      ? (isFr ? "TTS — Synthèse" : "TTS — Voice")
+                      : (isFr ? "STT — Reconnaissance" : "STT — Speech")}
+                    <span className="ml-1 font-mono opacity-50">
+                      ({m === "tts" ? allTTS.length : allSTT.length})
+                    </span>
+                  </button>
                 ))}
               </div>
-              <div className="mt-5 pt-4 border-t border-slate-100">
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  {isFr
-                    ? "Chaque critère est noté de 0 à 10. Un poids de 0 exclut le critère du calcul. Le score final est la moyenne pondérée."
-                    : "Each criterion is scored 0–10. A weight of 0 excludes the criterion from the calculation. The final score is the weighted average."}
-                </p>
+
+              {/* Sliders */}
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Pondération des critères" : "Criteria Weights"}
+                  </h3>
+                  <span className="text-xs text-slate-400 font-mono">0–10</span>
+                </div>
+                <div className="space-y-4">
+                  {currentSliders.map(({ key, label, labelFr, color, glossaryTerm }) => (
+                    <WeightSlider
+                      key={key}
+                      label={label}
+                      labelFr={labelFr}
+                      value={currentWeights[key as keyof typeof currentWeights]}
+                      onChange={(v) => mode === "tts" ? updateTTS(key as keyof TTSWeights, v) : updateSTT(key as keyof STTWeights, v)}
+                      isFr={isFr}
+                      color={color}
+                      glossaryTerm={glossaryTerm}
+                    />
+                  ))}
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-100">
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {isFr
+                      ? "Chaque critère est noté de 0 à 10. Un poids de 0 exclut le critère du calcul. Le score final est la moyenne pondérée."
+                      : "Each criterion is scored 0–10. A weight of 0 excludes the criterion from the calculation. The final score is the weighted average."}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
