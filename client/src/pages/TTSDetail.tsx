@@ -422,14 +422,71 @@ export default function TTSDetail() {
               </InternalLink>
             </div>
 
-            {/* Benchmark reference */}
-            {tts.benchmarkRef && (
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                <p className="text-xs text-amber-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  <strong>{isFr ? "Source benchmark : " : "Benchmark source: "}</strong>{tts.benchmarkRef}
-                </p>
+            {/* Data freshness + Sources */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Fraîcheur des données" : "Data Freshness"}
+                  </h3>
+                  {tts.dataUpdatedAt ? (
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+                        {isFr ? "Mis à jour le" : "Updated"} {new Date(tts.dataUpdatedAt).toLocaleDateString(isFr ? 'fr-FR' : 'en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />
+                      {isFr ? "Date inconnue" : "Date unknown"}
+                    </span>
+                  )}
+                </div>
+                {tts.benchmarkRef && (
+                  <p className="text-xs text-slate-400 italic max-w-xs text-right" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {tts.benchmarkRef}
+                  </p>
+                )}
               </div>
-            )}
+
+              {tts.dataUpdateNote && (
+                <div className="bg-white border border-slate-200 rounded-lg p-3">
+                  <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    <strong className="text-slate-800">{isFr ? "Note de mise à jour : " : "Update note: "}</strong>
+                    {tts.dataUpdateNote}
+                  </p>
+                </div>
+              )}
+
+              {tts.sources && tts.sources.length > 0 && (
+                <div>
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Sources de référence" : "Reference Sources"}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {tts.sources.map((src: { label: string; url: string; type: string }, i: number) => (
+                      <a
+                        key={i}
+                        href={src.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border transition-all hover:shadow-sm ${
+                          src.type === 'benchmark' ? 'bg-violet-50 border-violet-200 text-violet-700 hover:bg-violet-100' :
+                          src.type === 'pricing' ? 'bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100' :
+                          src.type === 'news' ? 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100' :
+                          'bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200'
+                        }`}
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        {src.label}
+                        <span className="opacity-50 text-[10px] uppercase tracking-wide">{src.type}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

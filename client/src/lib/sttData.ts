@@ -65,6 +65,10 @@ export interface STTData {
   digiDoubleRelevanceFr: string;
   digiDoubleAxis: string;
   benchmarkRef?: string;
+  // Traçabilité des données
+  dataUpdatedAt: string;      // ISO date de la dernière mise à jour des chiffres (YYYY-MM-DD)
+  dataUpdateNote: string;     // Contexte de la mise à jour
+  sources: Array<{ label: string; url: string; type: "pricing" | "benchmark" | "docs" | "news" }>;
 }
 
 const sttDatabase: STTData[] = [
@@ -112,6 +116,14 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Candidat principal pour l'ASR du MVP Phase 1. 75ms latence critique pour le pipeline <2s. Option on-premise alignée avec les exigences de souveraineté suisse. Audiogami (Gamilab) déjà en production — Deepgram comme fallback/comparaison.",
     digiDoubleAxis: "Phase 1 MVP — ASR streaming",
     benchmarkRef: "Inworld benchmark 2026 + Koenecke et al.",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Pricing updated: $0.0043/min PAYG (Jan 2026). Nova-3 language expansion (36 langs, Jan 2026). TTFA 75ms P90 confirmed by Inworld benchmark.",
+    sources: [
+      { label: "Deepgram Pricing", url: "https://deepgram.com/pricing", type: "pricing" },
+      { label: "Deepgram Nova-3 Docs", url: "https://developers.deepgram.com/docs/models-languages-overview", type: "docs" },
+      { label: "Artificial Analysis STT Benchmark", url: "https://artificialanalysis.ai/speech-to-text", type: "benchmark" },
+      { label: "Inworld STT Benchmark 2026", url: "https://inworld.ai/resources/best-speech-to-text-apis", type: "benchmark" },
+    ],
   },
   {
     id: "assemblyai",
@@ -156,6 +168,14 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Référence précision pour la validation DigiDouble. 4,9% WER utile pour benchmarker Audiogami et Whisper local. Non adapté à la production en raison de l'absence de souveraineté et de latence plus élevée que Deepgram.",
     digiDoubleAxis: "Référence précision",
     benchmarkRef: "AssemblyAI docs + Koenecke benchmark 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Pricing confirmed: $0.0062/min streaming, $0.0037/min async. Universal-2 WER 4.9% (AssemblyAI internal benchmark). Inworld raised prices 400%+ in 2026.",
+    sources: [
+      { label: "AssemblyAI Pricing", url: "https://www.assemblyai.com/pricing", type: "pricing" },
+      { label: "AssemblyAI Benchmarks", url: "https://www.assemblyai.com/benchmarks", type: "benchmark" },
+      { label: "AssemblyAI Universal-2 Docs", url: "https://www.assemblyai.com/docs/speech-to-text/speech-recognition", type: "docs" },
+      { label: "Artificial Analysis STT", url: "https://artificialanalysis.ai/speech-to-text", type: "benchmark" },
+    ],
   },
   {
     id: "google-stt",
@@ -200,6 +220,14 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Utile pour les déploiements DigiDouble multilingues nécessitant 100+ langues. Résidence données EU adresse partiellement la souveraineté suisse. Non recommandé pour le MVP Phase 1 en raison d'une latence plus élevée que Deepgram.",
     digiDoubleAxis: "Multilingue — option secondaire",
     benchmarkRef: "Google Cloud docs + Koenecke benchmark 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Chirp 3 public preview (Nov 2025). Pricing: $0.016/min (0-500k min). WER ~4-6% on Chirp 3 (Google internal). 85+ languages with Chirp 3.",
+    sources: [
+      { label: "Google STT Pricing", url: "https://cloud.google.com/speech-to-text/pricing", type: "pricing" },
+      { label: "Google Chirp 3 Announcement", url: "https://cloud.google.com/blog/products/ai-machine-learning/google-cloud-chirp-3-speech-to-text", type: "news" },
+      { label: "Google STT Docs", url: "https://cloud.google.com/speech-to-text/docs", type: "docs" },
+      { label: "Artificial Analysis STT", url: "https://artificialanalysis.ai/speech-to-text", type: "benchmark" },
+    ],
   },
   {
     id: "azure-stt",
@@ -244,6 +272,14 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Candidat fort pour les déploiements institutionnels suisses nécessitant la résidence des données en Suisse. Modèle suisse-allemand critique pour le marché suisse DigiDouble. Trop cher pour la production à volume élevé.",
     digiDoubleAxis: "Souveraineté suisse — institutionnel",
     benchmarkRef: "Microsoft docs + Azure pricing 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Azure pricing updated Apr 2026: $1/hr standard, $0.18/hr batch. WER 4.3% (Microsoft internal). Swiss data center (Switzerland North) confirmed. Disconnected container deployment available.",
+    sources: [
+      { label: "Azure Speech Pricing", url: "https://azure.microsoft.com/en-us/pricing/details/cognitive-services/speech-services/", type: "pricing" },
+      { label: "Azure Speech Docs", url: "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-to-text", type: "docs" },
+      { label: "Azure Switzerland North", url: "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/#geography=switzerland", type: "docs" },
+      { label: "Artificial Analysis STT", url: "https://artificialanalysis.ai/speech-to-text/models/azure", type: "benchmark" },
+    ],
   },
   // ─── OPEN SOURCE ─────────────────────────────────────────────
   {
@@ -289,6 +325,14 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Fondation d'Audiogami (Gamilab) — déjà en production pour DigiDouble. Utiliser faster-whisper avec VAD pour le pipeline streaming Phase 1. Souveraineté totale alignée avec les exigences suisses. Benchmarker contre Deepgram Nova-3 pour le compromis latence.",
     digiDoubleAxis: "Phase 1 MVP — Base Audiogami",
     benchmarkRef: "OpenAI Whisper paper + Koenecke benchmark 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Whisper Large v3 released Sep 2023. WER 2.7% on LibriSpeech clean (OpenAI). OpenAI API pricing: $0.006/min. Groq inference: $0.35/1M tokens (sub-100ms). Model unchanged since release.",
+    sources: [
+      { label: "Whisper GitHub", url: "https://github.com/openai/whisper", type: "docs" },
+      { label: "OpenAI Whisper API Pricing", url: "https://openai.com/api/pricing/", type: "pricing" },
+      { label: "Groq Whisper Pricing", url: "https://groq.com/pricing/", type: "pricing" },
+      { label: "HuggingFace Open ASR Leaderboard", url: "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard", type: "benchmark" },
+    ],
   },
   {
     id: "faster-whisper",
@@ -333,6 +377,13 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Recommandé pour le pipeline ASR souverain du MVP Phase 1. 4× plus rapide que Whisper de base, streaming avec VAD. Combiner avec silero-vad pour l'endpointing temps réel. Souveraineté totale. Benchmark : 150ms vs Deepgram 75ms — compromis acceptable pour déploiement souverain suisse.",
     digiDoubleAxis: "Phase 1 MVP — ASR souverain",
     benchmarkRef: "SYSTRAN faster-whisper benchmarks 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "faster-whisper v1.1.0 (Jan 2025). 4× faster than original Whisper on GPU, 2× on CPU with int8. Streaming mode with silero-vad confirmed. LiveKit voice agent template uses faster-whisper.",
+    sources: [
+      { label: "faster-whisper GitHub", url: "https://github.com/SYSTRAN/faster-whisper", type: "docs" },
+      { label: "faster-whisper Benchmarks", url: "https://github.com/SYSTRAN/faster-whisper#benchmarks", type: "benchmark" },
+      { label: "LiveKit Voice Agent Template", url: "https://github.com/livekit/agents", type: "docs" },
+    ],
   },
   {
     id: "whisper-turbo",
@@ -377,6 +428,13 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Bon équilibre vitesse/précision pour le pipeline souverain Phase 1. 8× plus rapide que Large v3 réduit le coût GPU. Utiliser avec faster-whisper + silero-vad pour le streaming. Alternative à faster-whisper Large v3 quand le budget GPU est contraint.",
     digiDoubleAxis: "Phase 1 MVP — ASR souverain léger",
     benchmarkRef: "OpenAI Whisper Turbo release notes, Oct 2024",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Whisper large-v3-turbo released Oct 2024. 809M params (distilled from Large v3). 8× faster inference. WER 3.0% English (OpenAI). Available on HuggingFace and via faster-whisper.",
+    sources: [
+      { label: "Whisper Turbo HuggingFace", url: "https://huggingface.co/openai/whisper-large-v3-turbo", type: "docs" },
+      { label: "OpenAI Whisper GitHub", url: "https://github.com/openai/whisper", type: "docs" },
+      { label: "HuggingFace Open ASR Leaderboard", url: "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard", type: "benchmark" },
+    ],
   },
   {
     id: "audiogami",
@@ -421,6 +479,12 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "ASR PRINCIPAL pour le MVP Phase 1 DigiDouble. Déjà en production. Souveraineté suisse + optimisation français/allemand = parfaitement adapté. Benchmarker contre Deepgram Nova-3 pour quantifier le compromis latence (200ms vs 75ms). Considérer faster-whisper comme fallback souverain.",
     digiDoubleAxis: "Phase 1 MVP — ASR principal",
     benchmarkRef: "Gamilab production deployment, 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Audiogami in production for DigiDouble Phase 1 (2025). Swiss-hosted on Exoscale. WER ~3.5% estimated (Whisper Large v3 base + Swiss fine-tuning). No public benchmarks available.",
+    sources: [
+      { label: "Gamilab Website", url: "https://gamilab.com", type: "docs" },
+      { label: "Exoscale Swiss Cloud", url: "https://www.exoscale.com", type: "docs" },
+    ],
   },
   {
     id: "voxtral-asr",
@@ -465,6 +529,13 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Évaluation haute priorité pour le MVP Phase 1. Crée un pipeline souverain full-stack avec Voxtral TTS + Mistral LLM. Support natif français/allemand critique pour le marché suisse. Très récent — 3 mois de tests production requis avant déploiement Phase 1.",
     digiDoubleAxis: "Phase 1 MVP — Stack Mistral souverain",
     benchmarkRef: "Mistral AI announcement, Mar 26, 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Voxtral announced Mar 26, 2026 by Mistral AI. Apache 2.0 open-weights. Part of Voxtral full-stack (ASR+TTS). Production benchmarks not yet available. Mistral API pricing estimated.",
+    sources: [
+      { label: "Mistral Voxtral Announcement", url: "https://mistral.ai/news/voxtral", type: "news" },
+      { label: "Mistral AI Docs", url: "https://docs.mistral.ai", type: "docs" },
+      { label: "Mistral API Pricing", url: "https://mistral.ai/technology/#pricing", type: "pricing" },
+    ],
   },
   // ─── INWORLD STT ─────────────────────────────────────────────
   {
@@ -538,6 +609,14 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Valeur stratégique élevée pour l'Axe 2 DigiDouble (Comportement Avatar) et l'Emotional Toolbox. Le voice profiling permet la détection d'émotion temps réel sans modèle séparé — alimentant directement la sélection d'expression avatar et le conditionnement des prompts LLM. Latence <100ms compatible avec la cible Phase 1.",
     digiDoubleAxis: "Phase 1 MVP — STT émotionnel + Axe 2 Avatar Behavior",
     benchmarkRef: "https://inworld.ai/resources/best-speech-to-text-apis",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Inworld STT pricing updated 2026 (400%+ increase reported). TTFA 92ms documented. Voice profiling features confirmed. ZDR available on all plans. EU data residency on Enterprise.",
+    sources: [
+      { label: "Inworld STT Product Page", url: "https://inworld.ai/speech-to-text", type: "docs" },
+      { label: "Inworld STT Benchmark Article", url: "https://inworld.ai/resources/best-speech-to-text-apis", type: "benchmark" },
+      { label: "Inworld Pricing", url: "https://inworld.ai/pricing", type: "pricing" },
+      { label: "Artificial Analysis STT", url: "https://artificialanalysis.ai/speech-to-text", type: "benchmark" },
+    ],
   },
 ];
 export function getSTTData(): STTData[] {

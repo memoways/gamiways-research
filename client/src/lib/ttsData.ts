@@ -71,6 +71,10 @@ export interface TTSData {
   // Références
   arxivRef?: string;
   benchmarkRef?: string;
+  // Traçabilité des données
+  dataUpdatedAt: string;      // ISO date de la dernière mise à jour des chiffres (YYYY-MM-DD)
+  dataUpdateNote: string;     // Contexte de la mise à jour
+  sources: Array<{ label: string; url: string; type: "pricing" | "benchmark" | "docs" | "news" }>;
 }
 
 const ttsDatabase: TTSData[] = [
@@ -120,6 +124,14 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Référence qualité pour les phases de validation. Clonage vocal critique pour le MVP Phase 1 (voice-to-voice). Trop cher pour la production à l'échelle. Évaluer Flash v2.5 ($75/1M) pour le prototype.",
     digiDoubleAxis: "Phase 1 MVP — Référence qualité",
     benchmarkRef: "Artificial Analysis Speech Leaderboard, Jan 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Eleven v3 ELO 1145 (rank #3, Apr 2026, Artificial Analysis Arena). Flash v2.5 TTFA 75ms confirmed. Pricing: $206/1M chars (v3), $75/1M (Flash v2.5). Enterprise on-premise available.",
+    sources: [
+      { label: "ElevenLabs Pricing", url: "https://elevenlabs.io/pricing", type: "pricing" },
+      { label: "ElevenLabs Docs", url: "https://elevenlabs.io/docs", type: "docs" },
+      { label: "Artificial Analysis TTS Leaderboard", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+      { label: "ElevenLabs Flash v2.5 Release", url: "https://elevenlabs.io/blog/flash-v2-5", type: "news" },
+    ],
   },
   {
     id: "cartesia",
@@ -166,6 +178,14 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Candidat principal pour le pipeline voice-to-voice du MVP Phase 1. 40ms TTFA critique pour l'objectif <2s end-to-end. Architecture SSM à étudier pour l'implémentation souveraine (Axe 1 R&D).",
     digiDoubleAxis: "Phase 1 MVP — Latence critique",
     benchmarkRef: "Cartesia docs + Artificial Analysis, Jan 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Sonic 3 ELO 1063 (rank #8, Apr 2026, Artificial Analysis Arena). TTFA 90ms (Sonic 3), 40ms (Sonic 2 Turbo). Pricing: $15/1M chars standard. GDPR + EU data residency confirmed.",
+    sources: [
+      { label: "Cartesia Pricing", url: "https://cartesia.ai/pricing", type: "pricing" },
+      { label: "Cartesia Docs", url: "https://docs.cartesia.ai", type: "docs" },
+      { label: "Artificial Analysis TTS", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+      { label: "Cartesia Sonic 3 Release", url: "https://cartesia.ai/blog/sonic-3", type: "news" },
+    ],
   },
   {
     id: "inworld_tts",
@@ -212,6 +232,14 @@ const ttsDatabase: TTSData[] = [
     benchmarkRef: "Artificial Analysis Speech Arena, March 2026. 4 of top 7 models are Inworld models.",
     digiDoubleRelevance: "Top candidate for Phase 1 MVP. Best quality/cost ratio (#1 ELO, lowest price). Realtime API (S2S + STT + LLM Router) enables full voice pipeline in a single provider. On-premise option aligns with Swiss sovereignty requirement. Viseme timestamps directly usable for avatar lip-sync (Axis 2). ElevenLabs migration tool simplifies transition.",
     digiDoubleRelevanceFr: "Candidat principal pour le MVP Phase 1. Meilleur rapport qualité/coût (#1 ELO, prix le plus bas). Realtime API (S2S + STT + LLM Router) permet un pipeline vocal complet chez un seul fournisseur. Option on-premise alignée avec l'exigence de souveraineté suisse. Timestamps visèmes directement utilisables pour le lip-sync avatar (Axe 2). Outil de migration ElevenLabs facilite la transition.",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Inworld TTS-1.5 Max ELO 1207 (rank #1, Apr 2026). Mini ELO 1149. Realtime API S2S latency <120ms Mini confirmed. Pricing: $10/1M chars (Max), $5/1M (Mini). On-premise available.",
+    sources: [
+      { label: "Inworld Pricing", url: "https://inworld.ai/pricing", type: "pricing" },
+      { label: "Inworld TTS Docs", url: "https://docs.inworld.ai/docs/tutorial-basics/text-to-speech/", type: "docs" },
+      { label: "Artificial Analysis TTS Arena", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+      { label: "Inworld Realtime API", url: "https://inworld.ai/realtime-api", type: "docs" },
+    ],
   },
   {
     id: "hume_octave",
@@ -258,6 +286,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Intéressant pour le MVP Phase 1 grâce au contrôle émotion en langage naturel et au faible coût. Pipeline speech-to-speech EVI 3 à évaluer. Support limité à 11 langues potentiellement problématique pour les cas d'usage multilingues.",
     digiDoubleAxis: "Phase 1 MVP — Expressivité émotionnelle",
     benchmarkRef: "Artificial Analysis Speech Leaderboard, Jan 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Hume Octave 2 ELO 1160 (rank #2, Apr 2026). Pricing: $0.06/min (Octave 2). EVI 3 speech-to-speech <300ms. 11 languages confirmed.",
+    sources: [
+      { label: "Hume AI Pricing", url: "https://www.hume.ai/pricing", type: "pricing" },
+      { label: "Hume AI Docs", url: "https://dev.hume.ai/docs", type: "docs" },
+      { label: "Artificial Analysis TTS", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+    ],
   },
   {
     id: "fish_audio",
@@ -304,6 +339,14 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Bon rapport coût/qualité pour le MVP Phase 1. Option auto-hébergement S1-mini alignée avec les exigences de souveraineté. Clonage vocal inclus sans frais supplémentaires est un avantage significatif.",
     digiDoubleAxis: "Phase 1 MVP — Coût/Souveraineté",
     benchmarkRef: "Artificial Analysis Speech Leaderboard + Fish Audio docs, 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Fish Audio OpenAudio S1 ELO 1074 (rank #7, Apr 2026). Pricing: $15/1M chars. S1-mini open-source for self-hosting. 13 languages.",
+    sources: [
+      { label: "Fish Audio Website", url: "https://fish.audio", type: "docs" },
+      { label: "Fish Audio Pricing", url: "https://fish.audio/pricing", type: "pricing" },
+      { label: "Artificial Analysis TTS", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+      { label: "Fish Audio GitHub", url: "https://github.com/fishaudio/fish-speech", type: "docs" },
+    ],
   },
   {
     id: "deepgram_aura",
@@ -350,6 +393,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Pertinent pour le MVP Phase 1 si utilisation de Deepgram Nova-3 pour l'ASR. Le stack ASR+TTS d'un seul fournisseur simplifie l'intégration et réduit la latence. Limité à l'anglais et sans clonage vocal sont des contraintes significatives.",
     digiDoubleAxis: "Phase 1 MVP — Stack ASR+TTS intégré",
     benchmarkRef: "Deepgram docs + Introl Voice AI guide, Jan 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Deepgram Aura-2 pricing: $15/1M chars. TTFA <100ms. English only. Best paired with Deepgram Nova-3 ASR for full voice agent stack.",
+    sources: [
+      { label: "Deepgram Aura-2 Pricing", url: "https://deepgram.com/pricing", type: "pricing" },
+      { label: "Deepgram Aura-2 Docs", url: "https://developers.deepgram.com/docs/tts-models", type: "docs" },
+      { label: "Artificial Analysis TTS", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+    ],
   },
 
   // ─── OPEN-SOURCE / SELF-HOSTED ────────────────────────────────
@@ -398,6 +448,14 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Candidat fort pour le MVP Phase 1 souverain. Fonctionne sur l'infrastructure GPU Exoscale suisse. L'absence de clonage vocal est une limitation significative pour les cas d'usage DigiDouble personnalisés. Coupler avec XTTS-v2 ou Chatterbox pour les besoins de clonage vocal.",
     digiDoubleAxis: "Phase 1 MVP — Souveraineté maximale",
     benchmarkRef: "Artificial Analysis Speech Leaderboard, Jan 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Kokoro 82M v1.0 ELO 1055 (rank #14, Apr 2026). Apache 2.0. Replicate hosted: $0.65/1M chars. Self-hosted: free. 8 languages confirmed.",
+    sources: [
+      { label: "Kokoro GitHub", url: "https://github.com/hexgrad/kokoro", type: "docs" },
+      { label: "Kokoro on Replicate", url: "https://replicate.com/hexgrad/kokoro-82m", type: "pricing" },
+      { label: "Artificial Analysis TTS", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+      { label: "HuggingFace Kokoro", url: "https://huggingface.co/hexgrad/Kokoro-82M", type: "docs" },
+    ],
   },
   {
     id: "chatterbox",
@@ -444,6 +502,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Excellent pour le MVP Phase 1 souverain avec clonage vocal. Licence MIT pour déploiement sans restriction sur infrastructure suisse. Anglais uniquement est une limitation pour les cas d'usage multilingues DigiDouble. Contrôle d'exagération émotionnelle aligné avec l'Axe 2 (avatar expressif).",
     digiDoubleAxis: "Phase 1 MVP — Clonage vocal souverain",
     benchmarkRef: "Resemble AI benchmark + HuggingFace TTS Arena, Dec 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Chatterbox released Apr 2025 by Resemble AI. MIT license. ELO ~1050 (Artificial Analysis). 63.75% preference vs ElevenLabs in blind tests. Self-hosted, 350M params.",
+    sources: [
+      { label: "Chatterbox GitHub", url: "https://github.com/resemble-ai/chatterbox", type: "docs" },
+      { label: "Resemble AI Blog", url: "https://www.resemble.ai/chatterbox", type: "news" },
+      { label: "HuggingFace TTS Arena", url: "https://huggingface.co/spaces/Pendrokar/TTS-Spaces-Arena", type: "benchmark" },
+    ],
   },
   {
     id: "orpheus",
@@ -490,6 +555,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Très pertinent pour le MVP Phase 1. Les sons non-verbaux (<laugh>, <sigh>) créent une conversation plus naturelle. Apache 2.0 pour déploiement souverain sur Exoscale. Nécessite GPU A100 — compatible avec l'infrastructure DigiDouble existante.",
     digiDoubleAxis: "Phase 1 MVP — Expressivité naturelle",
     benchmarkRef: "Canopy AI GitHub + Modal.com TTS comparison, 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Orpheus 3B released Jan 2025. Apache 2.0. 3B params. Emotion tags (laugh, sigh, etc.). Self-hosted on GPU. 7 languages.",
+    sources: [
+      { label: "Orpheus GitHub", url: "https://github.com/canopyai/Orpheus-TTS", type: "docs" },
+      { label: "Canopy AI Blog", url: "https://canopylabs.ai/model-releases", type: "news" },
+      { label: "Artificial Analysis TTS", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+    ],
   },
   {
     id: "dia",
@@ -536,6 +608,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Pertinent pour les séquences de dialogue pré-rendues (mode narratif). Capacité multi-locuteurs utile pour générer des données d'entraînement. Non adapté au MVP Phase 1 temps réel en raison du manque d'optimisation streaming.",
     digiDoubleAxis: "Mode narratif — Génération dialogue pré-rendu",
     benchmarkRef: "Nari Labs GitHub + VentureBeat, Apr 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Dia 1.6B released Apr 2025 by Nari Labs. Apache 2.0. Dialogue-native TTS with [S1]/[S2] speaker tags. Self-hosted on GPU.",
+    sources: [
+      { label: "Dia GitHub", url: "https://github.com/nari-labs/dia", type: "docs" },
+      { label: "Nari Labs Blog", url: "https://nari-labs.github.io/Dia/", type: "news" },
+      { label: "HuggingFace Dia", url: "https://huggingface.co/nari-labs/Dia-1.6B", type: "docs" },
+    ],
   },
   {
     id: "kyutai_tts",
@@ -582,6 +661,12 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Intéressant pour l'Axe 1 R&D (latence). La modélisation par flux décalés est une architecture novatrice à étudier. Timestamps natifs directement utilisables pour le lip-sync avatar. CC-BY 4.0 pour déploiement souverain.",
     digiDoubleAxis: "Axe 1 R&D — Architecture streaming",
     benchmarkRef: "Kyutai blog, Jul 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Kyutai TTS 1.6B released Jul 2025. CC-BY 4.0. Delayed streams modeling — streaming-native with timestamps. Part of Moshi S2S system. Self-hosted on GPU.",
+    sources: [
+      { label: "Kyutai GitHub", url: "https://github.com/kyutai-labs/moshi", type: "docs" },
+      { label: "Kyutai Blog", url: "https://kyutai.org/moshi", type: "news" },
+    ],
   },
   {
     id: "sesame_csm",
@@ -628,9 +713,16 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Très pertinent pour l'Axe 2 R&D (comportement conversationnel). La prosodie contextuelle et les backchannels naturels sont exactement ce dont DigiDouble a besoin pour une conversation authentique. Non adapté au MVP Phase 1 temps réel — évaluer pour la recherche Axe 2.",
     digiDoubleAxis: "Axe 2 R&D — Comportement conversationnel",
     benchmarkRef: "Sesame AI research blog, Mar 2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Sesame CSM released Mar 2025. Apache 2.0. 1B params. Conversational speech model with natural prosody. Self-hosted.",
+    sources: [
+      { label: "Sesame AI Blog", url: "https://www.sesame.com/research/crossing_the_uncanny_valley_of_voice", type: "news" },
+      { label: "Sesame CSM GitHub", url: "https://github.com/SesameAILabs/csm", type: "docs" },
+      { label: "HuggingFace CSM", url: "https://huggingface.co/sesame/csm-1b", type: "docs" },
+    ],
   },
 
-  // ─── VOICE-TO-VOICE (END-TO-END) ──────────────────────────────
+  // ─── VOICE-TO-VOICE (END-TO-END) ────────────────────────────────────────────────
   {
     id: "ultravox",
     name: "Ultravox v0.5",
@@ -676,6 +768,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Référence critique pour la décision d'architecture du MVP Phase 1 : en cascade (ASR+LLM+TTS) vs end-to-end (Ultravox). L'end-to-end élimine l'accumulation de latence mais perd en contrôlabilité. DigiDouble Phase 1 devrait benchmarker les deux approches. CC-BY-NC-4.0 limite l'auto-hébergement commercial.",
     digiDoubleAxis: "Phase 1 MVP — Architecture V2V end-to-end",
     benchmarkRef: "Ultravox AIEWF eval, Feb 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Ultravox v0.5 released Feb 2026. MIT license. End-to-end S2S, no separate TTS. Llama 3.1 backbone. Self-hosted or Fixie.ai API. AIEWF eval: 0.864s median latency.",
+    sources: [
+      { label: "Ultravox GitHub", url: "https://github.com/fixie-ai/ultravox", type: "docs" },
+      { label: "Ultravox Website", url: "https://www.ultravox.ai", type: "docs" },
+      { label: "AIEWF Evaluation Feb 2026", url: "https://artificialanalysis.ai/speech-to-text", type: "benchmark" },
+    ],
   },
   {
     id: "moshi",
@@ -722,6 +821,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Référence clé pour l'Axe 1 R&D (conversation full-duplex). La capacité full-duplex est l'objectif à long terme pour DigiDouble — permet la gestion naturelle des interruptions. CC-BY 4.0 pour déploiement souverain. Non adapté au MVP Phase 1 — évaluer pour la recherche avancée Axe 1.",
     digiDoubleAxis: "Axe 1 R&D — Full-duplex conversation",
     benchmarkRef: "Kyutai GitHub + research blog, 2024–2025",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Moshi released Sep 2024 by Kyutai. CC-BY 4.0. Full-duplex S2S with inner monologue. 7B params. Self-hosted on GPU.",
+    sources: [
+      { label: "Moshi GitHub", url: "https://github.com/kyutai-labs/moshi", type: "docs" },
+      { label: "Kyutai Research Blog", url: "https://kyutai.org/moshi", type: "news" },
+      { label: "HuggingFace Moshi", url: "https://huggingface.co/kyutai/moshi", type: "docs" },
+    ],
   },
   {
     id: "voxtral_tts",
@@ -768,6 +874,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Évaluation haute priorité pour le MVP Phase 1. Modèle open-weights européen avec support français/allemand parfaitement aligné avec les exigences de déploiement souverain suisse de DigiDouble. Très récent — nécessite des tests en production. L'intégration avec l'écosystème Mistral/Voxtral ASR crée une solution souveraine full-stack potentielle.",
     digiDoubleAxis: "Phase 1 MVP — Souveraineté européenne",
     benchmarkRef: "Mistral AI announcement, Mar 26, 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "Voxtral TTS announced Mar 26, 2026 by Mistral AI. Open-weights. 9 languages (EN, FR, DE, ES, NL, PT, IT, HI, AR). ELO not yet in Artificial Analysis leaderboard. Production benchmarks pending.",
+    sources: [
+      { label: "Mistral Voxtral Announcement", url: "https://mistral.ai/news/voxtral", type: "news" },
+      { label: "Mistral API Pricing", url: "https://mistral.ai/technology/#pricing", type: "pricing" },
+      { label: "Mistral Docs", url: "https://docs.mistral.ai", type: "docs" },
+    ],
   },
   {
     id: "openai_realtime",
@@ -814,6 +927,13 @@ const ttsDatabase: TTSData[] = [
     digiDoubleRelevanceFr: "Référence pour le benchmarking du MVP Phase 1. Non adapté à la production DigiDouble en raison de l'absence de souveraineté et de clonage vocal. Utiliser comme benchmark qualité/latence. Comparer avec Ultravox (end-to-end) et le stack souverain en cascade.",
     digiDoubleAxis: "Phase 1 MVP — Référence benchmark",
     benchmarkRef: "OpenAI docs + Ultravox AIEWF eval, Feb 2026",
+    dataUpdatedAt: "2026-04-30",
+    dataUpdateNote: "OpenAI Realtime API (GPT-4o) pricing: $0.06/min audio input + $0.24/min audio output. ELO 1106 (rank #4, Apr 2026). TTFA ~300ms. WebSocket streaming. 57 languages. No on-premise.",
+    sources: [
+      { label: "OpenAI Realtime API Pricing", url: "https://openai.com/api/pricing/", type: "pricing" },
+      { label: "OpenAI Realtime API Docs", url: "https://platform.openai.com/docs/guides/realtime", type: "docs" },
+      { label: "Artificial Analysis TTS", url: "https://artificialanalysis.ai/text-to-speech", type: "benchmark" },
+    ],
   },
 ];
 
