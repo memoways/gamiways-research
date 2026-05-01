@@ -19,13 +19,13 @@ export default function Home() {
         { stat: "< 500ms", label: "TTFB cible pour TTS first audio", color: "oklch(0.65 0.18 200)" },
         { stat: "14+", label: "moteurs TTS évalués (cloud + open-source)", color: "oklch(0.55 0.20 200)" },
         { stat: "$0.003–$0.20", label: "coût par minute selon le moteur TTS", color: "oklch(0.72 0.18 200)" },
-        { stat: "3", label: "architectures STT comparées (Nova-3, Whisper, Inworld)", color: "oklch(0.60 0.18 200)" },
+        { stat: "10", label: "moteurs STT évalués (cloud, open-source, souverain)", color: "oklch(0.60 0.18 200)" },
       ]
     : [
         { stat: "< 500ms", label: "TTFB target for TTS first audio", color: "oklch(0.65 0.18 200)" },
         { stat: "14+", label: "TTS engines evaluated (cloud + open-source)", color: "oklch(0.55 0.20 200)" },
         { stat: "$0.003–$0.20", label: "cost per minute depending on TTS engine", color: "oklch(0.72 0.18 200)" },
-        { stat: "3", label: "STT architectures compared (Nova-3, Whisper, Inworld)", color: "oklch(0.60 0.18 200)" },
+        { stat: "10", label: "STT engines evaluated (cloud, open-source, sovereign)", color: "oklch(0.60 0.18 200)" },
       ];
 
   // ── KEY LEARNINGS — Avatars ──────────────────────────────────────────────
