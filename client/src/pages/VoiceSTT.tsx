@@ -132,8 +132,8 @@ export default function VoiceSTT() {
             <div className="mb-4 bg-orange-50 border border-orange-200 rounded-lg px-5 py-3">
               <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
-                  ? <><strong>APIs STT cloud temps réel</strong> — Deepgram Nova-3 est la référence latence (75ms TTFA). Whisper large-v3 est le standard de qualité open-source. AssemblyAI Universal-2 domine le benchmark WER multilingue.</>
-                  : <><strong>Real-time cloud STT APIs</strong> — Deepgram Nova-3 is the latency reference (75ms TTFA). Whisper large-v3 is the open-source quality standard. AssemblyAI Universal-2 leads the multilingual WER benchmark.</>
+                  ? <><strong>APIs STT cloud temps réel</strong> — Deepgram Nova-3 est la référence latence (75ms TTFA). Whisper large-v3 est le standard de qualité open-source. AssemblyAI Universal-3 Pro domine le benchmark WER multilingue — Voice Agent API $4.50/hr (lancement 29 avr. 2026).</>
+                  : <><strong>Real-time cloud STT APIs</strong> — Deepgram Nova-3 is the latency reference (75ms TTFA). Whisper large-v3 is the open-source quality standard. AssemblyAI Universal-3 Pro leads the multilingual WER benchmark — Voice Agent API $4.50/hr (launched Apr 29, 2026).</>
                 }
               </p>
             </div>

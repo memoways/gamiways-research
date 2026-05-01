@@ -15,7 +15,7 @@ import GlossaryLink from "@/components/GlossaryLink";
 // ─── STT DATA ─────────────────────────────────────────────────────────────────
 const STT_BENCHMARKS = [
   { id: "deepgram-nova3",    name: "Deepgram Nova-3",             wer: 7.2,  ttfa: 75,  ttfaTyp: 200, priceMin: 0.0036, self: true,  streaming: true,  langs: 36,  notes: "Best latency cloud" },
-  { id: "assemblyai",        name: "AssemblyAI Universal-2",      wer: 4.9,  ttfa: 150, ttfaTyp: 300, priceMin: 0.0062, self: false, streaming: true,  langs: 99,  notes: "Best WER cloud" },
+  { id: "assemblyai",        name: "AssemblyAI Universal-3 Pro",   wer: 4.9,  ttfa: 150, ttfaTyp: 300, priceMin: 0.0062, self: false, streaming: true,  langs: 99,  notes: "Best WER cloud — Voice Agent API $4.50/hr" },
   { id: "google-stt",        name: "Google Speech-to-Text v2",    wer: 6.8,  ttfa: 200, ttfaTyp: 400, priceMin: 0.006,  self: false, streaming: true,  langs: 125, notes: "Largest language coverage" },
   { id: "azure-stt",         name: "Azure Speech (Microsoft)",    wer: 5.9,  ttfa: 180, ttfaTyp: 350, priceMin: 0.0167, self: true,  streaming: true,  langs: 100, notes: "EU on-premise available" },
   { id: "whisper-large-v3",  name: "Whisper Large v3",            wer: 2.7,  ttfa: 300, ttfaTyp: 800, priceMin: 0,      self: true,  streaming: false, langs: 99,  notes: "Best WER overall (open)" },
