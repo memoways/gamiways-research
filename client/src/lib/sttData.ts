@@ -69,6 +69,13 @@ export interface STTData {
   dataUpdatedAt: string;      // ISO date de la dernière mise à jour des chiffres (YYYY-MM-DD)
   dataUpdateNote: string;     // Contexte de la mise à jour
   sources: Array<{ label: string; url: string; type: "pricing" | "benchmark" | "docs" | "news" }>;
+  // Voice Agent API (pipeline complet STT+LLM+TTS)
+  voiceAgentApi?: {
+    available: boolean;
+    price?: string;       // ex: "$4.50/hr"
+    note?: string;        // ex: "WebSocket STT+LLM+TTS unifié"
+    url?: string;
+  };
 }
 
 const sttDatabase: STTData[] = [
@@ -116,6 +123,12 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Candidat principal pour l'ASR du MVP Phase 1. 75ms latence critique pour le pipeline <2s. Option on-premise alignée avec les exigences de souveraineté suisse. Audiogami (Gamilab) déjà en production — Deepgram comme fallback/comparaison.",
     digiDoubleAxis: "Phase 1 MVP — ASR streaming",
     benchmarkRef: "Inworld benchmark 2026 + Koenecke et al.",
+    voiceAgentApi: {
+      available: true,
+      price: "custom",
+      note: "Deepgram Aura-2 TTS + Nova-3 STT + LLM via LiveKit/Pipecat. Pas de pipeline WebSocket natif unifié — intégration via Pipecat ou LiveKit Agents.",
+      url: "https://developers.deepgram.com/docs/voice-agent",
+    },
     dataUpdatedAt: "2026-04-30",
     dataUpdateNote: "Pricing updated: $0.0043/min PAYG (Jan 2026). Nova-3 language expansion (36 langs, Jan 2026). TTFA 75ms P90 confirmed by Inworld benchmark.",
     sources: [
@@ -196,6 +209,12 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Voice Agent API très pertinent pour DigiDouble Phase 1 : pipeline complet en 1 WebSocket simplifie l'architecture. Tool calling permet d'intégrer un RAG sur la base de connaissances DigiDouble. Pas de clonage vocal natif : intégrer ElevenLabs ou Cartesia via TTS externe. Référence précision WER pour benchmarking.",
     digiDoubleAxis: "Voice Agent Pipeline — Référence précision",
     benchmarkRef: "AssemblyAI Voice Agent API launch (Apr 29, 2026) + pricing page",
+    voiceAgentApi: {
+      available: true,
+      price: "$4.50/hr",
+      note: "Pipeline complet STT+LLM+TTS en 1 WebSocket. Turn detection sémantique+acoustique, barge-in natif, tool calling JSON Schema. Lancé le 29 avr. 2026.",
+      url: "https://www.assemblyai.com/products/voice-agent-api",
+    },
     dataUpdatedAt: "2026-05-01",
     dataUpdateNote: "Mise à jour majeure : lancement Voice Agent API le 29 avril 2026. Universal-3 Pro Streaming (u3-rt-pro) nouveau modèle STT temps réel. Prix Voice Agent API : $4.50/hr flat (STT+LLM+TTS). STT seul : $0.21/hr Universal-3 Pro, $0.15/hr Universal-2. Clonage vocal : NON natif (voix prédéfinies, TTS externe intégrable). RAG : NON natif mais tool calling JSON Schema permet intégration externe complète.",
     sources: [
@@ -640,6 +659,12 @@ const sttDatabase: STTData[] = [
     digiDoubleRelevanceFr: "Valeur stratégique élevée pour l'Axe 2 DigiDouble (Comportement Avatar) et l'Emotional Toolbox. Le voice profiling permet la détection d'émotion temps réel sans modèle séparé — alimentant directement la sélection d'expression avatar et le conditionnement des prompts LLM. Latence <100ms compatible avec la cible Phase 1.",
     digiDoubleAxis: "Phase 1 MVP — STT émotionnel + Axe 2 Avatar Behavior",
     benchmarkRef: "https://inworld.ai/resources/best-speech-to-text-apis",
+    voiceAgentApi: {
+      available: true,
+      price: "inclus",
+      note: "Inworld est une plateforme d'agents vocaux complète (STT+LLM+TTS+Avatar). STT est un composant du pipeline Inworld. Pas de tarification STT isolée.",
+      url: "https://inworld.ai",
+    },
     dataUpdatedAt: "2026-04-30",
     dataUpdateNote: "Inworld STT pricing updated 2026 (400%+ increase reported). TTFA 92ms documented. Voice profiling features confirmed. ZDR available on all plans. EU data residency on Enterprise.",
     sources: [

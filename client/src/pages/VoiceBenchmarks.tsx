@@ -201,6 +201,7 @@ export default function VoiceBenchmarks() {
                   <th><span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span></th>
                   <th><span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span></th>
                   <th>{isFr ? "Note" : "Note"}</th>
+                  <th>{isFr ? "Agent vocal" : "Voice Agent"}</th>
                 </tr>
               </thead>
               <tbody>
@@ -244,6 +245,27 @@ export default function VoiceBenchmarks() {
                       }
                     </td>
                     <td className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>{s.notes}</td>
+                    <td>
+                      {/* Voice Agent API — lookup from sttData */}
+                      {s.id === "assemblyai" ? (
+                        <a href="https://www.assemblyai.com/products/voice-agent-api" target="_blank" rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold bg-violet-100 text-violet-700 border border-violet-200 hover:bg-violet-200 transition-colors whitespace-nowrap">
+                          ✓ $4.50/hr
+                        </a>
+                      ) : s.id === "deepgram-nova3" ? (
+                        <a href="https://developers.deepgram.com/docs/voice-agent" target="_blank" rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold bg-cyan-100 text-cyan-700 border border-cyan-200 hover:bg-cyan-200 transition-colors whitespace-nowrap">
+                          ✓ via Pipecat
+                        </a>
+                      ) : s.id === "inworld-stt" ? (
+                        <a href="https://inworld.ai" target="_blank" rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold bg-cyan-100 text-cyan-700 border border-cyan-200 hover:bg-cyan-200 transition-colors whitespace-nowrap">
+                          ✓ inclus
+                        </a>
+                      ) : (
+                        <span className="text-xs text-slate-300">—</span>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
