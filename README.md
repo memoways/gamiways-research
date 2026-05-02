@@ -3,6 +3,8 @@
 > **Site compagnon du projet de recherche DigiDouble** — état de l'art, benchmarks et analyses stratégiques des technologies de synthèse vocale (TTS/STT) et d'avatars vidéo conversationnels.
 
 **URL de production :** [digidouble.edugami.app](https://digidouble.edugami.app)
+**Version :** 0.9.0 — Mai 2026
+**Statut :** 🟢 En production — itérations continues
 
 ---
 
@@ -16,7 +18,7 @@ Le portail remplit trois fonctions complémentaires :
 
 1. **Site compagnon du projet DigiDouble** — documenter les choix technologiques, les gaps de recherche et l'état de l'art pour les partenaires industriels, les évaluateurs Innosuisse et les chercheurs de l'IDIAP.
 2. **Référence indépendante** — les chapitres *Voice Pipeline* et *Video Avatars* sont conçus pour être utiles à **tout projet** travaillant sur des pipelines vocaux ou des avatars vidéo, indépendamment de DigiDouble. Les analyses sont neutres, sourcées et maintenues à jour.
-3. **Outil de décision** — au-delà de l'état de l'art, le portail propose des outils interactifs (scoring personnalisé, simulateur de décision par couche) pour aider les équipes à structurer leurs choix technologiques en fonction de leur contexte propre.
+3. **Outil de décision** — au-delà de l'état de l'art, le portail propose des outils interactifs (scoring personnalisé, simulateur de décision par couche, simulateur de coûts avatars) pour aider les équipes à structurer leurs choix technologiques en fonction de leur contexte propre.
 
 ---
 
@@ -38,29 +40,36 @@ Pages dédiées au projet DigiDouble :
 
 Analyse indépendante des technologies de synthèse et reconnaissance vocale — utile pour tout projet de pipeline conversationnel :
 
-| Route | Contenu |
-| --- | --- |
-| `/voice/tts` | Comparatif de 16 moteurs TTS (cloud, on-premise, open-source) |
-| `/voice/stt` | Comparatif de 10 moteurs STT/ASR |
-| `/voice/benchmarks` | Benchmarks latence, WER, coût, qualité |
-| `/voice/stack` | Cadre de décision par couche (STT → TTS → LLM → Mémoire → Streaming → Infrastructure) + simulateur interactif |
-| `/voice/pipeline` | Diagramme du pipeline Voice-to-Voice complet |
-| `/voice/scoring` | Outil de scoring personnalisé avec pondération des critères |
-| `/tts/:id` | Fiche détaillée par outil TTS (benchmarks + analyse stratégique) |
-| `/voice/stt/:id` | Fiche détaillée par outil STT (benchmarks + analyse stratégique) |
+| Route | Titre | Contenu |
+|-------|-------|---------||
+| `/voice/stt` | STT / Speech-to-Text | Comparatif de 10 moteurs STT/ASR (cloud, open-source, souverain) |
+| `/voice/tts` | TTS & Voice Synthesis | Comparatif de 16 moteurs TTS (cloud, on-premise, open-source) |
+| `/voice/benchmarks` | Audio Synthesis Benchmarks | Benchmarks latence, WER, ELO, coût, qualité STT→TTS |
+| `/voice/stack` | Decision Framework | Cadre de décision par couche (STT → TTS → LLM → Mémoire → Streaming → Infrastructure) + simulateur interactif |
+| `/voice/pipeline` | Voice-to-Voice Pipeline | Diagramme du pipeline Voice-to-Voice complet |
+| `/voice/scoring` | Custom Voice Tool Ranking | Outil de scoring personnalisé avec pondération des critères, partage par URL |
+| `/voice/stt/:id` | Fiche STT | Fiche détaillée par outil STT (benchmarks + analyse stratégique + sources datées) |
+| `/tts/:id` | Fiche TTS | Fiche détaillée par outil TTS (benchmarks + analyse stratégique + sources datées) |
 
 ### Video Avatars
 
 Analyse indépendante des technologies d'avatars vidéo conversationnels :
 
-| Route | Contenu |
-| --- | --- |
-| `/avatars` | Comparatif des plateformes de streaming vidéo avatar |
-| `/avatars/market` | Enjeux business et opportunités de marché (2025–2026) |
-| `/avatars/pricing` | Simulateur de coûts comparatif |
-| `/research/behavior` | Axe 2 — Comportement & Expressivité avatar (au-delà du lip-sync) |
-| `/research/emotional` | Emotional Toolbox & Character Design |
-| `/platform/:id` | Fiche détaillée par plateforme avatar |
+| Route | Titre | Contenu |
+|-------|-------|---------||
+| `/avatars` | Streaming Video Avatars | Comparatif des plateformes de streaming vidéo avatar |
+| `/avatars/market` | Business & Market | Enjeux business et opportunités de marché (2025–2026) |
+| `/avatars/pricing` | Cost Simulator | Simulateur de coûts comparatif (30–3000 min/mo, 8 filtres use-case) |
+| `/avatars/behavior` | Axis 2 — Avatar Behavior & Expressiveness | Fidélité comportementale, langage corporel, TTS expressif |
+| `/avatars/emotional` | Emotional Toolbox & Character Design | Design émotionnel cinématographique pour avatars conversationnels |
+| `/platform/:id` | Fiche Plateforme | Fiche détaillée par plateforme avatar |
+
+### About / À propos
+
+| Route | Titre | Contenu |
+|-------|-------|---------||
+| `/about` | À propos du portail | Objectifs, philosophie éditoriale, structure, contexte DigiDouble |
+| `/glossary` | Glossaire technique | 30 termes EN/FR (WER, TTFA, ELO, Diarisation, Souveraineté, Lock-in…) filtrables par catégorie |
 
 ---
 
@@ -103,8 +112,8 @@ Un wizard en 5 questions contextuelles (phase projet, souveraineté, latence cib
 
 | Outil | Type | Infra |
 | --- | --- | --- |
-| Deepgram Nova-3 | Cloud API | US |
-| AssemblyAI Universal-2 | Cloud API | US |
+| Deepgram Nova-3 | Cloud API | US + EU | ✓ $4.50/hr (Voice Agent API) |
+| AssemblyAI Universal-3 Pro | Cloud API | US | ✓ $4.50/hr (Voice Agent API) |
 | Google Speech-to-Text v2 | Cloud API | US |
 | Azure Speech (Microsoft) | Cloud + On-premise | EU disponible |
 | Whisper Large v3 (OpenAI) | Open-source | Self-hosted |
@@ -112,7 +121,7 @@ Un wizard en 5 questions contextuelles (phase projet, souveraineté, latence cib
 | Whisper Turbo (OpenAI) | Open-source | Self-hosted |
 | Audiogami (Gamilab) | Cloud API | CH |
 | Voxtral ASR (Mistral) | Open-source | Self-hosted / EU |
-| Inworld STT | Cloud API | US |
+| Inworld STT | Cloud API | US | ✓ $0.015/min (Realtime API) |
 
 ---
 
@@ -162,15 +171,21 @@ Le portail est accessible sur `http://localhost:3000`.
 
 ---
 
-## Contribuer
+## Traçabilité des données
 
-Les données des outils sont centralisées dans :
+Chaque fiche outil affiche une section **Data Freshness** avec la date de mise à jour, une note sur les chiffres vérifiés, et des sources cliquables codées par couleur (violet = benchmark, vert = pricing, ambre = news, gris = docs).
 
-- `client/src/lib/ttsData.ts` — benchmarks TTS (latence, coût, scores ELO, capacités)
-- `client/src/lib/sttData.ts` — benchmarks STT (WER, latence, diarisation, streaming)
-- `client/src/lib/strategicData.ts` — analyses stratégiques (souveraineté, lock-in, GTM, M&A)
+## Architecture des données
 
-Pour mettre à jour un outil ou en ajouter un nouveau, il suffit de modifier ces fichiers de données — les pages de comparaison et de scoring se mettent à jour automatiquement.
+Les données des outils sont centralisées dans des fichiers TypeScript séparés du code de rendu. Pour mettre à jour un outil ou en ajouter un nouveau, il suffit de modifier ces fichiers — les pages de comparaison et de scoring se mettent à jour automatiquement.
+
+| Fichier | Contenu |
+|---------|---------||
+| `client/src/lib/ttsData.ts` | Benchmarks TTS : latence, coût, scores ELO, capacités, sources datées |
+| `client/src/lib/sttData.ts` | Benchmarks STT : WER, latence, diarisation, streaming, Voice Agent API, sources datées |
+| `client/src/lib/strategicData.ts` | Analyses stratégiques : souveraineté, lock-in, GTM, M&A, trajectoire open-source |
+| `client/src/lib/platformData.ts` | Données plateformes avatars vidéo |
+| `client/src/lib/pipelineData.ts` | Composants et stacks du pipeline Voice-to-Voice |
 
 ---
 
