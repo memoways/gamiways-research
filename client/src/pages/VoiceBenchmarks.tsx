@@ -64,20 +64,41 @@ export default function VoiceBenchmarks() {
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
-  type SttKey = "wer" | "ttfa" | "priceMin";
-  type TtsKey = "ttfa" | "elo" | "priceMin";
+  type SttKey = "name" | "wer" | "ttfa" | "ttfaTyp" | "priceMin" | "langs" | "self" | "streaming" | "voiceAgent";
+  type TtsKey = "name" | "ttfa" | "ttfaTyp" | "elo" | "priceMin" | "self";
+
+  const STT_VOICE_AGENT_IDS = new Set(["assemblyai", "deepgram-nova3", "inworld-stt"]);
 
   const [sttSort, setSttSort] = useState<{ key: SttKey; dir: "asc" | "desc" }>({ key: "ttfa", dir: "asc" });
   const [ttsSort, setTtsSort] = useState<{ key: TtsKey; dir: "asc" | "desc" }>({ key: "ttfa", dir: "asc" });
 
   const sortedStt = [...STT_BENCHMARKS].sort((a, b) => {
-    const v = sttSort.dir === "asc" ? a[sttSort.key] - b[sttSort.key] : b[sttSort.key] - a[sttSort.key];
-    return v;
+    const dir = sttSort.dir === "asc" ? 1 : -1;
+    switch (sttSort.key) {
+      case "name":      return dir * a.name.localeCompare(b.name);
+      case "wer":       return dir * (a.wer - b.wer);
+      case "ttfa":      return dir * (a.ttfa - b.ttfa);
+      case "ttfaTyp":   return dir * (a.ttfaTyp - b.ttfaTyp);
+      case "priceMin":  return dir * (a.priceMin - b.priceMin);
+      case "langs":     return dir * (a.langs - b.langs);
+      case "self":      return dir * ((a.self ? 1 : 0) - (b.self ? 1 : 0));
+      case "streaming": return dir * ((a.streaming ? 1 : 0) - (b.streaming ? 1 : 0));
+      case "voiceAgent":return dir * ((STT_VOICE_AGENT_IDS.has(a.id) ? 1 : 0) - (STT_VOICE_AGENT_IDS.has(b.id) ? 1 : 0));
+      default:          return 0;
+    }
   });
 
   const sortedTts = [...TTS_BENCHMARKS].sort((a, b) => {
-    const v = ttsSort.dir === "asc" ? a[ttsSort.key] - b[ttsSort.key] : b[ttsSort.key] - a[ttsSort.key];
-    return v;
+    const dir = ttsSort.dir === "asc" ? 1 : -1;
+    switch (ttsSort.key) {
+      case "name":    return dir * a.name.localeCompare(b.name);
+      case "ttfa":    return dir * (a.ttfa - b.ttfa);
+      case "ttfaTyp": return dir * (a.ttfaTyp - b.ttfaTyp);
+      case "elo":     return dir * (a.elo - b.elo);
+      case "priceMin":return dir * (a.priceMin - b.priceMin);
+      case "self":    return dir * ((a.self ? 1 : 0) - (b.self ? 1 : 0));
+      default:        return 0;
+    }
   });
 
   function toggleStt(key: SttKey) {
@@ -186,22 +207,34 @@ export default function VoiceBenchmarks() {
             <table className="data-table">
               <thead>
                 <tr>
-                  <th>{isFr ? "Moteur" : "Engine"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("name")}>
+                    {isFr ? "Moteur" : "Engine"} <SortIcon active={sttSort.key === "name"} dir={sttSort.dir} />
+                  </th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("wer")}>
                     <span className="inline-flex items-center gap-1">WER % <GlossaryLink term="WER" /></span> <SortIcon active={sttSort.key === "wer"} dir={sttSort.dir} />
                   </th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("ttfa")}>
                     <span className="inline-flex items-center gap-1">TTFA (ms) <GlossaryLink term="TTFA" /></span> <SortIcon active={sttSort.key === "ttfa"} dir={sttSort.dir} />
                   </th>
-                  <th>{isFr ? "Typ." : "Typical"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("ttfaTyp")}>
+                    {isFr ? "Typ." : "Typical"} <SortIcon active={sttSort.key === "ttfaTyp"} dir={sttSort.dir} />
+                  </th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("priceMin")}>
                     $/min <SortIcon active={sttSort.key === "priceMin"} dir={sttSort.dir} />
                   </th>
-                  <th>{isFr ? "Langues" : "Languages"}</th>
-                  <th><span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span></th>
-                  <th><span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span></th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("langs")}>
+                    {isFr ? "Langues" : "Languages"} <SortIcon active={sttSort.key === "langs"} dir={sttSort.dir} />
+                  </th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("self")}>
+                    <span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span> <SortIcon active={sttSort.key === "self"} dir={sttSort.dir} />
+                  </th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("streaming")}>
+                    <span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span> <SortIcon active={sttSort.key === "streaming"} dir={sttSort.dir} />
+                  </th>
                   <th>{isFr ? "Note" : "Note"}</th>
-                  <th>{isFr ? "Agent vocal" : "Voice Agent"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("voiceAgent")}>
+                    {isFr ? "Agent vocal" : "Voice Agent"} <SortIcon active={sttSort.key === "voiceAgent"} dir={sttSort.dir} />
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -287,18 +320,24 @@ export default function VoiceBenchmarks() {
             <table className="data-table">
               <thead>
                 <tr>
-                  <th>{isFr ? "Moteur" : "Engine"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("name")}>
+                    {isFr ? "Moteur" : "Engine"} <SortIcon active={ttsSort.key === "name"} dir={ttsSort.dir} />
+                  </th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("ttfa")}>
                     <span className="inline-flex items-center gap-1">TTFA (ms) <GlossaryLink term="TTFA" /></span> <SortIcon active={ttsSort.key === "ttfa"} dir={ttsSort.dir} />
                   </th>
-                  <th>{isFr ? "Typ." : "Typical"}</th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("ttfaTyp")}>
+                    {isFr ? "Typ." : "Typical"} <SortIcon active={ttsSort.key === "ttfaTyp"} dir={ttsSort.dir} />
+                  </th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("elo")}>
                     <span className="inline-flex items-center gap-1">ELO <GlossaryLink term="ELO Score" /></span> <SortIcon active={ttsSort.key === "elo"} dir={ttsSort.dir} />
                   </th>
                   <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("priceMin")}>
                     $/min <SortIcon active={ttsSort.key === "priceMin"} dir={ttsSort.dir} />
                   </th>
-                  <th><span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span></th>
+                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("self")}>
+                    <span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span> <SortIcon active={ttsSort.key === "self"} dir={ttsSort.dir} />
+                  </th>
                   <th>{isFr ? "Note" : "Note"}</th>
                 </tr>
               </thead>
