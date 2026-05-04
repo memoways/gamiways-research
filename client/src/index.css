@@ -252,6 +252,10 @@
   .data-table tr:hover td {
     background: oklch(0.96 0.004 265);
   }
+  .data-table th.cursor-pointer:hover {
+    background: oklch(0.16 0.02 265);
+    color: oklch(0.95 0 0);
+  }
 
   /* Code block */
   .code-block {
