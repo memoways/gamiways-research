@@ -1,5 +1,5 @@
 /*
- * GapMatrixDiagram — DigiDouble Research Portal
+ * GapMatrixDiagram — GamiWays Research Portal
  * Visual: 5 criteria × N solutions matrix with hover details
  * Design: compact grid, color-coded cells, hover for explanation
  */
@@ -93,7 +93,7 @@ const solutions: Solution[] = [
     cells: { realtime: "none", behavioral: "none", sovereignty: "full", memory: "none", narrative: "none" },
   },
   {
-    name: "DigiDouble",
+    name: "GamiWays",
     category: "Target",
     categoryFr: "Cible",
     cells: { realtime: "rd", behavioral: "rd", sovereignty: "full", memory: "rd", narrative: "full" },
@@ -145,8 +145,8 @@ export default function GapMatrixDiagram() {
           {solutions.map((sol) => (
             <tr
               key={sol.name}
-              className={sol.name === "DigiDouble" ? "border-t-2" : "border-t border-slate-100"}
-              style={sol.name === "DigiDouble" ? { borderTopColor: "oklch(0.60 0.20 25)" } : {}}
+              className={sol.name === "GamiWays" ? "border-t-2" : "border-t border-slate-100"}
+              style={sol.name === "GamiWays" ? { borderTopColor: "oklch(0.60 0.20 25)" } : {}}
             >
               <td className="py-3 pr-4">
                 <div className="font-semibold text-slate-900 text-base" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>

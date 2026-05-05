@@ -1,5 +1,5 @@
 /**
- * VoiceBenchmarks.tsx — DigiDouble Research Portal
+ * VoiceBenchmarks.tsx — GamiWays Research Portal
  * Page: Audio Synthesis Benchmarks — STT → TTS comparative synthesis
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext

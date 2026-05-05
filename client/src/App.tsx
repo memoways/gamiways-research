@@ -17,10 +17,10 @@ import PlatformDetail from "./pages/PlatformDetail";
 import TTSDetail from "@/pages/TTSDetail";
 import PipelinePhase1 from "@/pages/PipelinePhase1";
 
-// ── DigiDouble sub-pages ───────────────────────────────────────────────────
-import DigiDoubleArchitecture from "@/pages/DigiDoubleArchitecture";
-import DigiDoubleGaps from "@/pages/DigiDoubleGaps";
-import DigiDoubleAcademic from "@/pages/DigiDoubleAcademic";
+// ── GamiWays sub-pages ───────────────────────────────────────────────────
+import GamiWaysArchitecture from "@/pages/GamiWaysArchitecture";
+import GamiWaysGaps from "@/pages/GamiWaysGaps";
+import GamiWaysAcademic from "@/pages/GamiWaysAcademic";
 
 // ── Voice Pipeline pages ───────────────────────────────────────────────────
 import VoiceTTS from "@/pages/VoiceTTS";
@@ -63,9 +63,9 @@ function Router() {
           {/* ── The Project ───────────────────────────────────────────────── */}
           <Route path="/project" component={Project} />
           <Route path="/research" component={Research} />
-          <Route path="/research/architecture" component={DigiDoubleArchitecture} />
-          <Route path="/research/gaps" component={DigiDoubleGaps} />
-          <Route path="/research/academic" component={DigiDoubleAcademic} />
+          <Route path="/research/architecture" component={GamiWaysArchitecture} />
+          <Route path="/research/gaps" component={GamiWaysGaps} />
+          <Route path="/research/academic" component={GamiWaysAcademic} />
           {/* Avatar sub-pages also under /research for semantic grouping */}
           <Route path="/research/behavior" component={AvatarsBehavior} />
           <Route path="/research/emotional" component={AvatarsEmotional} />

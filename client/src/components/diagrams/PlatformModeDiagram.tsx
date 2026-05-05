@@ -1,5 +1,5 @@
 /*
- * PlatformModeDiagram — DigiDouble Research Portal
+ * PlatformModeDiagram — GamiWays Research Portal
  * Visual: two product modes (Pedagogical / Narrative) sharing a common engine
  * Design: clear visual split, hover for details on each component
  */

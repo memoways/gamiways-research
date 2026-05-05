@@ -1,5 +1,5 @@
 /*
- * NavBar — DigiDouble Research Portal
+ * NavBar — GamiWays Research Portal
  * Redesigned: 3 dropdown menus (The Project / Voice Pipeline / Video Avatars)
  * Mobile: hamburger with grouped sections
  * Design: Space Grotesk, top fixed, minimal
@@ -38,11 +38,11 @@ const NAV_MENUS: NavMenu[] = [
     color: "oklch(0.55 0.20 200)",
     activePrefix: ["/project", "/research"],
     items: [
-      { href: "/project", label: "DigiDouble Project", labelFr: "Projet DigiDouble", desc: "Vision, positioning & roadmap", descFr: "Vision, positionnement & roadmap" },
-      { href: "/research", label: "Research Challenges", labelFr: "Défis de Recherche", desc: "3 research axes & open questions", descFr: "3 axes de recherche & questions ouvertes" },
-      { href: "/research/architecture", label: "Target Architecture", labelFr: "Architecture Cible", desc: "DigiDouble system design & latency budget", descFr: "Design système DigiDouble & budget latence" },
-      { href: "/research/gaps", label: "Research Gaps & Opportunities", labelFr: "Gaps de Recherche & Opportunités", desc: "Identified gaps & opportunities", descFr: "Gaps identifiés & opportunités" },
-      { href: "/research/academic", label: "Academic Assessment", labelFr: "Assessment Académique", desc: "Key papers 2023–2026", descFr: "Publications clés 2023–2026" },
+      { href: "/project", label: "GamiWays Project", labelFr: "Projet GamiWays", desc: "Vision, positioning & product roadmap", descFr: "Vision, positionnement & roadmap produit" },
+      { href: "/research", label: "Technical Challenges", labelFr: "Défis Techniques", desc: "Core technical challenges & product objectives", descFr: "Défis techniques clés & objectifs produit" },
+      { href: "/research/architecture", label: "Target Architecture", labelFr: "Architecture Cible", desc: "System design & latency budget", descFr: "Design système & budget latence" },
+      { href: "/research/gaps", label: "Opportunities & Gaps", labelFr: "Opportunités & Lacunes", desc: "Technology gaps & strategic opportunities", descFr: "Lacunes technologiques & opportunités stratégiques" },
+      { href: "/research/academic", label: "State of the Art", labelFr: "État de l'Art", desc: "Key papers & benchmarks 2023–2026", descFr: "Publications clés & benchmarks 2023–2026" },
     ],
   },
   {
@@ -190,10 +190,10 @@ export default function NavBar() {
             <div className="flex items-center gap-1.5">
               <div className="w-6 h-6 rounded-sm flex items-center justify-center"
                 style={{ background: "oklch(0.72 0.18 200)" }}>
-                <span className="text-white font-bold text-xs" style={{ fontFamily: "'JetBrains Mono', monospace" }}>DD</span>
+                <span className="text-white font-bold text-xs" style={{ fontFamily: "'JetBrains Mono', monospace" }}>GW</span>
               </div>
               <span className="font-semibold text-slate-900 text-sm tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                DigiDouble
+                GamiWays
               </span>
             </div>
             <span className="hidden sm:inline text-xs font-mono text-slate-400 border border-slate-200 rounded px-1.5 py-0.5">

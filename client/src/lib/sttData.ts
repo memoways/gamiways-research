@@ -1,5 +1,5 @@
 // ============================================================
-// sttData.ts — DigiDouble Research Portal
+// sttData.ts — GamiWays Research Portal
 // Données centralisées STT / ASR (Speech-to-Text) 2025–2026
 // Sources : Artificial Analysis, benchmarks officiels, docs
 // ============================================================
@@ -60,7 +60,7 @@ export interface STTData {
   strengthsFr: string[];
   weaknesses: string[];
   weaknessesFr: string[];
-  // Pertinence DigiDouble
+  // Pertinence GamiWays
   digiDoubleRelevance: string;
   digiDoubleRelevanceFr: string;
   digiDoubleAxis: string;
@@ -207,8 +207,8 @@ const sttDatabase: STTData[] = [
       "LLM du Voice Agent API non personnalisable nativement",
       "4,50$/h Voice Agent API — coût élevé pour usage intensif",
     ],
-    digiDoubleRelevance: "Voice Agent API très pertinent pour DigiDouble Phase 1 : pipeline STT+LLM+TTS en 1 WebSocket simplifie l'architecture. Tool calling permet d'intégrer un RAG sur la base de connaissances DigiDouble. Pas de clonage vocal natif : intégrer ElevenLabs ou Cartesia via TTS externe pour la voix du DigiDouble. Référence précision WER pour benchmarking.",
-    digiDoubleRelevanceFr: "Voice Agent API très pertinent pour DigiDouble Phase 1 : pipeline complet en 1 WebSocket simplifie l'architecture. Tool calling permet d'intégrer un RAG sur la base de connaissances DigiDouble. Pas de clonage vocal natif : intégrer ElevenLabs ou Cartesia via TTS externe. Référence précision WER pour benchmarking.",
+    digiDoubleRelevance: "Voice Agent API très pertinent pour GamiWays Phase 1 : pipeline STT+LLM+TTS en 1 WebSocket simplifie l'architecture. Tool calling permet d'intégrer un RAG sur la base de connaissances GamiWays. Pas de clonage vocal natif : intégrer ElevenLabs ou Cartesia via TTS externe pour la voix du GamiWays. Référence précision WER pour benchmarking.",
+    digiDoubleRelevanceFr: "Voice Agent API très pertinent pour GamiWays Phase 1 : pipeline complet en 1 WebSocket simplifie l'architecture. Tool calling permet d'intégrer un RAG sur la base de connaissances GamiWays. Pas de clonage vocal natif : intégrer ElevenLabs ou Cartesia via TTS externe. Référence précision WER pour benchmarking.",
     digiDoubleAxis: "Voice Agent Pipeline — Référence précision",
     benchmarkRef: "AssemblyAI Voice Agent API launch (Apr 29, 2026) + pricing page",
     voiceAgentApi: {
@@ -268,8 +268,8 @@ const sttDatabase: STTData[] = [
     strengthsFr: ["2,7% WER (Chirp 3, mai 2026) — meilleure précision cloud", "125+ langues — couverture la plus large", "Résidence données EU disponible", "Streaming gRPC bidirectionnel", "MedASR open-source (domaine médical)", "Intégration écosystème Google (Dialogflow, Vertex AI)"],
     weaknesses: ["~650ms latence typique (3× Deepgram)", "Cloud uniquement, pas de souveraineté", "Tarification complexe (Chirp 3 = $0.016/min vs Chirp 2 = $0.006/min)", "Pas de clonage vocal natif", "Pas d'open-weights"],
     weaknessesFr: ["~650ms latence typique (3× Deepgram)", "Cloud uniquement, pas de souveraineté", "Tarification complexe (Chirp 3 = 0,016$/min vs Chirp 2 = 0,006$/min)", "Pas de clonage vocal natif", "Pas d'open-weights"],
-    digiDoubleRelevance: "Useful for multilingual DigiDouble deployments requiring 100+ language support. EU data residency partially addresses Swiss sovereignty. Not recommended for Phase 1 MVP due to higher latency than Deepgram.",
-    digiDoubleRelevanceFr: "Utile pour les déploiements DigiDouble multilingues nécessitant 100+ langues. Résidence données EU adresse partiellement la souveraineté suisse. Non recommandé pour le MVP Phase 1 en raison d'une latence plus élevée que Deepgram.",
+    digiDoubleRelevance: "Useful for multilingual GamiWays deployments requiring 100+ language support. EU data residency partially addresses Swiss sovereignty. Not recommended for Phase 1 MVP due to higher latency than Deepgram.",
+    digiDoubleRelevanceFr: "Utile pour les déploiements GamiWays multilingues nécessitant 100+ langues. Résidence données EU adresse partiellement la souveraineté suisse. Non recommandé pour le MVP Phase 1 en raison d'une latence plus élevée que Deepgram.",
     digiDoubleAxis: "Multilingue — option secondaire",
     benchmarkRef: "Artificial Analysis STT mai 2026 + Google Cloud docs",
     dataUpdatedAt: "2026-05-03",
@@ -321,8 +321,8 @@ const sttDatabase: STTData[] = [
     strengthsFr: ["Datacenter suisse (Zurich)", "Entraînement modèle personnalisé", "5,9% WER précision", "Déploiement conteneur déconnecté", "Support suisse-allemand"],
     weaknesses: ["Most expensive ($1/hour)", "180ms latency", "Complex setup for on-premise", "Microsoft ecosystem dependency"],
     weaknessesFr: ["Plus cher ($1/heure)", "180ms latence", "Configuration complexe on-premise", "Dépendance écosystème Microsoft"],
-    digiDoubleRelevance: "Strong candidate for Swiss institutional deployments requiring data residency in Switzerland. Swiss German custom model critical for DigiDouble Swiss market. Too expensive for high-volume production.",
-    digiDoubleRelevanceFr: "Candidat fort pour les déploiements institutionnels suisses nécessitant la résidence des données en Suisse. Modèle suisse-allemand critique pour le marché suisse DigiDouble. Trop cher pour la production à volume élevé.",
+    digiDoubleRelevance: "Strong candidate for Swiss institutional deployments requiring data residency in Switzerland. Swiss German custom model critical for GamiWays Swiss market. Too expensive for high-volume production.",
+    digiDoubleRelevanceFr: "Candidat fort pour les déploiements institutionnels suisses nécessitant la résidence des données en Suisse. Modèle suisse-allemand critique pour le marché suisse GamiWays. Trop cher pour la production à volume élevé.",
     digiDoubleAxis: "Souveraineté suisse — institutionnel",
     benchmarkRef: "Microsoft docs + Azure pricing 2026 + Artificial Analysis",
     dataUpdatedAt: "2026-05-03",
@@ -376,8 +376,8 @@ const sttDatabase: STTData[] = [
     strengthsFr: ["2,7% WER — meilleure précision open-source", "Licence MIT — souveraineté totale", "99 langues", "Gratuit (self-hosted)", "Audiogami (Gamilab) variante production"],
     weaknesses: ["Not streaming-native (batch)", "300ms+ latency for real-time use", "GPU required for production speed", "No speaker diarization"],
     weaknessesFr: ["Pas streaming-natif (batch)", "300ms+ latence pour usage temps réel", "GPU requis pour vitesse production", "Pas de diarisation"],
-    digiDoubleRelevance: "Foundation of Audiogami (Gamilab) — already in production for DigiDouble. Use faster-whisper with VAD for Phase 1 streaming pipeline. Full sovereignty aligns with Swiss requirements. Benchmark against Deepgram Nova-3 for latency trade-off.",
-    digiDoubleRelevanceFr: "Fondation d'Audiogami (Gamilab) — déjà en production pour DigiDouble. Utiliser faster-whisper avec VAD pour le pipeline streaming Phase 1. Souveraineté totale alignée avec les exigences suisses. Benchmarker contre Deepgram Nova-3 pour le compromis latence.",
+    digiDoubleRelevance: "Foundation of Audiogami (Gamilab) — already in production for GamiWays. Use faster-whisper with VAD for Phase 1 streaming pipeline. Full sovereignty aligns with Swiss requirements. Benchmark against Deepgram Nova-3 for latency trade-off.",
+    digiDoubleRelevanceFr: "Fondation d'Audiogami (Gamilab) — déjà en production pour GamiWays. Utiliser faster-whisper avec VAD pour le pipeline streaming Phase 1. Souveraineté totale alignée avec les exigences suisses. Benchmarker contre Deepgram Nova-3 pour le compromis latence.",
     digiDoubleAxis: "Phase 1 MVP — Base Audiogami",
     benchmarkRef: "OpenAI Whisper paper + Koenecke benchmark 2025",
     dataUpdatedAt: "2026-04-30",
@@ -495,7 +495,7 @@ const sttDatabase: STTData[] = [
     id: "audiogami",
     name: "Audiogami (Gamilab)",
     category: "open-source",
-    tagline: "Swiss-hosted Whisper variant — production-ready, DigiDouble Phase 1",
+    tagline: "Swiss-hosted Whisper variant — production-ready, GamiWays Phase 1",
     homepageUrl: "https://gamilab.com",
     docsUrl: "https://gamilab.com",
     wer: 3.5,
@@ -509,7 +509,7 @@ const sttDatabase: STTData[] = [
     selfHostNote: "Swiss-hosted (Exoscale). Full data sovereignty. Production deployment by Gamilab.",
     pricePerHour: 0,
     pricePerMin: 0,
-    priceNote: "Included in Gamilab partnership. No per-use pricing for DigiDouble.",
+    priceNote: "Included in Gamilab partnership. No per-use pricing for GamiWays.",
     freeTier: "Partnership-based",
     streaming: true,
     streamingDetail: "Production streaming deployment. Swiss-hosted on Exoscale. French/German/Swiss German optimized.",
@@ -524,18 +524,18 @@ const sttDatabase: STTData[] = [
     gdprCompliant: true,
     dataResidency: "Switzerland (Exoscale). Full nLPD compliance.",
     score: { accuracy: 8, latency: 6, multilingual: 5, sovereignty: 10, pricing: 10, streaming: 8 },
-    description: "Audiogami is Gamilab's production ASR service, based on Whisper Large v3 with Swiss-specific optimizations. Already deployed for DigiDouble Phase 1. Swiss-hosted on Exoscale with full nLPD/GDPR compliance. French, German, and Swiss German optimized. The primary ASR component for DigiDouble MVP.",
-    descriptionFr: "Audiogami est le service ASR de production de Gamilab, basé sur Whisper Large v3 avec des optimisations spécifiques suisses. Déjà déployé pour la Phase 1 DigiDouble. Hébergé en Suisse sur Exoscale avec conformité nLPD/RGPD complète. Optimisé pour le français, l'allemand et le suisse-allemand. Le composant ASR principal du MVP DigiDouble.",
-    strengths: ["Swiss sovereignty (Exoscale)", "nLPD + GDPR compliant", "French/German/Swiss German optimized", "Already in production for DigiDouble", "Partnership pricing (included)"],
-    strengthsFr: ["Souveraineté suisse (Exoscale)", "Conformité nLPD + RGPD", "Optimisé français/allemand/suisse-allemand", "Déjà en production pour DigiDouble", "Tarification partenariat (inclus)"],
+    description: "Audiogami is Gamilab's production ASR service, based on Whisper Large v3 with Swiss-specific optimizations. Already deployed for GamiWays Phase 1. Swiss-hosted on Exoscale with full nLPD/GDPR compliance. French, German, and Swiss German optimized. The primary ASR component for GamiWays MVP.",
+    descriptionFr: "Audiogami est le service ASR de production de Gamilab, basé sur Whisper Large v3 avec des optimisations spécifiques suisses. Déjà déployé pour la Phase 1 GamiWays. Hébergé en Suisse sur Exoscale avec conformité nLPD/RGPD complète. Optimisé pour le français, l'allemand et le suisse-allemand. Le composant ASR principal du MVP GamiWays.",
+    strengths: ["Swiss sovereignty (Exoscale)", "nLPD + GDPR compliant", "French/German/Swiss German optimized", "Already in production for GamiWays", "Partnership pricing (included)"],
+    strengthsFr: ["Souveraineté suisse (Exoscale)", "Conformité nLPD + RGPD", "Optimisé français/allemand/suisse-allemand", "Déjà en production pour GamiWays", "Tarification partenariat (inclus)"],
     weaknesses: ["Proprietary Gamilab service", "Limited language coverage (10)", "200ms latency (vs 75ms Deepgram)", "No public documentation"],
     weaknessesFr: ["Service propriétaire Gamilab", "Couverture linguistique limitée (10)", "200ms latence (vs 75ms Deepgram)", "Pas de documentation publique"],
-    digiDoubleRelevance: "PRIMARY ASR for DigiDouble Phase 1 MVP. Already in production. Swiss sovereignty + French/German optimization = perfect fit. Benchmark against Deepgram Nova-3 to quantify latency trade-off (200ms vs 75ms). Consider faster-whisper as sovereign fallback.",
-    digiDoubleRelevanceFr: "ASR PRINCIPAL pour le MVP Phase 1 DigiDouble. Déjà en production. Souveraineté suisse + optimisation français/allemand = parfaitement adapté. Benchmarker contre Deepgram Nova-3 pour quantifier le compromis latence (200ms vs 75ms). Considérer faster-whisper comme fallback souverain.",
+    digiDoubleRelevance: "PRIMARY ASR for GamiWays Phase 1 MVP. Already in production. Swiss sovereignty + French/German optimization = perfect fit. Benchmark against Deepgram Nova-3 to quantify latency trade-off (200ms vs 75ms). Consider faster-whisper as sovereign fallback.",
+    digiDoubleRelevanceFr: "ASR PRINCIPAL pour le MVP Phase 1 GamiWays. Déjà en production. Souveraineté suisse + optimisation français/allemand = parfaitement adapté. Benchmarker contre Deepgram Nova-3 pour quantifier le compromis latence (200ms vs 75ms). Considérer faster-whisper comme fallback souverain.",
     digiDoubleAxis: "Phase 1 MVP — ASR principal",
     benchmarkRef: "Gamilab production deployment, 2025",
     dataUpdatedAt: "2026-04-30",
-    dataUpdateNote: "Audiogami in production for DigiDouble Phase 1 (2025). Swiss-hosted on Exoscale. WER ~3.5% estimated (Whisper Large v3 base + Swiss fine-tuning). No public benchmarks available.",
+    dataUpdateNote: "Audiogami in production for GamiWays Phase 1 (2025). Swiss-hosted on Exoscale. WER ~3.5% estimated (Whisper Large v3 base + Swiss fine-tuning). No public benchmarks available.",
     sources: [
       { label: "Gamilab Website", url: "https://gamilab.com", type: "docs" },
       { label: "Exoscale Swiss Cloud", url: "https://www.exoscale.com", type: "docs" },
@@ -672,8 +672,8 @@ const sttDatabase: STTData[] = [
       "Pas de fine-tuning sur données personnalisées",
       "Hausse de prix de 400%+ signalée en 2026 (risque de consolidation marché)"
     ],
-    digiDoubleRelevance: "High strategic value for DigiDouble Axis 2 (Avatar Behavior) and Emotional Toolbox. Voice profiling enables real-time emotion detection without a separate model — feeding directly into avatar expression selection and LLM prompt conditioning. <100ms latency compatible with Phase 1 target. Evaluate as primary STT if emotion-aware routing is required in Phase 1.",
-    digiDoubleRelevanceFr: "Valeur stratégique élevée pour l'Axe 2 DigiDouble (Comportement Avatar) et l'Emotional Toolbox. Le voice profiling permet la détection d'émotion temps réel sans modèle séparé — alimentant directement la sélection d'expression avatar et le conditionnement des prompts LLM. Latence <100ms compatible avec la cible Phase 1.",
+    digiDoubleRelevance: "High strategic value for GamiWays Axis 2 (Avatar Behavior) and Emotional Toolbox. Voice profiling enables real-time emotion detection without a separate model — feeding directly into avatar expression selection and LLM prompt conditioning. <100ms latency compatible with Phase 1 target. Evaluate as primary STT if emotion-aware routing is required in Phase 1.",
+    digiDoubleRelevanceFr: "Valeur stratégique élevée pour l'Axe 2 GamiWays (Comportement Avatar) et l'Emotional Toolbox. Le voice profiling permet la détection d'émotion temps réel sans modèle séparé — alimentant directement la sélection d'expression avatar et le conditionnement des prompts LLM. Latence <100ms compatible avec la cible Phase 1.",
     digiDoubleAxis: "Phase 1 MVP — STT émotionnel + Axe 2 Avatar Behavior",
     benchmarkRef: "https://inworld.ai/resources/best-speech-to-text-apis",
     voiceAgentApi: {

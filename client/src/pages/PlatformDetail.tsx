@@ -1,5 +1,5 @@
 // ============================================================
-// PlatformDetail.tsx — DigiDouble Research Portal
+// PlatformDetail.tsx — GamiWays Research Portal
 // Page détaillée par plateforme : customisation, API, pricing
 // Design: Modernist Technical — monospace accents, clean grids
 // ============================================================
@@ -455,12 +455,12 @@ export default function PlatformDetail() {
             </ul>
           </div>
 
-          {/* 7. DigiDouble Relevance */}
+          {/* 7. GamiWays Relevance */}
           <div className="bg-slate-900 text-white rounded-xl p-6">
             <div className="flex items-center gap-2 mb-4">
               <Zap className="w-5 h-5 text-amber-400" />
               <h2 className="text-sm font-bold uppercase tracking-widest font-mono text-slate-300">
-                {lang === "fr" ? "Pertinence pour DigiDouble" : "DigiDouble Relevance"}
+                {lang === "fr" ? "Pertinence pour GamiWays" : "GamiWays Relevance"}
               </h2>
             </div>
             <div className="flex items-start gap-6">

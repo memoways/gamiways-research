@@ -1,5 +1,5 @@
 /*
- * ResearchAxesDiagram — DigiDouble Research Portal
+ * ResearchAxesDiagram — GamiWays Research Portal
  * Visual: 3 research axes as interactive cards with key metrics + accordion details
  * Design: icon + metric + 1-line summary, expandable details
  */

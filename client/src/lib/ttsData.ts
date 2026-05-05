@@ -1,5 +1,5 @@
 // ============================================================
-// ttsData.ts — DigiDouble Research Portal
+// ttsData.ts — GamiWays Research Portal
 // Données centralisées TTS & Voice-to-Voice (2025–2026)
 // Sources : Artificial Analysis, Inworld benchmark, docs officiels
 // ============================================================
@@ -64,7 +64,7 @@ export interface TTSData {
   strengthsFr: string[];
   weaknesses: string[];
   weaknessesFr: string[];
-  // Pertinence DigiDouble
+  // Pertinence GamiWays
   digiDoubleRelevance: string;
   digiDoubleRelevanceFr: string;
   digiDoubleAxis: string;   // ex: "Phase 1 MVP", "Axe 2a", "Référence"
@@ -120,7 +120,7 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["ELO 1108 — top 3 qualité", "380+ voix, 70+ langues", "Clonage voix zero-shot + pro", "75ms inférence (Flash v2.5)", "Timestamps mot-à-mot pour lip-sync", "SSML + tags émotion étendus"],
     weaknesses: ["$206/1M chars — 20.6× more expensive than Inworld", "Cloud only, no sovereignty", "Not optimized for real-time agents (vs Cartesia)", "No on-premise option"],
     weaknessesFr: ["$206/1M chars — 20,6× plus cher qu'Inworld", "Cloud uniquement, pas de souveraineté", "Non optimisé pour agents temps réel (vs Cartesia)", "Pas d'option on-premise"],
-    digiDoubleRelevance: "Quality reference for validation phases. Voice cloning capability critical for DigiDouble Phase 1 MVP (voice-to-voice). Too expensive for production scale. Evaluate Flash v2.5 ($75/1M) for prototype.",
+    digiDoubleRelevance: "Quality reference for validation phases. Voice cloning capability critical for GamiWays Phase 1 MVP (voice-to-voice). Too expensive for production scale. Evaluate Flash v2.5 ($75/1M) for prototype.",
     digiDoubleRelevanceFr: "Référence qualité pour les phases de validation. Clonage vocal critique pour le MVP Phase 1 (voice-to-voice). Trop cher pour la production à l'échelle. Évaluer Flash v2.5 ($75/1M) pour le prototype.",
     digiDoubleAxis: "Phase 1 MVP — Référence qualité",
     benchmarkRef: "Artificial Analysis Speech Leaderboard, Jan 2026",
@@ -444,8 +444,8 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["ELO 1059 — #1 modèle open-weight", "82M params — fonctionne sur CPU", "36× temps réel sur T4 GPU", "Apache 2.0 — souveraineté totale", "$0,70/1M chars en mode géré"],
     weaknesses: ["No voice cloning", "English only (American/British)", "Limited emotion control", "No lip-sync data"],
     weaknessesFr: ["Pas de clonage vocal", "Anglais uniquement (américain/britannique)", "Contrôle émotion limité", "Pas de données lip-sync"],
-    digiDoubleRelevance: "Strong candidate for sovereign Phase 1 MVP. Runs on Swiss Exoscale GPU infrastructure. No voice cloning is a significant limitation for personalized DigiDouble use cases. Pair with XTTS-v2 or Chatterbox for voice cloning needs.",
-    digiDoubleRelevanceFr: "Candidat fort pour le MVP Phase 1 souverain. Fonctionne sur l'infrastructure GPU Exoscale suisse. L'absence de clonage vocal est une limitation significative pour les cas d'usage DigiDouble personnalisés. Coupler avec XTTS-v2 ou Chatterbox pour les besoins de clonage vocal.",
+    digiDoubleRelevance: "Strong candidate for sovereign Phase 1 MVP. Runs on Swiss Exoscale GPU infrastructure. No voice cloning is a significant limitation for personalized GamiWays use cases. Pair with XTTS-v2 or Chatterbox for voice cloning needs.",
+    digiDoubleRelevanceFr: "Candidat fort pour le MVP Phase 1 souverain. Fonctionne sur l'infrastructure GPU Exoscale suisse. L'absence de clonage vocal est une limitation significative pour les cas d'usage GamiWays personnalisés. Coupler avec XTTS-v2 ou Chatterbox pour les besoins de clonage vocal.",
     digiDoubleAxis: "Phase 1 MVP — Souveraineté maximale",
     benchmarkRef: "Artificial Analysis Speech Leaderboard, Jan 2026",
     dataUpdatedAt: "2026-04-30",
@@ -498,8 +498,8 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["63,75% préférence vs ElevenLabs (test aveugle)", "Licence MIT — usage sans restriction", "Contrôle exagération émotionnelle", "Clonage vocal zero-shot", "#1 HuggingFace trending déc 2025"],
     weaknesses: ["English only", "GPU required for real-time", "No lip-sync data", "$40/1M chars managed (4× Inworld)"],
     weaknessesFr: ["Anglais uniquement", "GPU requis pour temps réel", "Pas de données lip-sync", "$40/1M chars géré (4× Inworld)"],
-    digiDoubleRelevance: "Excellent for sovereign Phase 1 MVP with voice cloning. MIT license enables unrestricted deployment on Swiss infrastructure. English-only is a limitation for multilingual DigiDouble use cases. Emotional exaggeration control aligns with Axis 2 (expressive avatar).",
-    digiDoubleRelevanceFr: "Excellent pour le MVP Phase 1 souverain avec clonage vocal. Licence MIT pour déploiement sans restriction sur infrastructure suisse. Anglais uniquement est une limitation pour les cas d'usage multilingues DigiDouble. Contrôle d'exagération émotionnelle aligné avec l'Axe 2 (avatar expressif).",
+    digiDoubleRelevance: "Excellent for sovereign Phase 1 MVP with voice cloning. MIT license enables unrestricted deployment on Swiss infrastructure. English-only is a limitation for multilingual GamiWays use cases. Emotional exaggeration control aligns with Axis 2 (expressive avatar).",
+    digiDoubleRelevanceFr: "Excellent pour le MVP Phase 1 souverain avec clonage vocal. Licence MIT pour déploiement sans restriction sur infrastructure suisse. Anglais uniquement est une limitation pour les cas d'usage multilingues GamiWays. Contrôle d'exagération émotionnelle aligné avec l'Axe 2 (avatar expressif).",
     digiDoubleAxis: "Phase 1 MVP — Clonage vocal souverain",
     benchmarkRef: "Artificial Analysis TTS mai 2026 + Resemble AI benchmark",
     dataUpdatedAt: "2026-05-03",
@@ -553,8 +553,8 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["Basé LLaMA 3 — qualité vocale naturelle", "Sons non-verbaux : <laugh>, <cough>, <gasp>", "Apache 2.0 — souveraineté totale", "Prêt production via Baseten", "7 langues"],
     weaknesses: ["3B params — requires A100 for real-time", "~200ms TTFA (slower than Kokoro)", "No lip-sync data"],
     weaknessesFr: ["3B params — nécessite A100 pour temps réel", "~200ms TTFA (plus lent que Kokoro)", "Pas de données lip-sync"],
-    digiDoubleRelevance: "Highly relevant for Phase 1 MVP. Non-verbal sounds (<laugh>, <sigh>) create more natural conversation. Apache 2.0 enables sovereign deployment on Exoscale. Requires A100 GPU — compatible with existing DigiDouble infrastructure.",
-    digiDoubleRelevanceFr: "Très pertinent pour le MVP Phase 1. Les sons non-verbaux (<laugh>, <sigh>) créent une conversation plus naturelle. Apache 2.0 pour déploiement souverain sur Exoscale. Nécessite GPU A100 — compatible avec l'infrastructure DigiDouble existante.",
+    digiDoubleRelevance: "Highly relevant for Phase 1 MVP. Non-verbal sounds (<laugh>, <sigh>) create more natural conversation. Apache 2.0 enables sovereign deployment on Exoscale. Requires A100 GPU — compatible with existing GamiWays infrastructure.",
+    digiDoubleRelevanceFr: "Très pertinent pour le MVP Phase 1. Les sons non-verbaux (<laugh>, <sigh>) créent une conversation plus naturelle. Apache 2.0 pour déploiement souverain sur Exoscale. Nécessite GPU A100 — compatible avec l'infrastructure GamiWays existante.",
     digiDoubleAxis: "Phase 1 MVP — Expressivité naturelle",
     benchmarkRef: "Canopy AI GitHub + Modal.com TTS comparison, 2025",
     dataUpdatedAt: "2026-04-30",
@@ -713,8 +713,8 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["Prosodie conversationnelle contextuelle", "Backchannels naturels et prise de tour", "Franchit la vallée de l'étrange vocale", "Apache 2.0 — souveraineté totale", "Architecture multimodale unique"],
     weaknesses: ["Not production-optimized for streaming", "~400ms+ TTFA", "English only", "Research-grade stability"],
     weaknessesFr: ["Non optimisé pour le streaming en production", "~400ms+ TTFA", "Anglais uniquement", "Stabilité niveau recherche"],
-    digiDoubleRelevance: "Highly relevant for Axis 2 R&D (conversational behavior). Context-aware prosody and natural backchannels are exactly what DigiDouble needs for authentic conversation. Not suitable for Phase 1 MVP real-time — evaluate for Axis 2 research.",
-    digiDoubleRelevanceFr: "Très pertinent pour l'Axe 2 R&D (comportement conversationnel). La prosodie contextuelle et les backchannels naturels sont exactement ce dont DigiDouble a besoin pour une conversation authentique. Non adapté au MVP Phase 1 temps réel — évaluer pour la recherche Axe 2.",
+    digiDoubleRelevance: "Highly relevant for Axis 2 R&D (conversational behavior). Context-aware prosody and natural backchannels are exactly what GamiWays needs for authentic conversation. Not suitable for Phase 1 MVP real-time — evaluate for Axis 2 research.",
+    digiDoubleRelevanceFr: "Très pertinent pour l'Axe 2 R&D (comportement conversationnel). La prosodie contextuelle et les backchannels naturels sont exactement ce dont GamiWays a besoin pour une conversation authentique. Non adapté au MVP Phase 1 temps réel — évaluer pour la recherche Axe 2.",
     digiDoubleAxis: "Axe 2 R&D — Comportement conversationnel",
     benchmarkRef: "Sesame AI research blog, Mar 2025",
     dataUpdatedAt: "2026-04-30",
@@ -768,8 +768,8 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["~100ms latence de réponse", "Élimine la surcharge du pipeline en cascade", "300/300 fiabilité de tour", "0,864s latence médiane vs 1,536s GPT-4o", "Compréhension vocale end-to-end"],
     weaknesses: ["No voice cloning", "CC-BY-NC-4.0 — non-commercial self-hosting only", "Less controllable than cascading systems", "No lip-sync data"],
     weaknessesFr: ["Pas de clonage vocal", "CC-BY-NC-4.0 — auto-hébergement non-commercial uniquement", "Moins contrôlable que les systèmes en cascade", "Pas de données lip-sync"],
-    digiDoubleRelevance: "Critical reference for Phase 1 MVP architecture decision: cascading (ASR+LLM+TTS) vs end-to-end (Ultravox). End-to-end eliminates latency accumulation but loses controllability. DigiDouble Phase 1 should benchmark both approaches. CC-BY-NC-4.0 limits commercial self-hosting.",
-    digiDoubleRelevanceFr: "Référence critique pour la décision d'architecture du MVP Phase 1 : en cascade (ASR+LLM+TTS) vs end-to-end (Ultravox). L'end-to-end élimine l'accumulation de latence mais perd en contrôlabilité. DigiDouble Phase 1 devrait benchmarker les deux approches. CC-BY-NC-4.0 limite l'auto-hébergement commercial.",
+    digiDoubleRelevance: "Critical reference for Phase 1 MVP architecture decision: cascading (ASR+LLM+TTS) vs end-to-end (Ultravox). End-to-end eliminates latency accumulation but loses controllability. GamiWays Phase 1 should benchmark both approaches. CC-BY-NC-4.0 limits commercial self-hosting.",
+    digiDoubleRelevanceFr: "Référence critique pour la décision d'architecture du MVP Phase 1 : en cascade (ASR+LLM+TTS) vs end-to-end (Ultravox). L'end-to-end élimine l'accumulation de latence mais perd en contrôlabilité. GamiWays Phase 1 devrait benchmarker les deux approches. CC-BY-NC-4.0 limite l'auto-hébergement commercial.",
     digiDoubleAxis: "Phase 1 MVP — Architecture V2V end-to-end",
     benchmarkRef: "Ultravox AIEWF eval, Feb 2026",
     dataUpdatedAt: "2026-04-30",
@@ -821,8 +821,8 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["Full-duplex : écoute + parole simultanées", "CC-BY 4.0 — déploiement souverain commercial", "Codec streaming Mimi", "De Kyutai (labo IA européen)", "Référence recherche full-duplex"],
     weaknesses: ["English only", "Requires A100 for real-time", "No voice cloning", "Research-grade stability"],
     weaknessesFr: ["Anglais uniquement", "Nécessite A100 pour temps réel", "Pas de clonage vocal", "Stabilité niveau recherche"],
-    digiDoubleRelevance: "Key reference for Axis 1 R&D (full-duplex conversation). Full-duplex capability is the long-term goal for DigiDouble — enables natural interruption handling. CC-BY 4.0 enables sovereign deployment. Not suitable for Phase 1 MVP — evaluate for Axis 1 advanced research.",
-    digiDoubleRelevanceFr: "Référence clé pour l'Axe 1 R&D (conversation full-duplex). La capacité full-duplex est l'objectif à long terme pour DigiDouble — permet la gestion naturelle des interruptions. CC-BY 4.0 pour déploiement souverain. Non adapté au MVP Phase 1 — évaluer pour la recherche avancée Axe 1.",
+    digiDoubleRelevance: "Key reference for Axis 1 R&D (full-duplex conversation). Full-duplex capability is the long-term goal for GamiWays — enables natural interruption handling. CC-BY 4.0 enables sovereign deployment. Not suitable for Phase 1 MVP — evaluate for Axis 1 advanced research.",
+    digiDoubleRelevanceFr: "Référence clé pour l'Axe 1 R&D (conversation full-duplex). La capacité full-duplex est l'objectif à long terme pour GamiWays — permet la gestion naturelle des interruptions. CC-BY 4.0 pour déploiement souverain. Non adapté au MVP Phase 1 — évaluer pour la recherche avancée Axe 1.",
     digiDoubleAxis: "Axe 1 R&D — Full-duplex conversation",
     benchmarkRef: "Kyutai GitHub + research blog, 2024–2025",
     dataUpdatedAt: "2026-04-30",
@@ -874,8 +874,8 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["Open-weights — déploiement souverain", "9 langues dont FR, DE", "Labo IA européen (Mistral)", "Rapide + instantanément adaptable", "Publié mars 2026 — état de l'art"],
     weaknesses: ["Very new — no production track record", "Limited documentation at launch", "No lip-sync data", "Emotion control not detailed"],
     weaknessesFr: ["Très récent — pas de track record production", "Documentation limitée au lancement", "Pas de données lip-sync", "Contrôle émotion non détaillé"],
-    digiDoubleRelevance: "High priority evaluation for Phase 1 MVP. European open-weights model with French/German support aligns perfectly with DigiDouble's Swiss sovereign deployment requirements. Very new — needs production testing. Mistral ecosystem integration with Voxtral ASR creates a potential full-stack sovereign solution.",
-    digiDoubleRelevanceFr: "Évaluation haute priorité pour le MVP Phase 1. Modèle open-weights européen avec support français/allemand parfaitement aligné avec les exigences de déploiement souverain suisse de DigiDouble. Très récent — nécessite des tests en production. L'intégration avec l'écosystème Mistral/Voxtral ASR crée une solution souveraine full-stack potentielle.",
+    digiDoubleRelevance: "High priority evaluation for Phase 1 MVP. European open-weights model with French/German support aligns perfectly with GamiWays's Swiss sovereign deployment requirements. Very new — needs production testing. Mistral ecosystem integration with Voxtral ASR creates a potential full-stack sovereign solution.",
+    digiDoubleRelevanceFr: "Évaluation haute priorité pour le MVP Phase 1. Modèle open-weights européen avec support français/allemand parfaitement aligné avec les exigences de déploiement souverain suisse de GamiWays. Très récent — nécessite des tests en production. L'intégration avec l'écosystème Mistral/Voxtral ASR crée une solution souveraine full-stack potentielle.",
     digiDoubleAxis: "Phase 1 MVP — Souveraineté européenne",
     benchmarkRef: "Mistral AI announcement, Mar 26, 2026",
     dataUpdatedAt: "2026-04-30",
@@ -927,8 +927,8 @@ const ttsDatabase: TTSData[] = [
     strengthsFr: ["Raisonnement GPT-4o intégré", "ELO 1106 — rang #4", "50+ langues", "WebSocket full-duplex", "API bien documentée"],
     weaknesses: ["No voice cloning", "No sovereignty (US cloud)", "$0.10/min — expensive at scale", "1.536s median latency (vs 0.864s Ultravox)"],
     weaknessesFr: ["Pas de clonage vocal", "Pas de souveraineté (cloud US)", "$0,10/min — coûteux à l'échelle", "1,536s latence médiane (vs 0,864s Ultravox)"],
-    digiDoubleRelevance: "Reference for Phase 1 MVP benchmarking. Not suitable for production DigiDouble due to no sovereignty and no voice cloning. Use as quality/latency benchmark. Compare against Ultravox (end-to-end) and cascading sovereign stack.",
-    digiDoubleRelevanceFr: "Référence pour le benchmarking du MVP Phase 1. Non adapté à la production DigiDouble en raison de l'absence de souveraineté et de clonage vocal. Utiliser comme benchmark qualité/latence. Comparer avec Ultravox (end-to-end) et le stack souverain en cascade.",
+    digiDoubleRelevance: "Reference for Phase 1 MVP benchmarking. Not suitable for production GamiWays due to no sovereignty and no voice cloning. Use as quality/latency benchmark. Compare against Ultravox (end-to-end) and cascading sovereign stack.",
+    digiDoubleRelevanceFr: "Référence pour le benchmarking du MVP Phase 1. Non adapté à la production GamiWays en raison de l'absence de souveraineté et de clonage vocal. Utiliser comme benchmark qualité/latence. Comparer avec Ultravox (end-to-end) et le stack souverain en cascade.",
     digiDoubleAxis: "Phase 1 MVP — Référence benchmark",
     benchmarkRef: "OpenAI docs + Ultravox AIEWF eval, Feb 2026",
     dataUpdatedAt: "2026-04-30",

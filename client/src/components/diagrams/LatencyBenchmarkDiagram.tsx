@@ -135,7 +135,7 @@ export default function LatencyBenchmarkDiagram() {
           </text>
           <line x1="324" y1="5" x2="340" y2="5" stroke="#16a34a" strokeWidth="2" />
           <text x="345" y="10" fontSize="12" fill="#16a34a" fontFamily="'JetBrains Mono', monospace">
-            {isFr ? "Cible DigiDouble" : "DigiDouble Target"}
+            {isFr ? "Cible GamiWays" : "GamiWays Target"}
           </text>
           <rect x="500" y="0" width="16" height="11" rx="2" fill="#dc2626" opacity="0.85" />
           <text x="521" y="10" fontSize="12" fill="#dc2626" fontFamily="'JetBrains Mono', monospace">

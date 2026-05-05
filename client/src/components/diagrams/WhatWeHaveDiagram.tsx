@@ -1,9 +1,9 @@
 /*
- * WhatWeHaveDiagram — DigiDouble pipeline overview
+ * WhatWeHaveDiagram — GamiWays pipeline overview
  * Design: HTML/CSS responsive (vertical on mobile, horizontal on desktop)
  * 3 zones:
  *   GREEN  = Available (Gamilab / Audiogami ASR)
- *   BLUE   = R&D Innosuisse + IDIAP (Memory, TTS, Avatar)
+ *   BLUE   = R&D — Gamilab (Memory, TTS, Avatar)
  *   YELLOW = R&D interne Memoways (Orchestration wrapping Memory+LLM+TTS, Multi-Stream Sync)
  * Output: EXPERIENCE (Pedagogical mode + Narrative mode) — Target <2s
  */
@@ -45,11 +45,11 @@ const BLOCKS: BlockDef[] = [
     id: "memory",
     label: { en: "Memory", fr: "Mémoire" },
     sub: { en: "Long-term · 3-layer arch.", fr: "Long terme · Archi. 3 couches" },
-    axis: { en: "Axis 1 · IDIAP", fr: "Axe 1 · IDIAP" },
+    axis: { en: "Axis 1 — Latency", fr: "Axe 1 — Latence" },
     zone: "innosuisse",
     tooltip: {
-      en: "Long-term conversational memory without token explosion. 3-layer architecture. Fundamental research — Innosuisse + IDIAP.",
-      fr: "Mémoire conversationnelle longue durée sans explosion de tokens. Architecture 3 couches. Recherche fondamentale — Innosuisse + IDIAP.",
+      en: "Long-term conversational memory without token explosion. 3-layer architecture. Core R&D challenge — Gamilab roadmap.",
+      fr: "Mémoire conversationnelle longue durée sans explosion de tokens. Architecture 3 couches. Défi R&D central — feuille de route Gamilab.",
     },
   },
   {
@@ -67,23 +67,23 @@ const BLOCKS: BlockDef[] = [
     id: "tts",
     label: { en: "TTS", fr: "TTS" },
     sub: { en: "Expressive voice · <200ms", fr: "Voix expressive · <200ms" },
-    axis: { en: "Axis 2a · IDIAP", fr: "Axe 2a · IDIAP" },
+    axis: { en: "Axis 2a — Voice", fr: "Axe 2a — Voix" },
     zone: "innosuisse",
     tooltip: {
-      en: "Personalized prosodic TTS: capture of individual prosodic fingerprint. Target: <200ms. Fundamental research — Innosuisse + IDIAP.",
-      fr: "TTS prosodique personnalisé : capture de l'empreinte prosodique individuelle. Cible : <200ms. Recherche fondamentale — Innosuisse + IDIAP.",
+      en: "Personalized prosodic TTS: capture of individual prosodic fingerprint. Target: <200ms. Core R&D challenge — Gamilab roadmap.",
+      fr: "TTS prosodique personnalisé : capture de l'empreinte prosodique individuelle. Cible : <200ms. Défi R&D central — feuille de route Gamilab.",
     },
   },
   {
     id: "avatar",
     label: { en: "Avatar", fr: "Avatar" },
     sub: { en: "Real-time · Body language", fr: "Temps réel · Langage corporel" },
-    axis: { en: "Axis 2b · IDIAP ⚠", fr: "Axe 2b · IDIAP ⚠" },
+    axis: { en: "Axis 2b — Avatar ⚠", fr: "Axe 2b — Avatar ⚠" },
     zone: "innosuisse",
     bottleneck: true,
     tooltip: {
-      en: "Real-time expressive avatar with body language. Critical bottleneck: 6–12s now → <500ms target. Fundamental research — Innosuisse + IDIAP.",
-      fr: "Avatar expressif temps réel avec langage corporel. Goulot critique : 6–12s actuellement → cible <500ms. Recherche fondamentale — Innosuisse + IDIAP.",
+      en: "Real-time expressive avatar with body language. Critical bottleneck: 6–12s now → <500ms target. Core R&D challenge — Gamilab roadmap.",
+      fr: "Avatar expressif temps réel avec langage corporel. Goulot critique : 6–12s actuellement → cible <500ms. Défi R&D central — feuille de route Gamilab.",
     },
   },
   {
@@ -186,7 +186,7 @@ export default function WhatWeHaveDiagram() {
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-5">
         {([
           { zone: "available" as const, en: "Available (Gamilab)", fr: "Disponible (Gamilab)" },
-          { zone: "innosuisse" as const, en: "R&D · Innosuisse + IDIAP", fr: "R&D · Innosuisse + IDIAP" },
+          { zone: "innosuisse" as const, en: "R&D — Gamilab", fr: "R&D — Gamilab" },
           { zone: "memoways" as const, en: "R&D · Memoways internal", fr: "R&D · Memoways interne" },
           { zone: "bottleneck" as const, en: "Critical bottleneck", fr: "Goulot critique" },
         ]).map(({ zone, en, fr }) => (

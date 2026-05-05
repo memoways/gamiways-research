@@ -1,5 +1,5 @@
 /**
- * DiagramModal — DigiDouble Research Portal
+ * DiagramModal — GamiWays Research Portal
  * Wraps any diagram: shows a scaled preview (no scrollbar), click opens full-size modal with zoom/pan
  * Design: minimal chrome, keyboard-accessible (Escape to close), click outside to close
  */

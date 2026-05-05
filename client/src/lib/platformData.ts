@@ -1,5 +1,5 @@
 // ============================================================
-// platformData.ts — DigiDouble Research Portal
+// platformData.ts — GamiWays Research Portal
 // Données centralisées pour les 10 plateformes d'avatars
 // Sources : recherche directe mars 2026
 // ============================================================
@@ -73,7 +73,7 @@ export interface PlatformData {
   gdpr: boolean;
   onPremise: boolean;
 
-  // Pertinence DigiDouble
+  // Pertinence GamiWays
   digiDoubleRelevance: string;
   digiDoubleScore: number; // 1-10
 }
@@ -168,7 +168,7 @@ export const platforms: PlatformData[] = [
     hosting: "AWS US-East-1",
     gdpr: true,
     onPremise: false,
-    digiDoubleRelevance: "Excellent for LITE mode: DigiDouble keeps full control over ASR/LLM/TTS stack while HeyGen handles real-time video rendering. Industry-leading visual quality. Main limitation: US-only hosting.",
+    digiDoubleRelevance: "Excellent for LITE mode: GamiWays keeps full control over ASR/LLM/TTS stack while HeyGen handles real-time video rendering. Industry-leading visual quality. Main limitation: US-only hosting.",
     digiDoubleScore: 8,
   },
 
@@ -266,7 +266,7 @@ export const platforms: PlatformData[] = [
     hosting: "AWS US",
     gdpr: true,
     onPremise: false,
-    digiDoubleRelevance: "As of April 2026, Tavus is the most advanced commercial platform for emotional intelligence in conversational video avatars. The Raven-1 + Phoenix-4 + Sparrow-1 stack is the reference architecture for DigiDouble's target capabilities. Raven-1's perception layer (audio-visual fusion, < 300ms context freshness) directly addresses DigiDouble Axis 3 (Contextual Awareness). Phoenix-4's fully-generated rendering (no video loops, active listening behaviors) sets the quality benchmark. Main limitations for DigiDouble: US-only hosting (GDPR sovereignty concern), high cost ($0.32/min), and no open-source equivalent available yet.",
+    digiDoubleRelevance: "As of April 2026, Tavus is the most advanced commercial platform for emotional intelligence in conversational video avatars. The Raven-1 + Phoenix-4 + Sparrow-1 stack is the reference architecture for GamiWays's target capabilities. Raven-1's perception layer (audio-visual fusion, < 300ms context freshness) directly addresses GamiWays Axis 3 (Contextual Awareness). Phoenix-4's fully-generated rendering (no video loops, active listening behaviors) sets the quality benchmark. Main limitations for GamiWays: US-only hosting (GDPR sovereignty concern), high cost ($0.32/min), and no open-source equivalent available yet.",
     digiDoubleScore: 9,
   },
 
@@ -359,7 +359,7 @@ export const platforms: PlatformData[] = [
     hosting: "AWS eu-west-1 (Ireland)",
     gdpr: true,
     onPremise: false,
-    digiDoubleRelevance: "Best EU sovereignty option. Excellent visual quality. Currently limited for real-time DigiDouble use case (async only), but Synthesia 3.0 Video Agents (in preview) may change this. Ideal for pre-recorded educational content.",
+    digiDoubleRelevance: "Best EU sovereignty option. Excellent visual quality. Currently limited for real-time GamiWays use case (async only), but Synthesia 3.0 Video Agents (in preview) may change this. Ideal for pre-recorded educational content.",
     digiDoubleScore: 6,
   },
 
@@ -454,7 +454,7 @@ export const platforms: PlatformData[] = [
     hosting: "Cloud (Norwegian company, EU jurisdiction)",
     gdpr: true,
     onPremise: false,
-    digiDoubleRelevance: "Best price/performance ratio for real-time video rendering. Ideal as a Speech-to-Video module in DigiDouble's modular pipeline. Ultra-low cost ($0.009/min) and <300ms latency. Limitation: no built-in AI stack — must integrate ASR/LLM/TTS separately.",
+    digiDoubleRelevance: "Best price/performance ratio for real-time video rendering. Ideal as a Speech-to-Video module in GamiWays's modular pipeline. Ultra-low cost ($0.009/min) and <300ms latency. Limitation: no built-in AI stack — must integrate ASR/LLM/TTS separately.",
     digiDoubleScore: 9,
   },
 
@@ -552,7 +552,7 @@ export const platforms: PlatformData[] = [
     hosting: "Cloud (AWS/GCP). Zero Data Retention option for Enterprise.",
     gdpr: true,
     onPremise: false,
-    digiDoubleRelevance: "Fastest median latency (180ms) among commercial platforms. One-Shot avatar creation ideal for rapid prototyping. Native RAG (beta) and structured persona system align well with DigiDouble's educational use case. Limitation: custom voice requires expensive plan.",
+    digiDoubleRelevance: "Fastest median latency (180ms) among commercial platforms. One-Shot avatar creation ideal for rapid prototyping. Native RAG (beta) and structured persona system align well with GamiWays's educational use case. Limitation: custom voice requires expensive plan.",
     digiDoubleScore: 9,
   },
 
@@ -744,7 +744,7 @@ export const platforms: PlatformData[] = [
     hosting: "AWS US",
     gdpr: true,
     onPremise: false,
-    digiDoubleRelevance: "Tool Calling is a unique differentiator for interactive educational scenarios. Zero-shot from image is excellent for rapid prototyping. 5-min session limit is a significant constraint for DigiDouble's longer interaction scenarios.",
+    digiDoubleRelevance: "Tool Calling is a unique differentiator for interactive educational scenarios. Zero-shot from image is excellent for rapid prototyping. 5-min session limit is a significant constraint for GamiWays's longer interaction scenarios.",
     digiDoubleScore: 7,
   },
 
@@ -842,7 +842,7 @@ export const platforms: PlatformData[] = [
     hosting: "Beyond Presence GmbH, Munich, Germany. Enterprise: isolated EU deployment.",
     gdpr: true,
     onPremise: true,
-    digiDoubleRelevance: "Best combination of low latency (250ms), EU sovereignty (German company, GDPR), and enterprise RAG. Isolated EU deployment option is unique among commercial platforms. Ideal for DigiDouble's Swiss/European context requiring data sovereignty.",
+    digiDoubleRelevance: "Best combination of low latency (250ms), EU sovereignty (German company, GDPR), and enterprise RAG. Isolated EU deployment option is unique among commercial platforms. Ideal for GamiWays's Swiss/European context requiring data sovereignty.",
     digiDoubleScore: 9,
   },
 
@@ -939,7 +939,7 @@ export const platforms: PlatformData[] = [
     hosting: "Self-hosted (on-premise, CPU or GPU) OR cloud. Full sovereignty option.",
     gdpr: true,
     onPremise: true,
-    digiDoubleRelevance: "Unique Dynamics API for gesture control is a key differentiator. Self-hosted CPU deployment enables total sovereignty and 10x cost reduction. Ideal for DigiDouble's Swiss sovereignty requirements. Limitation: Expression model requires GPU for custom faces.",
+    digiDoubleRelevance: "Unique Dynamics API for gesture control is a key differentiator. Self-hosted CPU deployment enables total sovereignty and 10x cost reduction. Ideal for GamiWays's Swiss sovereignty requirements. Limitation: Expression model requires GPU for custom faces.",
     digiDoubleScore: 8,
   },
 
@@ -1135,7 +1135,7 @@ export const platforms: PlatformData[] = [
     },
 
     constraints: [
-      "~3s hosted latency — above DigiDouble 2s target without Self-Managed Pipeline",
+      "~3s hosted latency — above GamiWays 2s target without Self-Managed Pipeline",
       "Self-Managed requires A100/H100 GPU (significant infrastructure investment)",
       "No native RAG integration",
       "US-hosted by default (Self-Managed enables sovereignty)",
@@ -1145,7 +1145,7 @@ export const platforms: PlatformData[] = [
     hosting: "US (hosted) · On-premise possible via Self-Managed Pipeline",
     gdpr: true,
     onPremise: true,
-    digiDoubleRelevance: "Strategically relevant for DigiDouble's Emotional Toolbox and Character Design axes. UNIQUE capability: multi-style avatars (cartoons, mascots, animals) enable non-human pedagogical characters — a gap no other commercial platform covers. Self-Managed Pipeline aligns with DigiDouble's sovereignty requirement. Main challenge: ~3s hosted latency requires Self-Managed deployment to meet the 2s target. Strong candidate for Gamilab integration (gamified avatars).",
+    digiDoubleRelevance: "Strategically relevant for GamiWays's Emotional Toolbox and Character Design axes. UNIQUE capability: multi-style avatars (cartoons, mascots, animals) enable non-human pedagogical characters — a gap no other commercial platform covers. Self-Managed Pipeline aligns with GamiWays's sovereignty requirement. Main challenge: ~3s hosted latency requires Self-Managed deployment to meet the 2s target. Strong candidate for Gamilab integration (gamified avatars).",
     digiDoubleScore: 8,
   },
 ];

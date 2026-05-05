@@ -1,5 +1,5 @@
 /**
- * AvatarsOverview.tsx — DigiDouble Research Portal
+ * AvatarsOverview.tsx — GamiWays Research Portal
  * Page: Streaming Video Avatars — extracted from StateOfArt section A
  * Design: Technical Blueprint, dense comparative tables
  * i18n: EN / FR via LangContext

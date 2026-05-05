@@ -1,5 +1,5 @@
 // ============================================================
-// PricingComparison.tsx — DigiDouble Research Portal
+// PricingComparison.tsx — GamiWays Research Portal
 // Comparaison tarifaire en $/minute de toutes les plateformes
 // Design: Modernist Technical — monospace accents, clean grids
 // ============================================================
@@ -137,7 +137,7 @@ export default function PricingComparison() {
                     {lang === "fr" ? "Gratuit" : "Free tier"}
                   </th>
                   <th className="py-3 px-4">
-                    <SortBtn k="digiDoubleScore" label="DigiDouble" />
+                    <SortBtn k="digiDoubleScore" label="GamiWays" />
                   </th>
                   <th className="py-3 px-4 text-left text-xs font-mono text-slate-400 uppercase tracking-wider">
                     {lang === "fr" ? "Détails" : "Details"}

@@ -1,5 +1,5 @@
 /**
- * StackDecisionSimulator.tsx — DigiDouble Research Portal
+ * StackDecisionSimulator.tsx — GamiWays Research Portal
  * Simulateur de décision : wizard contextuel → recommandation de stack par couche
  * Design: Technical Blueprint — wizard steps, result cards, shareable URL
  * i18n: EN / FR via LangContext

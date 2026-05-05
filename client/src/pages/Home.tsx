@@ -1,5 +1,5 @@
 /**
- * Home.tsx — DigiDouble Research Portal
+ * Home.tsx — GamiWays Research Portal
  * Redesigned: Executive summary + Voice & Avatar learnings + visual launcher
  * Tone: Institutional/academic intro + startup/product cards
  * Design: Technical Blueprint — Space Grotesk + Source Serif 4
@@ -51,16 +51,16 @@ export default function Home() {
       bg: "oklch(0.97 0.02 200)",
       border: "oklch(0.88 0.06 200)",
       category: isFr ? "The Project" : "The Project",
-      title: isFr ? "DigiDouble — Projet & Recherche" : "DigiDouble — Project & Research",
+      title: isFr ? "GamiWays — Projet & Recherche" : "GamiWays — Project & Research",
       desc: isFr
-        ? "Vision produit, architecture cible, axes de recherche Innosuisse, gaps identifiés et assessment académique."
-        : "Product vision, target architecture, Innosuisse research axes, identified gaps, and academic assessment.",
+        ? "Vision produit, architecture cible, défis techniques, opportunités identifiées et état de l'art."
+        : "Product vision, target architecture, technical challenges, identified opportunities, and state of the art.",
       links: [
         { label: isFr ? "Le Projet" : "The Project", to: "/project" },
-        { label: isFr ? "Research Challenges" : "Research Challenges", to: "/research" },
+        { label: isFr ? "Défis Techniques" : "Technical Challenges", to: "/research" },
         { label: isFr ? "Architecture Cible" : "Target Architecture", to: "/research/architecture" },
-        { label: isFr ? "Research Gaps" : "Research Gaps", to: "/research/gaps" },
-        { label: isFr ? "Assessment Académique" : "Academic Assessment", to: "/research/academic" },
+        { label: isFr ? "Opportunités & Lacunes" : "Opportunities & Gaps", to: "/research/gaps" },
+        { label: isFr ? "État de l'Art" : "State of the Art", to: "/research/academic" },
       ],
     },
     {
@@ -113,22 +113,22 @@ export default function Home() {
               </span>
               <span className="text-slate-300">·</span>
               <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ background: "oklch(0.97 0.02 200)", color: "oklch(0.55 0.20 200)", fontFamily: "'JetBrains Mono', monospace" }}>
-                {isFr ? "Projet Innosuisse — démarrage automne 2026" : "Innosuisse Project — starting autumn 2026"}
+                {isFr ? "Gamilab × Memoways" : "Gamilab × Memoways"}
               </span>
             </div>
             <h1 className="text-5xl font-black text-slate-900 mb-4 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.04em" }}>
-              DigiDouble
+              GamiWays
             </h1>
             <p className="text-xl text-slate-600 leading-relaxed mb-6" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? <>Un avatar conversationnel de toute personne, depuis ses archives vidéo existantes. <strong>Personnalisé, souverain, temps réel.</strong></>
-                : <>A conversational avatar of any person, from their existing video archives. <strong>Personalized, sovereign, real-time.</strong></>
+                ? <>Infrastructure conversationnelle multi-avatars. <strong>Modulaire, souveraine, temps réel.</strong></>
+                : <>Multi-avatar conversational infrastructure. <strong>Modular, sovereign, real-time.</strong></>
               }
             </p>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl mb-8" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Ce portail documente l'état de l'art, les gaps de recherche et les choix technologiques du projet DigiDouble. Il sert de référence pour les partenaires industriels, les évaluateurs Innosuisse et les chercheurs de l'IDIAP. Il fournit également des informations indépendantes sur les enjeux de la synthèse vocale et des avatars vidéo."
-                : "This portal documents the state of the art, research gaps, and technology choices for the DigiDouble project. It serves as a reference for industrial partners, Innosuisse evaluators, and IDIAP researchers. It also provides independent information on voice synthesis and video avatar challenges."}
+                ? "Ce portail concentre la veille technologique de Gamilab et Memoways sur les pipelines vocaux et les avatars vidéo. Il sert d'outil de sélection technologique, de support à la décision stratégique et de vitrine d'expertise pour clients et partenaires."
+                : "This portal consolidates Gamilab and Memoways' technology intelligence on voice pipelines and video avatars. It serves as a technology selection tool, strategic decision support, and an expertise showcase for clients and partners."}
             </p>
             <div className="flex flex-wrap gap-3">
               <InternalLink to="/project" className="inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-5 py-2.5 transition-all hover:opacity-90" style={{ background: 'oklch(0.55 0.20 200)', fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
@@ -136,7 +136,7 @@ export default function Home() {
                 <ArrowRight size={14} />
               </InternalLink>
               <InternalLink to="/research" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-5 py-2.5 border border-slate-300 text-slate-700 hover:bg-slate-100 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-                {isFr ? "Research Challenges" : "Research Challenges"}
+                {isFr ? "Défis Techniques" : "Technical Challenges"}
               </InternalLink>
             </div>
           </div>
@@ -156,7 +156,7 @@ export default function Home() {
                   {isFr ? "Synthèse & Reconnaissance Vocale" : "Speech Synthesis & Recognition"}
                 </h2>
                 <p className="text-xs text-slate-400" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  {isFr ? "Enjeux indépendants du projet DigiDouble" : "Challenges independent of the DigiDouble project"}
+                  {isFr ? "Veille technologique Gamilab × Memoways" : "Technology intelligence by Gamilab × Memoways"}
                 </p>
               </div>
             </div>
@@ -177,8 +177,8 @@ export default function Home() {
           </div>
           <p className="text-sm text-slate-500 leading-relaxed max-w-3xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "La section Voice Pipeline fournit une analyse indépendante de l'écosystème TTS/STT : comparatifs techniques, benchmarks de latence, modèles de coût et recommandations de stack. Ces informations sont utiles pour tout projet d'IA conversationnelle, au-delà de DigiDouble."
-              : "The Voice Pipeline section provides an independent analysis of the TTS/STT ecosystem: technical comparisons, latency benchmarks, cost models, and stack recommendations. This information is useful for any conversational AI project, beyond DigiDouble."}
+              ? "La section Voice Pipeline fournit une analyse complète de l'écosystème TTS/STT : comparatifs techniques, benchmarks de latence, modèles de coût et recommandations de stack. Ces données permettent de sélectionner les bons moteurs vocaux selon les contraintes de budget, souveraineté et performance."
+              : "The Voice Pipeline section provides a comprehensive analysis of the TTS/STT ecosystem: technical comparisons, latency benchmarks, cost models, and stack recommendations. This data enables selecting the right voice engines based on budget, sovereignty, and performance constraints."}
           </p>
         </div>
       </section>
@@ -196,7 +196,7 @@ export default function Home() {
                   {isFr ? "Avatars Vidéo Streaming" : "Streaming Video Avatars"}
                 </h2>
                 <p className="text-xs text-slate-400" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  {isFr ? "Enjeux indépendants du projet DigiDouble" : "Challenges independent of the DigiDouble project"}
+                  {isFr ? "Veille technologique Gamilab × Memoways" : "Technology intelligence by Gamilab × Memoways"}
                 </p>
               </div>
             </div>
@@ -217,8 +217,8 @@ export default function Home() {
           </div>
           <p className="text-sm text-slate-500 leading-relaxed max-w-3xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "La section Video Avatars fournit une analyse indépendante de l'écosystème des avatars vidéo streaming : comparatifs de plateformes, simulateur de coûts interactif, enjeux business et marché. Ces informations sont utiles pour tout projet intégrant un avatar conversationnel."
-              : "The Video Avatars section provides an independent analysis of the streaming video avatar ecosystem: platform comparisons, interactive cost simulator, business and market challenges. This information is useful for any project integrating a conversational avatar."}
+              ? "La section Video Avatars analyse l'écosystème des avatars vidéo streaming : comparatifs de plateformes, simulateur de coûts interactif, enjeux business et opportunités de marché. Un outil essentiel pour évaluer les options d'intégration d'un avatar conversationnel dans un projet client."
+              : "The Video Avatars section analyzes the streaming video avatar ecosystem: platform comparisons, interactive cost simulator, business challenges, and market opportunities. An essential tool for evaluating avatar integration options in a client project."}
           </p>
         </div>
       </section>
@@ -273,12 +273,12 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Layers size={14} className="text-slate-400" />
               <span className="text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                {isFr ? "Memoways SA · Projet Innosuisse avec IDIAP · Démarrage automne 2026" : "Memoways SA · Innosuisse project with IDIAP · Starting autumn 2026"}
+                {isFr ? "GamiWays Research Portal · Gamilab × Memoways · Geneva, Switzerland" : "GamiWays Research Portal · Gamilab × Memoways · Geneva, Switzerland"}
               </span>
             </div>
             <div className="flex gap-4">
               <InternalLink to="/research/gaps" className="text-xs text-slate-400 hover:text-slate-700 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-                {isFr ? "Research Gaps" : "Research Gaps"}
+                {isFr ? "Opportunités & Lacunes" : "Opportunities & Gaps"}
               </InternalLink>
               <InternalLink to="/avatars/pricing" className="text-xs text-slate-400 hover:text-slate-700 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
                 {isFr ? "Simulateur de coûts" : "Cost simulator"}

@@ -1,7 +1,7 @@
 /**
- * DigiDoubleArchitecture.tsx — DigiDouble Research Portal
+ * GamiWaysArchitecture.tsx — GamiWays Research Portal
  * Page: Target Architecture (extracted from Research section 01)
- * Context: DigiDouble project — part of "The Project" menu
+ * Context: GamiWays project — part of "The Project" menu
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
  */
@@ -11,7 +11,7 @@ import SectionHeader from "@/components/SectionHeader";
 import TargetArchDiagram from "@/components/diagrams/TargetArchDiagram";
 import DiagramModal from "@/components/DiagramModal";
 
-export default function DigiDoubleArchitecture() {
+export default function GamiWaysArchitecture() {
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
@@ -38,8 +38,8 @@ export default function DigiDoubleArchitecture() {
       ms: "2s",
       label: isFr ? "Limite naturelle" : "Natural limit",
       desc: isFr
-        ? "Seuil de naturalité conversationnelle (Nielsen 1993, validé par les recherches en dialogue humain). Au-delà, la conversation devient une série d'attentes. Cible TTFR DigiDouble."
-        : "Conversational naturalness threshold (Nielsen 1993, validated by human dialogue research). Beyond this, conversation becomes a series of waits. DigiDouble TTFR target.",
+        ? "Seuil de naturalité conversationnelle (Nielsen 1993, validé par les recherches en dialogue humain). Au-delà, la conversation devient une série d'attentes. Cible TTFR GamiWays."
+        : "Conversational naturalness threshold (Nielsen 1993, validated by human dialogue research). Beyond this, conversation becomes a series of waits. GamiWays TTFR target.",
       color: "oklch(0.75 0.16 75)",
       achievable: false,
     },
@@ -47,8 +47,8 @@ export default function DigiDoubleArchitecture() {
       ms: "6–12s",
       label: isFr ? "Rupture d'engagement" : "Engagement break",
       desc: isFr
-        ? "Latence actuelle de DigiDouble (HeyGem OS). L'utilisateur perd le fil, l'avatar cesse d'être une présence. Taux d'abandon élevé. C'est le problème à résoudre."
-        : "Current DigiDouble latency (HeyGem OS). User loses the thread, avatar stops being a presence. High drop-off rate. This is the problem to solve.",
+        ? "Latence actuelle de GamiWays (HeyGem OS). L'utilisateur perd le fil, l'avatar cesse d'être une présence. Taux d'abandon élevé. C'est le problème à résoudre."
+        : "Current GamiWays latency (HeyGem OS). User loses the thread, avatar stops being a presence. High drop-off rate. This is the problem to solve.",
       color: "oklch(0.60 0.20 25)",
       achievable: false,
     },
@@ -63,7 +63,7 @@ export default function DigiDoubleArchitecture() {
     {
       color: "oklch(0.55 0.20 200)",
       label: "R&D",
-      desc: isFr ? "Recherche fondamentale requise — cœur du projet Innosuisse" : "Fundamental research required — core of the Innosuisse project",
+      desc: isFr ? "Défi technique central — cœur de la feuille de route Gamilab" : "Core technical challenge — at the heart of Gamilab's roadmap",
     },
     {
       color: "oklch(0.75 0.16 75)",
@@ -78,7 +78,7 @@ export default function DigiDoubleArchitecture() {
       <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs">
           <InternalLink to="/research" className="text-xs font-mono text-slate-400 hover:text-slate-700 transition-colors">
-            {isFr ? "← Research Challenges" : "← Research Challenges"}
+            {isFr ? "← Défis Techniques" : "← Technical Challenges"}
           </InternalLink>
           <span className="text-slate-300">/</span>
           <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -127,8 +127,8 @@ export default function DigiDoubleArchitecture() {
           </h2>
           <p className="text-sm text-slate-600 leading-relaxed max-w-3xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "La latence n'est pas qu'un problème technique — c'est un problème d'expérience utilisateur. Au-delà de 2 secondes, l'utilisateur perd le fil de sa pensée, l'avatar cesse d'être une présence et devient un outil. L'objectif de DigiDouble est de franchir le seuil de naturalité conversationnelle : <2s end-to-end, avec un premier son dans les 500ms."
-              : "Latency is not just a technical problem — it is a user experience problem. Beyond 2 seconds, users lose their train of thought, the avatar stops being a presence and becomes a tool. DigiDouble's goal is to cross the conversational naturalness threshold: <2s end-to-end, with first sound within 500ms."}
+              ? "La latence n'est pas qu'un problème technique — c'est un problème d'expérience utilisateur. Au-delà de 2 secondes, l'utilisateur perd le fil de sa pensée, l'avatar cesse d'être une présence et devient un outil. L'objectif de GamiWays est de franchir le seuil de naturalité conversationnelle : <2s end-to-end, avec un premier son dans les 500ms."
+              : "Latency is not just a technical problem — it is a user experience problem. Beyond 2 seconds, users lose their train of thought, the avatar stops being a presence and becomes a tool. GamiWays's goal is to cross the conversational naturalness threshold: <2s end-to-end, with first sound within 500ms."}
           </p>
         </div>
 
@@ -144,7 +144,7 @@ export default function DigiDoubleArchitecture() {
                   <th>{isFr ? "Seuil" : "Threshold"}</th>
                   <th>{isFr ? "Qualification" : "Qualification"}</th>
                   <th>{isFr ? "Impact UX" : "UX Impact"}</th>
-                  <th>{isFr ? "Atteignable (DD)" : "Achievable (DD)"}</th>
+                  <th>{isFr ? "Atteignable" : "Achievable"}</th>
                 </tr>
               </thead>
               <tbody>
@@ -175,13 +175,13 @@ export default function DigiDoubleArchitecture() {
         {/* Navigation */}
         <div className="flex flex-wrap gap-3">
           <InternalLink to="/research" className="inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-4 py-2 transition-all hover:opacity-90" style={{ background: 'oklch(0.55 0.20 200)', fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-            {isFr ? "← Research Challenges" : "← Research Challenges"}
+            {isFr ? "← Défis Techniques" : "← Technical Challenges"}
           </InternalLink>
           <InternalLink to="/voice/pipeline" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
             {isFr ? "Pipeline Phase 1 →" : "Pipeline Phase 1 →"}
           </InternalLink>
           <InternalLink to="/research/gaps" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-            {isFr ? "Research Gaps →" : "Research Gaps →"}
+            {isFr ? "Opportunités & Lacunes →" : "Opportunities & Gaps →"}
           </InternalLink>
         </div>
       </div>

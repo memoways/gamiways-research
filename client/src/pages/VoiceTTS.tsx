@@ -1,5 +1,5 @@
 /**
- * VoiceTTS.tsx — DigiDouble Research Portal
+ * VoiceTTS.tsx — GamiWays Research Portal
  * Page: TTS & Voice Synthesis — extracted from StateOfArt section B
  * Design: Technical Blueprint, dense comparative tables
  * i18n: EN / FR via LangContext

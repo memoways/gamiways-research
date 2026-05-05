@@ -1,7 +1,7 @@
 /**
- * DigiDoubleAcademic.tsx — DigiDouble Research Portal
+ * GamiWaysAcademic.tsx — GamiWays Research Portal
  * Page: Academic Research Assessment (extracted from StateOfArt section F)
- * Context: DigiDouble project — part of "The Project" menu
+ * Context: GamiWays project — part of "The Project" menu
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
  */
@@ -10,7 +10,7 @@ import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
 import StatusBadge from "@/components/StatusBadge";
 
-export default function DigiDoubleAcademic() {
+export default function GamiWaysAcademic() {
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
@@ -168,8 +168,8 @@ export default function DigiDoubleAcademic() {
           number="06"
           title={isFr ? "Assessment Académique" : "Academic Assessment"}
           subtitle={isFr
-            ? "État des publications et travaux récents dans les domaines clés (2023–2026). Spécifique aux besoins du projet DigiDouble."
-            : "Status of publications and recent work in key domains (2023–2026). Specific to the DigiDouble project needs."}
+            ? "État des publications et travaux récents dans les domaines clés (2023–2026). Spécifique aux besoins du projet GamiWays."
+            : "Status of publications and recent work in key domains (2023–2026). Specific to the GamiWays project needs."}
           accent="cyan"
         />
 
@@ -241,7 +241,7 @@ export default function DigiDoubleAcademic() {
                   <th>{isFr ? "Domaine" : "Domain"}</th>
                   <th>{isFr ? "Maturité académique" : "Academic maturity"}</th>
                   <th>{isFr ? "Disponibilité commerciale" : "Commercial availability"}</th>
-                  <th>{isFr ? "Gap DigiDouble" : "DigiDouble gap"}</th>
+                  <th>{isFr ? "Gap GamiWays" : "GamiWays gap"}</th>
                 </tr>
               </thead>
               <tbody>

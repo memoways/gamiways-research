@@ -1,5 +1,5 @@
 /*
- * GlossaryLink.tsx — DigiDouble Research Portal
+ * GlossaryLink.tsx — GamiWays Research Portal
  * Reusable inline link to a specific glossary term anchor.
  * Renders a small "?" badge next to a column header or label.
  * Usage: <GlossaryLink term="WER" /> or <GlossaryLink term="TTFA" label="TTFA" />

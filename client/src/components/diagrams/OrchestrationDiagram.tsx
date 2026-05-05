@@ -1,5 +1,5 @@
 /*
- * OrchestrationDiagram — DigiDouble Research Portal
+ * OrchestrationDiagram — GamiWays Research Portal
  * Shows the Orchestration Freedom Degree continuum: 0% (scripted) → 90%+ (open)
  * With Pedagogical / Narrative mode mapping and node-level freedom concept
  * i18n: EN (default) / FR via useLang

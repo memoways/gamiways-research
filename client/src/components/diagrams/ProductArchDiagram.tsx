@@ -1,5 +1,5 @@
 /*
- * ProductArchDiagram — DigiDouble product architecture
+ * ProductArchDiagram — GamiWays product architecture
  * i18n: EN (default) / FR via useLang
  */
 import { useLang } from "@/contexts/LangContext";
@@ -76,7 +76,7 @@ export default function ProductArchDiagram() {
         {/* Shared engine */}
         <rect x={40} y={170} width={700} height={130} rx={4} fill="#f8fafc" stroke="#334155" strokeWidth="2" />
         <text x={390} y={190} textAnchor="middle" fontSize="10" fontWeight="700" fill="#334155" fontFamily="'JetBrains Mono', monospace">
-          {isFr ? "MOTEUR PARTAGÉ — DigiDouble Core" : "SHARED ENGINE — DigiDouble Core"}
+          {isFr ? "MOTEUR PARTAGÉ — GamiWays Core" : "SHARED ENGINE — GamiWays Core"}
         </text>
 
         {engineComponents.map((comp) => (

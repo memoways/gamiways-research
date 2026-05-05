@@ -1,5 +1,5 @@
 /**
- * VoiceStack.tsx — DigiDouble Research Portal
+ * VoiceStack.tsx — GamiWays Research Portal
  * Page: Voice Stack — Cadre de décision par couche (sans recommandations arrêtées)
  * Design: Technical Blueprint — questions stratégiques, enjeux, critères de choix
  * i18n: EN / FR via LangContext

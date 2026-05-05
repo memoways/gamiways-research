@@ -15,7 +15,7 @@ interface Platform {
 const platforms: Platform[] = [
   { name: "HeyGen",              nameFr: "HeyGen",              color: "#64748b", scores: [9, 7, 3, 1, 2, 2, 1] },
   { name: "NVIDIA ACE",          nameFr: "NVIDIA ACE",          color: "#16a34a", scores: [9, 10, 2, 3, 9, 9, 1] },
-  { name: "DigiDouble (target)", nameFr: "DigiDouble (cible)",  color: "#0891b2", scores: [8, 8, 7, 10, 9, 7, 9] },
+  { name: "GamiWays (target)", nameFr: "GamiWays (cible)",  color: "#0891b2", scores: [8, 8, 7, 10, 9, 7, 9] },
   { name: "HeyGem OS",           nameFr: "HeyGem OS",           color: "#d97706", scores: [6, 3, 8, 10, 3, 1, 3] },
   { name: "LemonSlice (LS-2.1)", nameFr: "LemonSlice (LS-2.1)", color: "#c026d3", scores: [8, 4, 7, 2, 5, 9, 10] },
 ];
@@ -84,7 +84,7 @@ export default function RadarCompareDiagram() {
             const pt = polarToCart(i * angleStep, r, CX, CY);
             return `${pt.x},${pt.y}`;
           }).join(" ");
-          const isDD = platform.name.includes("DigiDouble");
+          const isDD = platform.name.includes("GamiWays");
           return (
             <polygon key={platform.name} points={points}
               fill={platform.color} fillOpacity="0.12"
@@ -93,8 +93,8 @@ export default function RadarCompareDiagram() {
           );
         })}
 
-        {/* DigiDouble dots */}
-        {platforms.find(p => p.name.includes("DigiDouble"))?.scores.map((score, i) => {
+        {/* GamiWays dots */}
+        {platforms.find(p => p.name.includes("GamiWays"))?.scores.map((score, i) => {
           const r = (score / 10) * R;
           const pt = polarToCart(i * angleStep, r, CX, CY);
           return <circle key={i} cx={pt.x} cy={pt.y} r={3} fill="#0891b2" />;
@@ -106,7 +106,7 @@ export default function RadarCompareDiagram() {
             {isFr ? "Légende" : "Legend"}
           </text>
           {platforms.map((p, i) => {
-            const isDD = p.name.includes("DigiDouble");
+            const isDD = p.name.includes("GamiWays");
             return (
               <g key={p.name} transform={`translate(0, ${20 + i * 24})`}>
                 <line x1="0" y1="8" x2="20" y2="8" stroke={p.color} strokeWidth={isDD ? 2.5 : 1.5} strokeDasharray={isDD ? undefined : "4,2"} />
@@ -118,7 +118,7 @@ export default function RadarCompareDiagram() {
             );
           })}
           <text x="0" y={20 + platforms.length * 24 + 20} fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
-            {isFr ? "DigiDouble = cible R&D" : "DigiDouble = R&D target"}
+            {isFr ? "GamiWays = cible R&D" : "GamiWays = R&D target"}
           </text>
           <text x="0" y={20 + platforms.length * 24 + 34} fontSize="10" fill="#94a3b8" fontFamily="'JetBrains Mono', monospace">
             {isFr ? "(pas encore atteinte)" : "(not yet achieved)"}

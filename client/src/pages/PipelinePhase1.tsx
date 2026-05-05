@@ -1,5 +1,5 @@
 /**
- * PipelinePhase1.tsx — DigiDouble Research Portal
+ * PipelinePhase1.tsx — GamiWays Research Portal
  * Design: Technical documentation style — dark sidebar, monospace accents, structured data
  * Interactive voice pipeline diagram for Phase 1 MVP
  */
@@ -610,8 +610,8 @@ function CumulativeLatency({
         <AlertCircle className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
         <p className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
           {isFr
-            ? "Cible DigiDouble Phase 1 : <2s bout-en-bout (pipeline vocal seul, hors génération avatar). La génération avatar ajoute 80–300ms (BeyondPresence) ou 3–8s (HeyGen)."
-            : "DigiDouble Phase 1 target: <2s end-to-end (voice pipeline only, excluding avatar generation). Avatar generation adds 80–300ms (BeyondPresence) or 3–8s (HeyGen)."}
+            ? "Cible GamiWays Phase 1 : <2s bout-en-bout (pipeline vocal seul, hors génération avatar). La génération avatar ajoute 80–300ms (BeyondPresence) ou 3–8s (HeyGen)."
+            : "GamiWays Phase 1 target: <2s end-to-end (voice pipeline only, excluding avatar generation). Avatar generation adds 80–300ms (BeyondPresence) or 3–8s (HeyGen)."}
         </p>
       </div>
     </div>
@@ -651,7 +651,7 @@ function V2VSection({ isFr }: { isFr: boolean }) {
         <div className="bg-slate-800 rounded-lg p-3">
           <div className="text-xs font-mono text-slate-400 mb-1">{isFr ? "Clonage vocal" : "Voice cloning"}</div>
           <div className="text-2xl font-bold font-mono text-red-400">{isFr ? "Non" : "No"}</div>
-          <div className="text-xs text-slate-500 mt-1">{isFr ? "critique pour DigiDouble" : "critical for DigiDouble"}</div>
+          <div className="text-xs text-slate-500 mt-1">{isFr ? "critique pour GamiWays" : "critical for GamiWays"}</div>
         </div>
       </div>
 
@@ -788,8 +788,8 @@ export default function PipelinePhase1() {
           </h1>
           <p className="text-slate-500 max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "Diagramme interactif du pipeline vocal complet pour le MVP DigiDouble Phase 1. Sélectionnez les composants de chaque bloc pour visualiser la latence cumulée et le coût estimé. Comparez l'approche Cascade (ASR → LLM → TTS) avec le Voice-to-Voice end-to-end."
-              : "Interactive diagram of the complete voice pipeline for DigiDouble Phase 1 MVP. Select components for each block to visualize cumulative latency and estimated cost. Compare the Cascade approach (ASR → LLM → TTS) with end-to-end Voice-to-Voice."}
+              ? "Diagramme interactif du pipeline vocal complet pour le MVP GamiWays Phase 1. Sélectionnez les composants de chaque bloc pour visualiser la latence cumulée et le coût estimé. Comparez l'approche Cascade (ASR → LLM → TTS) avec le Voice-to-Voice end-to-end."
+              : "Interactive diagram of the complete voice pipeline for GamiWays Phase 1 MVP. Select components for each block to visualize cumulative latency and estimated cost. Compare the Cascade approach (ASR → LLM → TTS) with end-to-end Voice-to-Voice."}
           </p>
         </div>
 
@@ -942,8 +942,8 @@ export default function PipelinePhase1() {
                       </p>
                       <p className="text-xs text-amber-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                         {isFr
-                          ? "Le clonage vocal est critique pour le persona DigiDouble. Options : Cartesia (cloud, 40ms), Chatterbox (local, 150ms, MIT), ElevenLabs (cloud, 75ms, $75/1M). La stack souveraine requiert Chatterbox + Kokoro en combinaison."
-                          : "Voice cloning is critical for DigiDouble persona. Options: Cartesia (cloud, 40ms), Chatterbox (local, 150ms, MIT), ElevenLabs (cloud, 75ms, $75/1M). Sovereign stack requires Chatterbox + Kokoro combination."}
+                          ? "Le clonage vocal est critique pour le persona GamiWays. Options : Cartesia (cloud, 40ms), Chatterbox (local, 150ms, MIT), ElevenLabs (cloud, 75ms, $75/1M). La stack souveraine requiert Chatterbox + Kokoro en combinaison."
+                          : "Voice cloning is critical for GamiWays persona. Options: Cartesia (cloud, 40ms), Chatterbox (local, 150ms, MIT), ElevenLabs (cloud, 75ms, $75/1M). Sovereign stack requires Chatterbox + Kokoro combination."}
                       </p>
                     </div>
                   </div>

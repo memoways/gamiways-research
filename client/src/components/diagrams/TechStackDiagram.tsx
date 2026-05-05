@@ -1,5 +1,5 @@
 /*
- * TechStackDiagram — DigiDouble Research Portal
+ * TechStackDiagram — GamiWays Research Portal
  * Visual: layered tech stack with latency targets, hover for justification
  * Design: horizontal layers, color-coded by status, hover tooltips
  */

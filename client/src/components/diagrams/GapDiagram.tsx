@@ -1,5 +1,5 @@
 /*
- * GapDiagram — DigiDouble Research Portal
+ * GapDiagram — GamiWays Research Portal
  * Visual: 6 required criteria × 4 solution categories — hover for details
  * Design: same style as ProductArchDiagram — monospace labels, color-coded cells, tooltip on hover
  * Philosophy: editorial minimalism — Bauhaus grid, functional whitespace
@@ -171,9 +171,9 @@ const solutionCategories: SolutionCategory[] = [
     tooltipFr: "LemonSlice-2 (déc. 2025) : DiT vidéo 20B, 20 FPS sur GPU unique, zero-shot depuis 1 photo. LS-2.1 ajoute déclenchement émotions + actions temps réel. UNIQUE : seule plateforme commerciale supportant cartoons, mascottes, animaux + humains photoréalistes. Latence ~3s (hosted). Pas de souveraineté, pas de mémoire, pas de narratif.",
   },
   {
-    id: "digidouble",
-    label: "DigiDouble target",
-    labelFr: "Cible DigiDouble",
+    id: "gamiways",
+    label: "GamiWays target",
+    labelFr: "Cible GamiWays",
     examples: "Memoways × Gamilab — R&D 2025–2028",
     coverage: {
       realtime: "full",
@@ -239,7 +239,7 @@ export default function GapDiagram() {
     setTooltip(null);
   };
 
-  const isDigiDouble = (catId: string) => catId === "digidouble";
+  const isGamiWays = (catId: string) => catId === "gamiways";
 
   return (
     <div className="relative">
@@ -299,12 +299,12 @@ export default function GapDiagram() {
               <div
                 className="flex flex-col justify-center px-3 py-2 rounded cursor-default transition-all duration-150"
                 style={{
-                  background: isDigiDouble(cat.id)
+                  background: isGamiWays(cat.id)
                     ? "oklch(0.12 0.02 240)"
                     : hoveredCategory === cat.id
                       ? "oklch(0.95 0.01 240)"
                       : "oklch(0.98 0.005 240)",
-                  border: isDigiDouble(cat.id)
+                  border: isGamiWays(cat.id)
                     ? "1.5px solid oklch(0.72 0.18 200)"
                     : "1px solid oklch(0.90 0.01 240)",
                 }}
@@ -316,7 +316,7 @@ export default function GapDiagram() {
                   className="font-semibold text-xs leading-tight"
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    color: isDigiDouble(cat.id) ? "oklch(0.72 0.18 200)" : "oklch(0.30 0.02 240)",
+                    color: isGamiWays(cat.id) ? "oklch(0.72 0.18 200)" : "oklch(0.30 0.02 240)",
                     fontSize: "11px",
                   }}
                 >
@@ -325,7 +325,7 @@ export default function GapDiagram() {
                 <span
                   className="text-slate-400 leading-tight mt-0.5"
                   style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "9px",
-                    color: isDigiDouble(cat.id) ? "oklch(0.55 0.05 200)" : undefined }}
+                    color: isGamiWays(cat.id) ? "oklch(0.55 0.05 200)" : undefined }}
                 >
                   {cat.examples}
                 </span>
@@ -343,14 +343,14 @@ export default function GapDiagram() {
                     className="flex flex-col items-center justify-center rounded cursor-default transition-all duration-150"
                     style={{
                       padding: "10px 4px",
-                      background: isDigiDouble(cat.id) && cat.coverage[crit.id] === "full"
+                      background: isGamiWays(cat.id) && cat.coverage[crit.id] === "full"
                         ? "oklch(0.93 0.08 145)"
                         : isHovered || isRowHovered || isColHovered
                           ? cov.bg
                           : "oklch(0.985 0.005 240)",
                       border: isHovered
                         ? `2px solid ${cov.border}`
-                        : isDigiDouble(cat.id)
+                        : isGamiWays(cat.id)
                           ? `1.5px solid ${cov.border}`
                           : `1px solid oklch(0.90 0.01 240)`,
                       transform: isHovered ? "scale(1.04)" : "scale(1)",

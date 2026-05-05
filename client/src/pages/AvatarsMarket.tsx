@@ -1,5 +1,5 @@
 /**
- * AvatarsMarket.tsx — DigiDouble Research Portal
+ * AvatarsMarket.tsx — GamiWays Research Portal
  * Page: Business Challenges & Market Opportunities — extracted from StateOfArt section G
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext

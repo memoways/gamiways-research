@@ -1,12 +1,13 @@
 /*
- * About.tsx — DigiDouble Research Portal
+ * About.tsx — GamiWays Research Portal
  * Page: About this portal — purpose, editorial philosophy, structure
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
+ * Rebranded: Gamilab × Memoways — no Innosuisse/IDIAP references
  */
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
-import { Home, ChevronRight, BookOpen, Mic, Video, FlaskConical, BarChart2, Info } from "lucide-react";
+import { Home, ChevronRight, BookOpen, Mic, Video, FlaskConical, BarChart2, Info, Users, Target, Layers } from "lucide-react";
 
 export default function About() {
   const { t } = useLang();
@@ -38,8 +39,8 @@ export default function About() {
           </div>
           <p className="text-slate-500 text-sm leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             {isFr
-              ? "DigiDouble Research Portal — un site de référence indépendant sur l'état de l'art des pipelines vocaux et des avatars vidéo conversationnels."
-              : "DigiDouble Research Portal — an independent reference site on the state of the art in voice pipelines and conversational video avatars."}
+              ? "GamiWays Research Portal — outil de veille technologique et de sélection de solutions, développé par Gamilab et Memoways."
+              : "GamiWays Research Portal — a technology intelligence and solution selection tool, developed by Gamilab and Memoways."}
           </p>
           <div className="mt-3 h-px" style={{ background: "linear-gradient(to right, oklch(0.72 0.18 200), transparent)" }} />
         </div>
@@ -55,14 +56,100 @@ export default function About() {
           <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
             <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Ce portail documente l'état de l'art des technologies de synthèse vocale (STT, TTS) et des avatars vidéo conversationnels en 2025–2026. Il a été créé dans le cadre du projet DigiDouble — un projet de recherche Innosuisse visant à créer un avatar conversationnel photoréaliste à partir d'archives vidéo existantes — mais son contenu est conçu pour être utile à tout projet impliquant ces technologies."
-                : "This portal documents the state of the art in speech synthesis technologies (STT, TTS) and conversational video avatars in 2025–2026. It was created in the context of the DigiDouble project — an Innosuisse research project aiming to create a photorealistic conversational avatar from existing video archives — but its content is designed to be useful for any project involving these technologies."}
+                ? "Le GamiWays Research Portal est un outil de veille technologique concentrant l'expertise de Gamilab et Memoways sur les pipelines vocaux (STT, TTS) et les avatars vidéo conversationnels. Il documente l'état de l'art en 2025–2026, avec des benchmarks vérifiés, des analyses stratégiques et des outils de décision interactifs."
+                : "The GamiWays Research Portal is a technology intelligence tool consolidating Gamilab and Memoways' expertise on voice pipelines (STT, TTS) and conversational video avatars. It documents the state of the art in 2025–2026, with verified benchmarks, strategic analyses, and interactive decision tools."}
             </p>
             <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Le portail couvre 10 moteurs STT, 16 moteurs TTS et 11+ plateformes d'avatars vidéo, avec des benchmarks, des analyses stratégiques, des outils de décision interactifs et des cadres d'évaluation. Il est mis à jour régulièrement pour refléter l'évolution rapide du marché."
-                : "The portal covers 10 STT engines, 16 TTS engines, and 11+ video avatar platforms, with benchmarks, strategic analyses, interactive decision tools, and evaluation frameworks. It is regularly updated to reflect the rapidly evolving market."}
+                ? "Le portail couvre 10 moteurs STT, 16 moteurs TTS et 11+ plateformes d'avatars vidéo. Il est conçu pour aider à prendre des décisions technologiques éclairées — que ce soit pour un projet pilote client, une intégration produit, ou une évaluation stratégique de l'écosystème."
+                : "The portal covers 10 STT engines, 16 TTS engines, and 11+ video avatar platforms. It is designed to support informed technology decisions — whether for a client pilot project, a product integration, or a strategic ecosystem assessment."}
             </p>
+          </div>
+        </section>
+
+        {/* Who is it for */}
+        <section className="mb-10">
+          <div className="flex items-center gap-2 mb-4">
+            <Users size={16} style={{ color: "oklch(0.55 0.20 200)" }} />
+            <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Pour qui ?" : "Who is it for?"}
+            </h3>
+          </div>
+          <div className="bg-white border border-slate-200 rounded-xl p-6">
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[
+                {
+                  icon: "🏢",
+                  title: isFr ? "Clients Memoways" : "Memoways clients",
+                  desc: isFr
+                    ? "Organisations confrontées à des choix technologiques pour intégrer un avatar conversationnel ou une pipeline vocale dans leurs projets."
+                    : "Organizations facing technology choices for integrating a conversational avatar or voice pipeline into their projects.",
+                },
+                {
+                  icon: "🤝",
+                  title: isFr ? "Partenaires technologiques" : "Technology partners",
+                  desc: isFr
+                    ? "Équipes techniques et partenaires qui souhaitent comprendre les choix d'architecture de Gamilab et les contraintes de performance cibles."
+                    : "Technical teams and partners who want to understand Gamilab's architecture choices and target performance constraints.",
+                },
+                {
+                  icon: "🔍",
+                  title: isFr ? "Évaluateurs & experts" : "Evaluators & experts",
+                  desc: isFr
+                    ? "Toute structure confrontée aux mêmes questions — sélection de moteurs vocaux, évaluation d'avatars, arbitrage souveraineté vs performance vs coût."
+                    : "Any organization facing the same questions — voice engine selection, avatar evaluation, sovereignty vs performance vs cost trade-offs.",
+                },
+              ].map((item) => (
+                <div key={item.title} className="bg-slate-50 rounded-lg p-4">
+                  <div className="text-xl mb-2">{item.icon}</div>
+                  <p className="text-xs font-bold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</p>
+                  <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Objectives */}
+        <section className="mb-10">
+          <div className="flex items-center gap-2 mb-4">
+            <Target size={16} style={{ color: "oklch(0.55 0.20 200)" }} />
+            <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Objectifs du portail" : "Portal objectives"}
+            </h3>
+          </div>
+          <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[
+                {
+                  icon: "🎯",
+                  title: isFr ? "Sélection technologique" : "Technology selection",
+                  desc: isFr
+                    ? "Identifier les bons moteurs vocaux et plateformes d'avatars selon les contraintes réelles : budget, souveraineté, latence, langues, intégration."
+                    : "Identify the right voice engines and avatar platforms based on real constraints: budget, sovereignty, latency, languages, integration.",
+                },
+                {
+                  icon: "📊",
+                  title: isFr ? "Décision stratégique" : "Strategic decision support",
+                  desc: isFr
+                    ? "Fournir des données actualisées pour arbitrer entre options : cloud vs on-premise, open-source vs commercial, latence vs coût."
+                    : "Provide up-to-date data to arbitrate between options: cloud vs on-premise, open-source vs commercial, latency vs cost.",
+                },
+                {
+                  icon: "🏆",
+                  title: isFr ? "Vitrine d'expertise" : "Expertise showcase",
+                  desc: isFr
+                    ? "Démontrer la profondeur d'expertise de Gamilab et Memoways dans les technologies d'avatars conversationnels — pour festivals, clients et partenaires."
+                    : "Demonstrate the depth of Gamilab and Memoways' expertise in conversational avatar technologies — for festivals, clients, and partners.",
+                },
+              ].map((item) => (
+                <div key={item.title} className="bg-slate-50 rounded-lg p-4">
+                  <div className="text-xl mb-2">{item.icon}</div>
+                  <p className="text-xs font-bold text-slate-800 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.title}</p>
+                  <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -77,8 +164,8 @@ export default function About() {
           <div className="bg-white border border-slate-200 rounded-xl p-6 space-y-4">
             <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Ce portail ne recommande pas de solutions spécifiques. Il présente des options, des métriques, des questions à se poser et des cadres de décision. L'objectif est d'aider les équipes à comprendre le paysage technologique et à prendre des décisions éclairées en fonction de leurs contraintes propres — souveraineté des données, budget, latence, expertise technique."
-                : "This portal does not recommend specific solutions. It presents options, metrics, questions to ask, and decision frameworks. The goal is to help teams understand the technology landscape and make informed decisions based on their own constraints — data sovereignty, budget, latency, technical expertise."}
+                ? "Ce portail ne recommande pas de solutions spécifiques. Il présente des options, des métriques vérifiées, des questions à se poser et des cadres de décision. L'objectif est d'aider les équipes à comprendre le paysage technologique et à prendre des décisions éclairées en fonction de leurs contraintes propres — souveraineté des données, budget, latence, expertise technique."
+                : "This portal does not recommend specific solutions. It presents options, verified metrics, questions to ask, and decision frameworks. The goal is to help teams understand the technology landscape and make informed decisions based on their own constraints — data sovereignty, budget, latency, technical expertise."}
             </p>
             <div className="grid sm:grid-cols-3 gap-4 mt-2">
               {[
@@ -90,12 +177,12 @@ export default function About() {
                 {
                   icon: "⚖️",
                   title: isFr ? "Neutralité fournisseur" : "Vendor neutrality",
-                  desc: isFr ? "Aucun partenariat commercial. Les données sont issues de benchmarks publics et de tests indépendants." : "No commercial partnerships. Data comes from public benchmarks and independent tests.",
+                  desc: isFr ? "Aucun partenariat commercial avec les fournisseurs évalués. Les données sont issues de benchmarks publics et de tests indépendants." : "No commercial partnerships with evaluated vendors. Data comes from public benchmarks and independent tests.",
                 },
                 {
                   icon: "🔄",
                   title: isFr ? "Mise à jour continue" : "Continuous updates",
-                  desc: isFr ? "Le marché évolue vite. Ce portail est mis à jour pour refléter les nouvelles sorties et les changements de prix." : "The market moves fast. This portal is updated to reflect new releases and pricing changes.",
+                  desc: isFr ? "Le marché évolue vite. Ce portail est mis à jour pour refléter les nouvelles sorties, les changements de prix et les nouveaux benchmarks." : "The market moves fast. This portal is updated to reflect new releases, pricing changes, and new benchmarks.",
                 },
               ].map((item) => (
                 <div key={item.title} className="bg-slate-50 rounded-lg p-4">
@@ -111,7 +198,7 @@ export default function About() {
         {/* Portal structure */}
         <section className="mb-10">
           <div className="flex items-center gap-2 mb-4">
-            <BarChart2 size={16} style={{ color: "oklch(0.55 0.20 200)" }} />
+            <Layers size={16} style={{ color: "oklch(0.55 0.20 200)" }} />
             <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               {isFr ? "Structure du portail" : "Portal structure"}
             </h3>
@@ -123,8 +210,8 @@ export default function About() {
                 color: "oklch(0.55 0.20 200)",
                 section: isFr ? "The Project" : "The Project",
                 desc: isFr
-                  ? "Contexte et vision du projet DigiDouble : objectifs, défis de recherche, architecture cible, gaps identifiés et état de l'art académique. Contenu spécifique au projet DigiDouble."
-                  : "Context and vision of the DigiDouble project: objectives, research challenges, target architecture, identified gaps, and academic state of the art. DigiDouble-specific content.",
+                  ? "Vision produit de GamiWays, défis techniques, architecture cible, opportunités identifiées et état de l'art. Contexte de l'infrastructure conversationnelle Gamilab."
+                  : "GamiWays product vision, technical challenges, target architecture, identified opportunities, and state of the art. Context of Gamilab's conversational infrastructure.",
                 href: "/project",
               },
               {
@@ -132,8 +219,8 @@ export default function About() {
                 color: "oklch(0.55 0.20 200)",
                 section: isFr ? "Voice Pipeline" : "Voice Pipeline",
                 desc: isFr
-                  ? "Comparatifs STT (10 moteurs) et TTS (16 moteurs), benchmarks de synthèse audio, cadre de décision par couche, scoring personnalisé et diagramme pipeline V2V interactif. Utile pour tout projet vocal, indépendamment de DigiDouble."
-                  : "STT (10 engines) and TTS (16 engines) comparisons, audio synthesis benchmarks, layer-by-layer decision framework, custom scoring, and interactive V2V pipeline diagram. Useful for any voice project, independently of DigiDouble.",
+                  ? "Comparatifs STT (10 moteurs) et TTS (16 moteurs), benchmarks de synthèse audio, cadre de décision par couche, scoring personnalisé et diagramme pipeline V2V interactif."
+                  : "STT (10 engines) and TTS (16 engines) comparisons, audio synthesis benchmarks, layer-by-layer decision framework, custom scoring, and interactive V2V pipeline diagram.",
                 href: "/voice/stt",
               },
               {
@@ -150,8 +237,8 @@ export default function About() {
                 color: "oklch(0.60 0.20 280)",
                 section: isFr ? "À propos" : "About",
                 desc: isFr
-                  ? "Présentation du portail (cette page) et glossaire des termes techniques utilisés dans le portail."
-                  : "Portal presentation (this page) and glossary of technical terms used in the portal.",
+                  ? "Présentation du portail (cette page) et glossaire des 30+ termes techniques utilisés dans le portail."
+                  : "Portal presentation (this page) and glossary of the 30+ technical terms used in the portal.",
                 href: "/about",
               },
             ].map((item) => {
@@ -180,28 +267,58 @@ export default function About() {
           </div>
         </section>
 
-        {/* Technical context */}
+        {/* Partnership context */}
         <section className="mb-10">
           <div className="flex items-center gap-2 mb-4">
             <FlaskConical size={16} style={{ color: "oklch(0.55 0.20 200)" }} />
             <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {isFr ? "Contexte technique" : "Technical context"}
+              {isFr ? "Gamilab × Memoways" : "Gamilab × Memoways"}
             </h3>
           </div>
           <div className="bg-white border border-slate-200 rounded-xl p-6">
-            <p className="text-sm text-slate-700 leading-relaxed mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            <p className="text-sm text-slate-700 leading-relaxed mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Le projet DigiDouble est un projet de recherche Innosuisse mené par le laboratoire IDIAP (Institut de Recherche en Intelligence Artificielle Perceptive) en partenariat avec Memoways et Gamilab. L'objectif est de créer un avatar conversationnel photoréaliste d'une personne à partir de ses archives vidéo existantes, capable d'interagir en temps réel avec des utilisateurs."
-                : "The DigiDouble project is an Innosuisse research project led by the IDIAP laboratory (Institute for Perceptual Artificial Intelligence) in partnership with Memoways and Gamilab. The goal is to create a photorealistic conversational avatar of a person from their existing video archives, capable of interacting in real time with users."}
+                ? "Ce portail est le fruit du partenariat entre Gamilab et Memoways — deux structures complémentaires qui couvrent ensemble l'ensemble de la chaîne de valeur des avatars conversationnels : de l'infrastructure technologique aux projets clients."
+                : "This portal is the result of the partnership between Gamilab and Memoways — two complementary organizations that together cover the entire value chain of conversational avatars: from technological infrastructure to client projects."}
             </p>
-            <div className="grid sm:grid-cols-3 gap-3">
+            <div className="grid sm:grid-cols-2 gap-4">
               {[
-                { label: isFr ? "Partenaire recherche" : "Research partner", value: "IDIAP" },
-                { label: isFr ? "Partenaires industriels" : "Industry partners", value: "Memoways, Gamilab" },
-                { label: isFr ? "Financement" : "Funding", value: "Innosuisse" },
-                { label: isFr ? "Démarrage prévu" : "Expected start", value: isFr ? "Automne 2026" : "Autumn 2026" },
+                {
+                  name: "Gamilab",
+                  url: "https://gamilab.ch",
+                  color: "oklch(0.55 0.20 200)",
+                  role: isFr ? "Moteur technologique" : "Technology engine",
+                  desc: isFr
+                    ? "Développe l'infrastructure conversationnelle multi-avatars : SDK, API, pipeline STT→LLM→TTS→Avatar. Fournit la couche technique sur laquelle s'appuient les projets Memoways."
+                    : "Develops the multi-avatar conversational infrastructure: SDK, API, STT→LLM→TTS→Avatar pipeline. Provides the technical layer on which Memoways projects are built.",
+                },
+                {
+                  name: "Memoways",
+                  url: "https://memoways.com",
+                  color: "oklch(0.72 0.18 50)",
+                  role: isFr ? "Agence de déploiement" : "Deployment agency",
+                  desc: isFr
+                    ? "Réalise les projets pilotes et les implémentations pour clients : conception, intégration, personnalisation et déploiement d'avatars conversationnels dans des contextes réels."
+                    : "Delivers pilot projects and client implementations: design, integration, customization, and deployment of conversational avatars in real-world contexts.",
+                },
+              ].map((partner) => (
+                <div key={partner.name} className="rounded-xl p-5 border" style={{ borderColor: partner.color + "40", background: partner.color + "08" }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-base font-black" style={{ fontFamily: "'Space Grotesk', sans-serif", color: partner.color }}>{partner.name}</span>
+                    <a href={partner.url} target="_blank" rel="noopener noreferrer" className="text-xs font-mono" style={{ color: partner.color }}>
+                      {partner.url.replace("https://", "")} →
+                    </a>
+                  </div>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{partner.role}</p>
+                  <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{partner.desc}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 grid sm:grid-cols-3 gap-3">
+              {[
                 { label: isFr ? "Moteurs STT couverts" : "STT engines covered", value: "10" },
                 { label: isFr ? "Moteurs TTS couverts" : "TTS engines covered", value: "16" },
+                { label: isFr ? "Plateformes avatars" : "Avatar platforms", value: "11+" },
               ].map((item) => (
                 <div key={item.label} className="bg-slate-50 rounded-lg p-3">
                   <p className="text-xs text-slate-400 mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.label}</p>

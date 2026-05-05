@@ -1,4 +1,4 @@
-// STTDetail.tsx — DigiDouble Research Portal
+// STTDetail.tsx — GamiWays Research Portal
 // Page détaillée par solution STT / Speech-to-Text
 // Design: Modernist Technical — monospace accents, clean grids
 // ============================================================
@@ -240,9 +240,9 @@ export default function STTDetail() {
               </div>
             </div>
 
-            {/* DigiDouble relevance */}
+            {/* GamiWays relevance */}
             <div className="bg-slate-900 rounded-xl p-5 text-white">
-              <div className="text-xs font-mono font-bold text-cyan-400 mb-2 uppercase tracking-wider">DigiDouble</div>
+              <div className="text-xs font-mono font-bold text-cyan-400 mb-2 uppercase tracking-wider">GamiWays</div>
               <div className="text-xs font-bold mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 {stt.digiDoubleAxis}
               </div>

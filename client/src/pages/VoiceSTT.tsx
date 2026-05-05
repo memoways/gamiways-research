@@ -1,5 +1,5 @@
 /**
- * VoiceSTT.tsx — DigiDouble Research Portal
+ * VoiceSTT.tsx — GamiWays Research Portal
  * Page: STT / Speech-to-Text — extracted from StateOfArt section C
  * Design: Technical Blueprint, dense comparative tables
  * i18n: EN / FR via LangContext

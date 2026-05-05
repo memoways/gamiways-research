@@ -1,7 +1,7 @@
 /**
- * AvatarsEmotional.tsx — DigiDouble Research Portal
+ * AvatarsEmotional.tsx — GamiWays Research Portal
  * Page: Emotional Toolbox & Character Design (extracted from Research section 05b)
- * Context: DigiDouble R&D
+ * Context: GamiWays R&D
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
  */

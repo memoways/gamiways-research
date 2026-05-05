@@ -1,5 +1,5 @@
 /**
- * VoiceScoring.tsx — DigiDouble Research Portal
+ * VoiceScoring.tsx — GamiWays Research Portal
  * Outil de scoring personnalisé : pondérer les critères, obtenir un classement dynamique
  * Design: Technical Blueprint — sliders, ranked cards, presets
  * i18n: EN / FR via LangContext
@@ -150,9 +150,9 @@ const PRESETS: Preset[] = [
     sttWeights: { accuracy: 7, latency: 5, multilingual: 10, sovereignty: 4, pricing: 5, streaming: 6 },
   },
   {
-    id: "digidouble",
-    label: "DigiDouble Phase 2",
-    labelFr: "DigiDouble Phase 2",
+    id: "gamiways",
+    label: "GamiWays Phase 2",
+    labelFr: "GamiWays Phase 2",
     desc: "Balanced: quality + sovereignty + real-time for Swiss deployment",
     descFr: "Équilibré : qualité + souveraineté + temps réel pour déploiement suisse",
     icon: "🎯",
@@ -726,8 +726,8 @@ export default function VoiceScoring() {
               <p className="text-xs text-slate-500 leading-relaxed">
                 <span className="font-semibold text-slate-700">{isFr ? "Méthodologie : " : "Methodology: "}</span>
                 {isFr
-                  ? "Les scores bruts (1–10) sont issus de benchmarks publics (Artificial Analysis ELO, WER Koenecke, TTFA mesurés). La pondération est appliquée via une moyenne pondérée. Les badges souveraineté et lock-in proviennent de l'analyse stratégique DigiDouble."
-                  : "Raw scores (1–10) are sourced from public benchmarks (Artificial Analysis ELO, Koenecke WER, measured TTFA). Weighting is applied via weighted average. Sovereignty and lock-in badges come from the DigiDouble strategic analysis."}
+                  ? "Les scores bruts (1–10) sont issus de benchmarks publics (Artificial Analysis ELO, WER Koenecke, TTFA mesurés). La pondération est appliquée via une moyenne pondérée. Les badges souveraineté et lock-in proviennent de l'analyse stratégique GamiWays."
+                  : "Raw scores (1–10) are sourced from public benchmarks (Artificial Analysis ELO, Koenecke WER, measured TTFA). Weighting is applied via weighted average. Sovereignty and lock-in badges come from the GamiWays strategic analysis."}
               </p>
             </div>
           </div>

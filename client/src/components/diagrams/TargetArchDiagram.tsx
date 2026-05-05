@@ -1,5 +1,5 @@
 /*
- * TargetArchDiagram — DigiDouble Research Portal
+ * TargetArchDiagram — GamiWays Research Portal
  * Shows the target architecture: Gamilab (green) → R&D (blue) → Memoways (yellow) → Experience
  * i18n: EN (default) / FR via useLang
  * Fix: removed scale(1.35) transform that caused right overflow; recalculated viewBox to fit content.

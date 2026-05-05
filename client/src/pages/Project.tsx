@@ -1,5 +1,5 @@
 /*
- * Project — DigiDouble Research Portal
+ * Project — GamiWays Research Portal
  * Design: schema-first, details in accordion/toggle
  * Sections: Platform (PlatformMode) → Gap (GapMatrix) → Competitive → Infrastructure
  * i18n: EN (default) / FR via LangContext
@@ -69,13 +69,13 @@ export default function Project() {
   const isFr = lang === "fr";
 
   const competitiveData = [
-    { criterion: isFr ? "Avatars temps réel" : "Real-time avatars", heygen: { value: "✓✓✓", level: 3 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (OS)", level: 1 }, digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
-    { criterion: isFr ? "Langage corporel" : "Body language", heygen: { value: "✓", level: 1 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✗", level: 0 }, digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
-    { criterion: isFr ? "Sync multi-stream" : "Multi-stream sync", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓", level: 2 }, digidouble: { value: "✓✓✓", level: 3, rd: false } },
-    { criterion: isFr ? "Mémoire conversationnelle" : "Conversational memory", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓", level: 2 }, digidouble: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
-    { criterion: isFr ? "Éditeur nœuds" : "Node editor", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (tech)", level: 1 }, digidouble: { value: "✓✓✓", level: 3, rd: false } },
-    { criterion: isFr ? "Souveraineté données" : "Data sovereignty", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (self)", level: 2 }, digidouble: { value: "✓✓✓", level: 3, rd: false } },
-    { criterion: isFr ? "Risque censure" : "Censorship risk", heygen: { value: isFr ? "Élevé" : "High", level: 0 }, synthesia: { value: isFr ? "Élevé" : "High", level: 0 }, flowise: { value: isFr ? "Élevé" : "High", level: 0 }, digidouble: { value: isFr ? "Nul (souverain)" : "None (sovereign)", level: 3, rd: false } },
+    { criterion: isFr ? "Avatars temps réel" : "Real-time avatars", heygen: { value: "✓✓✓", level: 3 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (OS)", level: 1 }, gamiways: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
+    { criterion: isFr ? "Langage corporel" : "Body language", heygen: { value: "✓", level: 1 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✗", level: 0 }, gamiways: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
+    { criterion: isFr ? "Sync multi-stream" : "Multi-stream sync", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓", level: 2 }, gamiways: { value: "✓✓✓", level: 3, rd: false } },
+    { criterion: isFr ? "Mémoire conversationnelle" : "Conversational memory", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓", level: 2 }, gamiways: { value: "✓✓✓ (R&D)", level: 3, rd: true } },
+    { criterion: isFr ? "Éditeur nœuds" : "Node editor", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (tech)", level: 1 }, gamiways: { value: "✓✓✓", level: 3, rd: false } },
+    { criterion: isFr ? "Souveraineté données" : "Data sovereignty", heygen: { value: "✗", level: 0 }, synthesia: { value: "✗", level: 0 }, flowise: { value: "✓ (self)", level: 2 }, gamiways: { value: "✓✓✓", level: 3, rd: false } },
+    { criterion: isFr ? "Risque censure" : "Censorship risk", heygen: { value: isFr ? "Élevé" : "High", level: 0 }, synthesia: { value: isFr ? "Élevé" : "High", level: 0 }, flowise: { value: isFr ? "Élevé" : "High", level: 0 }, gamiways: { value: isFr ? "Nul (souverain)" : "None (sovereign)", level: 3, rd: false } },
   ];
 
   const techStack = [
@@ -156,7 +156,7 @@ export default function Project() {
             <span className="text-xs font-mono text-slate-400">{isFr ? "Contexte & Vision" : "Context & Vision"}</span>
           </div>
           <h1 className="text-4xl font-black text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
-            {isFr ? "Projet DigiDouble" : "DigiDouble Project"}
+            {isFr ? "Projet GamiWays" : "GamiWays Project"}
           </h1>
           <p className="text-base text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr ? (
@@ -177,13 +177,13 @@ export default function Project() {
               </>
             )}
           </p>
-          {/* Innosuisse badge — mention 1/3 */}
+          {/* Partnership badge */}
           <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded border text-xs font-mono" style={{ borderColor: "oklch(0.72 0.18 200)40", background: "oklch(0.97 0.02 200)", color: "oklch(0.45 0.18 200)" }}>
-            <span style={{ fontWeight: 700 }}>{isFr ? "PROJET INNOSUISSE (prévu)" : "INNOSUISSE PROJECT (planned)"}</span>
+            <span style={{ fontWeight: 700 }}>GamiWays Research Portal</span>
             <span className="text-slate-400">·</span>
-            <span>{isFr ? "Partenaire recherche : IDIAP" : "Research partner: IDIAP"}</span>
+            <span>Gamilab × Memoways</span>
             <span className="text-slate-400">·</span>
-            <span>{isFr ? "Démarrage prévu automne 2026" : "Expected start: autumn 2026"}</span>
+            <span>Geneva, Switzerland</span>
           </div>
         </div>
       </div>
@@ -210,8 +210,8 @@ export default function Project() {
             <div className="pt-3">
               <p className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
-                  ? "DigiDouble crée un nouveau type d'outil de \"montage\" vidéo où le montage n'est plus temporel (timeline) mais spatial et conversationnel — nœuds + agents + streams synchronisés temps réel. Analogie : HeyGen/Synthesia = iMovie (simple, limité). Flowise + custom = Final Cut XML (puissant, complexe). DigiDouble = Final Cut Pro (puissant ET utilisable par des créateurs non-techniques)."
-                  : "DigiDouble creates a new type of video \"editing\" tool where editing is no longer temporal (timeline) but spatial and conversational — nodes + agents + real-time synchronized streams. Analogy: HeyGen/Synthesia = iMovie (simple, limited). Flowise + custom = Final Cut XML (powerful, complex). DigiDouble = Final Cut Pro (powerful AND usable by non-technical creators)."}
+                  ? "GamiWays crée un nouveau type d'outil de \"montage\" vidéo où le montage n'est plus temporel (timeline) mais spatial et conversationnel — nœuds + agents + streams synchronisés temps réel. Analogie : HeyGen/Synthesia = iMovie (simple, limité). Flowise + custom = Final Cut XML (puissant, complexe). GamiWays = Final Cut Pro (puissant ET utilisable par des créateurs non-techniques)."
+                  : "GamiWays creates a new type of video \"editing\" tool where editing is no longer temporal (timeline) but spatial and conversational — nodes + agents + real-time synchronized streams. Analogy: HeyGen/Synthesia = iMovie (simple, limited). Flowise + custom = Final Cut XML (powerful, complex). GamiWays = Final Cut Pro (powerful AND usable by non-technical creators)."}
               </p>
             </div>
           </Accordion>
@@ -241,7 +241,7 @@ export default function Project() {
           <SectionDivider number="03" title="Competitive Comparison" titleFr="Comparaison Compétitive" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
-              {isFr ? "HeyGen · Synthesia · Flowise vs DigiDouble" : "HeyGen · Synthesia · Flowise vs DigiDouble"}
+              {isFr ? "HeyGen · Synthesia · Flowise vs GamiWays" : "HeyGen · Synthesia · Flowise vs GamiWays"}
             </h2>
             <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
@@ -252,7 +252,7 @@ export default function Project() {
           </div>
 
           {/* Radar */}
-          <DiagramModal title="Radar Comparison — Platforms vs DigiDouble Target">
+          <DiagramModal title="Radar Comparison — Platforms vs GamiWays Target">
             <RadarCompareDiagram />
           </DiagramModal>
 
@@ -270,14 +270,14 @@ export default function Project() {
                       <a href={SOLUTION_LINKS.synthesia.homepage} target="_blank" rel="noopener noreferrer" className="hover:text-[#0891b2] transition-colors">Synthesia</a>
                     </th>
                     <th className="text-center py-2 px-2 text-xs font-mono text-slate-500 font-semibold">Flowise</th>
-                    <th className="text-center py-2 px-2 text-xs font-mono font-bold" style={{ color: "oklch(0.45 0.18 200)" }}>DigiDouble</th>
+                    <th className="text-center py-2 px-2 text-xs font-mono font-bold" style={{ color: "oklch(0.45 0.18 200)" }}>GamiWays</th>
                   </tr>
                 </thead>
                 <tbody>
                   {competitiveData.map((row) => (
                     <tr key={row.criterion} className="border-t border-slate-100">
                       <td className="py-2 pr-4 text-xs font-medium text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.criterion}</td>
-                      {[row.heygen, row.synthesia, row.flowise, row.digidouble].map((cell, ci) => (
+                      {[row.heygen, row.synthesia, row.flowise, row.gamiways].map((cell, ci) => (
                         <td key={ci} className="text-center py-2 px-2">
                           <div className="flex items-center justify-center gap-1">
                             <span className="text-xs font-mono" style={{ color: cell.level === 0 ? "oklch(0.60 0.20 25)" : ci === 3 ? "oklch(0.45 0.18 200)" : "oklch(0.65 0.18 145)" }}>

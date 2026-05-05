@@ -1,5 +1,5 @@
 // ============================================================
-// TTSDetail.tsx — DigiDouble Research Portal
+// TTSDetail.tsx — GamiWays Research Portal
 // Page détaillée par solution TTS / Voice-to-Voice
 // Design: Modernist Technical — monospace accents, clean grids
 // ============================================================
@@ -239,9 +239,9 @@ export default function TTSDetail() {
               </div>
             </div>
 
-            {/* DigiDouble relevance */}
+            {/* GamiWays relevance */}
             <div className="bg-slate-900 rounded-xl p-5 text-white">
-              <div className="text-xs font-mono font-bold text-cyan-400 mb-2 uppercase tracking-wider">DigiDouble</div>
+              <div className="text-xs font-mono font-bold text-cyan-400 mb-2 uppercase tracking-wider">GamiWays</div>
               <div className="text-xs font-bold mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 {tts.digiDoubleAxis}
               </div>

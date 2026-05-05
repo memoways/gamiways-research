@@ -1,5 +1,5 @@
 /**
- * Breadcrumb.tsx — DigiDouble Research Portal
+ * Breadcrumb.tsx — GamiWays Research Portal
  * Fil d'Ariane cliquable et contextuel, résolution automatique des segments de route
  * i18n: EN / FR via LangContext
  */

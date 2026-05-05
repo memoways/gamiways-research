@@ -1,5 +1,5 @@
 /*
- * BeforeAfterDiagram — DigiDouble Research Portal
+ * BeforeAfterDiagram — GamiWays Research Portal
  * Visual: current pipeline (6–12s, red bottleneck) vs target (<2s, green)
  * Design: side-by-side, SVG inline, hover tooltips
  */

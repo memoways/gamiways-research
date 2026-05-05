@@ -1,5 +1,5 @@
 /*
- * Glossary.tsx — DigiDouble Research Portal
+ * Glossary.tsx — GamiWays Research Portal
  * Page: Technical Glossary — all terms used across the portal
  * Design: Technical Blueprint, alphabetical accordion sections
  * i18n: EN / FR via LangContext
@@ -293,8 +293,8 @@ const TERMS: GlossaryTerm[] = [
     term: "Digital Double",
     termFr: "Double Numérique",
     category: "avatar",
-    definition: "A photorealistic AI-generated video avatar that replicates a specific person's appearance, voice, and behavioral patterns. The DigiDouble project aims to create conversational digital doubles from existing video archives, enabling real-time interaction with a person's digital replica.",
-    definitionFr: "Un avatar vidéo généré par IA photoréaliste qui réplique l'apparence, la voix et les schémas comportementaux d'une personne spécifique. Le projet DigiDouble vise à créer des doubles numériques conversationnels à partir d'archives vidéo existantes, permettant une interaction en temps réel avec la réplique numérique d'une personne.",
+    definition: "A photorealistic AI-generated video avatar that replicates a specific person's appearance, voice, and behavioral patterns. The GamiWays project aims to create conversational digital doubles from existing video archives, enabling real-time interaction with a person's digital replica.",
+    definitionFr: "Un avatar vidéo généré par IA photoréaliste qui réplique l'apparence, la voix et les schémas comportementaux d'une personne spécifique. Le projet GamiWays vise à créer des doubles numériques conversationnels à partir d'archives vidéo existantes, permettant une interaction en temps réel avec la réplique numérique d'une personne.",
     relatedTerms: ["Video Avatar", "Lip-sync", "Voice Cloning"],
     seeAlso: { label: "The Project", labelFr: "Le Projet", href: "/project" },
   },

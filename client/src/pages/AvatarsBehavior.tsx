@@ -1,7 +1,7 @@
 /**
- * AvatarsBehavior.tsx — DigiDouble Research Portal
+ * AvatarsBehavior.tsx — GamiWays Research Portal
  * Page: Axis 2 — Avatar Behavior & Expressiveness (extracted from Research section 04)
- * Context: DigiDouble R&D — part of the "DigiDouble" menu
+ * Context: GamiWays R&D — part of the "GamiWays" menu
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
  */

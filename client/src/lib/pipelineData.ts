@@ -1,5 +1,5 @@
 /**
- * pipelineData.ts — DigiDouble Research Portal
+ * pipelineData.ts — GamiWays Research Portal
  * Data for the Phase 1 Voice Pipeline page
  * Architecture: Cascade (ASR → LLM → TTS) vs End-to-End Voice-to-Voice
  */
@@ -119,14 +119,14 @@ export const pipelineModes: PipelineMode[] = [
       "Architecture plus simple (un seul modèle)",
     ],
     cons: [
-      "No voice cloning (critical for DigiDouble)",
+      "No voice cloning (critical for GamiWays)",
       "Limited control over content/persona",
       "Models still maturing (2025–2026)",
       "Harder to integrate RAG/memory",
       "Less predictable output",
     ],
     consFr: [
-      "Pas de clonage vocal (critique pour DigiDouble)",
+      "Pas de clonage vocal (critique pour GamiWays)",
       "Contrôle limité sur le contenu/persona",
       "Modèles encore en maturation (2025–2026)",
       "Intégration RAG/mémoire plus difficile",
@@ -274,7 +274,7 @@ export const cascadeBlocks: PipelineBlock[] = [
         sovereign: true,
         pros: ["+26% accuracy vs baseline", "-91% tokens vs full history", "Self-hostable", "pgvector backend"],
         cons: ["Adds 20–50ms per turn", "Requires initial setup"],
-        notes: "Research reference (arXiv:2504.19413). Reduces context by 90% while maintaining 95% coherence. Critical for DigiDouble Axis 1.",
+        notes: "Research reference (arXiv:2504.19413). Reduces context by 90% while maintaining 95% coherence. Critical for GamiWays Axis 1.",
       },
       {
         id: "qdrant",
@@ -369,8 +369,8 @@ export const cascadeBlocks: PipelineBlock[] = [
     icon: "🔊",
     color: "oklch(0.55 0.20 145)",
     colorLight: "oklch(0.96 0.04 145)",
-    description: "Converts LLM text tokens to audio stream. Streaming TTS receives tokens as they arrive from LLM — first audio chunk plays before full response is generated. Voice cloning is critical for DigiDouble persona.",
-    descriptionFr: "Convertit les tokens texte du LLM en flux audio. Le TTS streaming reçoit les tokens au fur et à mesure du LLM — le premier chunk audio est joué avant que la réponse complète soit générée. Le clonage vocal est critique pour le persona DigiDouble.",
+    description: "Converts LLM text tokens to audio stream. Streaming TTS receives tokens as they arrive from LLM — first audio chunk plays before full response is generated. Voice cloning is critical for GamiWays persona.",
+    descriptionFr: "Convertit les tokens texte du LLM en flux audio. Le TTS streaming reçoit les tokens au fur et à mesure du LLM — le premier chunk audio est joué avant que la réponse complète soit générée. Le clonage vocal est critique pour le persona GamiWays.",
     options: [
       {
         id: "cartesia-sonic3",
@@ -415,7 +415,7 @@ export const cascadeBlocks: PipelineBlock[] = [
         pros: ["Voice cloning (zero-shot)", "Beats ElevenLabs in blind tests (63.75%)", "MIT license", "Emotion control"],
         cons: ["150ms TTFA — slower than Cartesia/Kokoro", "Larger model (requires more VRAM)"],
         ttsLink: "chatterbox",
-        notes: "Best open-source option WITH voice cloning. Critical for DigiDouble persona. MIT license allows commercial use.",
+        notes: "Best open-source option WITH voice cloning. Critical for GamiWays persona. MIT license allows commercial use.",
       },
       {
         id: "inworld-tts15",
@@ -430,7 +430,7 @@ export const cascadeBlocks: PipelineBlock[] = [
         pros: ["<120ms P90 — fastest realtime TTS (March 2026)", "ELO 1160 — #1 quality benchmark", "Free zero-shot voice cloning from 5–15s", "Viseme timestamps for avatar lip-sync", "On-premise option (GDPR, HIPAA, SOC2 Type II)", "Single-provider: STT + LLM Router + TTS in one platform", "116 ELO/dollar — best price-performance ratio"],
         cons: ["9 languages (vs 70+ ElevenLabs)", "Newer entrant (June 2025)", "Emotion tags experimental outside English"],
         ttsLink: "inworld_tts",
-        notes: "Best quality/cost ratio on market (#1 ELO, lowest price). Key advantage for DigiDouble: when used with Inworld STT + LLM Router, eliminates inter-component network serialization — estimated 30–50ms latency gain vs multi-provider cascade. On-premise option enables Swiss sovereign deployment. Viseme timestamps directly usable for Phase 2 avatar lip-sync.",
+        notes: "Best quality/cost ratio on market (#1 ELO, lowest price). Key advantage for GamiWays: when used with Inworld STT + LLM Router, eliminates inter-component network serialization — estimated 30–50ms latency gain vs multi-provider cascade. On-premise option enables Swiss sovereign deployment. Viseme timestamps directly usable for Phase 2 avatar lip-sync.",
       },
       {
         id: "elevenlabs-v3",
@@ -486,7 +486,7 @@ export const cascadeBlocks: PipelineBlock[] = [
         sovereign: true,
         pros: ["TypeScript + Python SDKs", "Used by BeyondPresence and bitHuman", "Scalable infrastructure", "Good documentation"],
         cons: ["More complex setup than Pipecat", "LiveKit Cloud for managed infra"],
-        notes: "Better if TypeScript is preferred. LiveKit Cloud available on EU servers. Used by several DigiDouble-comparable platforms.",
+        notes: "Better if TypeScript is preferred. LiveKit Cloud available on EU servers. Used by several GamiWays-comparable platforms.",
       },
     ],
   },
@@ -538,7 +538,7 @@ export const v2vOptions: PipelineOption[] = [
     pros: ["EU-sovereign (Mistral)", "9 languages", "Voice cloning (announced)", "GDPR compliant"],
     cons: ["Very new (March 2026)", "Limited documentation", "No production benchmarks yet"],
     ttsLink: "voxtral_tts",
-    notes: "Most promising V2V for DigiDouble: EU-sovereign + voice cloning announced. Monitor closely for H2 2026 evaluation.",
+    notes: "Most promising V2V for GamiWays: EU-sovereign + voice cloning announced. Monitor closely for H2 2026 evaluation.",
   },
   {
     id: "openai-realtime",
@@ -553,7 +553,7 @@ export const v2vOptions: PipelineOption[] = [
     pros: ["ELO 1106 quality", "50 languages", "Function calling", "Emotion control", "Production-ready"],
     cons: ["$0.30/min total — very expensive", "US data residency", "No sovereignty", "No voice cloning"],
     ttsLink: "openai_realtime",
-    notes: "Quality reference benchmark. $0.30/min makes it 30× more expensive than Cascade stack. Not viable for DigiDouble production.",
+    notes: "Quality reference benchmark. $0.30/min makes it 30× more expensive than Cascade stack. Not viable for GamiWays production.",
   },
 ];
 

@@ -1,5 +1,5 @@
 /*
- * Research — DigiDouble Research Portal
+ * Research — GamiWays Research Portal
  * Design: schema-first, details in accordion/toggle
  * Focus: Latency as the central UX problem → Memory → Avatar → Orchestration
  * Axes: Axis 1 = Latency & UX fluidity, Axis 2 = Avatar behavior, Axis 3 = Orchestration
@@ -132,8 +132,8 @@ export default function Research() {
       ms: "2s",
       label: isFr ? "Limite naturelle" : "Natural limit",
       desc: isFr
-        ? "Seuil de naturalit\u00e9 conversationnelle (Nielsen 1993, valid\u00e9 par les recherches en dialogue humain). Au-del\u00e0, la conversation devient une s\u00e9rie d'attentes. Cible TTFR DigiDouble."
-        : "Conversational naturalness threshold (Nielsen 1993, validated by human dialogue research). Beyond this, conversation becomes a series of waits. DigiDouble TTFR target.",
+        ? "Seuil de naturalit\u00e9 conversationnelle (Nielsen 1993, valid\u00e9 par les recherches en dialogue humain). Au-del\u00e0, la conversation devient une s\u00e9rie d'attentes. Cible TTFR GamiWays."
+        : "Conversational naturalness threshold (Nielsen 1993, validated by human dialogue research). Beyond this, conversation becomes a series of waits. GamiWays TTFR target.",
       color: "oklch(0.75 0.16 75)",
       achievable: false,
     },
@@ -141,8 +141,8 @@ export default function Research() {
       ms: "6\u201312s",
       label: isFr ? "Rupture d'engagement" : "Engagement break",
       desc: isFr
-        ? "Latence actuelle de DigiDouble (HeyGem OS). L'utilisateur perd le fil, l'avatar cesse d'\u00eatre une pr\u00e9sence. Taux d'abandon \u00e9lev\u00e9. C'est le probl\u00e8me \u00e0 r\u00e9soudre."
-        : "Current DigiDouble latency (HeyGem OS). User loses the thread, avatar stops being a presence. High drop-off rate. This is the problem to solve.",
+        ? "Latence actuelle de GamiWays (HeyGem OS). L'utilisateur perd le fil, l'avatar cesse d'\u00eatre une pr\u00e9sence. Taux d'abandon \u00e9lev\u00e9. C'est le probl\u00e8me \u00e0 r\u00e9soudre."
+        : "Current GamiWays latency (HeyGem OS). User loses the thread, avatar stops being a presence. High drop-off rate. This is the problem to solve.",
       color: "oklch(0.60 0.20 25)",
       achievable: false,
     },
@@ -156,8 +156,8 @@ export default function Research() {
     { name: "Runway Characters", latency: "<500ms", type: isFr ? "Commercial" : "Commercial", sovereign: false, cost: "$0.20/min", note: "WebRTC GWM-1" },
     { name: "D-ID V4", latency: isFr ? "Am\u00e9lior\u00e9e V4" : "Improved V4", type: isFr ? "Commercial" : "Commercial", sovereign: false, cost: "~$0.35/min", note: "WebRTC Janus" },
     { name: "HeyGen", latency: "2\u20135s", type: isFr ? "Commercial" : "Commercial", sovereign: false, cost: isFr ? "\u00c9lev\u00e9" : "High", note: "Streaming" },
-    { name: isFr ? "DigiDouble (actuel)" : "DigiDouble (current)", latency: "6\u201312s", type: isFr ? "Open-source" : "Open-source", sovereign: true, cost: isFr ? "GPU Exoscale" : "Exoscale GPU", note: "HeyGem OS" },
-    { name: isFr ? "DigiDouble (cible R&D)" : "DigiDouble (R&D target)", latency: "<2s", type: "R&D", sovereign: true, cost: isFr ? "GPU souverain" : "Sovereign GPU", note: isFr ? "Axe 1 R&D" : "Axis 1 R&D" },
+    { name: isFr ? "GamiWays (actuel)" : "GamiWays (current)", latency: "6\u201312s", type: isFr ? "Open-source" : "Open-source", sovereign: true, cost: isFr ? "GPU Exoscale" : "Exoscale GPU", note: "HeyGem OS" },
+    { name: isFr ? "GamiWays (cible R&D)" : "GamiWays (R&D target)", latency: "<2s", type: "R&D", sovereign: true, cost: isFr ? "GPU souverain" : "Sovereign GPU", note: isFr ? "Axe 1 R&D" : "Axis 1 R&D" },
     { name: "SoulX-FlashTalk", latency: "0.87s startup", type: isFr ? "Recherche" : "Research", sovereign: false, cost: "8xH800", note: "14B DiT" },
     { name: "AvatarForcing", latency: isFr ? "Temps r\u00e9el" : "Real-time", type: isFr ? "Recherche" : "Research", sovereign: false, cost: isFr ? "GPU recherche" : "Research GPU", note: "1-step diffusion" },
   ];
@@ -409,16 +409,16 @@ export default function Research() {
             <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">02</span>
             <span className="text-slate-300">·</span>
             <span className="text-xs font-mono text-slate-400">
-              {isFr ? "Défis de Recherche" : "Research Challenges"}
+              {isFr ? "Défis Techniques" : "Technical Challenges"}
             </span>
           </div>
           <h1 className="text-4xl font-black text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
-            {isFr ? "Défis de Recherche" : "Research Challenges"}
+            {isFr ? "Défis Techniques" : "Technical Challenges"}
           </h1>
           <p className="text-base text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? <>Trois axes de recherche, tous convergent vers un objectif central : une expérience conversationnelle fluide, personnalisée et proche du temps réel. Ces défis seront adressés dans le cadre d'un <strong>projet Innosuisse</strong> avec l'<strong>IDIAP</strong> comme partenaire de recherche (démarrage prévu automne 2026).</>
-              : <>Three research axes, all converging toward a central goal: a fluid, personalized, near-real-time conversational experience. These challenges will be addressed through an <strong>Innosuisse project</strong> with <strong>IDIAP</strong> as research partner (expected start: autumn 2026).</>
+              ? <>Trois axes techniques, tous convergent vers un objectif produit central : une expérience conversationnelle fluide, personnalisée et proche du temps réel. Ces défis structurent la feuille de route de <strong>Gamilab</strong> et les projets pilotes de <strong>Memoways</strong>.</>
+              : <>Three technical axes, all converging toward a central product goal: a fluid, personalized, near-real-time conversational experience. These challenges structure <strong>Gamilab</strong>'s roadmap and <strong>Memoways</strong>' pilot projects.</>
             }
           </p>
           {/* Axis overview pills */}
@@ -462,8 +462,8 @@ export default function Research() {
             </h2>
             <p className="text-sm text-slate-600 leading-relaxed max-w-3xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "La latence n'est pas qu'un problème technique — c'est un problème d'expérience utilisateur. Au-delà de 2 secondes, l'utilisateur perd le fil de sa pensée, l'avatar cesse d'être une présence et devient un outil. L'objectif de DigiDouble est de franchir le seuil de naturalité conversationnelle : <2s end-to-end, avec un premier son dans les 500ms."
-                : "Latency is not just a technical problem — it is a user experience problem. Beyond 2 seconds, users lose their train of thought, the avatar stops being a presence and becomes a tool. DigiDouble's goal is to cross the conversational naturalness threshold: <2s end-to-end, with first sound within 500ms."}
+                ? "La latence n'est pas qu'un problème technique — c'est un problème d'expérience utilisateur. Au-delà de 2 secondes, l'utilisateur perd le fil de sa pensée, l'avatar cesse d'être une présence et devient un outil. L'objectif de GamiWays est de franchir le seuil de naturalité conversationnelle : <2s end-to-end, avec un premier son dans les 500ms."
+                : "Latency is not just a technical problem — it is a user experience problem. Beyond 2 seconds, users lose their train of thought, the avatar stops being a presence and becomes a tool. GamiWays's goal is to cross the conversational naturalness threshold: <2s end-to-end, with first sound within 500ms."}
             </p>
           </div>
 
@@ -545,21 +545,21 @@ export default function Research() {
                   const lk = Object.entries(linkKeyMap).find(([k]) => c.name.includes(k))?.[1] || "";
                   return (
                   <tr key={c.name} style={{
-                    background: c.name.includes("DigiDouble") && c.name.includes(isFr ? "cible" : "target")
+                    background: c.name.includes("GamiWays") && c.name.includes(isFr ? "cible" : "target")
                       ? "oklch(0.97 0.03 145)"
-                      : c.name.includes("DigiDouble") ? "oklch(0.97 0.03 25)" : undefined,
+                      : c.name.includes("GamiWays") ? "oklch(0.97 0.03 25)" : undefined,
                   }}>
                     <td>
                       {lk && SOLUTION_LINKS[lk]?.homepage ? (
                         <a href={SOLUTION_LINKS[lk]!.homepage} target="_blank" rel="noopener noreferrer"
                           className="text-sm font-semibold hover:text-[#0891b2] transition-colors"
-                          style={{ fontFamily: "'Space Grotesk', sans-serif", color: c.name.includes("DigiDouble") ? "oklch(0.45 0.18 200)" : undefined }}>
+                          style={{ fontFamily: "'Space Grotesk', sans-serif", color: c.name.includes("GamiWays") ? "oklch(0.45 0.18 200)" : undefined }}>
                           {c.name}
                         </a>
                       ) : (
                         <span className="text-sm font-semibold" style={{
                           fontFamily: "'Space Grotesk', sans-serif",
-                          color: c.name.includes("DigiDouble") ? "oklch(0.45 0.18 200)" : undefined,
+                          color: c.name.includes("GamiWays") ? "oklch(0.45 0.18 200)" : undefined,
                         }}>{c.name}</span>
                       )}
                     </td>
@@ -591,8 +591,8 @@ export default function Research() {
           <div className="border border-slate-200 rounded-lg p-5 mb-8" style={{ background: "oklch(0.99 0.003 200)" }}>
             <p className="text-xs text-slate-500 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Le gap DigiDouble est visible : les solutions rapides n'ont pas de souveraineté, les solutions souveraines ne sont pas rapides. L'objectif R&D est de combler ce gap (flèche pointillée)."
-                : "The DigiDouble gap is visible: fast solutions have no sovereignty, sovereign solutions are not fast. The R&D goal is to bridge this gap (dashed arrow)."}
+                ? "Le gap GamiWays est visible : les solutions rapides n'ont pas de souveraineté, les solutions souveraines ne sont pas rapides. L'objectif R&D est de combler ce gap (flèche pointillée)."
+                : "The GamiWays gap is visible: fast solutions have no sovereignty, sovereign solutions are not fast. The R&D goal is to bridge this gap (dashed arrow)."}
             </p>
             <PositioningDiagram />
           </div>
@@ -889,8 +889,8 @@ export default function Research() {
             </p>
             <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Aucune plateforme commerciale actuelle ne propose un système de conception émotionnelle explicite et configurable par le créateur. La plupart laissent le LLM décider implicitement de l'état émotionnel, sans contrôle ni cohérence garantie. DigiDouble vise une boite à outils émotionnelle inspirée des méthodes de direction d'acteurs, accessible aux créateurs non-techniques."
-                : "No current commercial platform offers an explicit, creator-configurable emotional design system. Most leave the LLM to implicitly decide emotional state, without guaranteed control or coherence. DigiDouble targets an emotional toolbox inspired by actor direction methods, accessible to non-technical creators."}
+                ? "Aucune plateforme commerciale actuelle ne propose un système de conception émotionnelle explicite et configurable par le créateur. La plupart laissent le LLM décider implicitement de l'état émotionnel, sans contrôle ni cohérence garantie. GamiWays vise une boite à outils émotionnelle inspirée des méthodes de direction d'acteurs, accessible aux créateurs non-techniques."
+                : "No current commercial platform offers an explicit, creator-configurable emotional design system. Most leave the LLM to implicitly decide emotional state, without guaranteed control or coherence. GamiWays targets an emotional toolbox inspired by actor direction methods, accessible to non-technical creators."}
             </p>
           </div>
         </section>
@@ -901,7 +901,7 @@ export default function Research() {
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "DigiDouble apporte" : "DigiDouble brings"}
+                {isFr ? "GamiWays apporte" : "GamiWays brings"}
               </h3>
               <div className="space-y-2">
                 {digiDoubleContributions.map((item) => (
@@ -913,7 +913,7 @@ export default function Research() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                {isFr ? "DigiDouble recherche" : "DigiDouble seeks"}
+                {isFr ? "GamiWays recherche" : "GamiWays seeks"}
               </h3>
               <div className="space-y-2">
                 {researchExpectations.map((item) => (

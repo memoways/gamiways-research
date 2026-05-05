@@ -1,7 +1,7 @@
 /**
- * DigiDoubleGaps.tsx — DigiDouble Research Portal
+ * GamiWaysGaps.tsx — GamiWays Research Portal
  * Page: Research Gaps & Opportunities (extracted from StateOfArt section E)
- * Context: DigiDouble project — part of "The Project" menu
+ * Context: GamiWays project — part of "The Project" menu
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
  */
@@ -10,7 +10,7 @@ import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
 import GapDiagram from "@/components/diagrams/GapDiagram";
 
-export default function DigiDoubleGaps() {
+export default function GamiWaysGaps() {
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
@@ -124,10 +124,10 @@ export default function DigiDoubleGaps() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <SectionHeader
           number="05"
-          title={isFr ? "Gaps de Recherche & Opportunités" : "Research Gaps & Opportunities"}
+          title={isFr ? "Opportunités & Lacunes Techniques" : "Opportunities & Technical Gaps"}
           subtitle={isFr
-            ? "Analyse des lacunes identifiées dans l'état de l'art et leur traduction en opportunités de recherche pour DigiDouble."
-            : "Analysis of identified gaps in the state of the art and their translation into research opportunities for DigiDouble."}
+            ? "Analyse des lacunes identifiées dans l'état de l'art et leur traduction en opportunités produit et business pour Gamilab et Memoways."
+            : "Analysis of identified gaps in the state of the art and their translation into product and business opportunities for Gamilab and Memoways."}
           accent="red"
         />
 
@@ -169,7 +169,7 @@ export default function DigiDoubleGaps() {
                     </div>
                     <div>
                       <span className="font-semibold text-slate-400 uppercase tracking-wider block mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                        {isFr ? "Opportunité DigiDouble" : "DigiDouble opportunity"}
+                        {isFr ? "Opportunité GamiWays" : "GamiWays opportunity"}
                       </span>
                       <p className="text-slate-600 leading-relaxed font-medium" style={{ fontFamily: "'Source Serif 4', serif" }}>{g.opportunity}</p>
                     </div>
@@ -189,7 +189,7 @@ export default function DigiDoubleGaps() {
             {isFr ? "Assessment Académique →" : "Academic Assessment →"}
           </InternalLink>
           <InternalLink to="/research" className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-            {isFr ? "Research Challenges →" : "Research Challenges →"}
+            {isFr ? "Défis Techniques →" : "Technical Challenges →"}
           </InternalLink>
         </div>
       </div>

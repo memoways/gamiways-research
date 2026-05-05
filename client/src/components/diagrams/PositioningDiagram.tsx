@@ -1,5 +1,5 @@
 /**
- * PositioningDiagram — DigiDouble Research Portal
+ * PositioningDiagram — GamiWays Research Portal
  * Scatter plot 2D : Latence (X) × Souveraineté (Y)
  * 11 solutions positionnées avec tooltip interactif
  * Design: Technical Blueprint — Space Grotesk + Source Serif 4
@@ -16,7 +16,7 @@ interface Solution {
   // y: sovereignty score (0=no sovereignty, 10=full sovereignty)
   x: number;
   y: number;
-  category: "commercial" | "opensource" | "research" | "digidouble" | "target";
+  category: "commercial" | "opensource" | "research" | "gamiways" | "target";
   latencyLabel: string;
   sovereigntyLabel: string;
   sovereigntyLabelFr?: string;
@@ -121,8 +121,8 @@ const solutions: Solution[] = [
     sovereigntyLabel: "Full (self-hosted)",
     sovereigntyLabelFr: "Totale (self-hosted)",
     cost: "GPU Exoscale",
-    note: "Used by DigiDouble. Docker. 30% gain on Arch Linux.",
-    noteFr: "Utilisé par DigiDouble. Docker. +30% perf Arch Linux.",
+    note: "Used by GamiWays. Docker. 30% gain on Arch Linux.",
+    noteFr: "Utilisé par GamiWays. Docker. +30% perf Arch Linux.",
   },
   {
     name: "bitHuman",
@@ -161,11 +161,11 @@ const solutions: Solution[] = [
     noteFr: "Diffusion streaming 1-step. arXiv 2603.14331.",
   },
   {
-    name: "DigiDouble",
-    nameFr: "DigiDouble (actuel)",
+    name: "GamiWays",
+    nameFr: "GamiWays (actuel)",
     x: 3.0,
     y: 8.5,
-    category: "digidouble",
+    category: "gamiways",
     latencyLabel: "6–12s",
     sovereigntyLabel: "Full (Swiss GPU)",
     sovereigntyLabelFr: "Totale (GPU suisse)",
@@ -174,8 +174,8 @@ const solutions: Solution[] = [
     noteFr: "État actuel. HeyGem OS. Infrastructure suisse.",
   },
   {
-    name: "DigiDouble R&D",
-    nameFr: "DigiDouble (cible R&D)",
+    name: "GamiWays R&D",
+    nameFr: "GamiWays (cible R&D)",
     x: 8.0,
     y: 8.5,
     category: "target",
@@ -194,8 +194,8 @@ const categoryConfig = {
   commercial: { color: "oklch(0.72 0.18 200)", label: "Commercial", labelFr: "Commercial", shape: "circle" },
   opensource: { color: "oklch(0.65 0.18 145)", label: "Open-source", labelFr: "Open-source", shape: "square" },
   research: { color: "oklch(0.75 0.16 75)", label: "Research", labelFr: "Recherche", shape: "diamond" },
-  digidouble: { color: "oklch(0.60 0.20 25)", label: "DigiDouble (current)", labelFr: "DigiDouble (actuel)", shape: "star" },
-  target: { color: "oklch(0.45 0.22 145)", label: "DigiDouble (R&D target)", labelFr: "DigiDouble (cible R&D)", shape: "star" },
+  gamiways: { color: "oklch(0.60 0.20 25)", label: "GamiWays (current)", labelFr: "GamiWays (actuel)", shape: "star" },
+  target: { color: "oklch(0.45 0.22 145)", label: "GamiWays (R&D target)", labelFr: "GamiWays (cible R&D)", shape: "star" },
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -264,7 +264,7 @@ export default function PositioningDiagram() {
             {isFr ? "ZONE IDÉALE" : "IDEAL ZONE"}
           </text>
 
-          {/* Bottom-left: current DigiDouble problem zone */}
+          {/* Bottom-left: current GamiWays problem zone */}
           <rect
             x={PAD.left} y={toSvgY(5)}
             width={toSvgX(5) - PAD.left} height={plotH - (toSvgY(5) - PAD.top)}
@@ -331,9 +331,9 @@ export default function PositioningDiagram() {
             {isFr ? "SOUVERAINETÉ  →" : "SOVEREIGNTY  →"}
           </text>
 
-          {/* Arrow from DigiDouble current → target */}
+          {/* Arrow from GamiWays current → target */}
           {(() => {
-            const cur = solutions.find((s) => s.category === "digidouble")!;
+            const cur = solutions.find((s) => s.category === "gamiways")!;
             const tgt = solutions.find((s) => s.category === "target")!;
             const x1 = toSvgX(cur.x) + 8;
             const y1 = toSvgY(cur.y);
@@ -374,7 +374,7 @@ export default function PositioningDiagram() {
             const cy = toSvgY(s.y);
             const cfg = categoryConfig[s.category];
             const isHovered = hovered === s.name;
-            const r = s.category === "digidouble" || s.category === "target" ? 9 : 7;
+            const r = s.category === "gamiways" || s.category === "target" ? 9 : 7;
 
             return (
               <g
@@ -390,8 +390,8 @@ export default function PositioningDiagram() {
                   setTooltip(null);
                 }}
               >
-                {/* Glow for DigiDouble */}
-                {(s.category === "digidouble" || s.category === "target") && (
+                {/* Glow for GamiWays */}
+                {(s.category === "gamiways" || s.category === "target") && (
                   <circle cx={cx} cy={cy} r={r + 5} fill={cfg.color} opacity="0.15" />
                 )}
 
@@ -438,8 +438,8 @@ export default function PositioningDiagram() {
                   x={cx}
                   y={cy - r - 4}
                   textAnchor="middle"
-                  fontSize={s.category === "digidouble" || s.category === "target" ? "8.5" : "7.5"}
-                  fontWeight={s.category === "digidouble" || s.category === "target" ? "700" : "500"}
+                  fontSize={s.category === "gamiways" || s.category === "target" ? "8.5" : "7.5"}
+                  fontWeight={s.category === "gamiways" || s.category === "target" ? "700" : "500"}
                   fill={isHovered ? cfg.color : "oklch(0.35 0.04 200)"}
                 >
                   {isFr && s.nameFr ? s.nameFr : s.name}

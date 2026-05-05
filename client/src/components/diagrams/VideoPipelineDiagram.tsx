@@ -1,5 +1,5 @@
 /*
- * VideoPipelineDiagram — DigiDouble Research Portal
+ * VideoPipelineDiagram — GamiWays Research Portal
  *
  * Architecture: TWO INDEPENDENT STREAMS
  *

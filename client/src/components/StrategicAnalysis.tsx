@@ -1,5 +1,5 @@
 /**
- * StrategicAnalysis.tsx — DigiDouble Research Portal
+ * StrategicAnalysis.tsx — GamiWays Research Portal
  * Composant d'analyse stratégique et business pour les outils Voice Pipeline
  * Design: Space Grotesk, dark slate sections, accent amber/teal
  * Inspired by: Rokosbas "ElevenLabs Goes Off-Cloud" (April 2026)
@@ -49,7 +49,7 @@ interface _LegacyStrategicData {
   fundingStage: string;            // e.g. "Series D — $500M (Feb 2026)", "Open-source / no funding"
   recentMoves: string[];           // 2-3 recent strategic moves
   recentMovesFr: string[];
-  // E. DigiDouble Strategic Questions
+  // E. GamiWays Strategic Questions
   sovereigntyFit: "high" | "medium" | "low";
   sovereigntyNote: string;
   sovereigntyNoteFr: string;
@@ -158,8 +158,8 @@ export function StrategicAnalysis({ data, toolName }: Props) {
           </h2>
           <p className="text-sm text-slate-500 mt-1 max-w-2xl">
             {isFr
-              ? "Au-delà des specs techniques : où se positionne cet outil dans l'écosystème, quels sont les risques et les enjeux stratégiques pour DigiDouble ?"
-              : "Beyond technical specs: where does this tool sit in the ecosystem, what are the risks and strategic implications for DigiDouble?"}
+              ? "Au-delà des specs techniques : où se positionne cet outil dans l'écosystème, quels sont les risques et les enjeux stratégiques pour GamiWays ?"
+              : "Beyond technical specs: where does this tool sit in the ecosystem, what are the risks and strategic implications for GamiWays?"}
           </p>
         </div>
       </div>
@@ -256,12 +256,12 @@ export function StrategicAnalysis({ data, toolName }: Props) {
         </div>
       </div>
 
-      {/* DigiDouble Strategic Questions — always visible */}
+      {/* GamiWays Strategic Questions — always visible */}
       <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 mb-4">
         <div className="flex items-center gap-2 mb-3">
           <Building2 className="w-4 h-4 text-teal-700" />
           <h3 className="text-sm font-semibold text-teal-800">
-            {isFr ? "E. Questions stratégiques pour DigiDouble" : "E. Strategic Questions for DigiDouble"}
+            {isFr ? "E. Questions stratégiques pour GamiWays" : "E. Strategic Questions for GamiWays"}
           </h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

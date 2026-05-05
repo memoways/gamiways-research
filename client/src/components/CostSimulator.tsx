@@ -1,5 +1,5 @@
 /*
- * CostSimulator — DigiDouble Research Portal
+ * CostSimulator — GamiWays Research Portal
  * Interactive cost simulator for streaming video avatar platforms
  * Design: Modernist Technical — monospace accents, clean grids
  * Slider: 30-minute increments from 30 to 3000 min/month
@@ -280,14 +280,14 @@ const SIM_PLATFORMS: SimPlatform[] = [
     hostingNote: "AWS US-East-1 only. No EU hosting. GDPR DPA available.",
     hostingNoteFr: "AWS US-East-1 uniquement. Pas d'hébergement EU. DPA GDPR disponible.",
     specs: [
-      "LITE mode ($0.10/min): DigiDouble controls ASR/LLM/TTS — HeyGen handles video only",
+      "LITE mode ($0.10/min): GamiWays controls ASR/LLM/TTS — HeyGen handles video only",
       "FULL mode ($0.20/min): all-in-one agent",
       "1-minute credit escrow per session start (billed even if session fails)",
       "Market leader — best documentation and ecosystem",
       "US hosting only — GDPR sovereignty concern",
     ],
     specsFr: [
-      "Mode LITE ($0.10/min) : DigiDouble contrôle ASR/LLM/TTS — HeyGen gère uniquement la vidéo",
+      "Mode LITE ($0.10/min) : GamiWays contrôle ASR/LLM/TTS — HeyGen gère uniquement la vidéo",
       "Mode FULL ($0.20/min) : agent tout-en-un",
       "Séquestre de 1 min de crédit par démarrage de session (facturé même si la session échoue)",
       "Leader du marché — meilleure documentation et écosystème",

@@ -1,5 +1,5 @@
 /*
- * StateOfArt — DigiDouble Research Portal
+ * StateOfArt — GamiWays Research Portal
  * Page: State of the Art — Existing solutions, benchmarks, challenges
  * Design: Technical Blueprint, dense comparative tables, visual benchmarks
  * i18n: EN (default) / FR via LangContext
@@ -73,7 +73,7 @@ function TTSCard({ tts, isFr }: { tts: TTSData; isFr: boolean }) {
         {tts.selfHostable && <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-cyan-50 text-cyan-700">{isFr ? "Souverain" : "Sovereign"}</span>}
         {tts.lipsyncData && <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-violet-50 text-violet-700">Lip-sync</span>}
       </div>
-      {/* DigiDouble axis */}
+      {/* GamiWays axis */}
       <div className="text-xs font-mono text-slate-400 border-t border-slate-100 pt-2">{tts.digiDoubleAxis}</div>
       {/* Link */}
       <InternalLink to={`/tts/${tts.id}`} className="mt-auto text-xs font-mono font-bold text-cyan-600 hover:text-cyan-800 underline">
@@ -375,8 +375,8 @@ export default function StateOfArt() {
       license: "Open Source",
       used: true,
       notes: isFr
-        ? "Utilisé par DigiDouble sur Exoscale. Gain 30% perf avec Arch Linux vs Ubuntu."
-        : "Used by DigiDouble on Exoscale. 30% perf gain with Arch Linux vs Ubuntu.",
+        ? "Utilisé par GamiWays sur Exoscale. Gain 30% perf avec Arch Linux vs Ubuntu."
+        : "Used by GamiWays on Exoscale. 30% perf gain with Arch Linux vs Ubuntu.",
     },
     {
       name: "SadTalker",
@@ -682,7 +682,7 @@ export default function StateOfArt() {
       latency: "<500ms (cible)",
       sovereign: true,
       reason: isFr ? "Goulot principal. Nécessite R&D fondamentale. HeyGem OS en attendant." : "Main bottleneck. Requires fundamental R&D. HeyGem OS in the meantime.",
-      detail: isFr ? "Cible : one-step diffusion streaming (AvatarForcing). Distillation modèle 14B → 1B. TTFB <500ms. HeyGem OS (Apache 2.0) en bridge. Axe R&D IDIAP." : "Target: one-step streaming diffusion (AvatarForcing). 14B → 1B model distillation. TTFB <500ms. HeyGem OS (Apache 2.0) as bridge. IDIAP R&D axis.",
+      detail: isFr ? "Cible : one-step diffusion streaming (AvatarForcing). Distillation modèle 14B → 1B. TTFB <500ms. HeyGem OS (Apache 2.0) en bridge. Axe R&D Gamilab." : "Target: one-step streaming diffusion (AvatarForcing). 14B → 1B model distillation. TTFB <500ms. HeyGem OS (Apache 2.0) as bridge. Gamilab R&D axis.",
     },
     {
       layer: isFr ? "Streaming / Transport" : "Streaming / Transport",
@@ -852,8 +852,8 @@ export default function StateOfArt() {
       venue: "arXiv:2603.23013",
       url: "https://arxiv.org/abs/2603.23013",
       desc: isFr
-        ? "Hybrid retrieval pour mémoire conversationnelle. Turn-pairs storage. Queries factuelles + contextuelles. Directement applicable à l'architecture mémoire 3 couches DigiDouble."
-        : "Hybrid retrieval for conversational memory. Turn-pairs storage. Factual + contextual queries. Directly applicable to DigiDouble's 3-layer memory architecture.",
+        ? "Hybrid retrieval pour mémoire conversationnelle. Turn-pairs storage. Queries factuelles + contextuelles. Directement applicable à l'architecture mémoire 3 couches GamiWays."
+        : "Hybrid retrieval for conversational memory. Turn-pairs storage. Factual + contextual queries. Directly applicable to GamiWays's 3-layer memory architecture.",
       relevance: isFr ? "Très haute" : "Very high",
     },
   ];
@@ -896,7 +896,7 @@ export default function StateOfArt() {
           <SectionHeader
             number="01"
             title={isFr ? "Comparatif des Outils & Plateformes" : "Tools & Platforms Comparison"}
-            subtitle={isFr ? "Évaluation des solutions existantes sur les critères clés pour DigiDouble." : "Evaluation of existing solutions on key criteria for DigiDouble."}
+            subtitle={isFr ? "Évaluation des solutions existantes sur les critères clés pour GamiWays." : "Evaluation of existing solutions on key criteria for GamiWays."}
             accent="cyan"
           />
 
@@ -1135,8 +1135,8 @@ export default function StateOfArt() {
               <div className="callout-info">
                 <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
                   {isFr
-                    ? <><strong>Note :</strong> Les solutions open-source permettent la souveraineté des données et l'absence de censure, au prix d'une infrastructure GPU propre et d'un investissement technique significatif. DigiDouble utilise HeyGem OS sur Exoscale (GPU suisse) avec un gain de 30% de performance via Arch Linux.</>
-                    : <><strong>Note:</strong> Open-source solutions enable data sovereignty and freedom from censorship, at the cost of dedicated GPU infrastructure and significant technical investment. DigiDouble uses HeyGem OS on Exoscale (Swiss GPU) with a 30% performance gain via Arch Linux.</>
+                    ? <><strong>Note :</strong> Les solutions open-source permettent la souveraineté des données et l'absence de censure, au prix d'une infrastructure GPU propre et d'un investissement technique significatif. GamiWays utilise HeyGem OS sur Exoscale (GPU suisse) avec un gain de 30% de performance via Arch Linux.</>
+                    : <><strong>Note:</strong> Open-source solutions enable data sovereignty and freedom from censorship, at the cost of dedicated GPU infrastructure and significant technical investment. GamiWays uses HeyGem OS on Exoscale (Swiss GPU) with a 30% performance gain via Arch Linux.</>
                   }
                 </p>
               </div>
@@ -1249,9 +1249,9 @@ export default function StateOfArt() {
                     ))}
                   </div>
 
-                  {/* Inspirations for DigiDouble */}
+                  {/* Inspirations for GamiWays */}
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {isFr ? "Ce que DigiDouble peut s'inspirer de Phoenix-4" : "What DigiDouble can learn from Phoenix-4"}
+                    {isFr ? "Ce que GamiWays peut s'inspirer de Phoenix-4" : "What GamiWays can learn from Phoenix-4"}
                   </h4>
                   <div className="grid sm:grid-cols-2 gap-3 mb-4">
                     {[
@@ -1259,8 +1259,8 @@ export default function StateOfArt() {
                         axis: isFr ? "Axe 2b" : "Axis 2b",
                         title: isFr ? "Comportement d'écoute actif" : "Active listening behavior",
                         desc: isFr
-                          ? "L'avatar DigiDouble doit animer en continu, pas seulement pendant la parole. Micro-expressions, mouvements de tête, clignements pendant les silences — c'est ce qui crée la \"présence\"."
-                          : "DigiDouble's avatar must animate continuously, not just when speaking. Micro-expressions, head movements, blinks during silence — this is what creates \"presence\".",
+                          ? "L'avatar GamiWays doit animer en continu, pas seulement pendant la parole. Micro-expressions, mouvements de tête, clignements pendant les silences — c'est ce qui crée la \"présence\"."
+                          : "GamiWays's avatar must animate continuously, not just when speaking. Micro-expressions, head movements, blinks during silence — this is what creates \"presence\".",
                         color: "oklch(0.72 0.18 50)",
                       },
                       {
@@ -1275,32 +1275,32 @@ export default function StateOfArt() {
                         axis: isFr ? "Axe 1" : "Axis 1",
                         title: isFr ? "Distillation pour inférence temps réel" : "Distillation for real-time inference",
                         desc: isFr
-                          ? "Phoenix-4 utilise la distillation + architecture causale pour maintenir 40 FPS sans sacrifier la qualité. Technique directement applicable à l'Axe 1 (latence) de DigiDouble."
-                          : "Phoenix-4 uses distillation + causal architecture to maintain 40 FPS without quality sacrifice. Technique directly applicable to DigiDouble's Axis 1 (latency).",
+                          ? "Phoenix-4 utilise la distillation + architecture causale pour maintenir 40 FPS sans sacrifier la qualité. Technique directement applicable à l'Axe 1 (latence) de GamiWays."
+                          : "Phoenix-4 uses distillation + causal architecture to maintain 40 FPS without quality sacrifice. Technique directly applicable to GamiWays's Axis 1 (latency).",
                         color: "oklch(0.72 0.18 200)",
                       },
                       {
                         axis: isFr ? "Axe 3" : "Axis 3",
                         title: isFr ? "Directives LLM → contrôle émotionnel" : "LLM directives → emotional control",
                         desc: isFr
-                          ? "Phoenix-4 accepte des directives LLM pour piloter les émotions de l'avatar. L'orchestrateur DigiDouble (Axe 3) pourrait utiliser ce mécanisme pour contrôler l'expression selon le contexte pédagogique."
-                          : "Phoenix-4 accepts LLM directives to drive avatar emotions. DigiDouble's orchestrator (Axis 3) could use this mechanism to control expression based on pedagogical context.",
+                          ? "Phoenix-4 accepte des directives LLM pour piloter les émotions de l'avatar. L'orchestrateur GamiWays (Axe 3) pourrait utiliser ce mécanisme pour contrôler l'expression selon le contexte pédagogique."
+                          : "Phoenix-4 accepts LLM directives to drive avatar emotions. GamiWays's orchestrator (Axis 3) could use this mechanism to control expression based on pedagogical context.",
                         color: "oklch(0.65 0.18 145)",
                       },
                       {
                         axis: isFr ? "Axe 2a" : "Axis 2a",
                         title: isFr ? "Stack comportemental complet" : "Full behavioral stack",
                         desc: isFr
-                          ? "Phoenix-4 + Sparrow-1 (timing) + Raven-1 (perception) = stack end-to-end. DigiDouble doit concevoir un stack équivalent souverain : ASR + LLM + TTS + Avatar + Perception émotionnelle."
-                          : "Phoenix-4 + Sparrow-1 (timing) + Raven-1 (perception) = end-to-end stack. DigiDouble must design an equivalent sovereign stack: ASR + LLM + TTS + Avatar + Emotional perception.",
+                          ? "Phoenix-4 + Sparrow-1 (timing) + Raven-1 (perception) = stack end-to-end. GamiWays doit concevoir un stack équivalent souverain : ASR + LLM + TTS + Avatar + Perception émotionnelle."
+                          : "Phoenix-4 + Sparrow-1 (timing) + Raven-1 (perception) = end-to-end stack. GamiWays must design an equivalent sovereign stack: ASR + LLM + TTS + Avatar + Emotional perception.",
                         color: "oklch(0.72 0.18 50)",
                       },
                       {
                         axis: isFr ? "Différenciateur" : "Differentiator",
                         title: isFr ? "Ce que Phoenix-4 n'a pas" : "What Phoenix-4 doesn't have",
                         desc: isFr
-                          ? "Mémoire persistante multi-sessions, souveraineté de déploiement, orchestration narrative (playlist vidéo dynamique), séquençage cinématographique (mode narratif). Ces 4 points sont les différenciateurs clés de DigiDouble."
-                          : "Persistent multi-session memory, deployment sovereignty, narrative orchestration (dynamic video playlist), cinematographic sequencing (narrative mode). These 4 points are DigiDouble's key differentiators.",
+                          ? "Mémoire persistante multi-sessions, souveraineté de déploiement, orchestration narrative (playlist vidéo dynamique), séquençage cinématographique (mode narratif). Ces 4 points sont les différenciateurs clés de GamiWays."
+                          : "Persistent multi-session memory, deployment sovereignty, narrative orchestration (dynamic video playlist), cinematographic sequencing (narrative mode). These 4 points are GamiWays's key differentiators.",
                         color: "oklch(0.60 0.20 25)",
                       },
                     ].map((item) => (
@@ -1319,8 +1319,8 @@ export default function StateOfArt() {
                   <div className="callout-warning">
                     <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
                       {isFr
-                        ? <><strong>Conclusion (avril 2026) :</strong> Avec Raven-1 + Phoenix-4 + Sparrow-1, Tavus est désormais la plateforme commerciale la plus avancée pour les avatars conversationnels émotionnellement intelligents. Raven-1 adresse directement l'Axe 3 de DigiDouble (Contextual Awareness) avec sa perception audio-visuelle temps réel (&lt; 300ms). Phoenix-4 valide l'Axe 2 (Avatar) avec son rendu entièrement généré sans boucles vidéo. Les gaps restants — mémoire persistante, souveraineté RGPD, orchestration narrative, hébergement EU — confirment la valeur unique du projet DigiDouble.</>
-                        : <><strong>Conclusion (April 2026):</strong> With Raven-1 + Phoenix-4 + Sparrow-1, Tavus is now the most advanced commercial platform for emotionally intelligent conversational avatars. Raven-1 directly addresses DigiDouble's Axis 3 (Contextual Awareness) with real-time audio-visual perception (&lt; 300ms). Phoenix-4 validates Axis 2 (Avatar) with fully generated rendering and no video loops. The remaining gaps — persistent memory, GDPR sovereignty, narrative orchestration, EU hosting — confirm DigiDouble's unique value proposition.</>
+                        ? <><strong>Conclusion (avril 2026) :</strong> Avec Raven-1 + Phoenix-4 + Sparrow-1, Tavus est désormais la plateforme commerciale la plus avancée pour les avatars conversationnels émotionnellement intelligents. Raven-1 adresse directement l'Axe 3 de GamiWays (Contextual Awareness) avec sa perception audio-visuelle temps réel (&lt; 300ms). Phoenix-4 valide l'Axe 2 (Avatar) avec son rendu entièrement généré sans boucles vidéo. Les gaps restants — mémoire persistante, souveraineté RGPD, orchestration narrative, hébergement EU — confirment la valeur unique du projet GamiWays.</>
+                        : <><strong>Conclusion (April 2026):</strong> With Raven-1 + Phoenix-4 + Sparrow-1, Tavus is now the most advanced commercial platform for emotionally intelligent conversational avatars. Raven-1 directly addresses GamiWays's Axis 3 (Contextual Awareness) with real-time audio-visual perception (&lt; 300ms). Phoenix-4 validates Axis 2 (Avatar) with fully generated rendering and no video loops. The remaining gaps — persistent memory, GDPR sovereignty, narrative orchestration, EU hosting — confirm GamiWays's unique value proposition.</>
                       }
                     </p>
                   </div>
@@ -1344,8 +1344,8 @@ export default function StateOfArt() {
                 <div className="p-5">
                   <p className="text-sm text-slate-600 leading-relaxed mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
                     {isFr
-                      ? "Simli est la startup 'infrastructure-first' de la génération 2023. Fondée par des anciens de Y Combinator, elle se positionne non pas comme un studio créatif mais comme la 'face layer' pour les AI agents. Son modèle Trinity-1 atteint <300ms de latence avec Gaussian Splatting propriétaire — et son pricing à $0.009/min est 39× moins cher que D-ID. C'est la référence pour le benchmark latence de l'Axe 1 DigiDouble."
-                      : "Simli is the 'infrastructure-first' startup of the 2023 generation. Founded by Y Combinator alumni, it positions itself not as a creative studio but as the 'face layer' for AI agents. Its Trinity-1 model achieves <300ms latency with proprietary Gaussian Splatting — and its $0.009/min pricing is 39× cheaper than D-ID. It is the latency benchmark reference for DigiDouble Axis 1."
+                      ? "Simli est la startup 'infrastructure-first' de la génération 2023. Fondée par des anciens de Y Combinator, elle se positionne non pas comme un studio créatif mais comme la 'face layer' pour les AI agents. Son modèle Trinity-1 atteint <300ms de latence avec Gaussian Splatting propriétaire — et son pricing à $0.009/min est 39× moins cher que D-ID. C'est la référence pour le benchmark latence de l'Axe 1 GamiWays."
+                      : "Simli is the 'infrastructure-first' startup of the 2023 generation. Founded by Y Combinator alumni, it positions itself not as a creative studio but as the 'face layer' for AI agents. Its Trinity-1 model achieves <300ms latency with proprietary Gaussian Splatting — and its $0.009/min pricing is 39× cheaper than D-ID. It is the latency benchmark reference for GamiWays Axis 1."
                     }
                   </p>
                   <div className="grid sm:grid-cols-3 gap-3 mb-5">
@@ -1379,8 +1379,8 @@ export default function StateOfArt() {
                   <div className="callout-info">
                     <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
                       {isFr
-                        ? <><strong>Pertinence DigiDouble :</strong> Simli Trinity-1 est la référence de benchmark pour l'Axe 1 (latence). Son architecture Gaussian Splatting + WebRTC est une piste à évaluer pour remplacer HeyGem OS. Son pricing $0.009/min valide qu'un avatar temps réel à coût accessible est possible. Les gaps restants : pas de mémoire, pas de souveraineté, pas d'orchestration narrative — exactement les différenciateurs DigiDouble.</>
-                        : <><strong>DigiDouble relevance:</strong> Simli Trinity-1 is the benchmark reference for Axis 1 (latency). Its Gaussian Splatting + WebRTC architecture is a path to evaluate for replacing HeyGem OS. Its $0.009/min pricing validates that real-time avatar at accessible cost is possible. Remaining gaps: no memory, no sovereignty, no narrative orchestration — exactly DigiDouble's differentiators.</>
+                        ? <><strong>Pertinence GamiWays :</strong> Simli Trinity-1 est la référence de benchmark pour l'Axe 1 (latence). Son architecture Gaussian Splatting + WebRTC est une piste à évaluer pour remplacer HeyGem OS. Son pricing $0.009/min valide qu'un avatar temps réel à coût accessible est possible. Les gaps restants : pas de mémoire, pas de souveraineté, pas d'orchestration narrative — exactement les différenciateurs GamiWays.</>
+                        : <><strong>GamiWays relevance:</strong> Simli Trinity-1 is the benchmark reference for Axis 1 (latency). Its Gaussian Splatting + WebRTC architecture is a path to evaluate for replacing HeyGem OS. Its $0.009/min pricing validates that real-time avatar at accessible cost is possible. Remaining gaps: no memory, no sovereignty, no narrative orchestration — exactly GamiWays's differentiators.</>
                       }
                     </p>
                   </div>
@@ -1476,9 +1476,9 @@ export default function StateOfArt() {
                     </div>
                   </div>
 
-                  {/* Relevance for DigiDouble */}
+                  {/* Relevance for GamiWays */}
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                    {isFr ? "Pertinence pour DigiDouble" : "Relevance for DigiDouble"}
+                    {isFr ? "Pertinence pour GamiWays" : "Relevance for GamiWays"}
                   </h4>
                   <div className="grid sm:grid-cols-2 gap-3 mb-4">
                     {[
@@ -1486,32 +1486,32 @@ export default function StateOfArt() {
                         axis: isFr ? "Prototypage" : "Prototyping",
                         title: isFr ? "Outil de référence pour tests rapides" : "Reference tool for rapid testing",
                         desc: isFr
-                          ? "Runway Characters est idéal pour prototyper la mécanique conversationnelle de DigiDouble sans infrastructure GPU. Permet de valider les hypothèses H2 (mémoire) et H3 (comportement) avant d'investir en R&D."
-                          : "Runway Characters is ideal for prototyping DigiDouble's conversational mechanics without GPU infrastructure. Enables validating hypotheses H2 (memory) and H3 (behavior) before R&D investment.",
+                          ? "Runway Characters est idéal pour prototyper la mécanique conversationnelle de GamiWays sans infrastructure GPU. Permet de valider les hypothèses H2 (mémoire) et H3 (comportement) avant d'investir en R&D."
+                          : "Runway Characters is ideal for prototyping GamiWays's conversational mechanics without GPU infrastructure. Enables validating hypotheses H2 (memory) and H3 (behavior) before R&D investment.",
                         color: "oklch(0.72 0.18 50)",
                       },
                       {
                         axis: isFr ? "Axe 1" : "Axis 1",
                         title: isFr ? "Benchmark latence WebRTC" : "WebRTC latency benchmark",
                         desc: isFr
-                          ? "La latence <500ms de Runway Characters via WebRTC natif est un benchmark de référence pour l'Axe 1. DigiDouble doit atteindre des performances comparables avec une stack souveraine."
-                          : "Runway Characters' <500ms latency via native WebRTC is a reference benchmark for Axis 1. DigiDouble must achieve comparable performance with a sovereign stack.",
+                          ? "La latence <500ms de Runway Characters via WebRTC natif est un benchmark de référence pour l'Axe 1. GamiWays doit atteindre des performances comparables avec une stack souveraine."
+                          : "Runway Characters' <500ms latency via native WebRTC is a reference benchmark for Axis 1. GamiWays must achieve comparable performance with a sovereign stack.",
                         color: "oklch(0.72 0.18 200)",
                       },
                       {
                         axis: isFr ? "Différenciateur" : "Differentiator",
                         title: isFr ? "Ce que Runway n'a pas" : "What Runway doesn't have",
                         desc: isFr
-                          ? "Mémoire persistante, clonage vocal, souveraineté, orchestration narrative (mode narratif), playlist vidéo dynamique, sessions longues. Ces 6 points sont les différenciateurs clés de DigiDouble vs Runway Characters."
-                          : "Persistent memory, voice cloning, sovereignty, narrative orchestration (narrative mode), dynamic video playlist, long sessions. These 6 points are DigiDouble's key differentiators vs Runway Characters.",
+                          ? "Mémoire persistante, clonage vocal, souveraineté, orchestration narrative (mode narratif), playlist vidéo dynamique, sessions longues. Ces 6 points sont les différenciateurs clés de GamiWays vs Runway Characters."
+                          : "Persistent memory, voice cloning, sovereignty, narrative orchestration (narrative mode), dynamic video playlist, long sessions. These 6 points are GamiWays's key differentiators vs Runway Characters.",
                         color: "oklch(0.60 0.20 25)",
                       },
                       {
                         axis: isFr ? "Axe 3" : "Axis 3",
                         title: isFr ? "Architecture API à étudier" : "API architecture worth studying",
                         desc: isFr
-                          ? "Le modèle Avatar + Session + Knowledge Base de Runway est une architecture API propre à s'inspirer pour l'orchestrateur DigiDouble. La séparation Avatar (persistant) / Session (éphémère) est une bonne pratique."
-                          : "Runway's Avatar + Session + Knowledge Base model is a clean API architecture worth studying for DigiDouble's orchestrator. The Avatar (persistent) / Session (ephemeral) separation is a best practice.",
+                          ? "Le modèle Avatar + Session + Knowledge Base de Runway est une architecture API propre à s'inspirer pour l'orchestrateur GamiWays. La séparation Avatar (persistant) / Session (éphémère) est une bonne pratique."
+                          : "Runway's Avatar + Session + Knowledge Base model is a clean API architecture worth studying for GamiWays's orchestrator. The Avatar (persistent) / Session (ephemeral) separation is a best practice.",
                         color: "oklch(0.65 0.18 145)",
                       },
                     ].map((item) => (
@@ -1530,8 +1530,8 @@ export default function StateOfArt() {
                   <div className="callout-info">
                     <p className="text-sm text-slate-700" style={{ fontFamily: "'Source Serif 4', serif" }}>
                       {isFr
-                        ? <><strong>Conclusion :</strong> Runway Characters est la solution la plus accessible pour prototyper rapidement un avatar conversationnel en mars 2026. Son modèle WebRTC natif et son API simple en font un excellent outil de validation. Cependant, ses limitations (session 5–30 min, pas de mémoire, pas de souveraineté, $0.20/min) confirment la nécessité d'une stack souveraine comme DigiDouble pour les usages professionnels à l'échelle.</>
-                        : <><strong>Conclusion:</strong> Runway Characters is the most accessible solution for rapidly prototyping a conversational avatar in March 2026. Its native WebRTC model and simple API make it an excellent validation tool. However, its limitations (5–30 min session, no memory, no sovereignty, $0.20/min) confirm the need for a sovereign stack like DigiDouble for professional use at scale.</>
+                        ? <><strong>Conclusion :</strong> Runway Characters est la solution la plus accessible pour prototyper rapidement un avatar conversationnel en mars 2026. Son modèle WebRTC natif et son API simple en font un excellent outil de validation. Cependant, ses limitations (session 5–30 min, pas de mémoire, pas de souveraineté, $0.20/min) confirment la nécessité d'une stack souveraine comme GamiWays pour les usages professionnels à l'échelle.</>
+                        : <><strong>Conclusion:</strong> Runway Characters is the most accessible solution for rapidly prototyping a conversational avatar in March 2026. Its native WebRTC model and simple API make it an excellent validation tool. However, its limitations (5–30 min session, no memory, no sovereignty, $0.20/min) confirm the need for a sovereign stack like GamiWays for professional use at scale.</>
                       }
                     </p>
                   </div>
@@ -1573,8 +1573,8 @@ export default function StateOfArt() {
                   <span className="text-xs font-mono font-bold px-2 py-0.5 rounded mt-0.5" style={{ background: "oklch(0.55 0.20 280)", color: "white" }}>MVP PHASE 1</span>
                   <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                     {isFr
-                      ? <><strong>Voice-to-Voice est le premier livrable de DigiDouble.</strong> Cette section couvre les APIs cloud TTS streaming (2025–2026) pour guider le choix d'architecture du pipeline vocal Phase 1.</>
-                      : <><strong>Voice-to-Voice is DigiDouble's first deliverable.</strong> This section covers cloud streaming TTS APIs (2025–2026) to guide Phase 1 voice pipeline architecture decisions.</>
+                      ? <><strong>Voice-to-Voice est le premier livrable de GamiWays.</strong> Cette section couvre les APIs cloud TTS streaming (2025–2026) pour guider le choix d'architecture du pipeline vocal Phase 1.</>
+                      : <><strong>Voice-to-Voice is GamiWays's first deliverable.</strong> This section covers cloud streaming TTS APIs (2025–2026) to guide Phase 1 voice pipeline architecture decisions.</>
                     }
                   </p>
                 </div>
@@ -1625,8 +1625,8 @@ export default function StateOfArt() {
                 </p>
                 <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                   {isFr
-                    ? <>Le MVP Phase 1 doit choisir entre deux approches : <strong>(A) Pipeline en cascade</strong> (ASR → LLM → TTS, ex. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — plus contrôlable, clonage vocal possible, souveraineté totale possible, latence ~400–800ms ; ou <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — latence ~100ms mais moins contrôlable, pas de clonage vocal. <strong>Recommandation DigiDouble :</strong> commencer par (A) avec Voxtral TTS (Mistral, mars 2026) + Deepgram Nova-3 pour valider la qualité conversationnelle, puis évaluer (B) pour l'optimisation latence en Phase 2.</>
-                    : <>Phase 1 MVP must choose between two approaches: <strong>(A) Cascading pipeline</strong> (ASR → LLM → TTS, e.g. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — more controllable, voice cloning possible, full sovereignty possible, ~400–800ms latency; or <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — ~100ms latency but less controllable, no voice cloning. <strong>DigiDouble recommendation:</strong> start with (A) using Voxtral TTS (Mistral, March 2026) + Deepgram Nova-3 to validate conversational quality, then evaluate (B) for latency optimization in Phase 2.</>
+                    ? <>Le MVP Phase 1 doit choisir entre deux approches : <strong>(A) Pipeline en cascade</strong> (ASR → LLM → TTS, ex. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — plus contrôlable, clonage vocal possible, souveraineté totale possible, latence ~400–800ms ; ou <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — latence ~100ms mais moins contrôlable, pas de clonage vocal. <strong>Recommandation GamiWays :</strong> commencer par (A) avec Voxtral TTS (Mistral, mars 2026) + Deepgram Nova-3 pour valider la qualité conversationnelle, puis évaluer (B) pour l'optimisation latence en Phase 2.</>
+                    : <>Phase 1 MVP must choose between two approaches: <strong>(A) Cascading pipeline</strong> (ASR → LLM → TTS, e.g. Deepgram Nova-3 + Mistral + Cartesia/Kokoro) — more controllable, voice cloning possible, full sovereignty possible, ~400–800ms latency; or <strong>(B) End-to-end V2V</strong> (Ultravox, Moshi) — ~100ms latency but less controllable, no voice cloning. <strong>GamiWays recommendation:</strong> start with (A) using Voxtral TTS (Mistral, March 2026) + Deepgram Nova-3 to validate conversational quality, then evaluate (B) for latency optimization in Phase 2.</>
                   }
                 </p>
                 <div className="mt-4">
@@ -1873,7 +1873,7 @@ export default function StateOfArt() {
                     <th>Best-case</th>
                     <th>{isFr ? "Typique" : "Typical"}</th>
                     <th>{isFr ? "Visualisation" : "Visualization"}</th>
-                    <th>{isFr ? "Statut vs cible DigiDouble" : "Status vs DigiDouble target"}</th>
+                    <th>{isFr ? "Statut vs cible GamiWays" : "Status vs GamiWays target"}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1925,7 +1925,7 @@ export default function StateOfArt() {
           <SectionHeader
             number="03"
             title={isFr ? "Gaps de Recherche & Opportunités" : "Research Gaps & Opportunities"}
-            subtitle={isFr ? "Ce qui manque, ce qui existe, et où DigiDouble peut contribuer." : "What is missing, what exists, and where DigiDouble can contribute."}
+            subtitle={isFr ? "Ce qui manque, ce qui existe, et où GamiWays peut contribuer." : "What is missing, what exists, and where GamiWays can contribute."}
             accent="red"
           />
 
@@ -1937,8 +1937,8 @@ export default function StateOfArt() {
             <div className="border border-slate-200 rounded-lg p-5" style={{ background: "oklch(0.99 0.003 200)" }}>
               <p className="text-xs text-slate-500 mb-4 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
-                  ? "Le gap DigiDouble est visible : les solutions rapides n'ont pas de souveraineté, les solutions souveraines ne sont pas rapides. La flèche pointillée matérialise l'objectif R&D Axe 1."
-                  : "The DigiDouble gap is visible: fast solutions have no sovereignty, sovereign solutions are not fast. The dashed arrow materializes the Axis 1 R&D goal."}
+                  ? "Le gap GamiWays est visible : les solutions rapides n'ont pas de souveraineté, les solutions souveraines ne sont pas rapides. La flèche pointillée matérialise l'objectif R&D Axe 1."
+                  : "The GamiWays gap is visible: fast solutions have no sovereignty, sovereign solutions are not fast. The dashed arrow materializes the Axis 1 R&D goal."}
               </p>
               <PositioningDiagram />
             </div>
@@ -1966,7 +1966,7 @@ export default function StateOfArt() {
                   <th>{isFr ? "Domaine" : "Domain"}</th>
                   <th>{isFr ? "Gap identifié" : "Identified gap"}</th>
                   <th>{isFr ? "Meilleur SOTA actuel" : "Best current SOTA"}</th>
-                  <th>{isFr ? "Opportunité DigiDouble" : "DigiDouble opportunity"}</th>
+                  <th>{isFr ? "Opportunité GamiWays" : "GamiWays opportunity"}</th>
                   <th>{isFr ? "Urgence" : "Urgency"}</th>
                 </tr>
               </thead>
@@ -2117,8 +2117,8 @@ export default function StateOfArt() {
             </p>
             <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? <>La combinaison unique que vise DigiDouble — conversation IA + avatar photorealistic + séquençage vidéo intelligent + contrôle narratif/pédagogique + souveraineté — n'existe dans aucune solution commerciale ou open-source actuelle. Les gaps identifiés (mémoire long-terme, fidélité comportementale, latence avatar) correspondent précisément aux frontières de la recherche académique actuelle, ce qui justifie pleinement un programme de recherche fondamentale.</>
-                : <>The unique combination DigiDouble targets — AI conversation + photorealistic avatar + intelligent video sequencing + narrative/pedagogical control + sovereignty — does not exist in any current commercial or open-source solution. The identified gaps (long-term memory, behavioral fidelity, avatar latency) correspond precisely to the frontiers of current academic research, fully justifying a fundamental research program.</>
+                ? <>La combinaison unique que vise GamiWays — conversation IA + avatar photorealistic + séquençage vidéo intelligent + contrôle narratif/pédagogique + souveraineté — n'existe dans aucune solution commerciale ou open-source actuelle. Les gaps identifiés (mémoire long-terme, fidélité comportementale, latence avatar) correspondent précisément aux frontières de la recherche académique actuelle, ce qui justifie pleinement un programme de recherche fondamentale.</>
+                : <>The unique combination GamiWays targets — AI conversation + photorealistic avatar + intelligent video sequencing + narrative/pedagogical control + sovereignty — does not exist in any current commercial or open-source solution. The identified gaps (long-term memory, behavioral fidelity, avatar latency) correspond precisely to the frontiers of current academic research, fully justifying a fundamental research program.</>
               }
             </p>
           </div>
@@ -2129,7 +2129,7 @@ export default function StateOfArt() {
           <SectionHeader
             number="06"
             title={isFr ? "Technologies Recommandées" : "Recommended Technologies"}
-            subtitle={isFr ? "Stack cible pour l'architecture DigiDouble Phase 2." : "Target stack for DigiDouble Phase 2 architecture."}
+            subtitle={isFr ? "Stack cible pour l'architecture GamiWays Phase 2." : "Target stack for GamiWays Phase 2 architecture."}
             accent="cyan"
           />
 

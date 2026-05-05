@@ -147,14 +147,6 @@ export const SOLUTION_LINKS: Record<string, SolutionLinks> = {
     homepage: "https://qdrant.tech",
     apiDocs: "https://api.qdrant.tech/",
   },
-  idiap: {
-    name: "IDIAP Research Institute",
-    homepage: "https://www.idiap.ch",
-  },
-  innosuisse: {
-    name: "Innosuisse",
-    homepage: "https://www.innosuisse.admin.ch/fr/projet-dinnovation-avec-partenaire-de-mise-en-oeuvre",
-  },
 };
 
 // Helper: render an external link badge (homepage + optional API docs)
