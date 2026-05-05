@@ -41,9 +41,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            <span>{isFr ? "Portail de veille technologique" : "Technology Intelligence Portal"}</span>
-            <span className="hidden md:inline text-slate-200">|</span>
+          <div className="flex items-center gap-2 text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
             <span>
               {isFr ? "Dernière mise à jour" : "Last updated"}{" "}
               <span className="text-slate-600 font-medium">{isFr ? LAST_UPDATED_FR : LAST_UPDATED}</span>

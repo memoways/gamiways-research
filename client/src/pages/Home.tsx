@@ -266,30 +266,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER NOTE ──────────────────────────────────────────────────── */}
-      <section className="border-t border-slate-200 py-8 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <Layers size={14} className="text-slate-400" />
-              <span className="text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                {isFr ? "GamiWays Research Portal · Gamilab × Memoways · Geneva, Switzerland" : "GamiWays Research Portal · Gamilab × Memoways · Geneva, Switzerland"}
-              </span>
-            </div>
-            <div className="flex gap-4">
-              <InternalLink to="/research/gaps" className="text-xs text-slate-400 hover:text-slate-700 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-                {isFr ? "Opportunités & Lacunes" : "Opportunities & Gaps"}
-              </InternalLink>
-              <InternalLink to="/avatars/pricing" className="text-xs text-slate-400 hover:text-slate-700 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-                {isFr ? "Simulateur de coûts" : "Cost simulator"}
-              </InternalLink>
-              <InternalLink to="/voice/pipeline" className="text-xs text-slate-400 hover:text-slate-700 transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}>
-                Pipeline
-              </InternalLink>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
