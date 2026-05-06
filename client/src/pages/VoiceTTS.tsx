@@ -148,8 +148,8 @@ export default function VoiceTTS() {
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">
                 {isFr
-                  ? "ElevenLabs (11Md$) va off-cloud. Inworld est ELO #1 à 75% moins cher. Chatterbox bat ElevenLabs en tests à l'aveugle. L'écart de qualité entre cloud et open-source se réduit rapidement."
-                  : "ElevenLabs ($11B) is going off-cloud. Inworld is ELO #1 at 75% lower cost. Chatterbox beats ElevenLabs in blind tests. The quality gap between cloud and open-source is closing fast."}
+                  ? "ElevenLabs (11Md$) va off-cloud. Inworld TTS-2 (mai 2026) est ELO #1 avec Voice Direction, Conversational Awareness et 100+ langues. Chatterbox bat ElevenLabs en tests à l'aveugle. L'écart de qualité entre cloud et open-source se réduit rapidement."
+                  : "ElevenLabs ($11B) is going off-cloud. Inworld TTS-2 (May 2026) is ELO #1 with Voice Direction, Conversational Awareness and 100+ languages. Chatterbox beats ElevenLabs in blind tests. The quality gap between cloud and open-source is closing fast."}
               </p>
             </div>
           </div>

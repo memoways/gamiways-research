@@ -35,7 +35,7 @@ const TTS_BENCHMARKS = [
   { id: "hume_octave",    name: "Hume AI Octave 2",              ttfa: 100, ttfaTyp: 200,  elo: 1046, priceMin: 0.0076,self: false, notes: "Emotion-aware TTS" },
   { id: "kyutai_tts",     name: "Kyutai TTS 1.6B",               ttfa: 100, ttfaTyp: 200,  elo: 0,    priceMin: 0,     self: true,  notes: "Open, multilingual" },
   { id: "ultravox",       name: "Ultravox v0.5",                 ttfa: 100, ttfaTyp: 300,  elo: 0,    priceMin: 0.05,  self: true,  notes: "End-to-end speech LLM" },
-  { id: "inworld_tts",    name: "Inworld TTS-1.5",               ttfa: 130, ttfaTyp: 250,  elo: 1160, priceMin: 0.01,  self: true,  notes: "ELO #1, low cost, on-premise" },
+  { id: "inworld_tts",    name: "Inworld TTS-2",                 ttfa: 130, ttfaTyp: 250,  elo: 1160, priceMin: 0.035, self: true,  notes: "ELO #1, TTS-2 preview, Voice Direction, 100+ langs" },
   { id: "chatterbox",     name: "Chatterbox (Resemble AI)",      ttfa: 150, ttfaTyp: 300,  elo: 1050, priceMin: 0.04,  self: true,  notes: "Expressive open-source" },
   { id: "voxtral_tts",    name: "Voxtral TTS (Mistral)",         ttfa: 150, ttfaTyp: 300,  elo: 0,    priceMin: 0.02,  self: true,  notes: "EU-sovereign, open-weights" },
   { id: "fish_audio",     name: "Fish Audio OpenAudio S1",       ttfa: 200, ttfaTyp: 400,  elo: 1074, priceMin: 0.015, self: false, notes: "Best multilingual cloning" },
@@ -397,8 +397,8 @@ export default function VoiceBenchmarks() {
               </p>
               <p className="text-sm text-slate-700 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
-                  ? "Il est impossible d'optimiser simultanément les trois dimensions avec les approches actuelles. Cartesia = latence minimale mais qualité moyenne. Whisper = meilleur WER mais pas streaming-natif. Inworld TTS = ELO #1 + faible coût mais cloud US. La recherche fondamentale est nécessaire pour briser ce trilemme."
-                  : "It is impossible to simultaneously optimize all three dimensions with current approaches. Cartesia = minimum latency but average quality. Whisper = best WER but not streaming-native. Inworld TTS = ELO #1 + low cost but US cloud. Fundamental research is needed to break this trilemma."}
+                  ? "Il est impossible d'optimiser simultanément les trois dimensions avec les approches actuelles. Cartesia = latence minimale mais qualité moyenne. Whisper = meilleur WER mais pas streaming-natif. Inworld TTS-2 = ELO #1 + Voice Direction + 100 langues mais cloud US (on-premise Enterprise uniquement). L'innovation continue de réduire les compromis mais ne les élimine pas encore."
+                  : "It is impossible to simultaneously optimize all three dimensions with current approaches. Cartesia = minimum latency but average quality. Whisper = best WER but not streaming-native. Inworld TTS-2 = ELO #1 + Voice Direction + 100 languages but US cloud (on-premise Enterprise only). Innovation keeps reducing trade-offs but has not eliminated them yet."}
               </p>
             </div>
             <div className="callout-success">

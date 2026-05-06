@@ -106,8 +106,8 @@ function computeRecommendations(answers: SimulatorAnswers): LayerRecommendation[
         rationale: "Cartesia Sonic delivers the lowest TTFA of any commercial TTS (sub-80ms) with high-quality streaming. Ideal for real-time conversational agents where latency is the primary constraint. Voice cloning available with reference audio.",
         rationaleFr: "Cartesia Sonic offre le TTFA le plus faible de tout TTS commercial (<80ms) avec un streaming haute qualité. Idéal pour les agents conversationnels temps réel où la latence est la contrainte principale. Clonage vocal disponible avec audio de référence.",
         maturity: "production",
-        alternatives: ["ElevenLabs Flash v2.5", "Inworld TTS (streaming)"],
-        alternativesFr: ["ElevenLabs Flash v2.5", "Inworld TTS (streaming)"],
+        alternatives: ["ElevenLabs Flash v2.5", "Inworld TTS-2 (streaming, Voice Direction)"],
+        alternativesFr: ["ElevenLabs Flash v2.5", "Inworld TTS-2 (streaming, Voice Direction)"],
         link: "/tts/cartesia",
       };
     }
@@ -119,18 +119,18 @@ function computeRecommendations(answers: SimulatorAnswers): LayerRecommendation[
         rationale: "For sovereign deployments, Kokoro-82M (Apache 2.0, 82M params) offers excellent quality/compute ratio and runs on modest GPU hardware. Chatterbox-Turbo adds voice cloning with 3s reference audio. Both can be deployed on EU/CH infrastructure.",
         rationaleFr: "Pour les déploiements souverains, Kokoro-82M (Apache 2.0, 82M params) offre un excellent ratio qualité/calcul et tourne sur du hardware GPU modeste. Chatterbox-Turbo ajoute le clonage vocal avec 3s d'audio de référence. Les deux peuvent être déployés sur infrastructure EU/CH.",
         maturity: "emerging",
-        alternatives: ["XTTS-v2 (Coqui, multilingual)", "Inworld TTS on-premise"],
-        alternativesFr: ["XTTS-v2 (Coqui, multilingue)", "Inworld TTS on-premise"],
+        alternatives: ["XTTS-v2 (Coqui, multilingual)", "Inworld TTS-2 (Enterprise on-premise)"],
+        alternativesFr: ["XTTS-v2 (Coqui, multilingue)", "Inworld TTS-2 (Enterprise on-premise)"],
         link: "/tts/kokoro",
       };
     }
     if (useCase === "educational" || useCase === "conversational") {
       return {
         layer: "TTS / Voice Synthesis", layerFr: "TTS / Synthèse Vocale", icon: "🔊",
-        option: "ElevenLabs Turbo v2.5 or Inworld TTS",
-        optionFr: "ElevenLabs Turbo v2.5 ou Inworld TTS",
-        rationale: "Educational and conversational agents benefit from high expressiveness and voice cloning. ElevenLabs leads on emotional range and multilingual quality. Inworld TTS is purpose-built for conversational AI with emotion control API. Evaluate both with real user samples.",
-        rationaleFr: "Les agents éducatifs et conversationnels bénéficient d'une haute expressivité et du clonage vocal. ElevenLabs est leader sur la gamme émotionnelle et la qualité multilingue. Inworld TTS est conçu pour l'IA conversationnelle avec API de contrôle émotionnel. Évaluer les deux avec de vrais échantillons utilisateurs.",
+        option: "ElevenLabs Turbo v2.5 or Inworld TTS-2",
+        optionFr: "ElevenLabs Turbo v2.5 ou Inworld TTS-2",
+        rationale: "Educational and conversational agents benefit from high expressiveness and voice cloning. ElevenLabs leads on emotional range. Inworld TTS-2 is purpose-built for conversational AI: Voice Direction (natural language delivery instructions), Conversational Awareness (model hears prior turns), 100+ languages. Evaluate both with real user samples.",
+        rationaleFr: "Les agents éducatifs et conversationnels bénéficient d'une haute expressivité et du clonage vocal. ElevenLabs est leader sur la gamme émotionnelle. Inworld TTS-2 est conçu pour l'IA conversationnelle : Voice Direction (instructions de livraison en langage naturel), Conversational Awareness (le modèle entend les tours précédents), 100+ langues. Évaluer les deux avec de vrais échantillons utilisateurs.",
         maturity: "production",
         alternatives: ["Cartesia Sonic", "PlayHT PlayDialog"],
         alternativesFr: ["Cartesia Sonic", "PlayHT PlayDialog"],
@@ -144,8 +144,8 @@ function computeRecommendations(answers: SimulatorAnswers): LayerRecommendation[
       rationale: "For standard production deployments, ElevenLabs and Cartesia represent the current quality/latency frontier. ElevenLabs excels on expressiveness; Cartesia on latency. Run an A/B test with your actual use case scripts before committing.",
       rationaleFr: "Pour les déploiements production standard, ElevenLabs et Cartesia représentent la frontière qualité/latence actuelle. ElevenLabs excelle sur l'expressivité ; Cartesia sur la latence. Lancer un A/B test avec vos vrais scripts avant de vous engager.",
       maturity: "production",
-      alternatives: ["Kokoro-82M (self-hosted)", "Inworld TTS"],
-      alternativesFr: ["Kokoro-82M (auto-hébergé)", "Inworld TTS"],
+      alternatives: ["Kokoro-82M (self-hosted)", "Inworld TTS-2"],
+      alternativesFr: ["Kokoro-82M (auto-hébergé)", "Inworld TTS-2"],
       link: "/tts/elevenlabs",
     };
   })();
