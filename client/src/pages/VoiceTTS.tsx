@@ -4,13 +4,13 @@
  * Design: Technical Blueprint, dense comparative tables
  * i18n: EN / FR via LangContext
  */
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import GlossaryLink from "@/components/GlossaryLink";
 import { getTTSByCategory, type TTSData } from "@/lib/ttsData";
 import SectionHeader from "@/components/SectionHeader";
-import { Home, ChevronRight } from "lucide-react";
+import { Home, ChevronRight, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 
 function ScoreBar({ value, max = 10, color }: { value: number; max?: number; color: string }) {
   return (
@@ -71,14 +71,56 @@ function TTSCard({ tts, isFr }: { tts: TTSData; isFr: boolean }) {
 }
 
 type TTSTab = "commercial" | "opensource";
+type SortDir = "asc" | "desc";
+
+type CloudSortKey = "name" | "ttfaMs" | "eloScore" | "voiceCloning" | "emotionControl" | "languages" | "pricePerMChar";
+type OpenSortKey = "name" | "ttfaMs" | "eloScore" | "voiceCloning" | "isV2V" | "languages" | "license";
+
+function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
+  if (!active) return <ChevronsUpDown className="w-3 h-3 opacity-40" />;
+  return dir === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />;
+}
+
+function sortTTS<T extends TTSData>(data: T[], key: string, dir: SortDir): T[] {
+  return [...data].sort((a, b) => {
+    let av: any, bv: any;
+    switch (key) {
+      case "name":         av = a.name.toLowerCase();        bv = b.name.toLowerCase(); break;
+      case "ttfaMs":       av = a.ttfaMs;                    bv = b.ttfaMs; break;
+      case "eloScore":     av = a.eloScore;                  bv = b.eloScore; break;
+      case "voiceCloning": av = a.voiceCloning ? 1 : 0;      bv = b.voiceCloning ? 1 : 0; break;
+      case "emotionControl": av = a.emotionControl ? 1 : 0;  bv = b.emotionControl ? 1 : 0; break;
+      case "isV2V":        av = (a as any).isV2V ? 1 : 0;   bv = (b as any).isV2V ? 1 : 0; break;
+      case "languages":    av = a.languages;                 bv = b.languages; break;
+      case "pricePerMChar": av = a.pricePerMChar;            bv = b.pricePerMChar; break;
+      case "license":      av = a.license.toLowerCase();     bv = b.license.toLowerCase(); break;
+      default:             av = 0; bv = 0;
+    }
+    if (av < bv) return dir === "asc" ? -1 : 1;
+    if (av > bv) return dir === "asc" ? 1 : -1;
+    return 0;
+  });
+}
 
 export default function VoiceTTS() {
   const [ttsTab, setTtsTab] = useState<TTSTab>("commercial");
+  const [cloudSort, setCloudSort] = useState<{ key: CloudSortKey; dir: SortDir }>({ key: "eloScore", dir: "desc" });
+  const [openSort, setOpenSort] = useState<{ key: OpenSortKey; dir: SortDir }>({ key: "eloScore", dir: "desc" });
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
-  const cloudTTS = getTTSByCategory("cloud-api");
-  const openTTS = getTTSByCategory("open-source");
+  const cloudTTSRaw = getTTSByCategory("cloud-api");
+  const openTTSRaw = getTTSByCategory("open-source");
+
+  const cloudTTS = useMemo(() => sortTTS(cloudTTSRaw, cloudSort.key, cloudSort.dir), [cloudTTSRaw, cloudSort]);
+  const openTTS = useMemo(() => sortTTS(openTTSRaw, openSort.key, openSort.dir), [openTTSRaw, openSort]);
+
+  function toggleCloud(key: CloudSortKey) {
+    setCloudSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: key === "name" ? "asc" : "desc" });
+  }
+  function toggleOpen(key: OpenSortKey) {
+    setOpenSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: key === "name" || key === "license" ? "asc" : "desc" });
+  }
 
   const subTabLabels: Record<string, string> = {
     commercial: isFr ? "APIs Cloud" : "Cloud APIs",
@@ -194,16 +236,26 @@ export default function VoiceTTS() {
             </div>
             {/* Tableau comparatif Cloud */}
             <div className="overflow-x-auto mb-6">
+              <p className="text-xs text-slate-400 mb-2 font-mono">{isFr ? "Cliquez sur un en-tête pour trier" : "Click a header to sort"}</p>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>{isFr ? "Solution" : "Solution"}</th>
-                    <th><span className="inline-flex items-center gap-1">TTFA <GlossaryLink term="TTFA" /></span></th>
-                    <th><span className="inline-flex items-center gap-1">ELO <GlossaryLink term="ELO Score" /></span></th>
-                    <th><span className="inline-flex items-center gap-1">{isFr ? "Clonage" : "Cloning"} <GlossaryLink term="Voice Cloning" /></span></th>
-                    <th>{isFr ? "Émotion" : "Emotion"}</th>
-                    <th>{isFr ? "Multilingue" : "Multilingual"}</th>
-                    <th>{isFr ? "Prix/1M" : "Price/1M"}</th>
+                    {([
+                      { key: "name" as CloudSortKey, label: isFr ? "Solution" : "Solution", extra: null },
+                      { key: "ttfaMs" as CloudSortKey, label: "TTFA", extra: <GlossaryLink term="TTFA" /> },
+                      { key: "eloScore" as CloudSortKey, label: "ELO", extra: <GlossaryLink term="ELO Score" /> },
+                      { key: "voiceCloning" as CloudSortKey, label: isFr ? "Clonage" : "Cloning", extra: <GlossaryLink term="Voice Cloning" /> },
+                      { key: "emotionControl" as CloudSortKey, label: isFr ? "Émotion" : "Emotion", extra: null },
+                      { key: "languages" as CloudSortKey, label: isFr ? "Multilingue" : "Multilingual", extra: null },
+                      { key: "pricePerMChar" as CloudSortKey, label: isFr ? "Prix/1M" : "Price/1M", extra: null },
+                    ] as const).map(({ key, label, extra }) => (
+                      <th key={key} className="cursor-pointer select-none" onClick={() => toggleCloud(key)}>
+                        <span className="inline-flex items-center gap-1">
+                          {label}{extra}
+                          <SortIcon active={cloudSort.key === key} dir={cloudSort.dir} />
+                        </span>
+                      </th>
+                    ))}
                     <th>{isFr ? "Fiche" : "Detail"}</th>
                   </tr>
                 </thead>
@@ -265,16 +317,26 @@ export default function VoiceTTS() {
               </div>
             </div>
             <div className="overflow-x-auto mb-6">
+              <p className="text-xs text-slate-400 mb-2 font-mono">{isFr ? "Cliquez sur un en-tête pour trier" : "Click a header to sort"}</p>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>{isFr ? "Solution" : "Solution"}</th>
-                    <th><span className="inline-flex items-center gap-1">TTFA <GlossaryLink term="TTFA" /></span></th>
-                    <th><span className="inline-flex items-center gap-1">ELO <GlossaryLink term="ELO Score" /></span></th>
-                    <th><span className="inline-flex items-center gap-1">{isFr ? "Clonage" : "Cloning"} <GlossaryLink term="Voice Cloning" /></span></th>
-                    <th><span className="inline-flex items-center gap-1">V2V <GlossaryLink term="End-to-End Speech Model" /></span></th>
-                    <th>{isFr ? "Multilingue" : "Multilingual"}</th>
-                    <th>{isFr ? "Licence" : "License"}</th>
+                    {([
+                      { key: "name" as OpenSortKey, label: isFr ? "Solution" : "Solution", extra: null },
+                      { key: "ttfaMs" as OpenSortKey, label: "TTFA", extra: <GlossaryLink term="TTFA" /> },
+                      { key: "eloScore" as OpenSortKey, label: "ELO", extra: <GlossaryLink term="ELO Score" /> },
+                      { key: "voiceCloning" as OpenSortKey, label: isFr ? "Clonage" : "Cloning", extra: <GlossaryLink term="Voice Cloning" /> },
+                      { key: "isV2V" as OpenSortKey, label: "V2V", extra: <GlossaryLink term="End-to-End Speech Model" /> },
+                      { key: "languages" as OpenSortKey, label: isFr ? "Multilingue" : "Multilingual", extra: null },
+                      { key: "license" as OpenSortKey, label: isFr ? "Licence" : "License", extra: null },
+                    ] as const).map(({ key, label, extra }) => (
+                      <th key={key} className="cursor-pointer select-none" onClick={() => toggleOpen(key)}>
+                        <span className="inline-flex items-center gap-1">
+                          {label}{extra}
+                          <SortIcon active={openSort.key === key} dir={openSort.dir} />
+                        </span>
+                      </th>
+                    ))}
                     <th>{isFr ? "Fiche" : "Detail"}</th>
                   </tr>
                 </thead>
