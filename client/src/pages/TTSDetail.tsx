@@ -124,6 +124,20 @@ export default function TTSDetail() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        {/* Research Preview banner — shown only for Inworld TTS-2 */}
+        {tts.id === "inworld_tts" && (
+          <div className="mb-4 flex items-center gap-3 rounded-xl border border-amber-300 bg-amber-50 px-5 py-3">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-amber-700 bg-amber-100 border border-amber-300 px-2.5 py-1 rounded-full uppercase tracking-wider">
+              <Radio className="w-3 h-3" />
+              {isFr ? "Research Preview" : "Research Preview"}
+            </span>
+            <p className="text-xs text-amber-800 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "TTS-2 est en research preview depuis le 5 mai 2026. TTS-1.5 Max et Mini restent disponibles en production. Les fonctionnalités TTS-2 (Voice Direction, Conversational Awareness) peuvent évoluer avant la disponibilité générale (GA)."
+                : "TTS-2 has been in research preview since May 5, 2026. TTS-1.5 Max and Mini remain available for production use. TTS-2 features (Voice Direction, Conversational Awareness) may evolve before general availability (GA)."}
+            </p>
+          </div>
+        )}
         {/* Hero */}
         <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6 shadow-sm">
           <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
@@ -366,6 +380,42 @@ export default function TTSDetail() {
               <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {tts.priceNote}
               </p>
+              {/* Inworld TTS-2 — pricing by plan table */}
+              {tts.id === "inworld_tts" && (
+                <div className="mt-4 overflow-x-auto">
+                  <table className="w-full text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-slate-900 text-white">
+                        <th className="text-left px-3 py-2 font-mono font-bold rounded-tl">{isFr ? "Plan" : "Plan"}</th>
+                        <th className="text-right px-3 py-2 font-mono font-bold">{isFr ? "TTS-2 & 1.5 Max" : "TTS-2 & 1.5 Max"}</th>
+                        <th className="text-right px-3 py-2 font-mono font-bold">{isFr ? "TTS-1.5 Mini" : "TTS-1.5 Mini"}</th>
+                        <th className="text-right px-3 py-2 font-mono font-bold rounded-tr">{isFr ? "Inclus" : "Included"}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {[
+                        { plan: isFr ? "On-Demand (gratuit)" : "On-Demand (free)", max: "$35/1M", mini: "$25/1M", included: isFr ? "40 min TTS" : "40 min TTS" },
+                        { plan: "Developer",  max: "$30/1M", mini: "$20/1M", included: isFr ? "$20/mois" : "$20/mo" },
+                        { plan: "Creator",    max: "$30/1M", mini: "$20/1M", included: isFr ? "$50/mois" : "$50/mo" },
+                        { plan: "Growth",     max: "$25/1M", mini: "$15/1M", included: isFr ? "$200/mois" : "$200/mo" },
+                        { plan: "Enterprise", max: isFr ? "dès $10/1M" : "from $10/1M", mini: isFr ? "dès $5/1M" : "from $5/1M", included: isFr ? "On-premise, ZDR, BAA" : "On-premise, ZDR, BAA" },
+                      ].map((row, i) => (
+                        <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                          <td className="px-3 py-2 font-mono font-semibold text-slate-700">{row.plan}</td>
+                          <td className="px-3 py-2 text-right font-mono text-slate-900">{row.max}</td>
+                          <td className="px-3 py-2 text-right font-mono text-slate-900">{row.mini}</td>
+                          <td className="px-3 py-2 text-right text-slate-500">{row.included}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p className="text-xs text-slate-400 mt-2 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Tarifs On-Demand en $/1M caractères. Plans mensuels avec crédits inclus. Enterprise : tarif custom, on-premise, ZDR, BAA, résidence données EU/Inde."
+                      : "On-Demand rates in $/1M characters. Monthly plans include credits. Enterprise: custom pricing, on-premise, ZDR, BAA, EU/India data residency."}
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Sovereignty */}
@@ -395,6 +445,26 @@ export default function TTSDetail() {
                   </p>
                 </div>
               </div>
+              {/* Inworld TTS-2 — compliance certifications */}
+              {tts.id === "inworld_tts" && (
+                <div className="mt-4 pt-4 border-t border-slate-100">
+                  <p className="text-xs font-bold text-slate-700 mb-2 font-mono uppercase tracking-wider">
+                    {isFr ? "Certifications & conformité" : "Certifications & Compliance"}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["SOC 2 Type II", "GDPR", "HIPAA", "ZDR", "BAA"].map((cert) => (
+                      <span key={cert} className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
+                        <CheckCircle className="w-3 h-3" /> {cert}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-2 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "HIPAA, ZDR (Zero Data Retention) et BAA disponibles sur les plans Growth et Enterprise. On-premise Enterprise : résidence des données EU + Inde."
+                      : "HIPAA, ZDR (Zero Data Retention) and BAA available on Growth and Enterprise plans. Enterprise on-premise: EU + India data residency."}
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Strategic Analysis */}
