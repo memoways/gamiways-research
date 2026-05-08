@@ -4,13 +4,13 @@
  * Design: Technical Blueprint, dense comparative tables
  * i18n: EN / FR via LangContext
  */
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import GlossaryLink from "@/components/GlossaryLink";
 import { getSTTByCategory, type STTData } from "@/lib/sttData";
 import SectionHeader from "@/components/SectionHeader";
-import { Home, ChevronRight } from "lucide-react";
+import { Home, ChevronRight, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 
 function ScoreBar({ value, max = 10, color }: { value: number; max?: number; color: string }) {
   return (
@@ -24,14 +24,56 @@ function ScoreBar({ value, max = 10, color }: { value: number; max?: number; col
 }
 
 type STTTab = "commercial" | "opensource";
+type SortDir = "asc" | "desc";
+type CloudSTTKey = "name" | "latencyMs" | "wer" | "streaming" | "languages" | "speakerDiarization" | "pricePerHour" | "selfHostable";
+type OpenSTTKey = "name" | "latencyMs" | "wer" | "params" | "streaming" | "languages" | "license";
+
+function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
+  if (!active) return <ChevronsUpDown className="w-3 h-3 opacity-40" />;
+  return dir === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />;
+}
+
+function sortSTT<T extends STTData>(data: T[], key: string, dir: SortDir): T[] {
+  return [...data].sort((a, b) => {
+    let av: any, bv: any;
+    switch (key) {
+      case "name":              av = a.name.toLowerCase();           bv = b.name.toLowerCase(); break;
+      case "latencyMs":         av = a.latencyMs;                    bv = b.latencyMs; break;
+      case "wer":               av = a.wer;                          bv = b.wer; break;
+      case "streaming":         av = a.streaming ? 1 : 0;            bv = b.streaming ? 1 : 0; break;
+      case "languages":         av = a.languages;                    bv = b.languages; break;
+      case "speakerDiarization": av = a.speakerDiarization ? 1 : 0; bv = b.speakerDiarization ? 1 : 0; break;
+      case "pricePerHour":      av = a.pricePerHour;                 bv = b.pricePerHour; break;
+      case "selfHostable":      av = a.selfHostable ? 1 : 0;         bv = b.selfHostable ? 1 : 0; break;
+      case "params":            av = a.params.toLowerCase();         bv = b.params.toLowerCase(); break;
+      case "license":           av = a.license.toLowerCase();        bv = b.license.toLowerCase(); break;
+      default:                  av = 0; bv = 0;
+    }
+    if (av < bv) return dir === "asc" ? -1 : 1;
+    if (av > bv) return dir === "asc" ? 1 : -1;
+    return 0;
+  });
+}
 
 export default function VoiceSTT() {
   const [sttTab, setSttTab] = useState<STTTab>("commercial");
+  const [cloudSort, setCloudSort] = useState<{ key: CloudSTTKey; dir: SortDir }>({ key: "latencyMs", dir: "asc" });
+  const [openSort, setOpenSort] = useState<{ key: OpenSTTKey; dir: SortDir }>({ key: "wer", dir: "asc" });
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
-  const cloudSTT = getSTTByCategory("cloud-api");
-  const openSTT = getSTTByCategory("open-source");
+  const cloudSTTRaw = getSTTByCategory("cloud-api");
+  const openSTTRaw = getSTTByCategory("open-source");
+
+  const cloudSTT = useMemo(() => sortSTT(cloudSTTRaw, cloudSort.key, cloudSort.dir), [cloudSTTRaw, cloudSort]);
+  const openSTT = useMemo(() => sortSTT(openSTTRaw, openSort.key, openSort.dir), [openSTTRaw, openSort]);
+
+  function toggleCloud(key: CloudSTTKey) {
+    setCloudSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: key === "name" ? "asc" : key === "wer" || key === "latencyMs" || key === "pricePerHour" ? "asc" : "desc" });
+  }
+  function toggleOpen(key: OpenSTTKey) {
+    setOpenSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: key === "name" || key === "license" || key === "params" ? "asc" : key === "wer" || key === "latencyMs" ? "asc" : "desc" });
+  }
 
   const subTabLabels: Record<string, string> = {
     commercial: isFr ? "APIs Cloud" : "Cloud APIs",
@@ -138,17 +180,27 @@ export default function VoiceSTT() {
               </p>
             </div>
             <div className="overflow-x-auto mb-6">
+              <p className="text-xs text-slate-400 mb-2 font-mono">{isFr ? "Cliquez sur un en-tête pour trier" : "Click a header to sort"}</p>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>{isFr ? "Solution" : "Solution"}</th>
-                    <th><span className="inline-flex items-center gap-1">TTFA <GlossaryLink term="TTFA" /></span></th>
-                    <th><span className="inline-flex items-center gap-1">WER <GlossaryLink term="WER" /></span></th>
-                    <th><span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span></th>
-                    <th>{isFr ? "Multilingue" : "Multilingual"}</th>
-                    <th><span className="inline-flex items-center gap-1">{isFr ? "Diarisation" : "Diarization"} <GlossaryLink term="Diarization" /></span></th>
-                    <th>{isFr ? "Prix/heure" : "Price/hr"}</th>
-                    <th><span className="inline-flex items-center gap-1">{isFr ? "Souverain" : "Sovereign"} <GlossaryLink term="Sovereignty" /></span></th>
+                    {([
+                      { key: "name" as CloudSTTKey, label: isFr ? "Solution" : "Solution", extra: null },
+                      { key: "latencyMs" as CloudSTTKey, label: "TTFA", extra: <GlossaryLink term="TTFA" /> },
+                      { key: "wer" as CloudSTTKey, label: "WER", extra: <GlossaryLink term="WER" /> },
+                      { key: "streaming" as CloudSTTKey, label: isFr ? "Streaming" : "Streaming", extra: <GlossaryLink term="Streaming" /> },
+                      { key: "languages" as CloudSTTKey, label: isFr ? "Multilingue" : "Multilingual", extra: null },
+                      { key: "speakerDiarization" as CloudSTTKey, label: isFr ? "Diarisation" : "Diarization", extra: <GlossaryLink term="Diarization" /> },
+                      { key: "pricePerHour" as CloudSTTKey, label: isFr ? "Prix/heure" : "Price/hr", extra: null },
+                      { key: "selfHostable" as CloudSTTKey, label: isFr ? "Souverain" : "Sovereign", extra: <GlossaryLink term="Sovereignty" /> },
+                    ] as const).map(({ key, label, extra }) => (
+                      <th key={key} className="cursor-pointer select-none" onClick={() => toggleCloud(key)}>
+                        <span className="inline-flex items-center gap-1">
+                          {label}{extra}
+                          <SortIcon active={cloudSort.key === key} dir={cloudSort.dir} />
+                        </span>
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -213,16 +265,26 @@ export default function VoiceSTT() {
               </p>
             </div>
             <div className="overflow-x-auto mb-6">
+              <p className="text-xs text-slate-400 mb-2 font-mono">{isFr ? "Cliquez sur un en-tête pour trier" : "Click a header to sort"}</p>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>{isFr ? "Solution" : "Solution"}</th>
-                    <th><span className="inline-flex items-center gap-1">TTFA <GlossaryLink term="TTFA" /></span></th>
-                    <th><span className="inline-flex items-center gap-1">WER <GlossaryLink term="WER" /></span></th>
-                    <th>{isFr ? "Params" : "Params"}</th>
-                    <th><span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span></th>
-                    <th>{isFr ? "Multilingue" : "Multilingual"}</th>
-                    <th>{isFr ? "Licence" : "License"}</th>
+                    {([
+                      { key: "name" as OpenSTTKey, label: isFr ? "Solution" : "Solution", extra: null },
+                      { key: "latencyMs" as OpenSTTKey, label: "TTFA", extra: <GlossaryLink term="TTFA" /> },
+                      { key: "wer" as OpenSTTKey, label: "WER", extra: <GlossaryLink term="WER" /> },
+                      { key: "params" as OpenSTTKey, label: isFr ? "Params" : "Params", extra: null },
+                      { key: "streaming" as OpenSTTKey, label: isFr ? "Streaming" : "Streaming", extra: <GlossaryLink term="Streaming" /> },
+                      { key: "languages" as OpenSTTKey, label: isFr ? "Multilingue" : "Multilingual", extra: null },
+                      { key: "license" as OpenSTTKey, label: isFr ? "Licence" : "License", extra: null },
+                    ] as const).map(({ key, label, extra }) => (
+                      <th key={key} className="cursor-pointer select-none" onClick={() => toggleOpen(key)}>
+                        <span className="inline-flex items-center gap-1">
+                          {label}{extra}
+                          <SortIcon active={openSort.key === key} dir={openSort.dir} />
+                        </span>
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>

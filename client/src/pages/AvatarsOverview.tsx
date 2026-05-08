@@ -4,13 +4,13 @@
  * Design: Technical Blueprint, dense comparative tables
  * i18n: EN / FR via LangContext
  */
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
 import { SolutionTableCell } from "@/components/SolutionBadge";
 import { SOLUTION_LINKS } from "@/lib/solutionLinks";
-import { Home, ChevronRight } from "lucide-react";
+import { Home, ChevronRight, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 
 function ScoreBar({ value, max = 10, color }: { value: number; max?: number; color: string }) {
   return (
@@ -24,9 +24,19 @@ function ScoreBar({ value, max = 10, color }: { value: number; max?: number; col
 }
 
 type AvatarTab = "commercial" | "opensource";
+type SortDir = "asc" | "desc";
+type CommKey = "name" | "realtime" | "bodyLanguage" | "conversation" | "latency" | "sovereignty" | "censorship";
+type OpenKey = "name" | "type" | "latency" | "quality" | "deployment" | "license";
+
+function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
+  if (!active) return <ChevronsUpDown className="w-3 h-3 opacity-40" />;
+  return dir === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />;
+}
 
 export default function AvatarsOverview() {
   const [avatarTab, setAvatarTab] = useState<AvatarTab>("commercial");
+  const [commSort, setCommSort] = useState<{ key: CommKey; dir: SortDir }>({ key: "name", dir: "asc" });
+  const [openSort, setOpenSort] = useState<{ key: OpenKey; dir: SortDir }>({ key: "name", dir: "asc" });
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
@@ -265,6 +275,40 @@ export default function AvatarsOverview() {
   const hasDetailPage = (linkKey: string) => ["heygen","tavus","synthesia","simli","anam","did","runway","beyond_presence","bithuman","hedra","lemon_slice"].includes(linkKey);
   const platformDetailId = (linkKey: string) => linkKey === "lemon_slice" ? "lemonslice" : linkKey;
 
+  function toggleComm(key: CommKey) {
+    setCommSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" });
+  }
+  function toggleOpen(key: OpenKey) {
+    setOpenSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" });
+  }
+
+  const sortedComm = useMemo(() => [...commercialPlatforms].sort((a, b) => {
+    const d = commSort.dir === "asc" ? 1 : -1;
+    switch (commSort.key) {
+      case "name":        return d * a.name.localeCompare(b.name);
+      case "realtime":    return d * ((a.realtime ? 1 : 0) - (b.realtime ? 1 : 0));
+      case "bodyLanguage":return d * a.bodyLanguage.localeCompare(b.bodyLanguage);
+      case "conversation":return d * ((a.conversation ? 1 : 0) - (b.conversation ? 1 : 0));
+      case "latency":     return d * a.latency.localeCompare(b.latency);
+      case "sovereignty": return d * ((a.sovereignty ? 1 : 0) - (b.sovereignty ? 1 : 0));
+      case "censorship":  return d * a.censorship.localeCompare(b.censorship);
+      default: return 0;
+    }
+  }), [commercialPlatforms, commSort]);
+
+  const sortedOpen = useMemo(() => [...openSourceSolutions].sort((a, b) => {
+    const d = openSort.dir === "asc" ? 1 : -1;
+    switch (openSort.key) {
+      case "name":      return d * a.name.localeCompare(b.name);
+      case "type":      return d * a.type.localeCompare(b.type);
+      case "latency":   return d * a.latency.localeCompare(b.latency);
+      case "quality":   return d * a.quality.localeCompare(b.quality);
+      case "deployment":return d * a.deployment.localeCompare(b.deployment);
+      case "license":   return d * a.license.localeCompare(b.license);
+      default: return 0;
+    }
+  }), [openSourceSolutions, openSort]);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Breadcrumb */}
@@ -309,21 +353,28 @@ export default function AvatarsOverview() {
           <div>
             {/* Summary table */}
             <div className="overflow-x-auto mb-6">
+              <p className="text-xs text-slate-400 mb-2 font-mono">{isFr ? "Cliquez sur un en-tête pour trier" : "Click a header to sort"}</p>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>{isFr ? "Plateforme" : "Platform"}</th>
-                    <th>{isFr ? "Temps réel" : "Real-time"}</th>
-                    <th>{isFr ? "Corps" : "Body"}</th>
-                    <th>{isFr ? "Conversation" : "Conversation"}</th>
-                    <th>{isFr ? "Latence" : "Latency"}</th>
-                    <th>{isFr ? "Souveraineté" : "Sovereignty"}</th>
-                    <th>{isFr ? "Censure" : "Censorship"}</th>
+                    {([
+                      { key: "name" as CommKey, label: isFr ? "Plateforme" : "Platform" },
+                      { key: "realtime" as CommKey, label: isFr ? "Temps réel" : "Real-time" },
+                      { key: "bodyLanguage" as CommKey, label: isFr ? "Corps" : "Body" },
+                      { key: "conversation" as CommKey, label: isFr ? "Conversation" : "Conversation" },
+                      { key: "latency" as CommKey, label: isFr ? "Latence" : "Latency" },
+                      { key: "sovereignty" as CommKey, label: isFr ? "Souveraineté" : "Sovereignty" },
+                      { key: "censorship" as CommKey, label: isFr ? "Censure" : "Censorship" },
+                    ] as const).map(({ key, label }) => (
+                      <th key={key} className="cursor-pointer select-none" onClick={() => toggleComm(key)}>
+                        <span className="inline-flex items-center gap-1">{label}<SortIcon active={commSort.key === key} dir={commSort.dir} /></span>
+                      </th>
+                    ))}
                     <th>{isFr ? "Liens" : "Links"}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {commercialPlatforms.map((p) => (
+                  {sortedComm.map((p) => (
                     <tr key={p.name}>
                       <td>
                         <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{p.name}</div>
@@ -438,20 +489,27 @@ export default function AvatarsOverview() {
         {avatarTab === "opensource" && (
           <div>
             <div className="overflow-x-auto mb-4">
+              <p className="text-xs text-slate-400 mb-2 font-mono">{isFr ? "Cliquez sur un en-tête pour trier" : "Click a header to sort"}</p>
               <table className="data-table">
                 <thead>
                   <tr>
-                    <th>{isFr ? "Outil" : "Tool"}</th>
-                    <th>{isFr ? "Type" : "Type"}</th>
-                    <th>{isFr ? "Latence typique" : "Typical latency"}</th>
-                    <th>{isFr ? "Qualité" : "Quality"}</th>
-                    <th>{isFr ? "Déploiement" : "Deployment"}</th>
-                    <th>{isFr ? "Licence" : "License"}</th>
+                    {([
+                      { key: "name" as OpenKey, label: isFr ? "Outil" : "Tool" },
+                      { key: "type" as OpenKey, label: isFr ? "Type" : "Type" },
+                      { key: "latency" as OpenKey, label: isFr ? "Latence typique" : "Typical latency" },
+                      { key: "quality" as OpenKey, label: isFr ? "Qualité" : "Quality" },
+                      { key: "deployment" as OpenKey, label: isFr ? "Déploiement" : "Deployment" },
+                      { key: "license" as OpenKey, label: isFr ? "Licence" : "License" },
+                    ] as const).map(({ key, label }) => (
+                      <th key={key} className="cursor-pointer select-none" onClick={() => toggleOpen(key)}>
+                        <span className="inline-flex items-center gap-1">{label}<SortIcon active={openSort.key === key} dir={openSort.dir} /></span>
+                      </th>
+                    ))}
                     <th>{isFr ? "Liens" : "Links"}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {openSourceSolutions.map((s) => (
+                  {sortedOpen.map((s) => (
                     <tr key={s.name}>
                       <td>
                         <div className="font-semibold text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>

@@ -207,32 +207,32 @@ export default function VoiceBenchmarks() {
             <table className="data-table">
               <thead>
                 <tr>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("name")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("name")}>
                     {isFr ? "Moteur" : "Engine"} <SortIcon active={sttSort.key === "name"} dir={sttSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("wer")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("wer")}>
                     <span className="inline-flex items-center gap-1">WER % <GlossaryLink term="WER" /></span> <SortIcon active={sttSort.key === "wer"} dir={sttSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("ttfa")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("ttfa")}>
                     <span className="inline-flex items-center gap-1">TTFA (ms) <GlossaryLink term="TTFA" /></span> <SortIcon active={sttSort.key === "ttfa"} dir={sttSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("ttfaTyp")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("ttfaTyp")}>
                     {isFr ? "Typ." : "Typical"} <SortIcon active={sttSort.key === "ttfaTyp"} dir={sttSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("priceMin")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("priceMin")}>
                     $/min <SortIcon active={sttSort.key === "priceMin"} dir={sttSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("langs")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("langs")}>
                     {isFr ? "Langues" : "Languages"} <SortIcon active={sttSort.key === "langs"} dir={sttSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("self")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("self")}>
                     <span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span> <SortIcon active={sttSort.key === "self"} dir={sttSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("streaming")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("streaming")}>
                     <span className="inline-flex items-center gap-1">{isFr ? "Streaming" : "Streaming"} <GlossaryLink term="Streaming" /></span> <SortIcon active={sttSort.key === "streaming"} dir={sttSort.dir} />
                   </th>
                   <th>{isFr ? "Note" : "Note"}</th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleStt("voiceAgent")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleStt("voiceAgent")}>
                     {isFr ? "Agent vocal" : "Voice Agent"} <SortIcon active={sttSort.key === "voiceAgent"} dir={sttSort.dir} />
                   </th>
                 </tr>
@@ -320,22 +320,22 @@ export default function VoiceBenchmarks() {
             <table className="data-table">
               <thead>
                 <tr>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("name")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleTts("name")}>
                     {isFr ? "Moteur" : "Engine"} <SortIcon active={ttsSort.key === "name"} dir={ttsSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("ttfa")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleTts("ttfa")}>
                     <span className="inline-flex items-center gap-1">TTFA (ms) <GlossaryLink term="TTFA" /></span> <SortIcon active={ttsSort.key === "ttfa"} dir={ttsSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("ttfaTyp")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleTts("ttfaTyp")}>
                     {isFr ? "Typ." : "Typical"} <SortIcon active={ttsSort.key === "ttfaTyp"} dir={ttsSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("elo")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleTts("elo")}>
                     <span className="inline-flex items-center gap-1">ELO <GlossaryLink term="ELO Score" /></span> <SortIcon active={ttsSort.key === "elo"} dir={ttsSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("priceMin")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleTts("priceMin")}>
                     $/min <SortIcon active={ttsSort.key === "priceMin"} dir={ttsSort.dir} />
                   </th>
-                  <th className="cursor-pointer select-none hover:bg-slate-100" onClick={() => toggleTts("self")}>
+                  <th className="cursor-pointer select-none" onClick={() => toggleTts("self")}>
                     <span className="inline-flex items-center gap-1">{isFr ? "Souveraineté" : "Sovereignty"} <GlossaryLink term="Sovereignty" /></span> <SortIcon active={ttsSort.key === "self"} dir={ttsSort.dir} />
                   </th>
                   <th>{isFr ? "Note" : "Note"}</th>

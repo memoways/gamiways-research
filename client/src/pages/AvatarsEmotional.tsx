@@ -5,12 +5,22 @@
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
  */
+import { useState, useMemo } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
-import { Home, ChevronRight } from "lucide-react";
+import { Home, ChevronRight, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
+
+type SortDir = "asc" | "desc";
+type EmotKey = "name" | "configurable" | "creator" | "realtime";
+
+function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
+  if (!active) return <ChevronsUpDown className="w-3 h-3 opacity-40" />;
+  return dir === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />;
+}
 
 export default function AvatarsEmotional() {
+  const [sort, setSort] = useState<{ key: EmotKey; dir: SortDir }>({ key: "name", dir: "asc" });
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
@@ -111,24 +121,36 @@ export default function AvatarsEmotional() {
             {isFr ? "Paysage concurrentiel — Emotional AI" : "Competitive landscape — Emotional AI"}
           </h3>
           <div className="overflow-x-auto">
+            <p className="text-xs text-slate-400 mb-2 font-mono">{isFr ? "Cliquez sur un en-tête pour trier" : "Click a header to sort"}</p>
             <table className="data-table">
               <thead>
                 <tr>
-                  <th>{isFr ? "Plateforme" : "Platform"}</th>
-                  <th>{isFr ? "Émotions configurables" : "Configurable emotions"}</th>
-                  <th>{isFr ? "Contrôle créateur" : "Creator control"}</th>
-                  <th>{isFr ? "Temps réel" : "Real-time"}</th>
+                  {([
+                    { key: "name" as EmotKey, label: isFr ? "Plateforme" : "Platform" },
+                    { key: "configurable" as EmotKey, label: isFr ? "Émotions configurables" : "Configurable emotions" },
+                    { key: "creator" as EmotKey, label: isFr ? "Contrôle créateur" : "Creator control" },
+                    { key: "realtime" as EmotKey, label: isFr ? "Temps réel" : "Real-time" },
+                  ] as const).map(({ key, label }) => (
+                    <th key={key} className="cursor-pointer select-none" onClick={() => setSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" })}>
+                      <span className="inline-flex items-center gap-1">{label}<SortIcon active={sort.key === key} dir={sort.dir} /></span>
+                    </th>
+                  ))}
                   <th>{isFr ? "Note" : "Note"}</th>
                 </tr>
               </thead>
               <tbody>
-                {[
+                {useMemo(() => [
                   { name: "Tavus (Raven-1)", configurable: "✓ Partiel", creator: "✗ Implicite", realtime: "✓", note: isFr ? "Perception émotionnelle entrante (Raven-1), pas de toolbox créateur" : "Incoming emotional perception (Raven-1), no creator toolbox" },
                   { name: "LemonSlice (LS-2.1)", configurable: "✓ Partiel", creator: "✓ API", realtime: "✓", note: isFr ? "Emotion API + Action API, mais pas de design de répertoire" : "Emotion API + Action API, but no repertoire design" },
                   { name: "Anam", configurable: "✓ Partiel", creator: "✗ Implicite", realtime: "✓", note: isFr ? "Intelligence émotionnelle intégrée, non configurable" : "Built-in emotional intelligence, not configurable" },
                   { name: "HeyGen, Simli, D-ID", configurable: "✗", creator: "✗", realtime: "✓", note: isFr ? "Lip-sync uniquement, pas de couche émotionnelle" : "Lip-sync only, no emotional layer" },
-                  { name: isFr ? "Système cible (hypothèse)" : "Target system (hypothesis)", configurable: "✓ Complet", creator: "✓ Toolbox", realtime: "✓", note: isFr ? "Répertoire + transitions + activation contextuelle + direction acteur — à valider par la recherche" : "Repertoire + transitions + contextual activation + actor direction — to be validated by research" },
-                ].map((row) => (
+                  { name: isFr ? "Système cible (hypothèse)" : "Target system (hypothesis)", configurable: "✓ Complet", creator: "✓ Toolbox", realtime: "✓", note: isFr ? "Répertoire + transitions + activation contextuelle + direction acteur — à valider" : "Repertoire + transitions + contextual activation + actor direction — to be validated" },
+                ].sort((a, b) => {
+                  const d = sort.dir === "asc" ? 1 : -1;
+                  const av = (a as any)[sort.key] ?? "";
+                  const bv = (b as any)[sort.key] ?? "";
+                  return d * String(av).localeCompare(String(bv));
+                }), [sort, isFr]).map((row) => (
                   <tr key={row.name}>
                     <td className="font-semibold text-sm text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.name}</td>
                     <td className="text-xs text-slate-600">{row.configurable}</td>

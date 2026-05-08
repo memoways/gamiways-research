@@ -4,12 +4,22 @@
  * Design: Technical Blueprint
  * i18n: EN / FR via LangContext
  */
+import { useState, useMemo } from "react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import SectionHeader from "@/components/SectionHeader";
-import { Home, ChevronRight } from "lucide-react";
+import { Home, ChevronRight, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
+
+type SortDir = "asc" | "desc";
+type MktKey = "segment" | "value2025" | "valueTarget" | "cagr" | "source";
+
+function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
+  if (!active) return <ChevronsUpDown className="w-3 h-3 opacity-40" />;
+  return dir === "asc" ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />;
+}
 
 export default function AvatarsMarket() {
+  const [sort, setSort] = useState<{ key: MktKey; dir: SortDir }>({ key: "segment", dir: "asc" });
   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
@@ -68,18 +78,30 @@ export default function AvatarsMarket() {
 
         {/* Market table */}
         <div className="overflow-x-auto mb-8">
+          <p className="text-xs text-slate-400 mb-2 font-mono">{isFr ? "Cliquez sur un en-tête pour trier" : "Click a header to sort"}</p>
           <table className="data-table">
             <thead>
               <tr>
-                <th>{isFr ? "Segment" : "Segment"}</th>
-                <th>{isFr ? "Valeur 2025" : "2025 Value"}</th>
-                <th>{isFr ? "Valeur cible" : "Target value"}</th>
-                <th>CAGR</th>
-                <th>{isFr ? "Source" : "Source"}</th>
+                {([
+                  { key: "segment" as MktKey, label: isFr ? "Segment" : "Segment" },
+                  { key: "value2025" as MktKey, label: isFr ? "Valeur 2025" : "2025 Value" },
+                  { key: "valueTarget" as MktKey, label: isFr ? "Valeur cible" : "Target value" },
+                  { key: "cagr" as MktKey, label: "CAGR" },
+                  { key: "source" as MktKey, label: isFr ? "Source" : "Source" },
+                ] as const).map(({ key, label }) => (
+                  <th key={key} className="cursor-pointer select-none" onClick={() => setSort(prev => prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" })}>
+                    <span className="inline-flex items-center gap-1">{label}<SortIcon active={sort.key === key} dir={sort.dir} /></span>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {marketOpportunity.map((m) => (
+              {useMemo(() => [...marketOpportunity].sort((a, b) => {
+                const d = sort.dir === "asc" ? 1 : -1;
+                const av = String((a as any)[sort.key] ?? "");
+                const bv = String((b as any)[sort.key] ?? "");
+                return d * av.localeCompare(bv);
+              }), [marketOpportunity, sort]).map((m) => (
                 <tr key={m.segment}>
                   <td className="font-medium text-slate-900 text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{m.segment}</td>
                   <td><span className="text-sm font-bold font-mono" style={{ color: "oklch(0.72 0.18 200)" }}>{m.value2025}</span></td>
