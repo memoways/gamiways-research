@@ -5,7 +5,7 @@
  * i18n: EN (default) / FR via LangContext
  */
 import { useState } from "react";
-import { ChevronDown, ChevronUp, CheckCircle, AlertCircle } from "lucide-react";
+import { ChevronDown, ChevronUp, CheckCircle, AlertCircle, ArrowRight, ExternalLink } from "lucide-react";
 import ProductArchDiagram from "@/components/diagrams/ProductArchDiagram";
 import GapMatrixDiagram from "@/components/diagrams/GapMatrixDiagram";
 import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
@@ -393,6 +393,202 @@ export default function Project() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ── SECTION 6: CORE ENGINE VISION ─────────────────────────────────── */}
+        <section>
+          <SectionDivider number="06" title="Core Engine — Vision & Principles" titleFr="Core Engine — Vision & Principes" isFr={isFr} />
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "De la livraison de contenu à l'orchestration d'expériences." : "From content delivery to interactive experience orchestration."}
+            </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl mb-6" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Le GamiWays Core est un moteur d'orchestration headless pour expériences interactives guidées. Il n'est pas une application — c'est une couche fondation réutilisable par de multiples produits : learning, storytelling, médiation culturelle, formation corporate."
+                : "The GamiWays Core is a headless orchestration engine for guided interactive experiences. It is not an application — it is a foundation layer reusable across multiple products: learning, storytelling, cultural mediation, corporate training."}
+            </p>
+          </div>
+
+          {/* Use cases */}
+          <div className="grid sm:grid-cols-2 gap-3 mb-8">
+            {[
+              { icon: "📚", title: isFr ? "Learning" : "Learning", desc: isFr ? "Expériences pédagogiques adaptatives — l'avatar guide l'apprenant à travers des objectifs structurés, mémorise sa progression et adapte le contenu." : "Adaptive learning experiences — the avatar guides learners through structured objectives, remembers their progress and adapts content." },
+              { icon: "🎭", title: isFr ? "Storytelling" : "Storytelling", desc: isFr ? "Narrations interactives où les personnages se souviennent, évoluent et répondent aux choix du spectateur — au-delà du dialogue linéaire." : "Interactive narratives where characters remember, evolve and respond to viewer choices — beyond linear dialogue." },
+              { icon: "🏛️", title: isFr ? "Médiation culturelle" : "Cultural Mediation", desc: isFr ? "Guides virtuels pour musées, sites patrimoniaux et expositions — expériences riches en contexte, multilingues, souveraines." : "Virtual guides for museums, heritage sites and exhibitions — context-rich, multilingual, sovereign experiences." },
+              { icon: "🏢", title: isFr ? "Formation corporate" : "Corporate Training", desc: isFr ? "Simulations de situations professionnelles avec avatars spécialisés — onboarding, compliance, soft skills, évaluation continue." : "Professional situation simulations with specialized avatars — onboarding, compliance, soft skills, continuous assessment." },
+            ].map((uc) => (
+              <div key={uc.title} className="flex gap-3 p-4 border border-slate-200 rounded-lg bg-white">
+                <span className="text-xl shrink-0">{uc.icon}</span>
+                <div>
+                  <div className="text-sm font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{uc.title}</div>
+                  <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{uc.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 6 Principles */}
+          <div className="mb-4">
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "6 principes directeurs" : "6 guiding principles"}
+            </h3>
+            <div className="space-y-2">
+              {[
+                { num: "01", title: isFr ? "Experience First" : "Experience First", desc: isFr ? "La technologie sert la conversation — jamais l'inverse. Chaque choix architectural est évalué à l'aune de l'expérience utilisateur finale." : "Technology serves the conversation — never the reverse. Every architectural choice is evaluated against the final user experience." },
+                { num: "02", title: isFr ? "Orchestration over Generation" : "Orchestration over Generation", desc: isFr ? "Décider avant de générer. Le Game Master évalue le contexte global et guide l'expérience de façon asynchrone — la génération LLM est une conséquence, pas un point de départ." : "Decide before generating. The Game Master evaluates global context and guides the experience asynchronously — LLM generation is a consequence, not a starting point." },
+                { num: "03", title: isFr ? "Context is the Product" : "Context is the Product", desc: isFr ? "Ce qu'on injecte dans le LLM définit ce qu'on reçoit. La gestion du contexte (mémoire, monde, connaissance) est le principal différenciateur technique." : "What we inject into the LLM defines what we receive. Context management (memory, world, knowledge) is the primary technical differentiator." },
+                { num: "04", title: isFr ? "LLM-Agnostic Always" : "LLM-Agnostic Always", desc: isFr ? "Aucun lock-in fournisseur. Le Core peut basculer entre OpenAI, Anthropic, Mistral ou des modèles self-hosted sans changer la logique métier." : "No provider lock-in. The Core can switch between OpenAI, Anthropic, Mistral or self-hosted models without changing business logic." },
+                { num: "05", title: isFr ? "Keep Core Small" : "Keep Core Small", desc: isFr ? "Le Core n'inclut pas l'UI, la voix, les avatars vidéo ni les outils d'authoring. Ces couches se construisent par-dessus — le Core reste minimal, focalisé, stable." : "The Core does not include UI, voice, video avatars or authoring tools. These layers build on top — the Core stays minimal, focused, stable." },
+                { num: "06", title: isFr ? "Measure Everything That Matters" : "Measure Everything That Matters", desc: isFr ? "Latence, coût, tokens, qualité — mesurés depuis le premier jour. L'itération basée sur des preuves, pas sur des intuitions." : "Latency, cost, tokens, quality — measured from day one. Evidence-based iteration, not intuition." },
+              ].map((p) => (
+                <div key={p.num} className="flex gap-4 p-4 border border-slate-200 rounded-lg bg-white">
+                  <span className="text-xs font-black font-mono shrink-0 mt-0.5" style={{ color: "oklch(0.55 0.20 200)" }}>{p.num}</span>
+                  <div>
+                    <div className="text-sm font-bold text-slate-900 mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{p.title}</div>
+                    <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{p.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── SECTION 7: KEY CONCEPTS ──────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="07" title="Key Concepts" titleFr="Concepts Clés" isFr={isFr} />
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Avatar + Game Master : deux agents, une expérience." : "Avatar + Game Master: two agents, one experience."}
+            </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl mb-6" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Le Core est structuré autour de concepts précis qui définissent un vocabulaire commun entre Gamilab et Memoways."
+                : "The Core is structured around precise concepts that define a shared vocabulary between Gamilab and Memoways."}
+            </p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>{isFr ? "Concept" : "Concept"}</th>
+                  <th>{isFr ? "Rôle" : "Role"}</th>
+                  <th>{isFr ? "Description" : "Description"}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { concept: "Avatar", role: isFr ? "Acteur conversationnel" : "Conversational actor", desc: isFr ? "Persona IA avec identité, personnalité, autonomie et mémoire propre. Surface d'interaction — pas le produit lui-même." : "AI persona with identity, personality, autonomy and its own memory. Interaction surface — not the product itself." },
+                  { concept: "Game Master (GM)", role: isFr ? "Directeur asynchrone" : "Async director", desc: isFr ? "Comprend l'état global de l'expérience, guide de façon asynchrone via triggers et directives. Décide quand intervenir, changer d'avatar ou injecter une guidance." : "Understands global experience state, guides asynchronously via triggers and directives. Decides when to intervene, switch avatars or inject guidance." },
+                  { concept: "Session", role: isFr ? "Conteneur durable" : "Durable container", desc: isFr ? "Conteneur pour un run utilisateur dans un scénario. Persiste entre les conversations, maintient l'état global de progression." : "Container for a user run within a scenario. Persists across conversations, maintains global progression state." },
+                  { concept: "Conversation", role: isFr ? "Épisode de dialogue" : "Dialogue episode", desc: isFr ? "Épisode borné de dialogue avec un avatar dans une session. Chaque conversation a son propre contexte de fenêtre glissante." : "Bounded dialogue episode with one avatar within a session. Each conversation has its own sliding window context." },
+                  { concept: "Scenario", role: isFr ? "Template d'expérience" : "Experience template", desc: isFr ? "Définit les objectifs, les avatars assignés, les sources de connaissance, les règles de progression et les conditions de fin." : "Defines objectives, assigned avatars, knowledge sources, progression rules and completion conditions." },
+                  { concept: "Memory", role: isFr ? "Système 3 couches" : "3-layer system", desc: isFr ? "Working memory (fenêtre glissante + résumé cumulatif), persistance épisodique (résumés de session), faits utilisateur long terme. Politique de sélection déterministe." : "Working memory (sliding window + cumulative summary), episodic persistence (session summaries), long-term user facts. Deterministic selection policy." },
+                  { concept: "Context Manager", role: isFr ? "Assembleur de contexte" : "Context assembler", desc: isFr ? "Assemble 3 dimensions : Mémoire (ce qui s'est passé), Expérience/Monde (règles, objectifs), Connaissance (sources externes). Injection déterministe dans le LLM." : "Assembles 3 dimensions: Memory (what happened), Experience/World (rules, objectives), Knowledge (external sources). Deterministic injection into the LLM." },
+                  { concept: "Knowledge Pipeline", role: isFr ? "RAG interne" : "Internal RAG", desc: isFr ? "Ingestion (PDF, MD, texte), chunking, embeddings, retrieval pgvector, filtrage contextuel. Compaction et injection dans le flux GM/Avatar." : "Ingestion (PDF, MD, text), chunking, embeddings, pgvector retrieval, context-aware filtering. Compaction and injection into the GM/Avatar flow." },
+                ].map((row) => (
+                  <tr key={row.concept}>
+                    <td><span className="font-bold text-xs font-mono" style={{ color: "oklch(0.45 0.18 200)" }}>{row.concept}</span></td>
+                    <td><span className="text-xs font-semibold text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{row.role}</span></td>
+                    <td className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{row.desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* ── SECTION 8: ROADMAP ───────────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="08" title="Build Roadmap" titleFr="Feuille de Route" isFr={isFr} />
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Trois phases, une vision." : "Three phases, one vision."}
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {[
+              {
+                phase: "A",
+                title: isFr ? "Minimal Core" : "Minimal Core",
+                period: "April → July 2026",
+                status: isFr ? "En cours" : "In Progress",
+                statusColor: "oklch(0.50 0.18 50)",
+                statusBg: "oklch(0.97 0.04 50)",
+                color: "oklch(0.55 0.20 200)",
+                desc: isFr ? "Construire et valider la boucle fondamentale : entrée utilisateur → assemblage contexte → réponse avatar orchestrée → mise à jour mémoire. Back-office opérationnel. Prototype text-based avec un scénario réel." : "Build and validate the fundamental loop: user input → context assembly → orchestrated avatar response → memory update. Operational back-office. Text-based prototype with one real scenario.",
+                items: isFr
+                  ? ["Plateforme monorepo (pnpm + Turborepo)", "Boucle LLM avec abstraction fournisseur", "Game Master asynchrone v1 (Director–Actor)", "Memory System v3 (3 couches)", "Back-office Next.js + inspecteur runtime", "Observabilité LLM (Langfuse self-hosted)", "Prototype d'été avec scénario réel"]
+                  : ["Monorepo platform (pnpm + Turborepo)", "LLM loop with provider abstraction", "Async Game Master v1 (Director–Actor)", "Memory System v3 (3 layers)", "Next.js back-office + runtime inspector", "LLM observability (Langfuse self-hosted)", "Summer prototype with real scenario"],
+              },
+              {
+                phase: "B",
+                title: isFr ? "Expériences Enrichies" : "Enhanced Experiences",
+                period: "TBD",
+                status: isFr ? "Planifié" : "Planned",
+                statusColor: "oklch(0.50 0.01 265)",
+                statusBg: "oklch(0.96 0.01 265)",
+                color: "oklch(0.65 0.18 145)",
+                desc: isFr ? "Ajouter la voix (STT + TTS streaming), les déclencheurs multimédia, plusieurs scénarios, des systèmes de mémoire plus riches et un frontend utilisateur." : "Add voice (STT + TTS streaming), multimedia triggers, multiple scenarios, richer memory systems, and a user-facing frontend.",
+                items: isFr
+                  ? ["Intégration STT (Deepgram / Whisper)", "TTS streaming (Cartesia / Inworld TTS-2)", "Déclencheurs multimédia pilotés par GM", "Frontend utilisateur avec historique de session", "Moteur de progression guidée"]
+                  : ["STT integration (Deepgram / Whisper)", "TTS streaming (Cartesia / Inworld TTS-2)", "GM-driven multimedia triggers", "User frontend with session history", "Guided progression engine"],
+              },
+              {
+                phase: "C",
+                title: isFr ? "Recherche & Scale" : "Research & Scale Readiness",
+                period: "TBD",
+                status: isFr ? "Planifié" : "Planned",
+                statusColor: "oklch(0.50 0.01 265)",
+                statusBg: "oklch(0.96 0.01 265)",
+                color: "oklch(0.72 0.18 50)",
+                desc: isFr ? "Préparer la plateforme pour les intégrations avancées : avatars expressifs, multi-tenancy, scaling, SDKs et partenariats." : "Prepare the platform for advanced integrations: expressive avatars, multi-tenancy, scaling, SDKs and partnerships.",
+                items: isFr
+                  ? ["Intégration avatar vidéo expressif temps réel", "Multi-tenancy & sécurité (JWT, RBAC)", "SDK public & API versionnée", "Documentation développeur", "Partenariats de recherche"]
+                  : ["Real-time expressive video avatar integration", "Multi-tenancy & security (JWT, RBAC)", "Public SDK & versioned API", "Developer documentation", "Research partnerships"],
+              },
+            ].map((ph) => (
+              <div key={ph.phase} className="border border-slate-200 rounded-lg overflow-hidden bg-white">
+                <div className="px-5 py-4 border-b border-slate-200" style={{ borderLeft: `4px solid ${ph.color}` }}>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-black font-mono px-2 py-0.5 rounded" style={{ color: ph.color, background: `${ph.color}15` }}>PHASE {ph.phase}</span>
+                      <span className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{ph.title}</span>
+                      <span className="text-xs font-mono text-slate-400">{ph.period}</span>
+                    </div>
+                    <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ color: ph.statusColor, background: ph.statusBg }}>{ph.status}</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-2 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{ph.desc}</p>
+                </div>
+                <div className="px-5 py-3">
+                  <div className="flex flex-wrap gap-2">
+                    {ph.items.map((item) => (
+                      <span key={item} className="text-xs px-2 py-1 rounded border border-slate-200 text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Link to Project Status */}
+          <div className="mt-6 p-4 border border-slate-200 rounded-lg bg-slate-50 flex items-center justify-between gap-4">
+            <div>
+              <div className="text-sm font-bold text-slate-900 mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Suivi détaillé des épics" : "Detailed epic tracking"}
+              </div>
+              <p className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr ? "Tableau complet des épics avec statut ✅/🔄/⏳ — mis à jour depuis le repo de développement." : "Full epic table with ✅/🔄/⏳ status — synced from the development repository."}
+              </p>
+            </div>
+            <InternalLink
+              to="/project/status"
+              className="shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-4 py-2 transition-all hover:opacity-90"
+              style={{ background: "oklch(0.55 0.20 200)", fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}
+            >
+              {isFr ? "Voir l'état d'avancement" : "View build status"}
+              <ArrowRight size={14} />
+            </InternalLink>
           </div>
         </section>
 

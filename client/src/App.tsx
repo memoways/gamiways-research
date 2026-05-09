@@ -19,6 +19,7 @@ import PipelinePhase1 from "@/pages/PipelinePhase1";
 
 // ── GamiWays sub-pages ───────────────────────────────────────────────────
 import GamiWaysArchitecture from "@/pages/GamiWaysArchitecture";
+import ProjectStatus from "@/pages/ProjectStatus";
 import GamiWaysGaps from "@/pages/GamiWaysGaps";
 import GamiWaysAcademic from "@/pages/GamiWaysAcademic";
 
@@ -62,6 +63,7 @@ function Router() {
 
           {/* ── The Project ───────────────────────────────────────────────── */}
           <Route path="/project" component={Project} />
+          <Route path="/project/status" component={ProjectStatus} />
           <Route path="/research" component={Research} />
           <Route path="/research/architecture" component={GamiWaysArchitecture} />
           <Route path="/research/gaps" component={GamiWaysGaps} />
