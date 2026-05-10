@@ -752,25 +752,6 @@ export default function PipelinePhase1() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs">
-          <InternalLink
-            to="/voice/tts"
-            className="cta-back"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            {isFr ? "Retour" : "Back"}
-          </InternalLink>
-          <span className="text-slate-300">/</span>
-          <span className="text-xs font-mono text-slate-500 hidden sm:block">
-            {isFr ? "Phase 1 MVP" : "Phase 1 MVP"}
-          </span>
-          <span className="text-slate-300 hidden sm:block">/</span>
-          <span className="text-sm font-semibold text-slate-900">
-            {isFr ? "Pipeline Vocal" : "Voice Pipeline"}
-          </span>
-        </div>
-      </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Page title */}

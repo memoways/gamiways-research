@@ -58,17 +58,6 @@ export default function PricingComparison() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 sticky top-14 z-10">
-        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center gap-4">
-          <InternalLink to="/avatars" className="flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm transition-colors">
-            ← {lang === "fr" ? "État de l'Art" : "State of the Art"}
-          </InternalLink>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm font-medium text-slate-900">
-            {lang === "fr" ? "Simulateur de coûts" : "Cost Simulator"}
-          </span>
-        </div>
-      </div>
 
       <div className="max-w-6xl mx-auto px-6 py-10">
         {/* Title */}

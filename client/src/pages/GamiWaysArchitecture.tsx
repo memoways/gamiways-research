@@ -216,32 +216,6 @@ export default function GamiWaysArchitecture() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Sub-nav */}
-      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs">
-          <InternalLink to="/research" className="text-xs font-mono text-slate-400 hover:text-slate-700 transition-colors">
-            {isFr ? "← Défis Techniques" : "← Technical Challenges"}
-          </InternalLink>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm font-semibold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-            {isFr ? "Architecture & Stack" : "Architecture & Stack"}
-          </span>
-          <div className="ml-auto flex items-center gap-3">
-            <a
-              href="https://github.com/gami-lab/gami-digidouble-core"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-xs font-mono text-slate-400 hover:text-slate-700 transition-colors"
-            >
-              <ExternalLink size={11} />
-              gami-digidouble-core
-            </a>
-            <InternalLink to="/project/status" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">
-              {isFr ? "→ Build Status" : "→ Build Status"}
-            </InternalLink>
-          </div>
-        </div>
-      </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-16">
 

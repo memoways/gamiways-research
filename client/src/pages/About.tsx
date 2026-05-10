@@ -7,7 +7,7 @@
  */
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
-import { Home, ChevronRight, BookOpen, Mic, Video, FlaskConical, BarChart2, Info, Users, Target, Layers } from "lucide-react";
+import { BookOpen, Mic, Video, FlaskConical, BarChart2, Info, Users, Target, Layers } from "lucide-react";
 
 export default function About() {
   const { t } = useLang();
@@ -15,21 +15,8 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Breadcrumb */}
-      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          <InternalLink to="/" className="text-slate-400 hover:text-slate-700 transition-colors" aria-label={isFr ? "Accueil" : "Home"}><Home size={12} /></InternalLink>
-          <ChevronRight size={11} className="text-slate-300" />
-          <span className="font-semibold" style={{ color: "oklch(0.45 0.15 200)" }}>{isFr ? "À propos" : "About"}</span>
-          <div className="ml-auto">
-            <InternalLink to="/glossary" className="text-xs font-mono font-bold px-2 py-0.5 rounded" style={{ background: "oklch(0.55 0.20 200 / 0.1)", color: "oklch(0.45 0.15 200)" }}>
-              {isFr ? "→ Glossaire" : "→ Glossary"}
-            </InternalLink>
-          </div>
-        </div>
-      </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         {/* Header */}
         <div className="mb-10">
           <div className="flex items-baseline gap-3 mb-2">

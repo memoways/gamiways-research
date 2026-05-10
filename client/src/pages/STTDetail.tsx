@@ -111,18 +111,8 @@ export default function STTDetail() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs">
-          <InternalLink to="/voice/stt" className="cta-back">
-            <ChevronLeft className="w-4 h-4" />
-            {isFr ? "Retour" : "Back"}
-          </InternalLink>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm font-semibold text-slate-900 truncate">{stt.name}</span>
-        </div>
-      </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Hero */}
         <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6 shadow-sm">
           <div className="flex flex-wrap items-start justify-between gap-4 mb-4">

@@ -53,19 +53,6 @@ export default function AvatarsEmotional() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Breadcrumb */}
-      <div className="bg-white border-b border-slate-100 sticky top-14 z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-1 text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          <InternalLink to="/" className="text-slate-400 hover:text-slate-700 transition-colors" aria-label={isFr ? "Accueil" : "Home"}><Home size={12} /></InternalLink>
-          <ChevronRight size={11} className="text-slate-300" />
-          <InternalLink to="/avatars" className="text-slate-500 hover:text-slate-800 transition-colors">Video Avatars</InternalLink>
-          <ChevronRight size={11} className="text-slate-300" />
-          <span className="font-semibold" style={{ color: "oklch(0.45 0.15 145)" }}>{isFr ? "Emotional Toolbox" : "Emotional Toolbox"}</span>
-          <div className="ml-auto">
-            <InternalLink to="/research/behavior" className="text-xs font-mono text-slate-500 hover:text-slate-900 transition-colors">{isFr ? "← Comportement" : "← Behavior"}</InternalLink>
-          </div>
-        </div>
-      </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <SectionHeader
