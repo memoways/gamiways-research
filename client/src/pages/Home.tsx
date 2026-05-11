@@ -96,7 +96,7 @@ export default function Home() {
         { label: isFr ? "Simulateur de Coûts" : "Cost Simulator", to: "/avatars/pricing" },
         { label: isFr ? "Business & Marché" : "Business & Market", to: "/avatars/market" },
         { label: isFr ? "Comportement & Expressivité" : "Behavior & Expressiveness", to: "/research/behavior" },
-        { label: "Emotional Toolbox", to: "/research/emotional" },
+        { label: isFr ? "Comportement & Design Émotionnel" : "Behavior & Emotional Design", to: "/research/behavior" },
       ],
     },
   ];

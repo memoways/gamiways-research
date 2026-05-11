@@ -425,7 +425,7 @@ export default function Research() {
           <div className="flex flex-wrap gap-2 mt-4">
             {[
               { label: isFr ? "Axe 1 — Latence & UX" : "Axis 1 — Latency & UX", color: "oklch(0.60 0.20 25)" },
-              { label: isFr ? "Axe 2 — Comportement Avatar" : "Axis 2 — Avatar Behavior", color: "oklch(0.72 0.18 50)" },
+              { label: isFr ? "Comportement Avatar" : "Avatar Behavior", color: "oklch(0.72 0.18 50)" },
               { label: isFr ? "Axe 3 — Orchestration" : "Axis 3 — Orchestration", color: "oklch(0.65 0.18 145)" },
             ].map((ax) => (
               <span key={ax.label} className="text-xs font-mono font-bold px-3 py-1 rounded-full" style={{ background: ax.color + "18", color: ax.color, border: `1px solid ${ax.color}44` }}>
@@ -754,7 +754,7 @@ export default function Research() {
 
         {/* ── SECTION 3: AVATAR ────────────────────────────────────────────── */}
         <section>
-          <SectionDivider number="04" title="Axis 2 — Avatar Behavior & Expressiveness" titleFr="Axe 2 — Comportement & Expressivité Avatar" isFr={isFr} />
+          <SectionDivider number="04" title="Avatar Behavior & Emotional Design" titleFr="Comportement Avatar & Design Émotionnel" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Deux flux indépendants, une sortie dual-stream" : "Two independent streams, one dual-stream output"}
@@ -762,12 +762,12 @@ export default function Research() {
             <p className="text-sm text-slate-400 font-mono mb-2">Computer Vision & Speech</p>
             <p className="text-sm text-slate-500 leading-relaxed max-w-3xl mb-2" style={{ fontFamily: "'Source Serif 4', serif" }}>
               {isFr
-                ? "Le système sépare strictement l'analyse des sources vidéo (Flux A, offline, non-critique) de la construction de l'avatar (Flux B, R&D principal). La vidéo d'entraînement de l'avatar n'est jamais jouée dans l'expérience. Le défi de l'Axe 2 est de rendre le Flux B assez rapide pour respecter le budget latence de l'Axe 1."
-                : "The system strictly separates source video analysis (Stream A, offline, non-critical) from avatar construction (Stream B, main R&D). The avatar training video is never played in the experience. Axis 2's challenge is making Stream B fast enough to meet Axis 1's latency budget."}
+                ? "Le système sépare strictement l'analyse des sources vidéo (Flux A, offline, non-critique) de la construction de l'avatar (Flux B, R&D principal). La vidéo d'entraînement de l'avatar n'est jamais jouée dans l'expérience. Le défi est de rendre le Flux B assez rapide pour respecter le budget latence de l'expérience temps réel."
+                : "The system strictly separates source video analysis (Stream A, offline, non-critical) from avatar construction (Stream B, main R&D). The avatar training video is never played in the experience. The challenge is making Stream B fast enough to meet the real-time latency budget."}
             </p>
             <div className="flex flex-wrap gap-3 mb-4 text-xs font-mono">
               <span className="px-2 py-1 rounded" style={{ background: "#dcfce7", color: "#15803d" }}>{isFr ? "Flux A : Analyse offline — standard, non-critique" : "Stream A: Offline analysis — standard, non-critical"}</span>
-              <span className="px-2 py-1 rounded" style={{ background: "#fee2e2", color: "#dc2626" }}>{isFr ? "Flux B : Construction avatar — enjeu R&D principal (Axe 2b)" : "Stream B: Avatar construction — main R&D challenge (Axis 2b)"}</span>
+              <span className="px-2 py-1 rounded" style={{ background: "#fee2e2", color: "#dc2626" }}>{isFr ? "Flux B : Construction avatar — enjeu principal temps réel" : "Stream B: Avatar construction — main real-time challenge"}</span>
               <span className="px-2 py-1 rounded" style={{ background: "#eff6ff", color: "#0891b2" }}>{isFr ? "Sortie : Dual-stream synchronisé — expertise interne" : "Output: Synchronized dual-stream — internal expertise"}</span>
             </div>
           </div>

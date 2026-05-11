@@ -39,7 +39,6 @@ import Glossary from "@/pages/Glossary";
 import AvatarsOverview from "@/pages/AvatarsOverview";
 import AvatarsMarket from "@/pages/AvatarsMarket";
 import AvatarsBehavior from "@/pages/AvatarsBehavior";
-import AvatarsEmotional from "@/pages/AvatarsEmotional";
 import PricingComparison from "@/pages/PricingComparison";
 
 /** Remonte automatiquement en haut à chaque changement de route */
@@ -70,7 +69,6 @@ function Router() {
           <Route path="/research/academic" component={GamiWaysAcademic} />
           {/* Avatar sub-pages also under /research for semantic grouping */}
           <Route path="/research/behavior" component={AvatarsBehavior} />
-          <Route path="/research/emotional" component={AvatarsEmotional} />
 
           {/* ── Voice Pipeline ────────────────────────────────────────────── */}
           <Route path="/voice/tts" component={VoiceTTS} />
