@@ -37,7 +37,6 @@ import Glossary from "@/pages/Glossary";
 
 // ── Avatars pages ──────────────────────────────────────────────────────────
 import AvatarsOverview from "@/pages/AvatarsOverview";
-import AvatarsMarket from "@/pages/AvatarsMarket";
 import AvatarsBehavior from "@/pages/AvatarsBehavior";
 import PricingComparison from "@/pages/PricingComparison";
 
@@ -84,7 +83,6 @@ function Router() {
           {/* ── Video Avatars ─────────────────────────────────────────────── */}
           <Route path="/avatars" component={AvatarsOverview} />
           <Route path="/avatars/pricing" component={PricingComparison} />
-          <Route path="/avatars/market" component={AvatarsMarket} />
           <Route path="/platform/:id" component={PlatformDetail} />
 
           {/* ── About & Glossary ──────────────────────────────────────────── */}

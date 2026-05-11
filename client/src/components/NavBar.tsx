@@ -70,7 +70,6 @@ const NAV_MENUS: NavMenu[] = [
     items: [
       { href: "/avatars", label: "Streaming Video Avatars", labelFr: "Avatars Vidéo Streaming", desc: "11+ streaming avatar platforms compared", descFr: "11+ plateformes d'avatars streaming comparées" },
       { href: "/avatars/pricing", label: "Cost Simulator", labelFr: "Simulateur de coûts", desc: "Interactive pricing calculator — slider, filters, fixed vs variable costs", descFr: "Calculateur interactif — slider, filtres, coûts fixes vs variables", highlight: true, highlightColor: "oklch(0.60 0.18 50)" },
-      { href: "/avatars/market", label: "Business & Market", labelFr: "Business & Marché", desc: "Business challenges & market opportunities", descFr: "Enjeux business & opportunités de marché" },
       { href: "/research/behavior", label: "Avatar Behavior & Emotional Design", labelFr: "Comportement Avatar & Design Émotionnel", desc: "Living, organic, credible real-time experience — body language, emotional layer, latency", descFr: "Expérience temps réel vivante, organique, crédible — langage corporel, couche émotionnelle, latence" },
     ],
   },
