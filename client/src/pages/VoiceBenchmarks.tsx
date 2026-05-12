@@ -41,6 +41,7 @@ const TTS_BENCHMARKS = [
   { id: "fish_audio",     name: "Fish Audio OpenAudio S1",       ttfa: 200, ttfaTyp: 400,  elo: 1074, priceMin: 0.015, self: false, notes: "Best multilingual cloning" },
   { id: "moshi",          name: "Moshi (Kyutai)",                ttfa: 200, ttfaTyp: 500,  elo: 0,    priceMin: 0,     self: true,  notes: "Full-duplex end-to-end" },
   { id: "orpheus",        name: "Orpheus 3B",                    ttfa: 200, ttfaTyp: 500,  elo: 0,    priceMin: 0,     self: true,  notes: "Emotional open-source" },
+  { id: "stepaudio_25",   name: "StepAudio 2.5 TTS (StepFun)",  ttfa: 200, ttfaTyp: 400,  elo: 1187, priceMin: 0.064, self: false, notes: "ELO #3, dual-level context, no GDPR (CN)" },
   { id: "openai_realtime",name: "OpenAI Realtime API",           ttfa: 300, ttfaTyp: 700,  elo: 1106, priceMin: 0.10,  self: false, notes: "Full-duplex, GPT-4o native" },
   { id: "dia",            name: "Dia (Nari Labs)",               ttfa: 300, ttfaTyp: 800,  elo: 0,    priceMin: 0,     self: true,  notes: "Multi-speaker dialogue" },
   { id: "sesame_csm",     name: "Sesame CSM",                    ttfa: 400, ttfaTyp: 1000, elo: 0,    priceMin: 0,     self: true,  notes: "Context-aware prosody" },
@@ -120,8 +121,8 @@ export default function VoiceBenchmarks() {
           number="D"
           title={isFr ? "Benchmarks Synthèse Audio" : "Audio Synthesis Benchmarks"}
           subtitle={isFr
-            ? "Synthèse comparative des 10 moteurs STT et 16 moteurs TTS évalués. Métriques clés, budgets de latence pipeline et enjeux de décision (2025–2026)."
-            : "Comparative synthesis of 10 STT and 16 TTS engines evaluated. Key metrics, pipeline latency budgets, and decision stakes (2025–2026)."}
+            ? "Synthèse comparative des 10 moteurs STT et 17 moteurs TTS évalués. Métriques clés, budgets de latence pipeline et enjeux de décision (2025–2026)."
+            : "Comparative synthesis of 10 STT and 17 TTS engines evaluated. Key metrics, pipeline latency budgets, and decision stakes (2025–2026)."}
           accent="orange"
         />
 
@@ -294,7 +295,7 @@ export default function VoiceBenchmarks() {
         {/* ── TTS BENCHMARKS ── */}
         <section>
           <h2 className="text-base font-bold mb-1 uppercase tracking-wide" style={{ fontFamily: "'Space Grotesk', sans-serif", color: "oklch(0.45 0.15 200)" }}>
-            {isFr ? "TTS — Synthèse vocale (16 moteurs)" : "TTS — Speech Synthesis (16 engines)"}
+            {isFr ? "TTS — Synthèse vocale (17 moteurs)" : "TTS — Speech Synthesis (17 engines)"}
           </h2>
           <p className="text-sm text-slate-500 mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
@@ -402,8 +403,8 @@ export default function VoiceBenchmarks() {
               </p>
               <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
                 {isFr
-                  ? "7 des 10 moteurs STT cloud n'ont pas d'option on-premise. 8 des 16 moteurs TTS sont cloud-only. Pour un projet soumis au RGPD ou à la nLPD suisse, le choix se réduit à : Whisper/faster-whisper (STT), Kokoro/Chatterbox/Voxtral (TTS), Audiogami (STT CH-hosted). L'architecture doit être conçue pour switcher sans refactoring majeur."
-                  : "7 of 10 cloud STT engines have no on-premise option. 8 of 16 TTS engines are cloud-only. For a project subject to GDPR or Swiss nLPD, the choice narrows to: Whisper/faster-whisper (STT), Kokoro/Chatterbox/Voxtral (TTS), Audiogami (CH-hosted STT). Architecture must be designed to switch without major refactoring."}
+                  ? "7 des 10 moteurs STT cloud n'ont pas d'option on-premise. 9 des 17 moteurs TTS sont cloud-only. Pour un projet soumis au RGPD ou à la nLPD suisse, le choix se réduit à : Whisper/faster-whisper (STT), Kokoro/Chatterbox/Voxtral (TTS), Audiogami (STT CH-hosted). L'architecture doit être conçue pour switcher sans refactoring majeur."
+                  : "7 of 10 cloud STT engines have no on-premise option. 9 of 17 TTS engines are cloud-only. For a project subject to GDPR or Swiss nLPD, the choice narrows to: Whisper/faster-whisper (STT), Kokoro/Chatterbox/Voxtral (TTS), Audiogami (CH-hosted STT). Architecture must be designed to switch without major refactoring."}
               </p>
             </div>
             <div className="border border-slate-200 rounded-lg p-4 bg-white">
