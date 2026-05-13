@@ -94,7 +94,6 @@ export default function Home() {
       links: [
         { label: isFr ? "Avatars Streaming" : "Streaming Avatars", to: "/avatars" },
         { label: isFr ? "Simulateur de Coûts" : "Cost Simulator", to: "/avatars/pricing" },
-        { label: isFr ? "Comportement & Expressivité" : "Behavior & Expressiveness", to: "/research/behavior" },
         { label: isFr ? "Comportement & Design Émotionnel" : "Behavior & Emotional Design", to: "/research/behavior" },
       ],
     },
