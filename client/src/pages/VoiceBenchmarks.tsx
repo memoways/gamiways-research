@@ -28,21 +28,21 @@ const STT_BENCHMARKS = [
 
 // ─── TTS DATA ─────────────────────────────────────────────────────────────────
 const TTS_BENCHMARKS = [
-  { id: "cartesia",       name: "Cartesia Sonic 3",              ttfa: 40,  ttfaTyp: 90,   elo: 1054, priceMin: 0.047, self: false, notes: "Fastest TTFA (SSM arch)" },
+  { id: "cartesia",       name: "Cartesia Sonic 3",              ttfa: 40,  ttfaTyp: 90,   elo: 1069, priceMin: 0.047, self: false, notes: "Fastest TTFA (SSM arch)" },
   { id: "kokoro",         name: "Kokoro 82M v1.0",               ttfa: 60,  ttfaTyp: 120,  elo: 1059, priceMin: 0.0007,self: true,  notes: "Best open-source quality/cost" },
-  { id: "elevenlabs",     name: "ElevenLabs v3",                 ttfa: 75,  ttfaTyp: 200,  elo: 1108, priceMin: 0.206, self: false, notes: "Top 3 quality, best cloning" },
+  { id: "elevenlabs",     name: "ElevenLabs v3",                 ttfa: 75,  ttfaTyp: 200,  elo: 1178, priceMin: 0.206, self: false, notes: "Top 4 quality, best cloning" },
   { id: "deepgram_aura",  name: "Deepgram Aura 2",               ttfa: 80,  ttfaTyp: 150,  elo: 0,    priceMin: 0.015, self: false, notes: "Voice agent optimized" },
   { id: "hume_octave",    name: "Hume AI Octave 2",              ttfa: 100, ttfaTyp: 200,  elo: 1046, priceMin: 0.0076,self: false, notes: "Emotion-aware TTS" },
   { id: "kyutai_tts",     name: "Kyutai TTS 1.6B",               ttfa: 100, ttfaTyp: 200,  elo: 0,    priceMin: 0,     self: true,  notes: "Open, multilingual" },
   { id: "ultravox",       name: "Ultravox v0.5",                 ttfa: 100, ttfaTyp: 300,  elo: 0,    priceMin: 0.05,  self: true,  notes: "End-to-end speech LLM" },
   { id: "inworld_tts",    name: "Inworld TTS-2",                 ttfa: 130, ttfaTyp: 250,  elo: 1160, priceMin: 0.035, self: true,  notes: "ELO #1, TTS-2 preview, Voice Direction, 100+ langs" },
-  { id: "chatterbox",     name: "Chatterbox (Resemble AI)",      ttfa: 150, ttfaTyp: 300,  elo: 1050, priceMin: 0.04,  self: true,  notes: "Expressive open-source" },
+  { id: "chatterbox",     name: "Chatterbox (Resemble AI)",      ttfa: 150, ttfaTyp: 300,  elo: 1006, priceMin: 0.04,  self: true,  notes: "Expressive open-source" },
   { id: "voxtral_tts",    name: "Voxtral TTS (Mistral)",         ttfa: 150, ttfaTyp: 300,  elo: 0,    priceMin: 0.02,  self: true,  notes: "EU-sovereign, open-weights" },
-  { id: "fish_audio",     name: "Fish Audio OpenAudio S1",       ttfa: 200, ttfaTyp: 400,  elo: 1074, priceMin: 0.015, self: false, notes: "Best multilingual cloning" },
+  { id: "fish_audio",     name: "Fish Audio OpenAudio S1",       ttfa: 200, ttfaTyp: 400,  elo: 1128, priceMin: 0.015, self: false, notes: "Best multilingual cloning" },
   { id: "moshi",          name: "Moshi (Kyutai)",                ttfa: 200, ttfaTyp: 500,  elo: 0,    priceMin: 0,     self: true,  notes: "Full-duplex end-to-end" },
   { id: "orpheus",        name: "Orpheus 3B",                    ttfa: 200, ttfaTyp: 500,  elo: 0,    priceMin: 0,     self: true,  notes: "Emotional open-source" },
   { id: "stepaudio_25",   name: "StepAudio 2.5 TTS (StepFun)",  ttfa: 200, ttfaTyp: 400,  elo: 1187, priceMin: 0.064, self: false, notes: "ELO #3, dual-level context, no GDPR (CN)" },
-  { id: "openai_realtime",name: "OpenAI Realtime API",           ttfa: 300, ttfaTyp: 700,  elo: 1106, priceMin: 0.10,  self: false, notes: "Full-duplex, GPT-4o native" },
+  { id: "openai_realtime",name: "OpenAI Realtime API",           ttfa: 300, ttfaTyp: 700,  elo: 1208, priceMin: 0.10,  self: false, notes: "ELO #1, Full-duplex, GPT-4o native" },
   { id: "dia",            name: "Dia (Nari Labs)",               ttfa: 300, ttfaTyp: 800,  elo: 0,    priceMin: 0,     self: true,  notes: "Multi-speaker dialogue" },
   { id: "sesame_csm",     name: "Sesame CSM",                    ttfa: 400, ttfaTyp: 1000, elo: 0,    priceMin: 0,     self: true,  notes: "Context-aware prosody" },
 ];
