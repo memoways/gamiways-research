@@ -63,11 +63,21 @@ export default function GamiWaysArchitecture() {
         : "Single entry point of the engine. Exposes REST and WebSocket endpoints. Fastify is chosen for its native performance (3× faster than Express), TypeScript-first plugin ecosystem, and native SSE streaming support — critical for real-time LLM responses.",
       endpoints: [
         { method: "POST", path: "/v1/sessions", desc: isFr ? "Créer une session utilisateur dans un scénario" : "Create a user session in a scenario" },
-        { method: "GET", path: "/v1/sessions/:id", desc: isFr ? "Récupérer l'état d'une session" : "Retrieve session state" },
+        { method: "GET", path: "/v1/sessions", desc: isFr ? "Lister toutes les sessions" : "List all sessions" },
         { method: "POST", path: "/v1/sessions/:id/conversations", desc: isFr ? "Démarrer un épisode de dialogue avec un avatar" : "Start a dialogue episode with an avatar" },
         { method: "POST", path: "/v1/conversations/:id/messages", desc: isFr ? "Envoyer un message et recevoir la réponse avatar" : "Send a message and receive avatar response" },
         { method: "GET", path: "/v1/conversations/:id/history", desc: isFr ? "Récupérer l'historique de conversation" : "Retrieve conversation history" },
+        { method: "POST", path: "/v1/sessions/:id/conversations/:cid/end", desc: isFr ? "Fermer explicitement une conversation (déclenche compaction mémoire)" : "Explicitly close a conversation (triggers memory compaction)" },
+        { method: "POST", path: "/v1/sessions/:id/reset", desc: isFr ? "Réinitialiser une session" : "Reset a session" },
+        { method: "GET", path: "/v1/sessions/:id/runtime-state", desc: isFr ? "Snapshot état runtime de la session" : "Runtime state snapshot of the session" },
+        { method: "GET", path: "/v1/sessions/:id/events/stream", desc: isFr ? "Flux SSE des événements runtime asynchrones" : "SSE stream of async runtime events" },
+        { method: "GET/PUT", path: "/v1/users/:id/persona", desc: isFr ? "Lire/écrire le persona utilisateur (injecté dans avatar + GM)" : "Read/write user persona (injected into avatar + GM)" },
+        { method: "POST", path: "/v1/knowledge-sources", desc: isFr ? "Enregistrer une source de connaissance (PDF, MD, texte)" : "Register a knowledge source (PDF, MD, text)" },
+        { method: "POST", path: "/v1/knowledge-sources/:id/ingest", desc: isFr ? "Déclencher l'ingestion (chunking + embeddings)" : "Trigger ingestion (chunking + embeddings)" },
         { method: "POST", path: "/v1/exchange", desc: isFr ? "Échange LLM brut sans session (debug / test)" : "Raw LLM exchange without session (debug / test)" },
+        { method: "GET", path: "/v1/admin/sessions/:id/inspect", desc: isFr ? "Inspection complète de la session (mémoire, contexte, GM, métriques)" : "Full session inspection (memory, context, GM, metrics)" },
+        { method: "POST", path: "/v1/admin/sessions/:id/gm/replay", desc: isFr ? "Rejouer le Game Master sur la session" : "Replay Game Master on the session" },
+        { method: "POST", path: "/v1/admin/knowledge/retrieval", desc: isFr ? "Tester le retrieval RAG (debug)" : "Test RAG retrieval (debug)" },
       ],
     },
     {
@@ -88,8 +98,8 @@ export default function GamiWaysArchitecture() {
       color: "oklch(0.72 0.18 50)",
       badge: isFr ? "Cœur du moteur" : "Engine Core",
       desc: isFr
-        ? "Le cœur du moteur : Avatar (persona IA), Game Master (directeur asynchrone), Memory System v3 (3 couches), Context Manager (assemblage des 3 dimensions), Knowledge Pipeline (RAG). Aucune dépendance vers l'infrastructure — le domaine est pur et portable."
-        : "The engine core: Avatar (AI persona), Game Master (async director), Memory System v3 (3 layers), Context Manager (3-dimension assembly), Knowledge Pipeline (RAG). No infrastructure dependency — the domain is pure and portable.",
+        ? "Le cœur du moteur : Avatar (persona IA + assemblage prompt v2), Game Master (directeur asynchrone, 3 couches : Reasoning/Policy/Routing), Memory System (working memory + épisodique + faits long terme), Context Engine v2 (assemblage déterministe avec budget-token et trace lisible par machine), Knowledge Pipeline (ingestion PDF/MD/texte, chunking, embeddings, retrieval typé memory|world|media), User Persona (persistant, injecté dans avatar et GM). Aucune dépendance vers l'infrastructure."
+        : "The engine core: Avatar (AI persona + v2 prompt assembly), Game Master (async director, 3 layers: Reasoning/Policy/Routing), Memory System (working memory + episodic + long-term facts), Context Engine v2 (deterministic assembly with token-budget and machine-readable trace), Knowledge Pipeline (PDF/MD/text ingestion, chunking, embeddings, typed retrieval memory|world|media), User Persona (persistent, injected into avatar and GM). No infrastructure dependency.",
       endpoints: [],
     },
     {
@@ -278,11 +288,11 @@ export default function GamiWaysArchitecture() {
 
         {/* ── SECTION B: MEMORY SYSTEM ── */}
         <section>
-          <SectionDivider number="B" title={isFr ? "Memory System v3 — 3 Couches" : "Memory System v3 — 3 Layers"} />
+          <SectionDivider number="B" title={isFr ? "Memory System — 3 Couches" : "Memory System — 3 Layers"} />
           <p className="text-sm text-slate-500 leading-relaxed max-w-3xl mb-6" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
-              ? "Le Memory System v3 est l'une des innovations centrales du moteur. Il résout le problème de l'explosion de tokens dans les sessions longues en distribuant la mémoire sur 3 niveaux avec des politiques de sélection déterministes."
-              : "Memory System v3 is one of the engine's core innovations. It solves the token explosion problem in long sessions by distributing memory across 3 levels with deterministic selection policies."}
+              ? "Le Memory System est l'une des innovations centrales du moteur. Il résout le problème de l'explosion de tokens dans les sessions longues en distribuant la mémoire sur 3 niveaux avec des politiques de sélection déterministes. L'hydratation remplace le replay de transcript — les mémoires épisodiques sont scopées par utilisateur + avatar + scénario."
+              : "The Memory System is one of the engine's core innovations. It solves the token explosion problem in long sessions by distributing memory across 3 levels with deterministic selection policies. Hydration replaces transcript replay — episodic memories are scoped by user + avatar + scenario."}
           </p>
           <div className="grid gap-4 md:grid-cols-3">
             {memoryLayers.map((ml) => (
@@ -301,9 +311,89 @@ export default function GamiWaysArchitecture() {
           </div>
         </section>
 
-        {/* ── SECTION C: TECH STACK ── */}
+        {/* ── SECTION B2: CONTEXT ENGINE ── */}
         <section>
-          <SectionDivider number="C" title={isFr ? "Stack Technique — Choix & Justifications" : "Tech Stack — Choices & Rationale"} />
+          <SectionDivider number="C" title={isFr ? "Context Engine v2 — Assemblage Déterministe" : "Context Engine v2 — Deterministic Assembly"} />
+          <p className="text-sm text-slate-500 leading-relaxed max-w-3xl mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? "Le Context Engine v2 est le module central qui assemble le contexte de chaque tour de conversation. Il combine 7 dimensions en un payload déterministe, inspectable et testable. Chaque décision de sélection/trimming est tracée dans un format lisible par machine pour le débogage opérationnel."
+              : "Context Engine v2 is the central module that assembles context for each conversation turn. It combines 7 dimensions into a deterministic, inspectable and testable payload. Every selection/trimming decision is traced in machine-readable format for operational debugging."}
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 mb-5">
+            {[
+              { label: isFr ? "Mémoire court terme" : "Short-term Memory", detail: isFr ? "2 derniers échanges" : "Last 2 exchanges", color: "oklch(0.55 0.20 200)" },
+              { label: isFr ? "Mémoire de travail" : "Working Memory", detail: isFr ? "Résumé conversation actuelle" : "Current conversation summary", color: "oklch(0.65 0.18 145)" },
+              { label: isFr ? "Faits long terme" : "Long-term Facts", detail: isFr ? "Profil utilisateur persistant" : "Persistent user profile", color: "oklch(0.72 0.18 50)" },
+              { label: isFr ? "Config scénario" : "Scenario Config", detail: isFr ? "Objectifs, règles, avatars" : "Objectives, rules, avatars", color: "oklch(0.55 0.18 280)" },
+              { label: isFr ? "Retrieval RAG" : "RAG Retrieval", detail: isFr ? "memory | world | media" : "memory | world | media", color: "oklch(0.60 0.20 25)" },
+              { label: isFr ? "Directives GM" : "GM Directives", detail: isFr ? "Guidance asynchrone" : "Async guidance", color: "oklch(0.65 0.18 200)" },
+              { label: isFr ? "Persona utilisateur" : "User Persona", detail: isFr ? "Rôle, style, préférences" : "Role, style, preferences", color: "oklch(0.72 0.18 145)" },
+              { label: isFr ? "Budget-token" : "Token Budget", detail: isFr ? "Sélection déterministe" : "Deterministic selection", color: "oklch(0.55 0.15 265)" },
+            ].map((dim) => (
+              <div key={dim.label} className="bg-white border border-slate-200 rounded-lg p-3" style={{ borderLeft: `3px solid ${dim.color}` }}>
+                <div className="text-xs font-bold text-slate-800 mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{dim.label}</div>
+                <div className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>{dim.detail}</div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-slate-900 rounded-lg p-4 font-mono text-xs text-slate-300 leading-relaxed">
+            <div className="text-slate-500 mb-2">{isFr ? "# Flux de traitement d'un tour" : "# Turn processing flow"}</div>
+            <div><span className="text-cyan-400">User message</span> <span className="text-slate-500">→</span> <span className="text-green-400">API validation</span> <span className="text-slate-500">→</span> <span className="text-yellow-400">Load session/scenario</span></div>
+            <div className="ml-4"><span className="text-slate-500">→</span> <span className="text-orange-400">Context Engine</span> <span className="text-slate-500">(7 dimensions → bounded payload)</span></div>
+            <div className="ml-4"><span className="text-slate-500">→</span> <span className="text-cyan-400">Avatar generates response</span> <span className="text-slate-500">(streamed)</span></div>
+            <div className="ml-4"><span className="text-slate-500">→</span> <span className="text-green-400">Save messages</span></div>
+            <div className="ml-4"><span className="text-slate-500">→ [async]</span> <span className="text-purple-400">GM review</span> <span className="text-slate-500">+</span> <span className="text-yellow-400">memory update</span> <span className="text-slate-500">+</span> <span className="text-slate-400">metrics</span></div>
+          </div>
+        </section>
+
+        {/* ── SECTION B3: KNOWLEDGE PIPELINE ── */}
+        <section>
+          <SectionDivider number="D" title={isFr ? "Knowledge Pipeline — Ingestion & Retrieval" : "Knowledge Pipeline — Ingestion & Retrieval"} />
+          <p className="text-sm text-slate-500 leading-relaxed max-w-3xl mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? "Le module Knowledge gère l'ingestion de documents (PDF, Markdown, texte), leur chunking, la génération d'embeddings et le retrieval sémantique via pgvector. Le retrieval est typé en 3 catégories distinctes injectées séparément dans le contexte."
+              : "The Knowledge module handles document ingestion (PDF, Markdown, text), chunking, embedding generation and semantic retrieval via pgvector. Retrieval is typed into 3 distinct categories injected separately into context."}
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3 mb-5">
+            {[
+              { type: "memory", label: isFr ? "Mémoire" : "Memory", desc: isFr ? "Connaissances liées à l'historique utilisateur et aux interactions passées" : "Knowledge linked to user history and past interactions", color: "oklch(0.55 0.20 200)" },
+              { type: "world", label: isFr ? "Monde" : "World", desc: isFr ? "Connaissances du domaine, faits du scénario, contexte narratif" : "Domain knowledge, scenario facts, narrative context", color: "oklch(0.65 0.18 145)" },
+              { type: "media", label: isFr ? "Média" : "Media", desc: isFr ? "Références médias, documents visuels, ressources multimédia (non-rendus en Phase A)" : "Media references, visual documents, multimedia resources (non-rendered in Phase A)", color: "oklch(0.72 0.18 50)" },
+            ].map((rt) => (
+              <div key={rt.type} className="bg-white border border-slate-200 rounded-lg p-4" style={{ borderTop: `3px solid ${rt.color}` }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-black font-mono px-2 py-0.5 rounded" style={{ color: rt.color, background: `${rt.color}15` }}>{rt.type}</span>
+                  <span className="text-sm font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{rt.label}</span>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{rt.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+            <div className="px-4 py-2 border-b border-slate-100 bg-slate-50">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Cycle de vie d'ingestion" : "Ingestion lifecycle"}</span>
+            </div>
+            <div className="flex items-center gap-0 px-4 py-4 flex-wrap gap-y-2">
+              {["queued", "running", "completed", "failed"].map((s, i, arr) => (
+                <div key={s} className="flex items-center gap-2">
+                  <span className={`text-xs font-mono px-2 py-1 rounded font-bold ${
+                    s === "completed" ? "bg-green-50 text-green-700" :
+                    s === "failed" ? "bg-red-50 text-red-700" :
+                    s === "running" ? "bg-yellow-50 text-yellow-700" :
+                    "bg-slate-100 text-slate-600"
+                  }`}>{s}</span>
+                  {i < arr.length - 1 && s !== "running" && <span className="text-slate-300 text-xs">→</span>}
+                  {s === "running" && <span className="text-slate-300 text-xs">→</span>}
+                </div>
+              ))}
+              <span className="text-xs text-slate-400 ml-2" style={{ fontFamily: "'Source Serif 4', serif" }}>{isFr ? "(avec retry sur failed)" : "(with retry on failed)"}</span>
+            </div>
+          </div>
+        </section>
+
+        {/* ── SECTION E: TECH STACK ── */}
+        <section>
+          <SectionDivider number="E" title={isFr ? "Stack Technique — Choix & Justifications" : "Tech Stack — Choices & Rationale"} />
           <p className="text-sm text-slate-500 leading-relaxed max-w-3xl mb-6" style={{ fontFamily: "'Source Serif 4', serif" }}>
             {isFr
               ? "Chaque choix technologique est motivé par des contraintes concrètes : latence <2s, souveraineté des données, absence de lock-in fournisseur, et maintenabilité à long terme par une petite équipe."
@@ -328,9 +418,9 @@ export default function GamiWaysArchitecture() {
           </div>
         </section>
 
-        {/* ── SECTION D: LATENCY BUDGET ── */}
+        {/* ── SECTION F: LATENCY BUDGET ── */}
         <section>
-          <SectionDivider number="D" title={isFr ? "Budget Latence — Seuils Cognitifs" : "Latency Budget — Cognitive Thresholds"} />
+          <SectionDivider number="F" title={isFr ? "Budget Latence — Seuils Cognitifs" : "Latency Budget — Cognitive Thresholds"} />
 
           <div className="mb-6 p-5 border-l-4 rounded-r-lg bg-white border border-slate-200" style={{ borderLeftColor: "oklch(0.60 0.20 25)" }}>
             <h2 className="text-lg font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
