@@ -165,35 +165,80 @@ export default function ProjectStatus() {
       <div className="container max-w-4xl py-10 space-y-12">
 
         {/* Global progress */}
-        <div className="p-6 border border-slate-200 rounded-lg bg-white">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              {isFr ? "Progression globale — Phase A MVP" : "Overall Progress — Phase A MVP"}
+        <div className="p-6 border border-slate-200 rounded-lg bg-white space-y-5">
+
+          {/* Global bar */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Progression globale — toutes phases" : "Overall Progress — all phases"}
+              </span>
+              <span className="text-sm font-mono font-bold" style={{ color: "oklch(0.55 0.20 200)" }}>
+                {doneCount}/{totalCount} {isFr ? "épics" : "epics"} · {progressPct}%
+              </span>
+            </div>
+            <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-700"
+                style={{ width: `${progressPct}%`, background: "oklch(0.55 0.20 200)" }}
+              />
+            </div>
+            <div className="flex gap-6 mt-2">
+              {[
+                { status: "done" as EpicStatus, count: doneCount, label: isFr ? "Terminés" : "Done" },
+                { status: "in-progress" as EpicStatus, count: inProgressCount, label: isFr ? "En cours" : "In Progress" },
+                { status: "planned" as EpicStatus, count: totalCount - doneCount - inProgressCount, label: isFr ? "Planifiés" : "Planned" },
+              ].map(({ status, count, label }) => (
+                <div key={status} className="flex items-center gap-2">
+                  <StatusIcon status={status} />
+                  <span className="text-xs text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    <span className="font-bold text-slate-700">{count}</span> {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Per-phase bars */}
+          <div className="border-t border-slate-100 pt-4 space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {isFr ? "Détail par phase" : "Per-phase breakdown"}
             </span>
-            <span className="text-sm font-mono font-bold" style={{ color: "oklch(0.55 0.20 200)" }}>
-              {doneCount}/{totalCount} {isFr ? "épics" : "epics"} · {progressPct}%
-            </span>
+            {PHASES.map((phase) => {
+              const pDone = phase.epics.filter((e) => e.status === "done").length;
+              const pInProgress = phase.epics.filter((e) => e.status === "in-progress").length;
+              const pTotal = phase.epics.length;
+              const pPct = Math.round((pDone / pTotal) * 100);
+              return (
+                <div key={phase.id}>
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="text-xs font-black font-mono px-1.5 py-0.5 rounded"
+                        style={{ color: phase.color, background: `${phase.color}15` }}
+                      >
+                        {isFr ? phase.titleFr : phase.title}
+                      </span>
+                      <span className="text-xs text-slate-400 font-mono">{phase.period}</span>
+                    </div>
+                    <span className="text-xs font-mono font-bold" style={{ color: phase.color }}>
+                      {pDone}/{pTotal} · {pPct}%
+                      {pInProgress > 0 && (
+                        <span className="text-slate-400 font-normal ml-1">({pInProgress} {isFr ? "en cours" : "in progress"})</span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-700"
+                      style={{ width: `${pPct}%`, background: phase.color }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-            <div
-              className="h-full rounded-full transition-all duration-700"
-              style={{ width: `${progressPct}%`, background: "oklch(0.55 0.20 200)" }}
-            />
-          </div>
-          <div className="flex gap-6 mt-3">
-            {[
-              { status: "done" as EpicStatus, count: doneCount, label: isFr ? "Terminés" : "Done" },
-              { status: "in-progress" as EpicStatus, count: inProgressCount, label: isFr ? "En cours" : "In Progress" },
-              { status: "planned" as EpicStatus, count: totalCount - doneCount - inProgressCount, label: isFr ? "Planifiés" : "Planned" },
-            ].map(({ status, count, label }) => (
-              <div key={status} className="flex items-center gap-2">
-                <StatusIcon status={status} />
-                <span className="text-xs text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  <span className="font-bold text-slate-700">{count}</span> {label}
-                </span>
-              </div>
-            ))}
-          </div>
+
         </div>
 
         {/* Phases */}
