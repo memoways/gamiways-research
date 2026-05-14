@@ -31,6 +31,9 @@ interface Phase {
   epics: Epic[];
 }
 
+// Date de dernière synchronisation avec le repo — à mettre à jour manuellement à chaque sync
+const LAST_SYNC_DATE = "2026-05-14";
+
 const PHASES: Phase[] = [
   {
     id: "A",
@@ -147,18 +150,28 @@ export default function ProjectStatus() {
               ? "Suivi des épics de construction du moteur GamiWays Core — mis à jour manuellement depuis le repo de développement."
               : "Epic-level progress tracking for the GamiWays Core Engine build — manually synced from the development repository."}
           </p>
-          {/* GitHub link */}
-          <a
-            href="https://github.com/gami-lab/gami-digidouble-core"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
-            style={{ borderColor: "oklch(0.72 0.18 200)40", color: "oklch(0.45 0.18 200)" }}
-          >
-            <GitBranch size={13} />
-            gami-lab/gami-digidouble-core
-            <ExternalLink size={11} />
-          </a>
+          {/* Sync date + GitHub link */}
+          <div className="flex flex-wrap items-center gap-3 mt-1">
+            <div
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono"
+              style={{ borderColor: "oklch(0.65 0.18 145)40", background: "oklch(0.97 0.03 145)", color: "oklch(0.40 0.18 145)" }}
+            >
+              <CheckCircle2 size={12} />
+              {isFr ? "Synced depuis repo" : "Synced from repo"}
+              <span className="font-bold ml-0.5">{LAST_SYNC_DATE}</span>
+            </div>
+            <a
+              href="https://github.com/gami-lab/gami-digidouble-core"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
+              style={{ borderColor: "oklch(0.72 0.18 200)40", color: "oklch(0.45 0.18 200)" }}
+            >
+              <GitBranch size={13} />
+              gami-lab/gami-digidouble-core
+              <ExternalLink size={11} />
+            </a>
+          </div>
         </div>
       </div>
 
