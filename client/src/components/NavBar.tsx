@@ -33,18 +33,18 @@ interface NavMenu {
 const NAV_MENUS: NavMenu[] = [
   {
     label: "The Project",
-    labelFr: "The Project",
+    labelFr: "Projet",
     icon: FlaskConical,
     color: "oklch(0.55 0.20 200)",
     activePrefix: ["/project", "/research"],
     items: [
+      { href: "/project/prototypes", label: "Founding Prototypes", labelFr: "Prototypes Fondateurs", desc: "Parle à AVA! (Storygami) & Le Dilemme Plastique (Edugami) — origins of GamiWays", descFr: "Parle à AVA! (Storygami) & Le Dilemme Plastique (Edugami) — origines de GamiWays" },
       { href: "/project", label: "GamiWays Project", labelFr: "Projet GamiWays", desc: "Vision, positioning & product roadmap", descFr: "Vision, positionnement & roadmap produit" },
       { href: "/research", label: "Technical Challenges", labelFr: "Défis Techniques", desc: "Core technical challenges & product objectives", descFr: "Défis techniques clés & objectifs produit" },
       { href: "/research/architecture", label: "Target Architecture", labelFr: "Architecture Cible", desc: "System design & latency budget", descFr: "Design système & budget latence" },
       { href: "/research/gaps", label: "Opportunities & Gaps", labelFr: "Opportunités & Lacunes", desc: "Technology gaps & strategic opportunities", descFr: "Lacunes technologiques & opportunités stratégiques" },
       { href: "/research/academic", label: "State of the Art", labelFr: "État de l'Art", desc: "Key papers & benchmarks 2023–2026", descFr: "Publications clés & benchmarks 2023–2026" },
-      { href: "/project/prototypes", label: "Founding Prototypes", labelFr: "Prototypes Fondateurs", desc: "Parle à AVA! (Storygami) & Le Dilemme Plastique (Edugami) — origins of GamiWays", descFr: "Parle à AVA! (Storygami) & Le Dilemme Plastique (Edugami) — origines de GamiWays", highlight: true, highlightColor: "oklch(0.72 0.18 50)" },
-      { href: "/project/status", label: "Core Engine Build Status", labelFr: "État d'avancement du Core", desc: "Epic-level progress tracking — synced from dev repo", descFr: "Suivi des épics — mis à jour depuis le repo de développement", highlight: true, highlightColor: "oklch(0.55 0.20 200)" },
+      { href: "/project/status", label: "Core Engine Build Status", labelFr: "État d'avancement du Core", desc: "Epic-level progress tracking — synced from dev repo", descFr: "Suivi des épics — mis à jour depuis le repo de développement" },
     ],
   },
   {
@@ -141,14 +141,6 @@ function DropdownMenu({ menu, isFr, location, onClose }: { menu: NavMenu; isFr: 
                   color: item.highlight ? item.highlightColor : (itemActive ? menu.color : undefined)
                 }}>
                   {isFr ? item.labelFr : item.label}
-                  {item.highlight && (
-                    <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style={{
-                      background: `color-mix(in oklch, ${item.highlightColor} 20%, white)`,
-                      color: item.highlightColor,
-                      border: `1px solid color-mix(in oklch, ${item.highlightColor} 30%, white)`,
-                      fontFamily: "'JetBrains Mono', monospace"
-                    }}>Interactive</span>
-                  )}
                 </span>
                 {(item.desc || item.descFr) && (
                   <span className="text-xs mt-0.5 leading-snug" style={{

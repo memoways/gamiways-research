@@ -191,9 +191,52 @@ export default function Project() {
 
       <div className="container max-w-4xl py-14 space-y-20">
 
-        {/* ── SECTION 1: PLATFORM ──────────────────────────────────────────── */}
+        {/* ── SECTION 0: FOUNDING ORIGINS ──────────────────────────────────── */}
         <section>
-          <SectionDivider number="01" title="Product Vision — Two Modes, One Engine" titleFr="Vision Produit — Deux Modes, Un Moteur" isFr={isFr} />
+          <SectionDivider number="01" title="Origins — Two Prototypes, One Insight" titleFr="Origines — Deux Prototypes, Une Intuition" isFr={isFr} />
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "GamiWays est né de deux expériences réelles." : "GamiWays was born from two real experiences."}
+            </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Avant d'être un projet de plateforme, GamiWays est la réponse à des problèmes concrets rencontrés en construisant deux prototypes radicalement différents : un cinéma conversationnel dystopique (Storygami) et un outil pédagogique sur la pollution plastique (Edugami). Ces deux projets ont révélé les mêmes défis fondamentaux — latence, mémoire de session, qualité vocale française, avatar expressif — et ont rendu évidente la nécessité d'une infrastructure commune."
+                : "Before being a platform project, GamiWays is the answer to concrete problems encountered while building two radically different prototypes: a dystopian conversational cinema (Storygami) and an educational tool on plastic pollution (Edugami). Both projects revealed the same fundamental challenges — latency, session memory, French voice quality, expressive avatar — and made the need for a shared infrastructure evident."}
+            </p>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "\"Parle à AVA !\" est le prolongement interactif du film \"Où est Ava ?\", un thriller dystopique en production. \"Le Dilemme Plastique\" est un outil pédagogique basé sur dix ans de documentation terrain de Peter Charaf en partenariat avec la Fondation Race for Water, destiné à devenir Edugami — un outil généralisable à d'autres thématiques."
+                : "\"Parle à AVA !\" is the interactive extension of the film \"Where is Ava?\", a dystopian thriller in production. \"Le Dilemme Plastique\" is an educational tool based on ten years of field documentation by Peter Charaf in partnership with the Race for Water Foundation, designed to become Edugami — a tool generalisable to other themes."}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="https://proto1.parle-a-ava.com/" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:opacity-80"
+                style={{ borderColor: "oklch(0.72 0.18 50)40", color: "oklch(0.72 0.18 50)", background: "oklch(0.72 0.18 50)08" }}>
+                <Film size={11} />
+                {isFr ? "Tester AVA" : "Try AVA"}
+                <ExternalLink size={10} />
+              </a>
+              <a href="https://proto-dilemme2.edugami.app/" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:opacity-80"
+                style={{ borderColor: "oklch(0.55 0.20 200)40", color: "oklch(0.55 0.20 200)", background: "oklch(0.55 0.20 200)08" }}>
+                <BookOpen size={11} />
+                {isFr ? "Tester Dilemme Plastique" : "Try Dilemme Plastique"}
+                <ExternalLink size={10} />
+              </a>
+              <Link href="/project/prototypes">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80"
+                  style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
+                  {isFr ? "Détails techniques complets" : "Full technical details"}
+                  <ArrowRight size={10} />
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── SECTION 2: PLATFORM ──────────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="02" title="Product Vision — Two Modes, One Engine" titleFr="Vision Produit — Deux Modes, Un Moteur" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Mode pédagogique + Mode narratif, moteur partagé." : "Pedagogical mode + Narrative mode, shared engine."}
@@ -220,7 +263,7 @@ export default function Project() {
 
         {/* ── SECTION 2: GAP MATRIX ────────────────────────────────────────── */}
         <section>
-          <SectionDivider number="02" title="Competitive Gap" titleFr="Gap Compétitif" isFr={isFr} />
+          <SectionDivider number="03" title="Competitive Gap" titleFr="Gap Compétitif" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Aucune solution ne combine les 5 critères." : "No solution combines all 5 criteria."}
@@ -239,7 +282,7 @@ export default function Project() {
 
         {/* ── SECTION 3: COMPETITIVE TABLE ─────────────────────────────────── */}
         <section>
-          <SectionDivider number="03" title="Competitive Comparison" titleFr="Comparaison Compétitive" isFr={isFr} />
+          <SectionDivider number="04" title="Competitive Comparison" titleFr="Comparaison Compétitive" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "HeyGen · Synthesia · Flowise vs GamiWays" : "HeyGen · Synthesia · Flowise vs GamiWays"}
@@ -298,7 +341,7 @@ export default function Project() {
 
         {/* ── SECTION 4: FOUNDING PROJECTS ─────────────────────────────────── */}
         <section>
-          <SectionDivider number="04" title="Founding Prototypes" titleFr="Prototypes Fondateurs" isFr={isFr} />
+          <SectionDivider number="05" title="Founding Prototypes — Details" titleFr="Prototypes Fondateurs — Détails" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Deux prototypes validés avec utilisateurs réels." : "Two prototypes validated with real users."}
@@ -399,7 +442,7 @@ export default function Project() {
 
         {/* ── SECTION 5: INFRASTRUCTURE ────────────────────────────────────── */}
         <section>
-          <SectionDivider number="05" title="Infrastructure & Technical Expertise" titleFr="Infrastructure & Expertise Technique" isFr={isFr} />
+          <SectionDivider number="06" title="Infrastructure & Tech Stack" titleFr="Infrastructure & Stack Technique" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Opérationnel aujourd'hui vs. R&D nécessaire." : "Operational today vs. R&D required."}
