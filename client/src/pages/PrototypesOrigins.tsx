@@ -46,25 +46,32 @@ function Accordion({ label, labelFr, isFr, children }: { label: string; labelFr:
   );
 }
 
-/** UX Flow diagram — vertical steps with icons */
-function UXFlowDiagram({ steps, color }: { steps: { icon: React.ElementType; label: string; labelFr?: string; sub?: string; subFr?: string }[]; color: string; isFr?: boolean }) {
+/** UX Flow diagram — vertical steps with icons, Project.tsx style */
+function UXFlowDiagram({ steps, color }: { steps: { icon: React.ElementType; label: string; sub?: string }[]; color: string }) {
   return (
     <div className="relative">
       {steps.map((step, i) => (
-        <div key={i} className="flex items-start gap-3 mb-0">
-          <div className="flex flex-col items-center">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full shrink-0" style={{ background: `${color}15`, border: `1.5px solid ${color}40` }}>
+        <div key={i} className="flex items-start gap-3">
+          {/* Connector column */}
+          <div className="flex flex-col items-center shrink-0" style={{ width: 32 }}>
+            <div
+              className="flex items-center justify-center rounded-full shrink-0"
+              style={{ width: 32, height: 32, background: `${color}12`, border: `1.5px solid ${color}35` }}
+            >
               <step.icon size={13} style={{ color }} />
             </div>
             {i < steps.length - 1 && (
-              <div className="w-px flex-1 my-1" style={{ background: `${color}25`, minHeight: "20px" }} />
+              <div className="w-px" style={{ flex: 1, minHeight: 18, background: `${color}20` }} />
             )}
           </div>
-          <div className="pb-4">
+          {/* Content */}
+          <div className="pb-4 pt-1.5 flex-1">
             <div className="text-xs font-bold text-slate-800 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               {step.label}
             </div>
-            {step.sub && <div className="text-[11px] text-slate-400 mt-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{step.sub}</div>}
+            {step.sub && (
+              <div className="text-[11px] text-slate-400 mt-0.5 leading-snug" style={{ fontFamily: "'Source Serif 4', serif" }}>{step.sub}</div>
+            )}
           </div>
         </div>
       ))}
@@ -72,20 +79,30 @@ function UXFlowDiagram({ steps, color }: { steps: { icon: React.ElementType; lab
   );
 }
 
-/** Architecture block diagram — layered boxes */
+/** Architecture block diagram — layered boxes, Project.tsx style */
 function ArchDiagram({ layers, color }: { layers: { title: string; items: { name: string; tech: string }[] }[]; color: string }) {
   return (
     <div className="space-y-2">
       {layers.map((layer, i) => (
-        <div key={i} className="rounded-lg border overflow-hidden" style={{ borderColor: `${color}25` }}>
-          <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider" style={{ background: `${color}10`, color, fontFamily: "'Space Grotesk', sans-serif" }}>
-            {layer.title}
+        <div key={i} className="border border-slate-200 rounded overflow-hidden">
+          {/* Layer header — accent left border like Project.tsx project cards */}
+          <div
+            className="px-4 py-2 flex items-center gap-2"
+            style={{ borderLeft: `3px solid ${color}`, background: `${color}08` }}
+          >
+            <span
+              className="text-[10px] font-bold uppercase tracking-widest"
+              style={{ color, fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              {layer.title}
+            </span>
           </div>
-          <div className="flex flex-wrap gap-2 p-3">
+          {/* Items grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-slate-100">
             {layer.items.map((item, j) => (
-              <div key={j} className="flex flex-col px-3 py-2 rounded border bg-white" style={{ borderColor: `${color}20`, minWidth: "100px" }}>
-                <span className="text-xs font-bold text-slate-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.name}</span>
-                <span className="text-[10px] text-slate-400 mt-0.5">{item.tech}</span>
+              <div key={j} className="flex flex-col px-3 py-2.5 bg-white">
+                <span className="text-xs font-semibold text-slate-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.name}</span>
+                <span className="text-[10px] text-slate-400 mt-0.5 font-mono">{item.tech}</span>
               </div>
             ))}
           </div>
@@ -129,22 +146,34 @@ function CostBreakdown({ items, total, color }: { items: { tool: string; usage: 
   );
 }
 
-/** Pipeline flow diagram — horizontal nodes with arrows */
+/** Pipeline flow diagram — numbered horizontal steps, Project.tsx style */
 function PipelineFlow({ steps, color }: { steps: { label: string; sub?: string }[]; color: string }) {
   return (
-    <div className="overflow-x-auto py-2">
-      <div className="flex items-center gap-1 min-w-max">
+    <div className="overflow-x-auto">
+      <div className="flex items-stretch gap-0 min-w-max border border-slate-200 rounded overflow-hidden">
         {steps.map((step, i) => (
-          <div key={i} className="flex items-center gap-1">
+          <div key={i} className="flex items-stretch">
+            {/* Step block */}
             <div
-              className="flex flex-col items-center justify-center px-3 py-2 rounded text-center"
-              style={{ background: `${color}12`, border: `1px solid ${color}30`, minWidth: "80px" }}
+              className="flex flex-col justify-center px-3 py-3 text-center"
+              style={{ background: i === 0 ? `${color}12` : i === steps.length - 1 ? `${color}18` : "white", minWidth: "88px", borderLeft: i > 0 ? "1px solid oklch(0.92 0.006 265)" : undefined }}
             >
-              <span className="text-xs font-bold" style={{ color, fontFamily: "'Space Grotesk', sans-serif" }}>{step.label}</span>
-              {step.sub && <span className="text-[10px] text-slate-400 mt-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{step.sub}</span>}
+              <span
+                className="text-[10px] font-bold font-mono mb-0.5"
+                style={{ color: "oklch(0.75 0.006 265)" }}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="text-xs font-semibold text-slate-800 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{step.label}</span>
+              {step.sub && (
+                <span className="text-[10px] text-slate-400 mt-0.5 font-mono leading-tight">{step.sub}</span>
+              )}
             </div>
+            {/* Arrow divider */}
             {i < steps.length - 1 && (
-              <ArrowRight size={14} style={{ color: `${color}80` }} className="shrink-0" />
+              <div className="flex items-center justify-center w-5 shrink-0 bg-white border-l border-slate-100">
+                <ArrowRight size={11} style={{ color: `${color}60` }} />
+              </div>
             )}
           </div>
         ))}
@@ -864,46 +893,38 @@ export default function PrototypesOrigins() {
                 </div>
               </div>
 
-              {/* Tools + costs — Dilemme (données Notion uniquement) */}
+              {/* Tools + costs — Dilemme (totaux Notion uniquement, pas d'estimations détaillées) */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {isFr ? "Outils utilisés et coûts de développement" : "Tools used and development costs"}
                 </h3>
                 <div className="space-y-4">
 
-                  {/* Light / Tutoriel — données exactes Notion */}
-                  <div className="rounded-lg border overflow-hidden" style={{ borderColor: `${DILEMME_COLOR}25` }}>
-                    <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider" style={{ background: `${DILEMME_COLOR}10`, color: DILEMME_COLOR, fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Prototype Light / Tutoriel — 25h — ~220 CHF" : "Light / Tutorial prototype — 25h — ~220 CHF"}
+                  {/* Light / Tutoriel — total Notion uniquement */}
+                  <div className="border border-slate-200 rounded overflow-hidden">
+                    <div className="px-4 py-2 flex items-center gap-2" style={{ borderLeft: `3px solid ${DILEMME_COLOR}`, background: `${DILEMME_COLOR}08` }}>
+                      <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: DILEMME_COLOR, fontFamily: "'Space Grotesk', sans-serif" }}>
+                        {isFr ? "Prototype Light / Tutoriel" : "Light / Tutorial Prototype"}
+                      </span>
                     </div>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs">
-                        <thead>
-                          <tr className="border-b border-slate-100 bg-slate-50">
-                            <th className="text-left px-3 py-2 font-bold text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Outil" : "Tool"}</th>
-                            <th className="text-left px-3 py-2 font-bold text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Usage" : "Usage"}</th>
-                            <th className="text-right px-3 py-2 font-bold text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Coût" : "Cost"}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {[
-                            { tool: "Claude Code", usage: isFr ? "Corrections ciblées et revues" : "Targeted fixes and reviews", cost: "~80 USD / ~70 CHF" },
-                            { tool: "OpenAI", usage: isFr ? "GPT-4o Assistants API + Whisper STT" : "GPT-4o Assistants API + Whisper STT", cost: "~60 USD / ~55 CHF" },
-                            { tool: "Replit Agent", usage: isFr ? "Développement principal (vibe coding) + hébergement" : "Main development (vibe coding) + hosting", cost: isFr ? "~80 CHF (estimé)" : "~80 CHF (estimated)" },
-                            { tool: "ElevenLabs", usage: isFr ? "TTS eleven_multilingual_v2 — voix Peter" : "TTS eleven_multilingual_v2 — Peter voice", cost: isFr ? "Inclus quota existant" : "Included in existing quota" },
-                          ].map((row, i) => (
-                            <tr key={i} className="border-t border-slate-100">
-                              <td className="px-3 py-2 font-mono font-bold" style={{ color: DILEMME_COLOR }}>{row.tool}</td>
-                              <td className="px-3 py-2 text-slate-600">{row.usage}</td>
-                              <td className="px-3 py-2 text-right font-mono text-slate-700">{row.cost}</td>
-                            </tr>
-                          ))}
-                          <tr className="border-t-2" style={{ borderColor: `${DILEMME_COLOR}30`, background: `${DILEMME_COLOR}06` }}>
-                            <td colSpan={2} className="px-3 py-2 font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Total</td>
-                            <td className="px-3 py-2 text-right font-mono font-black" style={{ color: DILEMME_COLOR }}>~220 CHF</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div className="p-4 flex flex-wrap gap-4 items-center">
+                      <div className="flex gap-4">
+                        <div className="text-center">
+                          <div className="text-xl font-black font-mono" style={{ color: DILEMME_COLOR }}>25h</div>
+                          <div className="text-xs text-slate-400" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Développement" : "Development"}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-xl font-black font-mono" style={{ color: DILEMME_COLOR }}>~220 CHF</div>
+                          <div className="text-xs text-slate-400" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Coût total" : "Total cost"}</div>
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                          {isFr
+                            ? "Outils : Replit Agent (vibe coding + hébergement), Claude Code, OpenAI GPT-4o Assistants API + Whisper, ElevenLabs TTS."
+                            : "Tools: Replit Agent (vibe coding + hosting), Claude Code, OpenAI GPT-4o Assistants API + Whisper, ElevenLabs TTS."}
+                        </p>
+                      </div>
                     </div>
                   </div>
 
