@@ -65,14 +65,14 @@ export default function MermaidDiagram({ chart, title, description, accentColor 
   useEffect(() => {
     initMermaid();
     const id = idRef.current;
-    mermaid.render(id, chart).then(({ svg: renderedSvg }) => {
+    mermaid.render(id, chart).then(({ svg: renderedSvg }: { svg: string; bindFunctions?: (element: Element) => void }) => {
       // Post-process SVG for better styling
       const styled = renderedSvg
         .replace(/font-family:[^;"]*/g, "font-family: 'Space Grotesk', sans-serif")
         .replace(/font-size:\s*\d+px/g, "font-size: 12px");
       setSvg(styled);
       setError("");
-    }).catch((err) => {
+    }).catch((err: unknown) => {
       console.error("Mermaid render error:", err);
       setError("Diagram rendering error");
     });
