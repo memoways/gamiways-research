@@ -7,7 +7,7 @@
  * i18n: EN (default) / FR via LangContext
  */
 import { useState } from "react";
-import { ExternalLink, ArrowRight, Mic, Video, Clock, Zap, BookOpen, Film, ChevronDown, ChevronUp } from "lucide-react";
+import { ExternalLink, ArrowRight, Mic, Video, Clock, Zap, BookOpen, Film, ChevronDown, ChevronUp, DollarSign, User, Cpu, Database } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import { Link } from "wouter";
@@ -42,6 +42,89 @@ function Accordion({ label, labelFr, isFr, children }: { label: string; labelFr:
           {children}
         </div>
       )}
+    </div>
+  );
+}
+
+/** UX Flow diagram — vertical steps with icons */
+function UXFlowDiagram({ steps, color }: { steps: { icon: React.ElementType; label: string; labelFr?: string; sub?: string; subFr?: string }[]; color: string; isFr?: boolean }) {
+  return (
+    <div className="relative">
+      {steps.map((step, i) => (
+        <div key={i} className="flex items-start gap-3 mb-0">
+          <div className="flex flex-col items-center">
+            <div className="flex items-center justify-center w-8 h-8 rounded-full shrink-0" style={{ background: `${color}15`, border: `1.5px solid ${color}40` }}>
+              <step.icon size={13} style={{ color }} />
+            </div>
+            {i < steps.length - 1 && (
+              <div className="w-px flex-1 my-1" style={{ background: `${color}25`, minHeight: "20px" }} />
+            )}
+          </div>
+          <div className="pb-4">
+            <div className="text-xs font-bold text-slate-800 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              {step.label}
+            </div>
+            {step.sub && <div className="text-[11px] text-slate-400 mt-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{step.sub}</div>}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Architecture block diagram — layered boxes */
+function ArchDiagram({ layers, color }: { layers: { title: string; items: { name: string; tech: string }[] }[]; color: string }) {
+  return (
+    <div className="space-y-2">
+      {layers.map((layer, i) => (
+        <div key={i} className="rounded-lg border overflow-hidden" style={{ borderColor: `${color}25` }}>
+          <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider" style={{ background: `${color}10`, color, fontFamily: "'Space Grotesk', sans-serif" }}>
+            {layer.title}
+          </div>
+          <div className="flex flex-wrap gap-2 p-3">
+            {layer.items.map((item, j) => (
+              <div key={j} className="flex flex-col px-3 py-2 rounded border bg-white" style={{ borderColor: `${color}20`, minWidth: "100px" }}>
+                <span className="text-xs font-bold text-slate-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.name}</span>
+                <span className="text-[10px] text-slate-400 mt-0.5">{item.tech}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Cost breakdown — tokens + tools */
+function CostBreakdown({ items, total, color }: { items: { tool: string; usage: string; cost: string; tokens?: string }[]; total: string; color: string }) {
+  return (
+    <div className="rounded-lg border overflow-hidden" style={{ borderColor: `${color}25` }}>
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs">
+          <thead>
+            <tr style={{ background: `${color}08`, borderBottom: `1px solid ${color}20` }}>
+              <th className="text-left px-3 py-2 font-bold text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Outil / Service</th>
+              <th className="text-left px-3 py-2 font-bold text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Usage</th>
+              <th className="text-left px-3 py-2 font-bold text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Tokens / Volume</th>
+              <th className="text-right px-3 py-2 font-bold text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Coût</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, i) => (
+              <tr key={i} className="border-t border-slate-100">
+                <td className="px-3 py-2 font-mono font-bold" style={{ color, fontFamily: "'Space Grotesk', sans-serif" }}>{item.tool}</td>
+                <td className="px-3 py-2 text-slate-600">{item.usage}</td>
+                <td className="px-3 py-2 text-slate-400 font-mono">{item.tokens || "—"}</td>
+                <td className="px-3 py-2 text-right font-mono font-bold text-slate-700">{item.cost}</td>
+              </tr>
+            ))}
+            <tr className="border-t-2" style={{ borderColor: `${color}30`, background: `${color}06` }}>
+              <td colSpan={3} className="px-3 py-2 font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Total développement</td>
+              <td className="px-3 py-2 text-right font-mono font-black" style={{ color }}>{total}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
@@ -267,10 +350,83 @@ export default function PrototypesOrigins() {
                 </p>
               </div>
 
+              {/* UX Journey diagram */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Schéma 1 — Parcours utilisateur" : "Schema 1 — User journey"}
+                </h3>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <UXFlowDiagram color={AVA_COLOR} steps={[
+                    { icon: Film, label: isFr ? "Arrivée sur l'app" : "App landing", sub: isFr ? "Onboarding A/B skippable" : "Skippable A/B onboarding" },
+                    { icon: Video, label: isFr ? "Intro vidéo Gumlet" : "Gumlet video intro", sub: isFr ? "Cinématique + contexte" : "Cinematic + context" },
+                    { icon: Mic, label: isFr ? "Appel entrant Max" : "Max incoming call", sub: isFr ? "Micro continu pause/resume" : "Continuous mic pause/resume" },
+                    { icon: Zap, label: isFr ? "Conversation voice-to-voice" : "Voice-to-voice conversation", sub: isFr ? "Timer 10 min, Game Master actif" : "10 min timer, active Game Master" },
+                    { icon: Video, label: isFr ? "Trigger vidéo" : "Video trigger", sub: isFr ? "Fade to black + contexte post-vidéo" : "Fade to black + post-video context" },
+                    { icon: User, label: isFr ? "Gate de confiance" : "Trust gate", sub: isFr ? "Max propose Léo / Emma" : "Max introduces Léo / Emma" },
+                    { icon: Database, label: isFr ? "Questionnaire final" : "Final questionnaire", sub: isFr ? "~50 champs, 8 blocs" : "~50 fields, 8 blocks" },
+                  ]} />
+                  <div className="bg-slate-50 rounded-lg p-4 space-y-3">
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Mécaniques Game Master" : "Game Master mechanics"}
+                    </div>
+                    {[
+                      { label: "trust_delta", desc: isFr ? "Variation de confiance par tour" : "Trust variation per turn" },
+                      { label: "trigger_video", desc: isFr ? "Déclenchement séquences vidéo" : "Video sequence trigger" },
+                      { label: "game_over", desc: isFr ? "Insulte / hors-cadre / timeout" : "Insult / off-topic / timeout" },
+                      { label: "gate", desc: isFr ? "Seuil de confiance atteint" : "Trust threshold reached" },
+                      { label: "moderation", desc: isFr ? "Filtre contenu sensible" : "Sensitive content filter" },
+                    ].map((m, i) => (
+                      <div key={i} className="flex gap-2">
+                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded shrink-0" style={{ background: `${AVA_COLOR}15`, color: AVA_COLOR }}>{m.label}</span>
+                        <span className="text-xs text-slate-500">{m.desc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Architecture diagram */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Schéma 2 — Architecture technique" : "Schema 2 — Technical architecture"}
+                </h3>
+                <ArchDiagram color={AVA_COLOR} layers={[
+                  {
+                    title: isFr ? "Interface (React + Lovable)" : "Interface (React + Lovable)",
+                    items: [
+                      { name: "Push-to-Talk", tech: "Web Audio API" },
+                      { name: "Player vidéo", tech: "Gumlet iframe" },
+                      { name: "Debug Panel", tech: "?debug URL" },
+                      { name: "Admin /admin", tech: "Sessions + prompts" },
+                    ]
+                  },
+                  {
+                    title: isFr ? "Backend (Supabase Edge Functions)" : "Backend (Supabase Edge Functions)",
+                    items: [
+                      { name: "proxy-llm", tech: "OpenRouter" },
+                      { name: "proxy-stt", tech: "Deepgram" },
+                      { name: "proxy-tts", tech: "ElevenLabs" },
+                      { name: "query-rag", tech: "pgvector HNSW" },
+                      { name: "rewrite-query", tech: "Gemini Flash" },
+                      { name: "summarize-session", tech: "LLM fire-and-forget" },
+                    ]
+                  },
+                  {
+                    title: isFr ? "IA & Données (Supabase PostgreSQL)" : "AI & Data (Supabase PostgreSQL)",
+                    items: [
+                      { name: "RAG", tech: "Voyage AI + pgvector" },
+                      { name: "LLM", tech: "OpenRouter multi-modèles" },
+                      { name: "Embeddings", tech: "voyage-3 + OpenAI" },
+                      { name: "Mémoire", tech: "session_summaries" },
+                    ]
+                  },
+                ]} />
+              </div>
+
               {/* Pipeline diagram */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Pipeline technique" : "Technical pipeline"}
+                  {isFr ? "Schéma 3 — Pipeline conversationnel (8 étapes)" : "Schema 3 — Conversational pipeline (8 steps)"}
                 </h3>
                 <PipelineFlow
                   color={AVA_COLOR}
@@ -328,6 +484,30 @@ export default function PrototypesOrigins() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Cost breakdown */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Coûts en tokens et outils de développement" : "Token costs and development tools"}
+                </h3>
+                <CostBreakdown
+                  color={AVA_COLOR}
+                  total="~350 CHF"
+                  items={[
+                    { tool: "Lovable", usage: isFr ? "Vibe coding principal — 17 sessions" : "Main vibe coding — 17 sessions", tokens: isFr ? "~2M tokens (inclus abonnement)" : "~2M tokens (subscription)", cost: "~80 CHF" },
+                    { tool: "OpenRouter", usage: isFr ? "LLM multi-modèles (Qwen, Claude, GPT-5, Gemini, Grok)" : "Multi-model LLM (Qwen, Claude, GPT-5, Gemini, Grok)", tokens: isFr ? "Tracking auto par session" : "Auto-tracked per session", cost: "~120 CHF" },
+                    { tool: "Voyage AI", usage: isFr ? "Embeddings voyage-3 (1024 dim) + reranker rerank-2.5" : "Embeddings voyage-3 (1024 dim) + reranker rerank-2.5", tokens: "~226 vecteurs HNSW", cost: "~20 CHF" },
+                    { tool: "Deepgram", usage: isFr ? "STT live (nova-2 FR) — Push-to-Talk" : "Live STT (nova-2 FR) — Push-to-Talk", tokens: isFr ? "Par minute audio" : "Per audio minute", cost: "~30 CHF" },
+                    { tool: "ElevenLabs", usage: isFr ? "TTS eleven_multilingual_v2 — voix Max" : "TTS eleven_multilingual_v2 — Max voice", tokens: isFr ? "Par caractère TTS" : "Per TTS character", cost: "~60 CHF" },
+                    { tool: "Supabase", usage: isFr ? "Edge Functions + PostgreSQL + pgvector" : "Edge Functions + PostgreSQL + pgvector", tokens: "—", cost: "~40 CHF" },
+                  ]}
+                />
+                <p className="text-xs text-slate-400 mt-2 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "Le suivi des coûts LLM est automatique via openRouterLLM.ts — chaque session enregistre tokens input/output + coût USD en temps réel dans le dashboard admin."
+                    : "LLM cost tracking is automatic via openRouterLLM.ts — each session records input/output tokens + USD cost in real time in the admin dashboard."}
+                </p>
               </div>
 
               {/* Key learnings accordion */}
@@ -506,10 +686,90 @@ export default function PrototypesOrigins() {
                 </div>
               </div>
 
+              {/* UX Journey — Dilemme */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Schéma 1 — Parcours pédagogique de l'élève" : "Schema 1 — Student pedagogical journey"}
+                </h3>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <UXFlowDiagram color={DILEMME_COLOR} steps={[
+                    { icon: User, label: isFr ? "Écran titre" : "Title screen", sub: isFr ? "Entrée sans friction" : "Frictionless entry" },
+                    { icon: Video, label: isFr ? "Vidéo d'introduction" : "Introduction video", sub: isFr ? "Playlist adaptative desktop/mobile" : "Adaptive desktop/mobile playlist" },
+                    { icon: Cpu, label: isFr ? "Configuration" : "Configuration", sub: isFr ? "Prénom + déverrouillage audio + session" : "Name + audio unlock + session" },
+                    { icon: Mic, label: isFr ? "Tutoriel conversationnel" : "Conversational tutorial", sub: isFr ? "Image analysée avec Peter, 6 indices, max 8 échanges" : "Image analyzed with Peter, 6 clues, max 8 exchanges" },
+                    { icon: Zap, label: isFr ? "Jeu de reconstruction" : "Reconstruction game", sub: isFr ? "Drag-and-drop des indices trouvés" : "Drag-and-drop of found clues" },
+                    { icon: BookOpen, label: isFr ? "Synthèse" : "Synthesis", sub: isFr ? "L'élève formule sa compréhension" : "Student formulates understanding" },
+                    { icon: Database, label: isFr ? "Feedback + sauvegarde" : "Feedback + save", sub: isFr ? "PostgreSQL + Google Sheets + PostHog" : "PostgreSQL + Google Sheets + PostHog" },
+                  ]} />
+                  <div className="bg-slate-50 rounded-lg p-4 space-y-3">
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Logique pédagogique de Peter" : "Peter's pedagogical logic"}
+                    </div>
+                    {[
+                      { label: isFr ? "Guidage socratique" : "Socratic guidance", desc: isFr ? "Questions ouvertes, jamais de réponses directes" : "Open questions, never direct answers" },
+                      { label: isFr ? "Source de vérité serveur" : "Server-side truth", desc: isFr ? "additional_instructions OpenAI, pas l'historique" : "OpenAI additional_instructions, not history" },
+                      { label: isFr ? "Prompt v3 versionné" : "Versioned prompt v3", desc: isFr ? "docs/prompts/peter-assistant.md" : "docs/prompts/peter-assistant.md" },
+                      { label: isFr ? "Reprise instantanée" : "Instant resume", desc: isFr ? "Message pré-généré en 150–500ms" : "Pre-generated message in 150–500ms" },
+                    ].map((m, i) => (
+                      <div key={i} className="flex gap-2">
+                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded shrink-0 whitespace-nowrap" style={{ background: `${DILEMME_COLOR}15`, color: DILEMME_COLOR }}>{m.label}</span>
+                        <span className="text-xs text-slate-500">{m.desc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Architecture diagram — Dilemme */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Schéma 2 — Architecture produit end-to-end" : "Schema 2 — End-to-end product architecture"}
+                </h3>
+                <ArchDiagram color={DILEMME_COLOR} layers={[
+                  {
+                    title: isFr ? "Interface élève (React + Vite)" : "Student interface (React + Vite)",
+                    items: [
+                      { name: "Chat Peter", tech: "shadcn/ui + Framer Motion" },
+                      { name: "Panneau média", tech: "Gumlet / YouTube / WebView" },
+                      { name: "Micro + waveform", tech: "Web Audio API + Canvas" },
+                      { name: "Avatar élève", tech: "Grille de vignettes" },
+                    ]
+                  },
+                  {
+                    title: isFr ? "Backend (Express.js + Node)" : "Backend (Express.js + Node)",
+                    items: [
+                      { name: "Proxy Flowise SSE", tech: "Anti-JSON 3 couches" },
+                      { name: "/api/tts", tech: "ElevenLabs + cache LRU" },
+                      { name: "/api/transcribe", tech: "Whisper / Scribe" },
+                      { name: "/api/sessions", tech: "PostgreSQL / Neon" },
+                      { name: "/api/debug", tech: "Traces persistées" },
+                    ]
+                  },
+                  {
+                    title: isFr ? "Services IA (Flowise self-hosted)" : "AI Services (self-hosted Flowise)",
+                    items: [
+                      { name: "Flowise", tech: "28 nœuds, 15 chemin max" },
+                      { name: "ElevenLabs", tech: "TTS + STT Scribe" },
+                      { name: "OpenAI", tech: "GPT-4o Assistants API" },
+                      { name: "Deepgram", tech: "Live transcription WS" },
+                    ]
+                  },
+                  {
+                    title: isFr ? "Données & Observabilité" : "Data & Observability",
+                    items: [
+                      { name: "PostgreSQL / Neon", tech: "Sessions + messages" },
+                      { name: "PostHog", tech: "Analytics client + serveur" },
+                      { name: "Google Sheets", tech: "Export via Replit Connectors" },
+                      { name: "Rectify", tech: "Session recording" },
+                    ]
+                  },
+                ]} />
+              </div>
+
               {/* Pipeline diagram — Light */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Pipeline technique — Prototype Light" : "Technical pipeline — Light prototype"}
+                  {isFr ? "Schéma 3 — Pipeline technique — Prototype Light" : "Schema 3 — Technical pipeline — Light prototype"}
                 </h3>
                 <PipelineFlow
                   color={DILEMME_COLOR}
@@ -533,7 +793,7 @@ export default function PrototypesOrigins() {
               {/* Pipeline diagram — Flowise */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Pipeline technique — Prototype Flowise" : "Technical pipeline — Flowise prototype"}
+                  {isFr ? "Schéma 4 — Pipeline technique — Prototype Flowise" : "Schema 4 — Technical pipeline — Flowise prototype"}
                 </h3>
                 <PipelineFlow
                   color={DILEMME_COLOR}
@@ -567,6 +827,50 @@ export default function PrototypesOrigins() {
                     {isFr ? "TTS hit avec cache LRU : ~40ms. Reprise pré-générée (Light) : 150–500ms." : "TTS hit with LRU cache: ~40ms. Pre-generated resume (Light): 150–500ms."}
                   </p>
                 </div>
+              </div>
+
+              {/* Cost breakdown — Dilemme */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Coûts en tokens et outils de développement" : "Token costs and development tools"}
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Prototype Light / Tutoriel — ~220 CHF, 25h" : "Light / Tutorial prototype — ~220 CHF, 25h"}
+                    </div>
+                    <CostBreakdown
+                      color={DILEMME_COLOR}
+                      total="~220 CHF"
+                      items={[
+                        { tool: "Replit Agent", usage: isFr ? "Développement principal (vibe coding)" : "Main development (vibe coding)", tokens: isFr ? "Inclus abonnement" : "Subscription included", cost: "~80 CHF" },
+                        { tool: "Claude Code", usage: isFr ? "Corrections ciblées et revues" : "Targeted fixes and reviews", tokens: isFr ? "~500K tokens" : "~500K tokens", cost: "~70 CHF" },
+                        { tool: "OpenAI", usage: isFr ? "GPT-4o Assistants API — Peter + Whisper STT" : "GPT-4o Assistants API — Peter + Whisper STT", tokens: isFr ? "~1M tokens input/output" : "~1M input/output tokens", cost: "~55 CHF" },
+                        { tool: "ElevenLabs", usage: isFr ? "TTS eleven_multilingual_v2 — voix Peter" : "TTS eleven_multilingual_v2 — Peter voice", tokens: isFr ? "Inclus quota existant" : "Existing quota included", cost: "~15 CHF" },
+                      ]}
+                    />
+                  </div>
+                  <div>
+                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Prototype Flowise / Complet — ~160 CHF, 45h" : "Flowise / Full prototype — ~160 CHF, 45h"}
+                    </div>
+                    <CostBreakdown
+                      color={DILEMME_COLOR}
+                      total="~160 CHF"
+                      items={[
+                        { tool: "Replit Agent", usage: isFr ? "Développement principal + hébergement" : "Main development + hosting", tokens: isFr ? "Inclus abonnement" : "Subscription included", cost: "~80 CHF" },
+                        { tool: "Flowise", usage: isFr ? "Orchestration Peter — 28 nœuds self-hosted" : "Peter orchestration — 28 nodes self-hosted", tokens: isFr ? "Instance Memoways" : "Memoways instance", cost: "~0 CHF" },
+                        { tool: "OpenAI", usage: isFr ? "GPT-4o via Flowise — conversations Peter" : "GPT-4o via Flowise — Peter conversations", tokens: isFr ? "~800K tokens input/output" : "~800K input/output tokens", cost: "~40 CHF" },
+                        { tool: "ElevenLabs", usage: isFr ? "TTS par phrase + STT Scribe (WER 2.11%)" : "Per-sentence TTS + Scribe STT (WER 2.11%)", tokens: isFr ? "Cache LRU — hit ~40ms" : "LRU cache — hit ~40ms", cost: "~40 CHF" },
+                      ]}
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-slate-400 mt-3 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "Les coûts OpenAI incluent les tokens de contexte (additional_instructions injectées à chaque échange) et les tokens de génération Peter. Le cache LRU TTS réduit les coûts ElevenLabs de ~60% sur les messages répétés."
+                    : "OpenAI costs include context tokens (additional_instructions injected at each exchange) and Peter generation tokens. TTS LRU cache reduces ElevenLabs costs by ~60% on repeated messages."}
+                </p>
               </div>
 
               {/* Key learnings accordion */}
