@@ -370,13 +370,32 @@ export default function PrototypesOrigins() {
               {/* Concept */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Concept" : "Concept"}
+                  {isFr ? "L'expérience" : "The experience"}
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  {isFr
-                    ? "L'utilisateur entre dans l'univers du film dystopique \"Où est Ava ?\" de Romed Wyder et parle en visioconférence avec Max, un développeur de 28 ans dont la sœur Ava a disparu dans le contexte d'une pandémie mondiale. Un Game Master IA orchestre l'expérience en temps réel : il gère le niveau de confiance, déclenche des séquences vidéo et peut provoquer un game over. Le pipeline complet STT→LLM→TTS est enrichi par un système RAG qui ancre Max dans son univers narratif."
-                    : "The user enters the dystopian film universe \"Where is Ava?\" by Romed Wyder and speaks via video call with Max, a 28-year-old developer whose sister Ava disappeared during a global pandemic. An AI Game Master orchestrates the experience in real time: it manages trust levels, triggers video sequences and can trigger a game over. The full STT→LLM→TTS pipeline is enriched by a RAG system that anchors Max in his narrative universe."}
-                </p>
+                <div className="space-y-3">
+                  <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Plongez au cœur d'un thriller dystopique avec \"Parle à Ava !\" — une expérience audiovisuelle conversationnelle immersive accessible sur desktop et mobile. Vous êtes catapulté dans un chalet d'alpage où la famille d'Emma, Max, Ava (9 ans) et Léo (15 ans) tente de survivre face à un virus qui transforme les femmes en hommes (la \"protogynie\")."
+                      : "Dive into a dystopian thriller with \"Parle à Ava !\" — an immersive conversational audiovisual experience accessible on desktop and mobile. You are catapulted into a mountain chalet where the family of Emma, Max, Ava (9 years old) and Léo (15 years old) tries to survive a virus that transforms women into men (the \"protogyny\")."}
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "\"Parle à Ava !\" est le prolongement interactif du film \"Où est Ava ?\", un thriller dystopique en production (présentation publique prévue en 2026). Explorez le contexte initial du film, découvrez les enjeux et les secrets de la famille, et préparez-vous à vivre une histoire conversationnelle personnalisée, pleine de rebondissements et de surprises."
+                      : "\"Parle à Ava !\" is the interactive extension of the film \"Where is Ava?\", a dystopian thriller in production (public presentation planned for 2026). Explore the film's initial context, discover the family's stakes and secrets, and prepare to live a personalised conversational story, full of twists and surprises."}
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Grâce à une IA conversationnelle et à des vidéos synthétiques hyperréalistes, engagez des dialogues uniques avec les personnages de ce monde au bord de la rupture. Posez des questions, exprimez vos hypothèses et explorez des thèmes complexes dans un monde en péril. Chaque conversation dévoile un fragment d'une réalité possible, avec toutes ses contradictions et sa complexité, pour vous confronter à vos propres valeurs."
+                      : "Through conversational AI and hyperrealistic synthetic videos, engage in unique dialogues with the characters of this world on the brink. Ask questions, express your hypotheses and explore complex themes in a world in peril. Each conversation reveals a fragment of a possible reality, with all its contradictions and complexity, to confront you with your own values."}
+                  </p>
+                  <div className="p-3 rounded border-l-2 bg-slate-50" style={{ borderColor: "oklch(0.55 0.20 200)" }}>
+                    <p className="text-xs text-slate-500 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                      {isFr
+                        ? "L'objectif de ce projet numérique : vous faire réfléchir. Explorez vos réactions face aux thèmes abordés et expérimentez votre rapport à vos propres certitudes et principes moraux à travers cette expérience interactive originale."
+                        : "The objective of this digital project: to make you think. Explore your reactions to the themes addressed and experiment with your relationship to your own certainties and moral principles through this original interactive experience."}
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* UX Journey diagram */}
@@ -683,6 +702,38 @@ export default function PrototypesOrigins() {
             </div>
 
             <div className="p-6 space-y-6">
+
+              {/* Concept — from Memoways blog */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Le projet" : "The project"}
+                </h3>
+                <div className="space-y-3">
+                  <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Dilemme Plastique est un projet innovant qui combine expertise documentaire, intelligence artificielle et pédagogie active pour sensibiliser aux enjeux environnementaux liés à la pollution plastique. Il est destiné à évoluer vers l'outil pédagogique généralisable Edugami."
+                      : "Dilemme Plastique is an innovative project combining documentary expertise, artificial intelligence and active pedagogy to raise awareness of environmental issues related to plastic pollution. It is designed to evolve into the generalisable educational tool Edugami."}
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Le projet est né de la rencontre entre Peter Charaf, réalisateur documentariste qui a effectué deux tours du monde sur une décennie (depuis 2015) pour documenter la problématique plastique en partenariat avec la Fondation Race for Water, et l'équipe de Memoways. Cette collaboration a abouti à une base de données propriétaire unique : images, vidéos et témoignages vérifiés sur le terrain, couvrant pollution environnementale, impacts sanitaires, défis du recyclage et solutions émergentes."
+                      : "The project was born from the meeting between Peter Charaf, a documentary filmmaker who spent a decade (since 2015) travelling the world twice to document the plastic problem in partnership with the Race for Water Foundation, and the Memoways team. This collaboration resulted in a unique proprietary database: field-verified images, videos and testimonials covering environmental pollution, health impacts, recycling challenges and emerging solutions."}
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Après un premier prototype déterministe présenté lors de la Semaine des Médias en Suisse romande en février 2024, l'équipe a opéré un pivot technologique majeur : abandon de l'approche no-code linéaire au profit d'un système 100% alimenté par l'IA générative. L'élève peut communiquer avec l'avatar de Peter Charaf via la voix ou le texte, dans un environnement conçu pour maximiser l'engagement pédagogique."
+                      : "After a first deterministic prototype presented at the Semaine des Médias in French-speaking Switzerland in February 2024, the team made a major technological pivot: abandoning the linear no-code approach in favour of a system 100% powered by generative AI. The student can communicate with Peter Charaf's avatar via voice or text, in an environment designed to maximise pedagogical engagement."}
+                  </p>
+                  <div className="p-3 rounded border-l-2 bg-slate-50" style={{ borderColor: DILEMME_COLOR }}>
+                    <p className="text-xs text-slate-500 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                      {isFr
+                        ? "Vision long terme : Edugami est un outil pédagogique généralisable à d'autres thématiques. \"On remplace le plastique par autre chose, une autre thématique, l'histoire, une autre problématique de société.\" — Peter Charaf"
+                        : "Long-term vision: Edugami is an educational tool generalisable to other themes. \"We replace plastic with something else, another theme, history, another social issue.\" — Peter Charaf"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Two sub-prototypes */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
