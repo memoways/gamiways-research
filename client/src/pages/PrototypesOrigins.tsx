@@ -486,28 +486,37 @@ export default function PrototypesOrigins() {
                 </div>
               </div>
 
-              {/* Cost breakdown */}
+              {/* Tools used — AVA */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Coûts en tokens et outils de développement" : "Token costs and development tools"}
+                  {isFr ? "Outils utilisés" : "Tools used"}
                 </h3>
-                <CostBreakdown
-                  color={AVA_COLOR}
-                  total="~350 CHF"
-                  items={[
-                    { tool: "Lovable", usage: isFr ? "Vibe coding principal — 17 sessions" : "Main vibe coding — 17 sessions", tokens: isFr ? "~2M tokens (inclus abonnement)" : "~2M tokens (subscription)", cost: "~80 CHF" },
-                    { tool: "OpenRouter", usage: isFr ? "LLM multi-modèles (Qwen, Claude, GPT-5, Gemini, Grok)" : "Multi-model LLM (Qwen, Claude, GPT-5, Gemini, Grok)", tokens: isFr ? "Tracking auto par session" : "Auto-tracked per session", cost: "~120 CHF" },
-                    { tool: "Voyage AI", usage: isFr ? "Embeddings voyage-3 (1024 dim) + reranker rerank-2.5" : "Embeddings voyage-3 (1024 dim) + reranker rerank-2.5", tokens: "~226 vecteurs HNSW", cost: "~20 CHF" },
-                    { tool: "Deepgram", usage: isFr ? "STT live (nova-2 FR) — Push-to-Talk" : "Live STT (nova-2 FR) — Push-to-Talk", tokens: isFr ? "Par minute audio" : "Per audio minute", cost: "~30 CHF" },
-                    { tool: "ElevenLabs", usage: isFr ? "TTS eleven_multilingual_v2 — voix Max" : "TTS eleven_multilingual_v2 — Max voice", tokens: isFr ? "Par caractère TTS" : "Per TTS character", cost: "~60 CHF" },
-                    { tool: "Supabase", usage: isFr ? "Edge Functions + PostgreSQL + pgvector" : "Edge Functions + PostgreSQL + pgvector", tokens: "—", cost: "~40 CHF" },
-                  ]}
-                />
-                <p className="text-xs text-slate-400 mt-2 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  {isFr
-                    ? "Le suivi des coûts LLM est automatique via openRouterLLM.ts — chaque session enregistre tokens input/output + coût USD en temps réel dans le dashboard admin."
-                    : "LLM cost tracking is automatic via openRouterLLM.ts — each session records input/output tokens + USD cost in real time in the admin dashboard."}
-                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { tool: "Lovable", role: isFr ? "Vibe coding principal — 17 sessions" : "Main vibe coding — 17 sessions" },
+                    { tool: "Supabase", role: isFr ? "Edge Functions + PostgreSQL + pgvector" : "Edge Functions + PostgreSQL + pgvector" },
+                    { tool: "OpenRouter", role: isFr ? "LLM multi-modèles (Qwen, Claude, GPT-5, Gemini, Grok)" : "Multi-model LLM (Qwen, Claude, GPT-5, Gemini, Grok)" },
+                    { tool: "Deepgram", role: isFr ? "STT live nova-2 FR — Push-to-Talk" : "Live STT nova-2 FR — Push-to-Talk" },
+                    { tool: "ElevenLabs", role: isFr ? "TTS eleven_multilingual_v2 — voix Max" : "TTS eleven_multilingual_v2 — Max voice" },
+                    { tool: "Voyage AI", role: isFr ? "Embeddings voyage-3 + reranker rerank-2.5" : "voyage-3 embeddings + rerank-2.5" },
+                    { tool: "PostHog", role: isFr ? "Analytics session recording" : "Session recording analytics" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex flex-col px-3 py-2 rounded border bg-white" style={{ borderColor: `${AVA_COLOR}20` }}>
+                      <span className="text-xs font-bold" style={{ color: AVA_COLOR, fontFamily: "'Space Grotesk', sans-serif" }}>{item.tool}</span>
+                      <span className="text-[10px] text-slate-400 mt-0.5 max-w-[160px]">{item.role}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 flex items-center gap-3 p-3 rounded bg-slate-50 border border-slate-200">
+                  <div className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Temps de développement" : "Development time"}
+                  </div>
+                  <div className="text-sm font-black font-mono" style={{ color: AVA_COLOR }}>32h</div>
+                  <div className="text-xs text-slate-400">—</div>
+                  <div className="text-xs text-slate-500">
+                    {isFr ? "Le suivi des coûts LLM est automatique via openRouterLLM.ts — tokens input/output + coût USD enregistrés par session dans le dashboard admin." : "LLM cost tracking is automatic via openRouterLLM.ts — input/output tokens + USD cost recorded per session in the admin dashboard."}
+                  </div>
+                </div>
               </div>
 
               {/* Key learnings accordion */}
@@ -829,48 +838,79 @@ export default function PrototypesOrigins() {
                 </div>
               </div>
 
-              {/* Cost breakdown — Dilemme */}
+              {/* Tools + costs — Dilemme (données Notion uniquement) */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Coûts en tokens et outils de développement" : "Token costs and development tools"}
+                  {isFr ? "Outils utilisés et coûts de développement" : "Tools used and development costs"}
                 </h3>
                 <div className="space-y-4">
-                  <div>
-                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Prototype Light / Tutoriel — ~220 CHF, 25h" : "Light / Tutorial prototype — ~220 CHF, 25h"}
+
+                  {/* Light / Tutoriel — données exactes Notion */}
+                  <div className="rounded-lg border overflow-hidden" style={{ borderColor: `${DILEMME_COLOR}25` }}>
+                    <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider" style={{ background: `${DILEMME_COLOR}10`, color: DILEMME_COLOR, fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Prototype Light / Tutoriel — 25h — ~220 CHF" : "Light / Tutorial prototype — 25h — ~220 CHF"}
                     </div>
-                    <CostBreakdown
-                      color={DILEMME_COLOR}
-                      total="~220 CHF"
-                      items={[
-                        { tool: "Replit Agent", usage: isFr ? "Développement principal (vibe coding)" : "Main development (vibe coding)", tokens: isFr ? "Inclus abonnement" : "Subscription included", cost: "~80 CHF" },
-                        { tool: "Claude Code", usage: isFr ? "Corrections ciblées et revues" : "Targeted fixes and reviews", tokens: isFr ? "~500K tokens" : "~500K tokens", cost: "~70 CHF" },
-                        { tool: "OpenAI", usage: isFr ? "GPT-4o Assistants API — Peter + Whisper STT" : "GPT-4o Assistants API — Peter + Whisper STT", tokens: isFr ? "~1M tokens input/output" : "~1M input/output tokens", cost: "~55 CHF" },
-                        { tool: "ElevenLabs", usage: isFr ? "TTS eleven_multilingual_v2 — voix Peter" : "TTS eleven_multilingual_v2 — Peter voice", tokens: isFr ? "Inclus quota existant" : "Existing quota included", cost: "~15 CHF" },
-                      ]}
-                    />
-                  </div>
-                  <div>
-                    <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Prototype Flowise / Complet — ~160 CHF, 45h" : "Flowise / Full prototype — ~160 CHF, 45h"}
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="border-b border-slate-100 bg-slate-50">
+                            <th className="text-left px-3 py-2 font-bold text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Outil" : "Tool"}</th>
+                            <th className="text-left px-3 py-2 font-bold text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Usage" : "Usage"}</th>
+                            <th className="text-right px-3 py-2 font-bold text-slate-500" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{isFr ? "Coût" : "Cost"}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {[
+                            { tool: "Claude Code", usage: isFr ? "Corrections ciblées et revues" : "Targeted fixes and reviews", cost: "~80 USD / ~70 CHF" },
+                            { tool: "OpenAI", usage: isFr ? "GPT-4o Assistants API + Whisper STT" : "GPT-4o Assistants API + Whisper STT", cost: "~60 USD / ~55 CHF" },
+                            { tool: "Replit Agent", usage: isFr ? "Développement principal (vibe coding) + hébergement" : "Main development (vibe coding) + hosting", cost: isFr ? "~80 CHF (estimé)" : "~80 CHF (estimated)" },
+                            { tool: "ElevenLabs", usage: isFr ? "TTS eleven_multilingual_v2 — voix Peter" : "TTS eleven_multilingual_v2 — Peter voice", cost: isFr ? "Inclus quota existant" : "Included in existing quota" },
+                          ].map((row, i) => (
+                            <tr key={i} className="border-t border-slate-100">
+                              <td className="px-3 py-2 font-mono font-bold" style={{ color: DILEMME_COLOR }}>{row.tool}</td>
+                              <td className="px-3 py-2 text-slate-600">{row.usage}</td>
+                              <td className="px-3 py-2 text-right font-mono text-slate-700">{row.cost}</td>
+                            </tr>
+                          ))}
+                          <tr className="border-t-2" style={{ borderColor: `${DILEMME_COLOR}30`, background: `${DILEMME_COLOR}06` }}>
+                            <td colSpan={2} className="px-3 py-2 font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Total</td>
+                            <td className="px-3 py-2 text-right font-mono font-black" style={{ color: DILEMME_COLOR }}>~220 CHF</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
-                    <CostBreakdown
-                      color={DILEMME_COLOR}
-                      total="~160 CHF"
-                      items={[
-                        { tool: "Replit Agent", usage: isFr ? "Développement principal + hébergement" : "Main development + hosting", tokens: isFr ? "Inclus abonnement" : "Subscription included", cost: "~80 CHF" },
-                        { tool: "Flowise", usage: isFr ? "Orchestration Peter — 28 nœuds self-hosted" : "Peter orchestration — 28 nodes self-hosted", tokens: isFr ? "Instance Memoways" : "Memoways instance", cost: "~0 CHF" },
-                        { tool: "OpenAI", usage: isFr ? "GPT-4o via Flowise — conversations Peter" : "GPT-4o via Flowise — Peter conversations", tokens: isFr ? "~800K tokens input/output" : "~800K input/output tokens", cost: "~40 CHF" },
-                        { tool: "ElevenLabs", usage: isFr ? "TTS par phrase + STT Scribe (WER 2.11%)" : "Per-sentence TTS + Scribe STT (WER 2.11%)", tokens: isFr ? "Cache LRU — hit ~40ms" : "LRU cache — hit ~40ms", cost: "~40 CHF" },
-                      ]}
-                    />
                   </div>
+
+                  {/* Flowise — données exactes Notion */}
+                  <div className="rounded-lg border overflow-hidden" style={{ borderColor: `${DILEMME_COLOR}25` }}>
+                    <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider" style={{ background: `${DILEMME_COLOR}10`, color: DILEMME_COLOR, fontFamily: "'Space Grotesk', sans-serif" }}>
+                      {isFr ? "Prototype Flowise / Complet — 45h — 160 CHF" : "Flowise / Full prototype — 45h — 160 CHF"}
+                    </div>
+                    <div className="flex flex-wrap gap-2 p-3">
+                      {[
+                        { tool: "Replit Agent", role: isFr ? "Développement principal + hébergement" : "Main development + hosting" },
+                        { tool: "Flowise", role: isFr ? "Orchestration Peter — 28 nœuds (self-hosted Memoways)" : "Peter orchestration — 28 nodes (Memoways self-hosted)" },
+                        { tool: "OpenAI", role: isFr ? "GPT-4o via Flowise — conversations Peter" : "GPT-4o via Flowise — Peter conversations" },
+                        { tool: "ElevenLabs", role: isFr ? "TTS par phrase + STT Scribe (WER 2.11%)" : "Per-sentence TTS + Scribe STT (WER 2.11%)" },
+                        { tool: "Deepgram", role: isFr ? "Transcription live non définitive (feedback visuel)" : "Non-final live transcription (visual feedback)" },
+                        { tool: "PostHog + Rectify", role: isFr ? "Analytics produit + session recording" : "Product analytics + session recording" },
+                      ].map((item, i) => (
+                        <div key={i} className="flex flex-col px-3 py-2 rounded border bg-white" style={{ borderColor: `${DILEMME_COLOR}20` }}>
+                          <span className="text-xs font-bold" style={{ color: DILEMME_COLOR, fontFamily: "'Space Grotesk', sans-serif" }}>{item.tool}</span>
+                          <span className="text-[10px] text-slate-400 mt-0.5 max-w-[180px]">{item.role}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="px-3 pb-3">
+                      <div className="flex items-center gap-2 p-2 rounded bg-slate-50 border border-slate-100">
+                        <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Total</span>
+                        <span className="text-sm font-black font-mono" style={{ color: DILEMME_COLOR }}>160 CHF</span>
+                        <span className="text-xs text-slate-400">— 45h</span>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
-                <p className="text-xs text-slate-400 mt-3 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                  {isFr
-                    ? "Les coûts OpenAI incluent les tokens de contexte (additional_instructions injectées à chaque échange) et les tokens de génération Peter. Le cache LRU TTS réduit les coûts ElevenLabs de ~60% sur les messages répétés."
-                    : "OpenAI costs include context tokens (additional_instructions injected at each exchange) and Peter generation tokens. TTS LRU cache reduces ElevenLabs costs by ~60% on repeated messages."}
-                </p>
               </div>
 
               {/* Key learnings accordion */}
