@@ -12,6 +12,7 @@ import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import { Link } from "wouter";
 import MermaidDiagram from "@/components/MermaidDiagram";
+import DiagramToggle from "@/components/DiagramToggle";
 import {
   AVA_UX_FLOW, AVA_PIPELINE, AVA_GM_LOOP, AVA_DATA_SYNC,
   DILEMME_LIGHT_UX, DILEMME_LIGHT_GAME, DILEMME_LIGHT_ARCH,
@@ -405,10 +406,15 @@ export default function PrototypesOrigins() {
               </div>
 
               {/* UX Journey diagram — Mermaid from Notion */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 1 — Parcours utilisateur" : "Schema 1 — User journey"}
-                </h3>
+              <DiagramToggle
+                title="Schema 1 — User journey"
+                titleFr="Schéma 1 — Parcours utilisateur"
+                summary="Onboarding → video intro → incoming call → voice-to-voice conversation → video triggers → trust gate → questionnaire"
+                summaryFr="Onboarding → intro vidéo → appel entrant → conversation voice-to-voice → triggers vidéo → gate de confiance → questionnaire"
+                types={["experience"]}
+                accentColor={AVA_COLOR}
+                isFr={isFr}
+              >
                 <MermaidDiagram
                   chart={AVA_UX_FLOW}
                   title={isFr ? "Parcours utilisateur AVA" : "AVA User Journey"}
@@ -434,55 +440,77 @@ export default function PrototypesOrigins() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </DiagramToggle>
 
-              {/* Architecture diagram — Mermaid from Notion */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 2 — Pipeline technique voice-to-voice" : "Schema 2 — Voice-to-voice technical pipeline"}
-                </h3>
+              {/* Pipeline diagram — Mermaid from Notion */}
+              <DiagramToggle
+                title="Schema 2 — Voice-to-voice technical pipeline"
+                titleFr="Schéma 2 — Pipeline technique voice-to-voice"
+                summary="STT → RAG → GM pre-turn → LLM (Max) → Validator → TTS — with per-step latency budgets (250/400/800/600ms)"
+                summaryFr="STT → RAG → GM pré-tour → LLM (Max) → Validateur → TTS — avec budgets de latence par étape (250/400/800/600ms)"
+                types={["technique"]}
+                accentColor={AVA_COLOR}
+                isFr={isFr}
+              >
                 <MermaidDiagram
                   chart={AVA_PIPELINE}
                   title={isFr ? "Pipeline STT → RAG → GM → LLM → TTS" : "STT → RAG → GM → LLM → TTS Pipeline"}
                   description={isFr ? "Budgets de latence par étape — extrait de la page Notion Prototype 1 AVA" : "Per-step latency budgets — extracted from Notion page Prototype 1 AVA"}
                   accentColor={AVA_COLOR}
                 />
-              </div>
+              </DiagramToggle>
 
               {/* GM Loop diagram — Mermaid from Notion */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 3 — Boucle Game Master" : "Schema 3 — Game Master loop"}
-                </h3>
+              <DiagramToggle
+                title="Schema 3 — Game Master loop"
+                titleFr="Schéma 3 — Boucle Game Master"
+                summary="GM pre-turn → Max LLM → anti-hallucination validator → GM post-turn: trust delta, video triggers, game_over, gate"
+                summaryFr="GM pré-tour → LLM Max → validateur anti-hallucination → GM post-tour : trust_delta, triggers vidéo, game_over, gate"
+                types={["technique", "concept"]}
+                accentColor={AVA_COLOR}
+                isFr={isFr}
+              >
                 <MermaidDiagram
                   chart={AVA_GM_LOOP}
                   title={isFr ? "Boucle GM pré-tour → Max → Validateur → GM post-tour" : "GM pre-turn → Max → Validator → GM post-turn loop"}
                   description={isFr ? "Contrôle narratif + anti-hallucination + mise à jour game state" : "Narrative control + anti-hallucination + game state update"}
                   accentColor={AVA_COLOR}
                 />
-              </div>
+              </DiagramToggle>
 
               {/* Data sync diagram — Mermaid from Notion */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 4 — Sync Notion → Supabase" : "Schema 4 — Notion → Supabase sync"}
-                </h3>
+              <DiagramToggle
+                title="Schema 4 — Notion → Supabase sync"
+                titleFr="Schéma 4 — Sync Notion → Supabase"
+                summary="Editorial source (Notion) → Edge Function → pgvector HNSW: characters, storyworld, gameplay, videos"
+                summaryFr="Source éditoriale (Notion) → Edge Function → pgvector HNSW : personnages, storyworld, gameplay, vidéos"
+                types={["technique"]}
+                accentColor={AVA_COLOR}
+                isFr={isFr}
+              >
                 <MermaidDiagram
                   chart={AVA_DATA_SYNC}
                   title={isFr ? "Source éditoriale Notion → pgvector HNSW" : "Notion editorial source → pgvector HNSW"}
                   description={isFr ? "Personnages, storyworld, gameplay, vidéos — synchronisés via Edge Function" : "Characters, storyworld, gameplay, videos — synced via Edge Function"}
                   accentColor={AVA_COLOR}
                 />
-              </div>
+              </DiagramToggle>
 
-              {/* Architecture layers — kept as reference */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Architecture par couches" : "Layered architecture"}
-                </h3>
-                <ArchDiagram color={AVA_COLOR} layers={[
+                      {/* Architecture par couches AVA — redesign visuel */}
+              <DiagramToggle
+                title="Architecture — Layered view"
+                titleFr="Architecture par couches"
+                summary="Interface (React + Lovable) → Backend (Supabase Edge Functions) → AI & Data (pgvector + OpenRouter + ElevenLabs)"
+                summaryFr="Interface (React + Lovable) → Backend (Supabase Edge Functions) → IA & Données (pgvector + OpenRouter + ElevenLabs)"
+                types={["technique"]}
+                accentColor={AVA_COLOR}
+                isFr={isFr}
+              >
+              <div className="space-y-2">
+                {[
                   {
                     title: isFr ? "Interface (React + Lovable)" : "Interface (React + Lovable)",
+                    icon: "01",
                     items: [
                       { name: "Push-to-Talk", tech: "Web Audio API" },
                       { name: "Player vidéo", tech: "Gumlet iframe" },
@@ -492,6 +520,7 @@ export default function PrototypesOrigins() {
                   },
                   {
                     title: isFr ? "Backend (Supabase Edge Functions)" : "Backend (Supabase Edge Functions)",
+                    icon: "02",
                     items: [
                       { name: "proxy-llm", tech: "OpenRouter" },
                       { name: "proxy-stt", tech: "Deepgram" },
@@ -503,6 +532,7 @@ export default function PrototypesOrigins() {
                   },
                   {
                     title: isFr ? "IA & Données (Supabase PostgreSQL)" : "AI & Data (Supabase PostgreSQL)",
+                    icon: "03",
                     items: [
                       { name: "RAG", tech: "Voyage AI + pgvector" },
                       { name: "LLM", tech: "OpenRouter multi-modèles" },
@@ -510,14 +540,35 @@ export default function PrototypesOrigins() {
                       { name: "Mémoire", tech: "session_summaries" },
                     ]
                   },
-                ]} />
+                ].map((layer, li) => (
+                  <div key={li} className="rounded-lg border overflow-hidden" style={{ borderColor: `${AVA_COLOR}25` }}>
+                    <div className="flex items-center gap-2 px-3 py-2" style={{ background: `${AVA_COLOR}10` }}>
+                      <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: `${AVA_COLOR}20`, color: AVA_COLOR }}>{layer.icon}</span>
+                      <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{layer.title}</span>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-slate-100">
+                      {layer.items.map((item, ii) => (
+                        <div key={ii} className="bg-white px-3 py-2">
+                          <div className="text-xs font-semibold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.name}</div>
+                          <div className="text-[10px] text-slate-400 mt-0.5 font-mono">{item.tech}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
+              </DiagramToggle>
 
               {/* Pipeline diagram */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 3 — Pipeline conversationnel (8 étapes)" : "Schema 3 — Conversational pipeline (8 steps)"}
-                </h3>
+              <DiagramToggle
+                title="Schema 3 — Conversational pipeline (8 steps)"
+                titleFr="Schéma 3 — Pipeline conversationnel (8 étapes)"
+                summary="Push-to-Talk → Deepgram STT → Gemini query rewrite → RAG → Game Master → Max LLM → Validator → ElevenLabs TTS"
+                summaryFr="Push-to-Talk → Deepgram STT → Gemini rewrite → RAG → Game Master → Max LLM → Validateur → ElevenLabs TTS"
+                types={["technique"]}
+                accentColor={AVA_COLOR}
+                isFr={isFr}
+              >
                 <PipelineFlow
                   color={AVA_COLOR}
                   steps={[
@@ -536,7 +587,7 @@ export default function PrototypesOrigins() {
                     ? "Game Master et Max LLM sont parallélisés via Promise.all — gain de 2 à 5s par tour de conversation."
                     : "Game Master and Max LLM are parallelized via Promise.all — saving 2 to 5s per conversation turn."}
                 </p>
-              </div>
+              </DiagramToggle>
 
               {/* Metrics */}
               <div>
@@ -817,11 +868,16 @@ export default function PrototypesOrigins() {
                 </div>
               </div>
 
-              {/* UX Journey — Dilemme Light Mermaid */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 1 — Parcours pédagogique — Prototype Light" : "Schema 1 — Pedagogical journey — Light prototype"}
-                </h3>
+              {/* UX Journey — Dilemme Light */}
+              <DiagramToggle
+                title="Schema 1 — Pedagogical journey — Light prototype"
+                titleFr="Schéma 1 — Parcours pédagogique — Prototype Light"
+                summary="Title screen → intro video → config → conversational tutorial (6 clues) → drag-and-drop game → synthesis → feedback"
+                summaryFr="Écran titre → vidéo intro → configuration → tutoriel conversationnel (6 indices) → jeu drag-and-drop → synthèse → feedback"
+                types={["experience"]}
+                accentColor={DILEMME_COLOR}
+                isFr={isFr}
+              >
                 <MermaidDiagram
                   chart={DILEMME_LIGHT_UX}
                   title={isFr ? "Parcours élève — Prototype Light" : "Student journey — Light prototype"}
@@ -846,108 +902,118 @@ export default function PrototypesOrigins() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </DiagramToggle>
 
-              {/* Game mechanics diagram — Dilemme Light Mermaid */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 2 — Mécanique du jeu de découverte" : "Schema 2 — Discovery game mechanics"}
-                </h3>
+              {/* Game mechanics — Dilemme Light */}
+              <DiagramToggle
+                title="Schema 2 — Discovery game mechanics"
+                titleFr="Schéma 2 — Mécanique du jeu de découverte"
+                summary="Socratic guidance → clue detection → confirmation → progression (6 clues) → synthesis"
+                summaryFr="Guidage socratique → détection indice → confirmation → progression (6 indices) → synthèse"
+                types={["experience", "concept"]}
+                accentColor={DILEMME_COLOR}
+                isFr={isFr}
+              >
                 <MermaidDiagram
                   chart={DILEMME_LIGHT_GAME}
                   title={isFr ? "Logique de découverte des 6 indices" : "6-clue discovery logic"}
                   description={isFr ? "Guidage socratique → détection indice → confirmation → progression → synthèse" : "Socratic guidance → clue detection → confirmation → progression → synthesis"}
                   accentColor={DILEMME_COLOR}
                 />
-              </div>
+              </DiagramToggle>
 
-              {/* Architecture diagram — Dilemme Flowise Mermaid */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 3 — Architecture Flowise end-to-end" : "Schema 3 — Flowise end-to-end architecture"}
-                </h3>
-                <MermaidDiagram
-                  chart={DILEMME_FLOWISE_ARCH}
-                  title={isFr ? "Architecture Flowise — Interface → Backend → IA → Données" : "Flowise architecture — Interface → Backend → AI → Data"}
-                  description={isFr ? "React + Express + Flowise 28 nœuds + PostgreSQL + PostHog" : "React + Express + Flowise 28 nodes + PostgreSQL + PostHog"}
-                  accentColor={DILEMME_COLOR}
-                />
-              </div>
+              {/* Architecture par couches — Flowise redesign */}
+              <DiagramToggle
+                title="Architecture — Layered view — Flowise prototype"
+                titleFr="Architecture par couches — Prototype Flowise"
+                summary="Interface (React + Vite) → Backend (Express.js) → AI Services (Flowise 28 nodes) → Data & Observability"
+                summaryFr="Interface (React + Vite) → Backend (Express.js) → Services IA (Flowise 28 nœuds) → Données & Observabilité"
+                types={["technique"]}
+                accentColor={DILEMME_COLOR}
+                isFr={isFr}
+              >
+                <div className="space-y-2">
+                  {[
+                    {
+                      title: isFr ? "Interface élève (React + Vite)" : "Student interface (React + Vite)",
+                      icon: "01",
+                      items: [
+                        { name: "Chat Peter", tech: "shadcn/ui + Framer Motion" },
+                        { name: "Panneau média", tech: "Gumlet / YouTube / WebView" },
+                        { name: "Micro + waveform", tech: "Web Audio API + Canvas" },
+                        { name: "Avatar élève", tech: "Grille de vignettes" },
+                      ]
+                    },
+                    {
+                      title: isFr ? "Backend (Express.js + Node)" : "Backend (Express.js + Node)",
+                      icon: "02",
+                      items: [
+                        { name: "Proxy Flowise SSE", tech: "Anti-JSON 3 couches" },
+                        { name: "/api/tts", tech: "ElevenLabs + cache LRU" },
+                        { name: "/api/transcribe", tech: "Whisper / Scribe" },
+                        { name: "/api/sessions", tech: "PostgreSQL / Neon" },
+                        { name: "/api/debug", tech: "Traces persistées" },
+                      ]
+                    },
+                    {
+                      title: isFr ? "Services IA (Flowise self-hosted)" : "AI Services (self-hosted Flowise)",
+                      icon: "03",
+                      items: [
+                        { name: "Flowise", tech: "28 nœuds, 15 chemin max" },
+                        { name: "ElevenLabs", tech: "TTS + STT Scribe" },
+                        { name: "OpenAI", tech: "GPT-4o Assistants API" },
+                        { name: "Deepgram", tech: "Live transcription WS" },
+                      ]
+                    },
+                    {
+                      title: isFr ? "Données & Observabilité" : "Data & Observability",
+                      icon: "04",
+                      items: [
+                        { name: "PostgreSQL / Neon", tech: "Sessions + messages" },
+                        { name: "PostHog", tech: "Analytics client + serveur" },
+                        { name: "Google Sheets", tech: "Export via Replit Connectors" },
+                        { name: "Rectify", tech: "Session recording" },
+                      ]
+                    },
+                  ].map((layer, li) => (
+                    <div key={li} className="rounded-lg border overflow-hidden" style={{ borderColor: `${DILEMME_COLOR}25` }}>
+                      <div className="flex items-center gap-2 px-3 py-2" style={{ background: `${DILEMME_COLOR}10` }}>
+                        <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded" style={{ background: `${DILEMME_COLOR}20`, color: DILEMME_COLOR }}>{layer.icon}</span>
+                        <span className="text-xs font-bold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{layer.title}</span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-slate-100">
+                        {layer.items.map((item, ii) => (
+                          <div key={ii} className="bg-white px-3 py-2">
+                            <div className="text-xs font-semibold text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.name}</div>
+                            <div className="text-[10px] text-slate-400 mt-0.5 font-mono">{item.tech}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </DiagramToggle>
 
-              {/* Flowise sequence diagram — Mermaid */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 4 — Séquence de conversation Flowise" : "Schema 4 — Flowise conversation sequence"}
-                </h3>
-                <MermaidDiagram
-                  chart={DILEMME_FLOWISE_SEQUENCE}
-                  title={isFr ? "Séquence STT → Flowise → TTS + médias" : "STT → Flowise → TTS + media sequence"}
-                  description={isFr ? "Streaming SSE phrase par phrase + cache LRU TTS + déclenchement médias" : "Per-sentence SSE streaming + TTS LRU cache + media triggers"}
-                  accentColor={DILEMME_COLOR}
-                />
-              </div>
-
-              {/* Architecture layers — kept as reference */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Architecture par couches — Flowise" : "Layered architecture — Flowise"}
-                </h3>
-                <ArchDiagram color={DILEMME_COLOR} layers={[
-                  {
-                    title: isFr ? "Interface élève (React + Vite)" : "Student interface (React + Vite)",
-                    items: [
-                      { name: "Chat Peter", tech: "shadcn/ui + Framer Motion" },
-                      { name: "Panneau média", tech: "Gumlet / YouTube / WebView" },
-                      { name: "Micro + waveform", tech: "Web Audio API + Canvas" },
-                      { name: "Avatar élève", tech: "Grille de vignettes" },
-                    ]
-                  },
-                  {
-                    title: isFr ? "Backend (Express.js + Node)" : "Backend (Express.js + Node)",
-                    items: [
-                      { name: "Proxy Flowise SSE", tech: "Anti-JSON 3 couches" },
-                      { name: "/api/tts", tech: "ElevenLabs + cache LRU" },
-                      { name: "/api/transcribe", tech: "Whisper / Scribe" },
-                      { name: "/api/sessions", tech: "PostgreSQL / Neon" },
-                      { name: "/api/debug", tech: "Traces persistées" },
-                    ]
-                  },
-                  {
-                    title: isFr ? "Services IA (Flowise self-hosted)" : "AI Services (self-hosted Flowise)",
-                    items: [
-                      { name: "Flowise", tech: "28 nœuds, 15 chemin max" },
-                      { name: "ElevenLabs", tech: "TTS + STT Scribe" },
-                      { name: "OpenAI", tech: "GPT-4o Assistants API" },
-                      { name: "Deepgram", tech: "Live transcription WS" },
-                    ]
-                  },
-                  {
-                    title: isFr ? "Données & Observabilité" : "Data & Observability",
-                    items: [
-                      { name: "PostgreSQL / Neon", tech: "Sessions + messages" },
-                      { name: "PostHog", tech: "Analytics client + serveur" },
-                      { name: "Google Sheets", tech: "Export via Replit Connectors" },
-                      { name: "Rectify", tech: "Session recording" },
-                    ]
-                  },
-                ]} />
-              </div>
-
-              {/* Pipeline diagram — Light */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 3 — Pipeline technique — Prototype Light" : "Schema 3 — Technical pipeline — Light prototype"}
-                </h3>
+              {/* Pipeline Light */}
+              <DiagramToggle
+                title="Schema 3 — Technical pipeline — Light prototype"
+                titleFr="Schéma 3 — Pipeline technique — Prototype Light"
+                summary="Student mic → Deepgram live STT → OpenAI Whisper final → GPT-4o Assistants (game state via additional_instructions) → ElevenLabs TTS"
+                summaryFr="Micro élève → Deepgram live STT → OpenAI Whisper final → GPT-4o Assistants (état jeu via additional_instructions) → ElevenLabs TTS"
+                types={["technique"]}
+                accentColor={DILEMME_COLOR}
+                isFr={isFr}
+              >
                 <PipelineFlow
                   color={DILEMME_COLOR}
                   steps={[
-                    { label: "Micro élève", sub: "Web Audio API" },
+                    { label: isFr ? "Micro élève" : "Student mic", sub: "Web Audio API" },
                     { label: "STT live", sub: "Deepgram nova-2" },
                     { label: "STT final", sub: "OpenAI Whisper" },
                     { label: "Peter LLM", sub: "GPT-4o Assistants" },
-                    { label: "Contexte jeu", sub: "additional_instructions" },
+                    { label: isFr ? "Contexte jeu" : "Game context", sub: "additional_instructions" },
                     { label: "TTS", sub: "ElevenLabs" },
-                    { label: "Reprise", sub: "pré-générée 150ms" },
+                    { label: isFr ? "Reprise" : "Resume", sub: isFr ? "pré-générée 150ms" : "pre-generated 150ms" },
                   ]}
                 />
                 <p className="text-xs text-slate-400 mt-2 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
@@ -955,13 +1021,18 @@ export default function PrototypesOrigins() {
                     ? "L'état du jeu (indices trouvés, numéro d'échange) est injecté via additional_instructions — jamais dans l'historique du thread. Source de vérité serveur."
                     : "Game state (found clues, exchange number) is injected via additional_instructions — never in the thread history. Server-side source of truth."}
                 </p>
-              </div>
+              </DiagramToggle>
 
-              {/* Pipeline diagram — Flowise */}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 4 — Pipeline technique — Prototype Flowise" : "Schema 4 — Technical pipeline — Flowise prototype"}
-                </h3>
+              {/* Pipeline Flowise */}
+              <DiagramToggle
+                title="Schema 4 — Technical pipeline — Flowise prototype"
+                titleFr="Schéma 4 — Pipeline technique — Prototype Flowise"
+                summary="ElevenLabs Scribe STT → Flowise (28 nodes) → GPT-4o → per-sentence ElevenLabs TTS (LRU cache ~40ms) → media panel"
+                summaryFr="ElevenLabs Scribe STT → Flowise (28 nœuds) → GPT-4o → TTS ElevenLabs par phrase (cache LRU ~40ms) → panneau média"
+                types={["technique"]}
+                accentColor={DILEMME_COLOR}
+                isFr={isFr}
+              >
                 <PipelineFlow
                   color={DILEMME_COLOR}
                   steps={[
@@ -970,7 +1041,7 @@ export default function PrototypesOrigins() {
                     { label: "Peter LLM", sub: "GPT-4o" },
                     { label: "TTS phrase", sub: "ElevenLabs" },
                     { label: "Cache LRU", sub: "hit ~40ms" },
-                    { label: "Panneau média", sub: "Gumlet / YouTube" },
+                    { label: isFr ? "Panneau média" : "Media panel", sub: "Gumlet / YouTube" },
                   ]}
                 />
                 <p className="text-xs text-slate-400 mt-2 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
@@ -978,7 +1049,25 @@ export default function PrototypesOrigins() {
                     ? "TTS par phrase + cache LRU : premier audio de bienvenue pré-warmé à ~40ms. Baseline 30s → objectif <8s après optimisations."
                     : "Per-sentence TTS + LRU cache: first welcome audio pre-warmed to ~40ms. Baseline 30s → target <8s after optimizations."}
                 </p>
-              </div>
+              </DiagramToggle>
+
+              {/* Flowise conversation sequence */}
+              <DiagramToggle
+                title="Schema 5 — Flowise conversation sequence"
+                titleFr="Schéma 5 — Séquence de conversation Flowise"
+                summary="STT → Flowise SSE streaming → per-sentence TTS + LRU cache → media triggers (Gumlet / YouTube)"
+                summaryFr="STT → Flowise streaming SSE → TTS par phrase + cache LRU → déclenchement médias (Gumlet / YouTube)"
+                types={["technique"]}
+                accentColor={DILEMME_COLOR}
+                isFr={isFr}
+              >
+                <MermaidDiagram
+                  chart={DILEMME_FLOWISE_SEQUENCE}
+                  title={isFr ? "Séquence STT → Flowise → TTS + médias" : "STT → Flowise → TTS + media sequence"}
+                  description={isFr ? "Streaming SSE phrase par phrase + cache LRU TTS + déclenchement médias" : "Per-sentence SSE streaming + TTS LRU cache + media triggers"}
+                  accentColor={DILEMME_COLOR}
+                />
+              </DiagramToggle>
 
               {/* Latency — measured values from repo changelogs only */}
               <div>
