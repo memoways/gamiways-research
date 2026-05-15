@@ -822,18 +822,44 @@ export default function PrototypesOrigins() {
                 </p>
               </div>
 
-              {/* Latency improvement */}
+              {/* Latency — measured values from repo changelogs only */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Réduction de latence documentée" : "Documented latency reduction"}
+                  {isFr ? "Optimisations de latence — valeurs mesurées" : "Latency optimisations — measured values"}
                 </h3>
                 <div className="bg-slate-50 rounded-lg p-4 space-y-3">
-                  <LatencyBar label={isFr ? "Latence conversationnelle (Light)" : "Conversational latency (Light)"} before={20} after={7} unit="s" color={DILEMME_COLOR} />
-                  <LatencyBar label={isFr ? "Premier audio (Light)" : "First audio (Light)"} before={7} after={2.5} unit="s" color={DILEMME_COLOR} />
-                  <LatencyBar label={isFr ? "TTFT Flowise cold" : "Flowise cold TTFT"} before={12.4} after={3} unit="s" color={DILEMME_COLOR} />
-                  <LatencyBar label={isFr ? "TTS miss (Flowise)" : "TTS miss (Flowise)"} before={9.45} after={1.3} unit="s" color={DILEMME_COLOR} />
-                  <p className="text-xs text-slate-400 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
-                    {isFr ? "TTS hit avec cache LRU : ~40ms. Reprise pré-générée (Light) : 150–500ms." : "TTS hit with LRU cache: ~40ms. Pre-generated resume (Light): 150–500ms."}
+                  {/* Only values explicitly marked as measured in CHANGELOG */}
+                  <div className="space-y-2">
+                    {[
+                      {
+                        label: isFr ? "TTS hit (cache LRU) — Light & Flowise" : "TTS hit (LRU cache) — Light & Flowise",
+                        value: "~40 ms",
+                        note: isFr ? "Mesuré en local (CHANGELOG v1.2.0 Light + Flowise)" : "Measured locally (CHANGELOG v1.2.0 Light + Flowise)",
+                      },
+                      {
+                        label: isFr ? "TTS welcome pré-chauffé — Flowise" : "Pre-warmed welcome TTS — Flowise",
+                        value: "2 569 ms → ~40 ms",
+                        note: isFr ? "Mesuré au boot serveur — payé une fois pour tous les élèves (CHANGELOG Flowise)" : "Measured at server boot — paid once for all students (Flowise CHANGELOG)",
+                      },
+                      {
+                        label: isFr ? "Reprise de session pré-générée — Light" : "Pre-generated session resume — Light",
+                        value: "150–500 ms",
+                        note: isFr ? "Au lieu de 3–5s — mesuré (CHANGELOG Light)" : "Instead of 3–5s — measured (Light CHANGELOG)",
+                      },
+                    ].map((item, i) => (
+                      <div key={i} className="rounded border border-slate-200 bg-white px-3 py-2">
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
+                          <span className="text-xs font-medium text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.label}</span>
+                          <span className="text-xs font-bold font-mono" style={{ color: DILEMME_COLOR }}>{item.value}</span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-0.5 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>{item.note}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-slate-400 italic border-t border-slate-200 pt-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr
+                      ? "Les gains globaux (Phase 1 + 2 : -40 à -55% de latence totale) sont des estimations de conception documentées dans le CHANGELOG v1.2.0, non des mesures PostHog. Le dashboard de latence AVA (admin) collecte des données réelles par session mais aucune valeur agrégée n'est publiée dans le repo."
+                      : "Overall gains (Phase 1 + 2: -40 to -55% total latency) are design estimates documented in CHANGELOG v1.2.0, not PostHog measurements. The AVA latency dashboard (admin) collects real per-session data but no aggregated values are published in the repo."}
                   </p>
                 </div>
               </div>
