@@ -355,11 +355,11 @@ export default function PrototypesOrigins() {
                   href="https://proto1.parle-a-ava.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors hover:opacity-80"
-                  style={{ background: AVA_COLOR, color: "white" }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
+                  style={{ borderColor: `${AVA_COLOR}40`, color: AVA_COLOR }}
                 >
                   <ExternalLink size={11} />
-                  {isFr ? "Tester le prototype" : "Try the prototype"}
+                  {isFr ? "Tester" : "Try it"}
                 </a>
                 <a
                   href="https://github.com/memoways/ava-proto1"
@@ -775,11 +775,11 @@ export default function PrototypesOrigins() {
                   href="https://proto-dilemme2.edugami.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors hover:opacity-80"
-                  style={{ background: DILEMME_COLOR, color: "white" }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
+                  style={{ borderColor: `${DILEMME_COLOR}40`, color: DILEMME_COLOR }}
                 >
                   <ExternalLink size={11} />
-                  {isFr ? "Prototype tutoriel" : "Tutorial prototype"}
+                  {isFr ? "Tester (light)" : "Try (light)"}
                 </a>
                 <a
                   href="https://dilemme-proto.replit.app/"
@@ -789,7 +789,7 @@ export default function PrototypesOrigins() {
                   style={{ borderColor: `${DILEMME_COLOR}40`, color: DILEMME_COLOR }}
                 >
                   <ExternalLink size={11} />
-                  {isFr ? "Prototype Flowise" : "Flowise prototype"}
+                  {isFr ? "Tester (Flowise)" : "Try (Flowise)"}
                 </a>
               </div>
             </div>

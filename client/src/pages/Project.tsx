@@ -209,6 +209,13 @@ export default function Project() {
                 : "\"Parle à AVA !\" is the interactive extension of the film \"Where is Ava?\", a dystopian thriller in production. \"Le Dilemme Plastique\" is an educational tool based on ten years of field documentation by Peter Charaf in partnership with the Race for Water Foundation, designed to become Edugami — a tool generalisable to other themes."}
             </p>
             <div className="flex flex-wrap gap-3">
+              <Link href="/project/prototypes">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80"
+                  style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
+                  {isFr ? "Détails techniques complets" : "Full technical details"}
+                  <ArrowRight size={10} />
+                </span>
+              </Link>
               <a href="https://proto1.parle-a-ava.com/" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:opacity-80"
                 style={{ borderColor: "oklch(0.72 0.18 50)40", color: "oklch(0.72 0.18 50)", background: "oklch(0.72 0.18 50)08" }}>
@@ -223,13 +230,6 @@ export default function Project() {
                 {isFr ? "Tester Dilemme Plastique" : "Try Dilemme Plastique"}
                 <ExternalLink size={10} />
               </a>
-              <Link href="/project/prototypes">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80"
-                  style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
-                  {isFr ? "Détails techniques complets" : "Full technical details"}
-                  <ArrowRight size={10} />
-                </span>
-              </Link>
             </div>
           </div>
         </section>
@@ -352,6 +352,13 @@ export default function Project() {
                 : "GamiWays was born from the convergence of two radically different experiences that revealed the same fundamental challenges: latency, session memory, French voice quality, and expressive avatar. These two prototypes are the concrete, testable origins of the project."}
             </p>
             <div className="flex flex-wrap gap-3 mb-2">
+              <Link href="/project/prototypes">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80"
+                  style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
+                  {isFr ? "Détails techniques complets" : "Full technical details"}
+                  <ArrowRight size={10} />
+                </span>
+              </Link>
               <a href="https://proto1.parle-a-ava.com/" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:opacity-80"
                 style={{ borderColor: "oklch(0.72 0.18 50)40", color: "oklch(0.72 0.18 50)", background: "oklch(0.72 0.18 50)08" }}>
@@ -366,13 +373,6 @@ export default function Project() {
                 {isFr ? "Tester Dilemme Plastique" : "Try Dilemme Plastique"}
                 <ExternalLink size={10} />
               </a>
-              <Link href="/project/prototypes">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80"
-                  style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
-                  {isFr ? "Détails techniques complets" : "Full technical details"}
-                  <ArrowRight size={10} />
-                </span>
-              </Link>
             </div>
           </div>
           <div className="grid md:grid-cols-2 gap-6">

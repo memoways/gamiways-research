@@ -185,6 +185,15 @@ export default function Home() {
                   {isFr ? "Cinéma interactif" : "Interactive cinema"}
                 </span>
               </div>
+              {/* Screenshot AVA */}
+              <div className="overflow-hidden" style={{ maxHeight: "140px" }}>
+                <img
+                  src="https://d2xsxph8kpxj0f.cloudfront.net/117184650/JCUDa4RfVRrK7WLqtd9JFw/ava-landing-screenshot_3718c6d1.webp"
+                  alt="Parle à AVA! prototype screenshot"
+                  className="w-full object-cover object-top"
+                  style={{ borderBottom: "1px solid oklch(0.72 0.18 50)20" }}
+                />
+              </div>
               <div className="p-5">
                 <p className="text-xs text-slate-600 leading-relaxed mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
                   {isFr
@@ -192,19 +201,19 @@ export default function Home() {
                     : "The user enters the film universe \"Where is Ava?\" and speaks via video call with Max, an AI character. A Game Master orchestrates the experience in real time via an STT→LLM→TTS pipeline enriched by RAG."}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <a href="https://proto1.parle-a-ava.com/" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors hover:opacity-80"
-                    style={{ background: "oklch(0.72 0.18 50)", color: "white" }}>
-                    <ExternalLink size={10} />
-                    {isFr ? "Tester" : "Try it"}
-                  </a>
                   <Link href="/project/prototypes">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono cursor-pointer transition-colors hover:bg-slate-50"
-                      style={{ borderColor: "oklch(0.72 0.18 50)40", color: "oklch(0.72 0.18 50)" }}>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80"
+                      style={{ background: "oklch(0.72 0.18 50)", color: "white" }}>
                       {isFr ? "Détails techniques" : "Technical details"}
                       <ArrowRight size={10} />
                     </span>
                   </Link>
+                  <a href="https://proto1.parle-a-ava.com/" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
+                    style={{ borderColor: "oklch(0.72 0.18 50)40", color: "oklch(0.72 0.18 50)" }}>
+                    <ExternalLink size={10} />
+                    {isFr ? "Tester" : "Try it"}
+                  </a>
                 </div>
               </div>
             </div>
@@ -223,6 +232,15 @@ export default function Home() {
                   {isFr ? "Éducation voice-first" : "Voice-first education"}
                 </span>
               </div>
+              {/* Screenshot Dilemme */}
+              <div className="overflow-hidden" style={{ maxHeight: "140px" }}>
+                <img
+                  src="https://d2xsxph8kpxj0f.cloudfront.net/117184650/JCUDa4RfVRrK7WLqtd9JFw/dilemme-light-landing-screenshot_3343a943.webp"
+                  alt="Le Dilemme Plastique prototype screenshot"
+                  className="w-full object-cover object-top"
+                  style={{ borderBottom: "1px solid oklch(0.55 0.20 200)20" }}
+                />
+              </div>
               <div className="p-5">
                 <p className="text-xs text-slate-600 leading-relaxed mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
                   {isFr
@@ -230,9 +248,16 @@ export default function Home() {
                     : "Peter guides 12–18 year-old students in discovering 6 clues about plastic pollution. Two complementary prototypes: lightweight pipeline (25h, ~220 CHF) and full Flowise orchestration (45h, ~160 CHF)."}
                 </p>
                 <div className="flex flex-wrap gap-2">
+                  <Link href="/project/prototypes">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80"
+                      style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
+                      {isFr ? "Détails techniques" : "Technical details"}
+                      <ArrowRight size={10} />
+                    </span>
+                  </Link>
                   <a href="https://proto-dilemme2.edugami.app/" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors hover:opacity-80"
-                    style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
+                    style={{ borderColor: "oklch(0.55 0.20 200)40", color: "oklch(0.55 0.20 200)" }}>
                     <ExternalLink size={10} />
                     {isFr ? "Tester (light)" : "Try (light)"}
                   </a>
@@ -242,13 +267,6 @@ export default function Home() {
                     <ExternalLink size={10} />
                     {isFr ? "Tester (Flowise)" : "Try (Flowise)"}
                   </a>
-                  <Link href="/project/prototypes">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono cursor-pointer transition-colors hover:bg-slate-50"
-                      style={{ borderColor: "oklch(0.55 0.20 200)40", color: "oklch(0.55 0.20 200)" }}>
-                      {isFr ? "Détails techniques" : "Technical details"}
-                      <ArrowRight size={10} />
-                    </span>
-                  </Link>
                 </div>
               </div>
             </div>
