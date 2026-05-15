@@ -7,10 +7,16 @@
  * i18n: EN (default) / FR via LangContext
  */
 import { useState } from "react";
-import { ExternalLink, ArrowRight, Mic, Video, Clock, Zap, BookOpen, Film, ChevronDown, ChevronUp, DollarSign, User, Cpu, Database } from "lucide-react";
+import { ExternalLink, ArrowRight, Mic, Video, Clock, Zap, BookOpen, Film, ChevronDown, ChevronUp, User, Cpu, Database } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
 import { Link } from "wouter";
+import MermaidDiagram from "@/components/MermaidDiagram";
+import {
+  AVA_UX_FLOW, AVA_PIPELINE, AVA_GM_LOOP, AVA_DATA_SYNC,
+  DILEMME_LIGHT_UX, DILEMME_LIGHT_GAME, DILEMME_LIGHT_ARCH,
+  DILEMME_FLOWISE_UX, DILEMME_FLOWISE_ARCH, DILEMME_FLOWISE_SEQUENCE
+} from "@/lib/prototypeDiagrams";
 
 function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
   return (
@@ -398,25 +404,22 @@ export default function PrototypesOrigins() {
                 </div>
               </div>
 
-              {/* UX Journey diagram */}
+              {/* UX Journey diagram — Mermaid from Notion */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                   {isFr ? "Schéma 1 — Parcours utilisateur" : "Schema 1 — User journey"}
                 </h3>
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <UXFlowDiagram color={AVA_COLOR} steps={[
-                    { icon: Film, label: isFr ? "Arrivée sur l'app" : "App landing", sub: isFr ? "Onboarding A/B skippable" : "Skippable A/B onboarding" },
-                    { icon: Video, label: isFr ? "Intro vidéo Gumlet" : "Gumlet video intro", sub: isFr ? "Cinématique + contexte" : "Cinematic + context" },
-                    { icon: Mic, label: isFr ? "Appel entrant Max" : "Max incoming call", sub: isFr ? "Micro continu pause/resume" : "Continuous mic pause/resume" },
-                    { icon: Zap, label: isFr ? "Conversation voice-to-voice" : "Voice-to-voice conversation", sub: isFr ? "Timer 10 min, Game Master actif" : "10 min timer, active Game Master" },
-                    { icon: Video, label: isFr ? "Trigger vidéo" : "Video trigger", sub: isFr ? "Fade to black + contexte post-vidéo" : "Fade to black + post-video context" },
-                    { icon: User, label: isFr ? "Gate de confiance" : "Trust gate", sub: isFr ? "Max propose Léo / Emma" : "Max introduces Léo / Emma" },
-                    { icon: Database, label: isFr ? "Questionnaire final" : "Final questionnaire", sub: isFr ? "~50 champs, 8 blocs" : "~50 fields, 8 blocks" },
-                  ]} />
-                  <div className="bg-slate-50 rounded-lg p-4 space-y-3">
-                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Mécaniques Game Master" : "Game Master mechanics"}
-                    </div>
+                <MermaidDiagram
+                  chart={AVA_UX_FLOW}
+                  title={isFr ? "Parcours utilisateur AVA" : "AVA User Journey"}
+                  description={isFr ? "Onboarding → conversation voice-to-voice → triggers vidéo → gate de confiance → questionnaire" : "Onboarding → voice-to-voice conversation → video triggers → trust gate → questionnaire"}
+                  accentColor={AVA_COLOR}
+                />
+                <div className="mt-4 bg-slate-50 rounded-lg p-4">
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Mécaniques Game Master" : "Game Master mechanics"}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
                     {[
                       { label: "trust_delta", desc: isFr ? "Variation de confiance par tour" : "Trust variation per turn" },
                       { label: "trigger_video", desc: isFr ? "Déclenchement séquences vidéo" : "Video sequence trigger" },
@@ -424,19 +427,58 @@ export default function PrototypesOrigins() {
                       { label: "gate", desc: isFr ? "Seuil de confiance atteint" : "Trust threshold reached" },
                       { label: "moderation", desc: isFr ? "Filtre contenu sensible" : "Sensitive content filter" },
                     ].map((m, i) => (
-                      <div key={i} className="flex gap-2">
+                      <div key={i} className="flex items-start gap-1.5">
                         <span className="text-[10px] font-mono px-1.5 py-0.5 rounded shrink-0" style={{ background: `${AVA_COLOR}15`, color: AVA_COLOR }}>{m.label}</span>
-                        <span className="text-xs text-slate-500">{m.desc}</span>
+                        <span className="text-xs text-slate-500 pt-0.5">{m.desc}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Architecture diagram */}
+              {/* Architecture diagram — Mermaid from Notion */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 2 — Architecture technique" : "Schema 2 — Technical architecture"}
+                  {isFr ? "Schéma 2 — Pipeline technique voice-to-voice" : "Schema 2 — Voice-to-voice technical pipeline"}
+                </h3>
+                <MermaidDiagram
+                  chart={AVA_PIPELINE}
+                  title={isFr ? "Pipeline STT → RAG → GM → LLM → TTS" : "STT → RAG → GM → LLM → TTS Pipeline"}
+                  description={isFr ? "Budgets de latence par étape — extrait de la page Notion Prototype 1 AVA" : "Per-step latency budgets — extracted from Notion page Prototype 1 AVA"}
+                  accentColor={AVA_COLOR}
+                />
+              </div>
+
+              {/* GM Loop diagram — Mermaid from Notion */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Schéma 3 — Boucle Game Master" : "Schema 3 — Game Master loop"}
+                </h3>
+                <MermaidDiagram
+                  chart={AVA_GM_LOOP}
+                  title={isFr ? "Boucle GM pré-tour → Max → Validateur → GM post-tour" : "GM pre-turn → Max → Validator → GM post-turn loop"}
+                  description={isFr ? "Contrôle narratif + anti-hallucination + mise à jour game state" : "Narrative control + anti-hallucination + game state update"}
+                  accentColor={AVA_COLOR}
+                />
+              </div>
+
+              {/* Data sync diagram — Mermaid from Notion */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Schéma 4 — Sync Notion → Supabase" : "Schema 4 — Notion → Supabase sync"}
+                </h3>
+                <MermaidDiagram
+                  chart={AVA_DATA_SYNC}
+                  title={isFr ? "Source éditoriale Notion → pgvector HNSW" : "Notion editorial source → pgvector HNSW"}
+                  description={isFr ? "Personnages, storyworld, gameplay, vidéos — synchronisés via Edge Function" : "Characters, storyworld, gameplay, videos — synced via Edge Function"}
+                  accentColor={AVA_COLOR}
+                />
+              </div>
+
+              {/* Architecture layers — kept as reference */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Architecture par couches" : "Layered architecture"}
                 </h3>
                 <ArchDiagram color={AVA_COLOR} layers={[
                   {
@@ -775,44 +817,80 @@ export default function PrototypesOrigins() {
                 </div>
               </div>
 
-              {/* UX Journey — Dilemme */}
+              {/* UX Journey — Dilemme Light Mermaid */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 1 — Parcours pédagogique de l'élève" : "Schema 1 — Student pedagogical journey"}
+                  {isFr ? "Schéma 1 — Parcours pédagogique — Prototype Light" : "Schema 1 — Pedagogical journey — Light prototype"}
                 </h3>
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <UXFlowDiagram color={DILEMME_COLOR} steps={[
-                    { icon: User, label: isFr ? "Écran titre" : "Title screen", sub: isFr ? "Entrée sans friction" : "Frictionless entry" },
-                    { icon: Video, label: isFr ? "Vidéo d'introduction" : "Introduction video", sub: isFr ? "Playlist adaptative desktop/mobile" : "Adaptive desktop/mobile playlist" },
-                    { icon: Cpu, label: isFr ? "Configuration" : "Configuration", sub: isFr ? "Prénom + déverrouillage audio + session" : "Name + audio unlock + session" },
-                    { icon: Mic, label: isFr ? "Tutoriel conversationnel" : "Conversational tutorial", sub: isFr ? "Image analysée avec Peter, 6 indices, max 8 échanges" : "Image analyzed with Peter, 6 clues, max 8 exchanges" },
-                    { icon: Zap, label: isFr ? "Jeu de reconstruction" : "Reconstruction game", sub: isFr ? "Drag-and-drop des indices trouvés" : "Drag-and-drop of found clues" },
-                    { icon: BookOpen, label: isFr ? "Synthèse" : "Synthesis", sub: isFr ? "L'élève formule sa compréhension" : "Student formulates understanding" },
-                    { icon: Database, label: isFr ? "Feedback + sauvegarde" : "Feedback + save", sub: isFr ? "PostgreSQL + Google Sheets + PostHog" : "PostgreSQL + Google Sheets + PostHog" },
-                  ]} />
-                  <div className="bg-slate-50 rounded-lg p-4 space-y-3">
-                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                      {isFr ? "Logique pédagogique de Peter" : "Peter's pedagogical logic"}
-                    </div>
+                <MermaidDiagram
+                  chart={DILEMME_LIGHT_UX}
+                  title={isFr ? "Parcours élève — Prototype Light" : "Student journey — Light prototype"}
+                  description={isFr ? "Écran titre → vidéo intro → configuration → tutoriel conversationnel → jeu → synthèse → feedback" : "Title screen → intro video → config → conversational tutorial → game → synthesis → feedback"}
+                  accentColor={DILEMME_COLOR}
+                />
+                <div className="mt-4 bg-slate-50 rounded-lg p-4">
+                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {isFr ? "Logique pédagogique de Peter" : "Peter's pedagogical logic"}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
                     {[
                       { label: isFr ? "Guidage socratique" : "Socratic guidance", desc: isFr ? "Questions ouvertes, jamais de réponses directes" : "Open questions, never direct answers" },
                       { label: isFr ? "Source de vérité serveur" : "Server-side truth", desc: isFr ? "additional_instructions OpenAI, pas l'historique" : "OpenAI additional_instructions, not history" },
                       { label: isFr ? "Prompt v3 versionné" : "Versioned prompt v3", desc: isFr ? "docs/prompts/peter-assistant.md" : "docs/prompts/peter-assistant.md" },
                       { label: isFr ? "Reprise instantanée" : "Instant resume", desc: isFr ? "Message pré-généré en 150–500ms" : "Pre-generated message in 150–500ms" },
                     ].map((m, i) => (
-                      <div key={i} className="flex gap-2">
+                      <div key={i} className="flex items-start gap-1.5">
                         <span className="text-[10px] font-mono px-1.5 py-0.5 rounded shrink-0 whitespace-nowrap" style={{ background: `${DILEMME_COLOR}15`, color: DILEMME_COLOR }}>{m.label}</span>
-                        <span className="text-xs text-slate-500">{m.desc}</span>
+                        <span className="text-xs text-slate-500 pt-0.5">{m.desc}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Architecture diagram — Dilemme */}
+              {/* Game mechanics diagram — Dilemme Light Mermaid */}
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                  {isFr ? "Schéma 2 — Architecture produit end-to-end" : "Schema 2 — End-to-end product architecture"}
+                  {isFr ? "Schéma 2 — Mécanique du jeu de découverte" : "Schema 2 — Discovery game mechanics"}
+                </h3>
+                <MermaidDiagram
+                  chart={DILEMME_LIGHT_GAME}
+                  title={isFr ? "Logique de découverte des 6 indices" : "6-clue discovery logic"}
+                  description={isFr ? "Guidage socratique → détection indice → confirmation → progression → synthèse" : "Socratic guidance → clue detection → confirmation → progression → synthesis"}
+                  accentColor={DILEMME_COLOR}
+                />
+              </div>
+
+              {/* Architecture diagram — Dilemme Flowise Mermaid */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Schéma 3 — Architecture Flowise end-to-end" : "Schema 3 — Flowise end-to-end architecture"}
+                </h3>
+                <MermaidDiagram
+                  chart={DILEMME_FLOWISE_ARCH}
+                  title={isFr ? "Architecture Flowise — Interface → Backend → IA → Données" : "Flowise architecture — Interface → Backend → AI → Data"}
+                  description={isFr ? "React + Express + Flowise 28 nœuds + PostgreSQL + PostHog" : "React + Express + Flowise 28 nodes + PostgreSQL + PostHog"}
+                  accentColor={DILEMME_COLOR}
+                />
+              </div>
+
+              {/* Flowise sequence diagram — Mermaid */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Schéma 4 — Séquence de conversation Flowise" : "Schema 4 — Flowise conversation sequence"}
+                </h3>
+                <MermaidDiagram
+                  chart={DILEMME_FLOWISE_SEQUENCE}
+                  title={isFr ? "Séquence STT → Flowise → TTS + médias" : "STT → Flowise → TTS + media sequence"}
+                  description={isFr ? "Streaming SSE phrase par phrase + cache LRU TTS + déclenchement médias" : "Per-sentence SSE streaming + TTS LRU cache + media triggers"}
+                  accentColor={DILEMME_COLOR}
+                />
+              </div>
+
+              {/* Architecture layers — kept as reference */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Architecture par couches — Flowise" : "Layered architecture — Flowise"}
                 </h3>
                 <ArchDiagram color={DILEMME_COLOR} layers={[
                   {
