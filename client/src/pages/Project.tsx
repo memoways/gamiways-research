@@ -5,7 +5,8 @@
  * i18n: EN (default) / FR via LangContext
  */
 import { useState } from "react";
-import { ChevronDown, ChevronUp, CheckCircle, AlertCircle, ArrowRight, ExternalLink } from "lucide-react";
+import { ChevronDown, ChevronUp, CheckCircle, AlertCircle, ArrowRight, ExternalLink, Film, BookOpen } from "lucide-react";
+import { Link } from "wouter";
 import ProductArchDiagram from "@/components/diagrams/ProductArchDiagram";
 import GapMatrixDiagram from "@/components/diagrams/GapMatrixDiagram";
 import RadarCompareDiagram from "@/components/diagrams/RadarCompareDiagram";
@@ -297,11 +298,39 @@ export default function Project() {
 
         {/* ── SECTION 4: FOUNDING PROJECTS ─────────────────────────────────── */}
         <section>
-          <SectionDivider number="04" title="Founding Projects" titleFr="Projets Fondateurs" isFr={isFr} />
+          <SectionDivider number="04" title="Founding Prototypes" titleFr="Prototypes Fondateurs" isFr={isFr} />
           <div className="mb-4">
             <h2 className="text-2xl font-bold text-slate-900 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
               {isFr ? "Deux prototypes validés avec utilisateurs réels." : "Two prototypes validated with real users."}
             </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "GamiWays est né de la convergence de deux expériences radicalement différentes qui ont révélé les mêmes défis fondamentaux : latence, mémoire de session, qualité vocale française et avatar expressif. Ces deux prototypes sont les origines concrètes et testables du projet."
+                : "GamiWays was born from the convergence of two radically different experiences that revealed the same fundamental challenges: latency, session memory, French voice quality, and expressive avatar. These two prototypes are the concrete, testable origins of the project."}
+            </p>
+            <div className="flex flex-wrap gap-3 mb-2">
+              <a href="https://proto1.parle-a-ava.com/" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:opacity-80"
+                style={{ borderColor: "oklch(0.72 0.18 50)40", color: "oklch(0.72 0.18 50)", background: "oklch(0.72 0.18 50)08" }}>
+                <Film size={11} />
+                {isFr ? "Tester AVA" : "Try AVA"}
+                <ExternalLink size={10} />
+              </a>
+              <a href="https://proto-dilemme2.edugami.app/" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:opacity-80"
+                style={{ borderColor: "oklch(0.55 0.20 200)40", color: "oklch(0.55 0.20 200)", background: "oklch(0.55 0.20 200)08" }}>
+                <BookOpen size={11} />
+                {isFr ? "Tester Dilemme Plastique" : "Try Dilemme Plastique"}
+                <ExternalLink size={10} />
+              </a>
+              <Link href="/project/prototypes">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80"
+                  style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
+                  {isFr ? "Détails techniques complets" : "Full technical details"}
+                  <ArrowRight size={10} />
+                </span>
+              </Link>
+            </div>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {projects.map((proj) => (

@@ -1,0 +1,765 @@
+/**
+ * PrototypesOrigins — GamiWays Research Portal
+ * Sub-page of /project — presents the two founding prototypes:
+ *   - Parle à AVA! (Storygami) — interactive cinema
+ *   - Le Dilemme Plastique (Edugami) — educational voice-first
+ * Design: schema-first, inline Mermaid-style diagrams as SVG/JSX, links to Voice & Avatars sections
+ * i18n: EN (default) / FR via LangContext
+ */
+import { useState } from "react";
+import { ExternalLink, ArrowRight, Mic, Video, Clock, Zap, BookOpen, Film, ChevronDown, ChevronUp } from "lucide-react";
+import { useLang } from "@/contexts/LangContext";
+import InternalLink from "@/components/InternalLink";
+import { Link } from "wouter";
+
+function SectionDivider({ number, title, titleFr, isFr }: { number: string; title: string; titleFr: string; isFr: boolean }) {
+  return (
+    <div className="flex items-center gap-4 mb-8">
+      <span className="text-xs font-mono text-slate-300 shrink-0">{number}</span>
+      <div className="h-px flex-1 bg-slate-200" />
+      <span className="text-xs font-bold uppercase tracking-widest text-slate-400 shrink-0" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        {isFr ? titleFr : title}
+      </span>
+      <div className="h-px w-8 bg-slate-200" />
+    </div>
+  );
+}
+
+function Accordion({ label, labelFr, isFr, children }: { label: string; labelFr: string; isFr: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-slate-200 rounded mt-4">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-3 text-xs font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors rounded"
+        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+      >
+        <span>{isFr ? labelFr : label}</span>
+        {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+      </button>
+      {open && (
+        <div className="px-4 pb-4 border-t border-slate-100 bg-slate-50">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Pipeline flow diagram — horizontal nodes with arrows */
+function PipelineFlow({ steps, color }: { steps: { label: string; sub?: string }[]; color: string }) {
+  return (
+    <div className="overflow-x-auto py-2">
+      <div className="flex items-center gap-1 min-w-max">
+        {steps.map((step, i) => (
+          <div key={i} className="flex items-center gap-1">
+            <div
+              className="flex flex-col items-center justify-center px-3 py-2 rounded text-center"
+              style={{ background: `${color}12`, border: `1px solid ${color}30`, minWidth: "80px" }}
+            >
+              <span className="text-xs font-bold" style={{ color, fontFamily: "'Space Grotesk', sans-serif" }}>{step.label}</span>
+              {step.sub && <span className="text-[10px] text-slate-400 mt-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{step.sub}</span>}
+            </div>
+            {i < steps.length - 1 && (
+              <ArrowRight size={14} style={{ color: `${color}80` }} className="shrink-0" />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Latency bar chart — visual comparison */
+function LatencyBar({ label, before, after, unit, color }: { label: string; before: number; after: number; unit: string; color: string }) {
+  const max = before;
+  return (
+    <div className="mb-3">
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs font-medium text-slate-600" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{label}</span>
+        <span className="text-xs font-mono text-slate-400">{before}{unit} → <span className="font-bold" style={{ color }}>{after}{unit}</span></span>
+      </div>
+      <div className="relative h-4 bg-slate-100 rounded overflow-hidden">
+        <div className="absolute inset-0 h-full rounded" style={{ width: "100%", background: "oklch(0.88 0.006 265)" }} />
+        <div className="absolute inset-0 h-full rounded transition-all duration-700" style={{ width: `${(after / max) * 100}%`, background: color }} />
+      </div>
+    </div>
+  );
+}
+
+/** Metric card */
+function MetricCard({ value, label, color }: { value: string; label: string; color: string }) {
+  return (
+    <div className="bg-white border border-slate-200 rounded p-3 text-center">
+      <div className="text-xl font-black font-mono mb-0.5" style={{ color }}>{value}</div>
+      <div className="text-xs text-slate-500 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{label}</div>
+    </div>
+  );
+}
+
+/** Cross-link card to Voice/Avatars sections */
+function CrossLink({ href, icon: Icon, title, titleFr, desc, descFr, color, isFr }: {
+  href: string; icon: React.ElementType; title: string; titleFr: string;
+  desc: string; descFr: string; color: string; isFr: boolean;
+}) {
+  return (
+    <Link href={href}>
+      <div
+        className="flex items-start gap-3 p-4 rounded-lg border cursor-pointer transition-all hover:shadow-sm"
+        style={{ borderColor: `${color}30`, background: `${color}06` }}
+      >
+        <div className="shrink-0 mt-0.5 p-1.5 rounded" style={{ background: `${color}15` }}>
+          <Icon size={14} style={{ color }} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-bold text-slate-900 mb-0.5" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            {isFr ? titleFr : title}
+          </div>
+          <p className="text-xs text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr ? descFr : desc}
+          </p>
+        </div>
+        <ArrowRight size={13} className="shrink-0 mt-1" style={{ color: `${color}80` }} />
+      </div>
+    </Link>
+  );
+}
+
+export default function PrototypesOrigins() {
+  const { lang } = useLang();
+  const isFr = lang === "fr";
+
+  const AVA_COLOR = "oklch(0.72 0.18 50)";
+  const DILEMME_COLOR = "oklch(0.55 0.20 200)";
+
+  return (
+    <div className="min-h-screen">
+      {/* Page header */}
+      <div className="border-b border-slate-200 py-10">
+        <div className="container max-w-4xl">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">01</span>
+            <span className="text-slate-300">·</span>
+            <span className="text-xs font-mono text-slate-400">{isFr ? "The Project" : "The Project"}</span>
+            <span className="text-slate-300">·</span>
+            <span className="text-xs font-mono text-slate-400">{isFr ? "Prototypes Fondateurs" : "Founding Prototypes"}</span>
+          </div>
+          <h1 className="text-4xl font-black text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+            {isFr ? "Les origines concrètes de GamiWays" : "The concrete origins of GamiWays"}
+          </h1>
+          <p className="text-base text-slate-500 leading-relaxed max-w-2xl mb-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? "GamiWays n'est pas né d'une idée abstraite. Il est la généralisation de deux prototypes fonctionnels, testés avec de vrais utilisateurs, qui ont chacun révélé les mêmes enjeux fondamentaux : latence, personnalisation de l'expérience, immersion et qualité vocale."
+              : "GamiWays was not born from an abstract idea. It is the generalization of two functional prototypes, tested with real users, which each revealed the same fundamental challenges: latency, experience personalization, immersion and voice quality."}
+          </p>
+          {/* Two prototype badges */}
+          <div className="flex flex-wrap gap-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded border text-xs font-mono" style={{ borderColor: `${AVA_COLOR}40`, background: `${AVA_COLOR}0d`, color: AVA_COLOR }}>
+              <Film size={12} />
+              <span className="font-bold">Storygami</span>
+              <span className="text-slate-400">·</span>
+              <span>Parle à AVA!</span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded border text-xs font-mono" style={{ borderColor: `${DILEMME_COLOR}40`, background: `${DILEMME_COLOR}0d`, color: DILEMME_COLOR }}>
+              <BookOpen size={12} />
+              <span className="font-bold">Edugami</span>
+              <span className="text-slate-400">·</span>
+              <span>Le Dilemme Plastique</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container max-w-4xl py-14 space-y-20">
+
+        {/* ── INTRO: Why these two prototypes ──────────────────────────────── */}
+        <section>
+          <SectionDivider number="00" title="From Prototypes to Platform" titleFr="Des Prototypes à la Plateforme" isFr={isFr} />
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="md:col-span-2">
+              <h2 className="text-2xl font-bold text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+                {isFr ? "Deux expériences, un moteur commun." : "Two experiences, one shared engine."}
+              </h2>
+              <p className="text-sm text-slate-500 leading-relaxed mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "Parle à AVA! et Le Dilemme Plastique sont deux expériences radicalement différentes en surface — l'une narrative et cinématique, l'autre pédagogique et scientifique. Pourtant, elles partagent exactement les mêmes défis techniques : pipeline STT→LLM→TTS, orchestration d'un agent conversationnel, gestion de la mémoire de session, latence perçue et qualité vocale en français."
+                  : "Parle à AVA! and Le Dilemme Plastique are two radically different experiences on the surface — one narrative and cinematic, the other pedagogical and scientific. Yet they share exactly the same technical challenges: STT→LLM→TTS pipeline, conversational agent orchestration, session memory management, perceived latency and French voice quality."}
+              </p>
+              <p className="text-sm text-slate-500 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "C'est cette convergence qui a donné naissance à GamiWays : une plateforme générique capable de porter à la fois l'expérience Storygami (cinéma interactif) et l'expérience Edugami (apprentissage guidé), en partageant le même moteur d'orchestration."
+                  : "This convergence gave birth to GamiWays: a generic platform capable of supporting both the Storygami experience (interactive cinema) and the Edugami experience (guided learning), sharing the same orchestration engine."}
+              </p>
+            </div>
+            <div className="space-y-3">
+              {[
+                { icon: Zap, label: isFr ? "Latence & fluidité" : "Latency & fluidity", desc: isFr ? "Pipeline STT→LLM→TTS <2s" : "STT→LLM→TTS pipeline <2s" },
+                { icon: Mic, label: isFr ? "Qualité vocale FR" : "French voice quality", desc: isFr ? "Naturalité, prosodie, immersion" : "Naturalness, prosody, immersion" },
+                { icon: Clock, label: isFr ? "Mémoire de session" : "Session memory", desc: isFr ? "Continuité sans explosion tokens" : "Continuity without token explosion" },
+                { icon: Video, label: isFr ? "Avatar expressif" : "Expressive avatar", desc: isFr ? "Synchronisation lip-sync + corps" : "Lip-sync + body language sync" },
+              ].map((item) => (
+                <div key={item.label} className="flex gap-2.5 p-3 border border-slate-200 rounded bg-white">
+                  <item.icon size={14} className="shrink-0 mt-0.5" style={{ color: "oklch(0.55 0.20 200)" }} />
+                  <div>
+                    <div className="text-xs font-bold text-slate-800" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{item.label}</div>
+                    <div className="text-xs text-slate-400">{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── PROTOTYPE 1: PARLE À AVA! ─────────────────────────────────────── */}
+        <section>
+          <SectionDivider number="01" title="Parle à AVA! — Storygami" titleFr="Parle à AVA! — Storygami" isFr={isFr} />
+
+          {/* Header card */}
+          <div className="border rounded-lg overflow-hidden mb-6" style={{ borderColor: `${AVA_COLOR}30` }}>
+            <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4" style={{ background: `${AVA_COLOR}08`, borderBottom: `1px solid ${AVA_COLOR}20` }}>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Film size={16} style={{ color: AVA_COLOR }} />
+                  <span className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: AVA_COLOR }}>Storygami</span>
+                  <span className="text-xs font-mono text-slate-400">·</span>
+                  <span className="text-xs font-mono text-slate-400">{isFr ? "Cinéma interactif" : "Interactive cinema"}</span>
+                </div>
+                <h2 className="text-2xl font-black text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+                  Parle à AVA!
+                </h2>
+                <p className="text-sm text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr ? "Prototype 1 — v0.20.1 — 32h de développement" : "Prototype 1 — v0.20.1 — 32h of development"}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end">
+                <a
+                  href="https://proto1.parle-a-ava.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors hover:opacity-80"
+                  style={{ background: AVA_COLOR, color: "white" }}
+                >
+                  <ExternalLink size={11} />
+                  {isFr ? "Tester le prototype" : "Try the prototype"}
+                </a>
+                <a
+                  href="https://github.com/memoways/ava-proto1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
+                  style={{ borderColor: `${AVA_COLOR}40`, color: AVA_COLOR }}
+                >
+                  GitHub
+                </a>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Concept */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Concept" : "Concept"}
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "L'utilisateur entre dans l'univers du film dystopique \"Où est Ava ?\" de Romed Wyder et parle en visioconférence avec Max, un développeur de 28 ans dont la sœur Ava a disparu dans le contexte d'une pandémie mondiale. Un Game Master IA orchestre l'expérience en temps réel : il gère le niveau de confiance, déclenche des séquences vidéo et peut provoquer un game over. Le pipeline complet STT→LLM→TTS est enrichi par un système RAG qui ancre Max dans son univers narratif."
+                    : "The user enters the dystopian film universe \"Where is Ava?\" by Romed Wyder and speaks via video call with Max, a 28-year-old developer whose sister Ava disappeared during a global pandemic. An AI Game Master orchestrates the experience in real time: it manages trust levels, triggers video sequences and can trigger a game over. The full STT→LLM→TTS pipeline is enriched by a RAG system that anchors Max in his narrative universe."}
+                </p>
+              </div>
+
+              {/* Pipeline diagram */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Pipeline technique" : "Technical pipeline"}
+                </h3>
+                <PipelineFlow
+                  color={AVA_COLOR}
+                  steps={[
+                    { label: "Push-to-Talk", sub: "Deepgram" },
+                    { label: "STT", sub: "Deepgram live" },
+                    { label: "Query Rewrite", sub: "Gemini Flash" },
+                    { label: "RAG", sub: "Voyage AI + pgvector" },
+                    { label: "Game Master", sub: "LLM async" },
+                    { label: "Max LLM", sub: "OpenRouter" },
+                    { label: "Validator", sub: "Anti-hallucination" },
+                    { label: "TTS", sub: "ElevenLabs" },
+                  ]}
+                />
+                <p className="text-xs text-slate-400 mt-2 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "Game Master et Max LLM sont parallélisés via Promise.all — gain de 2 à 5s par tour de conversation."
+                    : "Game Master and Max LLM are parallelized via Promise.all — saving 2 to 5s per conversation turn."}
+                </p>
+              </div>
+
+              {/* Metrics */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Métriques clés" : "Key metrics"}
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <MetricCard value="v0.20.1" label={isFr ? "Version actuelle" : "Current version"} color={AVA_COLOR} />
+                  <MetricCard value="21" label={isFr ? "Versions livrées" : "Versions delivered"} color={AVA_COLOR} />
+                  <MetricCard value="32h" label={isFr ? "Temps de développement" : "Development time"} color={AVA_COLOR} />
+                  <MetricCard value="8+" label={isFr ? "Modèles LLM supportés" : "LLM models supported"} color={AVA_COLOR} />
+                </div>
+              </div>
+
+              {/* User journey */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Parcours utilisateur" : "User journey"}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    isFr ? "Onboarding A/B" : "A/B Onboarding",
+                    isFr ? "Intro vidéo Gumlet" : "Gumlet video intro",
+                    isFr ? "Appel entrant Max" : "Max incoming call",
+                    isFr ? "Conversation voice-to-voice" : "Voice-to-voice conversation",
+                    isFr ? "Triggers vidéo dynamiques" : "Dynamic video triggers",
+                    isFr ? "Gate de confiance" : "Trust gate",
+                    isFr ? "Questionnaire ~50 champs" : "~50-field questionnaire",
+                  ].map((step, i) => (
+                    <div key={i} className="flex items-center gap-1.5">
+                      <span className="text-xs font-mono px-2 py-1 rounded" style={{ background: `${AVA_COLOR}10`, color: AVA_COLOR, fontFamily: "'Space Grotesk', sans-serif" }}>
+                        {step}
+                      </span>
+                      {i < 6 && <ArrowRight size={10} style={{ color: `${AVA_COLOR}50` }} />}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Key learnings accordion */}
+              <Accordion label="Key technical learnings" labelFr="Enseignements techniques clés" isFr={isFr}>
+                <div className="pt-3 space-y-2">
+                  {[
+                    {
+                      en: "Vibe coding with Lovable: complete voice-to-voice prototype in ~2 days with a detailed PRD as initial prompt.",
+                      fr: "Vibe coding avec Lovable : prototype voice-to-voice complet en ~2 jours avec un PRD détaillé comme prompt initial.",
+                    },
+                    {
+                      en: "Supabase Edge Functions as API proxy: zero exposed keys client-side, ideal for production prototypes.",
+                      fr: "Edge Functions Supabase comme proxy API : zéro clé exposée côté client, idéal pour les prototypes en production.",
+                    },
+                    {
+                      en: "GM + Max parallelization via Promise.all: 2–5s latency reduction per turn — critical for voice-to-voice fluidity.",
+                      fr: "Parallélisation GM + Max via Promise.all : réduction de 2 à 5s de latence par tour — critique pour la fluidité voice-to-voice.",
+                    },
+                    {
+                      en: "Voyage rerank-2.5 after cosine retrieval: relevant chunk goes from 0.47 (cosine) to 0.81 (rerank) — significant quality gain.",
+                      fr: "Voyage rerank-2.5 après retrieval cosinus : un chunk pertinent passe de 0.47 (cosine) à 0.81 (rerank) — gain de qualité significatif.",
+                    },
+                    {
+                      en: "Query rewriting LLM before RAG: ambiguous queries like 'and you?' become autonomous queries based on history — major relevance improvement.",
+                      fr: "Query rewriting LLM avant RAG : les requêtes ambiguës comme « et toi ? » deviennent des requêtes autonomes basées sur l'historique — impact majeur sur la pertinence.",
+                    },
+                    {
+                      en: "Fail-open anti-hallucination validator (4s timeout): better to let a response through than silently block the experience.",
+                      fr: "Validateur anti-hallucination fail-open (timeout 4s) : mieux vaut laisser passer une réponse que bloquer silencieusement l'expérience.",
+                    },
+                  ].map((l, i) => (
+                    <div key={i} className="flex gap-2">
+                      <span className="text-xs shrink-0 mt-0.5" style={{ color: AVA_COLOR }}>→</span>
+                      <span className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{isFr ? l.fr : l.en}</span>
+                    </div>
+                  ))}
+                </div>
+              </Accordion>
+
+              {/* Cross-links */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Enjeux techniques → solutions documentées" : "Technical challenges → documented solutions"}
+                </h3>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <CrossLink
+                    href="/voice/tts"
+                    icon={Mic}
+                    title="TTS & Voice Synthesis"
+                    titleFr="TTS & Synthèse Vocale"
+                    desc="ElevenLabs vs 15 alternatives — quality, latency, French naturalness. AVA uses ElevenLabs eleven_multilingual_v2."
+                    descFr="ElevenLabs vs 15 alternatives — qualité, latence, naturalité française. AVA utilise ElevenLabs eleven_multilingual_v2."
+                    color={AVA_COLOR}
+                    isFr={isFr}
+                  />
+                  <CrossLink
+                    href="/avatars"
+                    icon={Video}
+                    title="Streaming Video Avatars"
+                    titleFr="Avatars Vidéo Streaming"
+                    desc="Real-time avatar platforms — lip-sync, body language, latency. AVA's next step: photorealistic avatar of Max."
+                    descFr="Plateformes d'avatars temps réel — lip-sync, langage corporel, latence. Prochaine étape d'AVA : avatar photoréaliste de Max."
+                    color={AVA_COLOR}
+                    isFr={isFr}
+                  />
+                  <CrossLink
+                    href="/voice/benchmarks"
+                    icon={Zap}
+                    title="Audio Synthesis Benchmarks"
+                    titleFr="Benchmarks Synthèse Audio"
+                    desc="ELO rankings, TTFA, latency budgets — the metrics that define AVA's voice pipeline performance."
+                    descFr="Classements ELO, TTFA, budgets latence — les métriques qui définissent la performance du pipeline vocal d'AVA."
+                    color={AVA_COLOR}
+                    isFr={isFr}
+                  />
+                  <CrossLink
+                    href="/research/architecture"
+                    icon={Zap}
+                    title="Target Architecture"
+                    titleFr="Architecture Cible"
+                    desc="Context Engine v2, Memory System, Game Master — the GamiWays generalization of AVA's pipeline."
+                    descFr="Context Engine v2, Memory System, Game Master — la généralisation GamiWays du pipeline d'AVA."
+                    color={AVA_COLOR}
+                    isFr={isFr}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── PROTOTYPE 2: LE DILEMME PLASTIQUE ────────────────────────────── */}
+        <section>
+          <SectionDivider number="02" title="Le Dilemme Plastique — Edugami" titleFr="Le Dilemme Plastique — Edugami" isFr={isFr} />
+
+          {/* Header card */}
+          <div className="border rounded-lg overflow-hidden mb-6" style={{ borderColor: `${DILEMME_COLOR}30` }}>
+            <div className="px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4" style={{ background: `${DILEMME_COLOR}08`, borderBottom: `1px solid ${DILEMME_COLOR}20` }}>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <BookOpen size={16} style={{ color: DILEMME_COLOR }} />
+                  <span className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: DILEMME_COLOR }}>Edugami</span>
+                  <span className="text-xs font-mono text-slate-400">·</span>
+                  <span className="text-xs font-mono text-slate-400">{isFr ? "Éducation voice-first" : "Voice-first education"}</span>
+                </div>
+                <h2 className="text-2xl font-black text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+                  Le Dilemme Plastique
+                </h2>
+                <p className="text-sm text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr ? "2 prototypes — 70h de développement — ~380 CHF" : "2 prototypes — 70h of development — ~380 CHF"}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end">
+                <a
+                  href="https://proto-dilemme2.edugami.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors hover:opacity-80"
+                  style={{ background: DILEMME_COLOR, color: "white" }}
+                >
+                  <ExternalLink size={11} />
+                  {isFr ? "Prototype tutoriel" : "Tutorial prototype"}
+                </a>
+                <a
+                  href="https://dilemme-proto.replit.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
+                  style={{ borderColor: `${DILEMME_COLOR}40`, color: DILEMME_COLOR }}
+                >
+                  <ExternalLink size={11} />
+                  {isFr ? "Prototype Flowise" : "Flowise prototype"}
+                </a>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Two sub-prototypes */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Deux approches, un même défi pédagogique" : "Two approaches, one pedagogical challenge"}
+                </h3>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* Tutoriel Light */}
+                  <div className="border border-slate-200 rounded-lg p-4 bg-white">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-bold font-mono px-2 py-0.5 rounded" style={{ color: DILEMME_COLOR, background: `${DILEMME_COLOR}12` }}>Light / Tutoriel</span>
+                      <span className="text-xs text-slate-400 font-mono">v2.6.0</span>
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                      {isFr
+                        ? "Peter guide des élèves de 12–18 ans dans l'analyse d'une image de la Place des Nations à Genève pour découvrir 6 indices cachés. Sessions ≤5 min, 24+ simultanées. Pipeline : Deepgram live → OpenAI Assistants API → ElevenLabs."
+                        : "Peter guides 12–18 year-old students through the analysis of an image of the Place des Nations in Geneva to discover 6 hidden clues. Sessions ≤5 min, 24+ simultaneous. Pipeline: Deepgram live → OpenAI Assistants API → ElevenLabs."}
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <MetricCard value="25h" label={isFr ? "Dev" : "Dev"} color={DILEMME_COLOR} />
+                      <MetricCard value="~220 CHF" label={isFr ? "Coût" : "Cost"} color={DILEMME_COLOR} />
+                    </div>
+                  </div>
+                  {/* Flowise */}
+                  <div className="border border-slate-200 rounded-lg p-4 bg-white">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-bold font-mono px-2 py-0.5 rounded" style={{ color: DILEMME_COLOR, background: `${DILEMME_COLOR}12` }}>Flowise / Complet</span>
+                      <span className="text-xs text-slate-400 font-mono">live</span>
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-3" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                      {isFr
+                        ? "Interface split-screen : chat Peter (gauche) + panneau média (droite). Peter orchestré via Flowise (28 nœuds). Sessions 20–30 min, sans compte. Inclut vidéos, articles intégrés, persistance Postgres, console admin, analytics PostHog."
+                        : "Split-screen interface: Peter chat (left) + media panel (right). Peter orchestrated via Flowise (28 nodes). 20–30 min sessions, no account. Includes videos, embedded articles, Postgres persistence, admin console, PostHog analytics."}
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <MetricCard value="45h" label={isFr ? "Dev" : "Dev"} color={DILEMME_COLOR} />
+                      <MetricCard value="~160 CHF" label={isFr ? "Coût" : "Cost"} color={DILEMME_COLOR} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pipeline diagram — Light */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Pipeline technique — Prototype Light" : "Technical pipeline — Light prototype"}
+                </h3>
+                <PipelineFlow
+                  color={DILEMME_COLOR}
+                  steps={[
+                    { label: "Micro élève", sub: "Web Audio API" },
+                    { label: "STT live", sub: "Deepgram nova-2" },
+                    { label: "STT final", sub: "OpenAI Whisper" },
+                    { label: "Peter LLM", sub: "GPT-4o Assistants" },
+                    { label: "Contexte jeu", sub: "additional_instructions" },
+                    { label: "TTS", sub: "ElevenLabs" },
+                    { label: "Reprise", sub: "pré-générée 150ms" },
+                  ]}
+                />
+                <p className="text-xs text-slate-400 mt-2 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "L'état du jeu (indices trouvés, numéro d'échange) est injecté via additional_instructions — jamais dans l'historique du thread. Source de vérité serveur."
+                    : "Game state (found clues, exchange number) is injected via additional_instructions — never in the thread history. Server-side source of truth."}
+                </p>
+              </div>
+
+              {/* Pipeline diagram — Flowise */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Pipeline technique — Prototype Flowise" : "Technical pipeline — Flowise prototype"}
+                </h3>
+                <PipelineFlow
+                  color={DILEMME_COLOR}
+                  steps={[
+                    { label: "STT", sub: "ElevenLabs Scribe" },
+                    { label: "Flowise", sub: "28 nœuds" },
+                    { label: "Peter LLM", sub: "GPT-4o" },
+                    { label: "TTS phrase", sub: "ElevenLabs" },
+                    { label: "Cache LRU", sub: "hit ~40ms" },
+                    { label: "Panneau média", sub: "Gumlet / YouTube" },
+                  ]}
+                />
+                <p className="text-xs text-slate-400 mt-2 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "TTS par phrase + cache LRU : premier audio de bienvenue pré-warmé à ~40ms. Baseline 30s → objectif <8s après optimisations."
+                    : "Per-sentence TTS + LRU cache: first welcome audio pre-warmed to ~40ms. Baseline 30s → target <8s after optimizations."}
+                </p>
+              </div>
+
+              {/* Latency improvement */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Réduction de latence documentée" : "Documented latency reduction"}
+                </h3>
+                <div className="bg-slate-50 rounded-lg p-4 space-y-3">
+                  <LatencyBar label={isFr ? "Latence conversationnelle (Light)" : "Conversational latency (Light)"} before={20} after={7} unit="s" color={DILEMME_COLOR} />
+                  <LatencyBar label={isFr ? "Premier audio (Light)" : "First audio (Light)"} before={7} after={2.5} unit="s" color={DILEMME_COLOR} />
+                  <LatencyBar label={isFr ? "TTFT Flowise cold" : "Flowise cold TTFT"} before={12.4} after={3} unit="s" color={DILEMME_COLOR} />
+                  <LatencyBar label={isFr ? "TTS miss (Flowise)" : "TTS miss (Flowise)"} before={9.45} after={1.3} unit="s" color={DILEMME_COLOR} />
+                  <p className="text-xs text-slate-400 italic" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                    {isFr ? "TTS hit avec cache LRU : ~40ms. Reprise pré-générée (Light) : 150–500ms." : "TTS hit with LRU cache: ~40ms. Pre-generated resume (Light): 150–500ms."}
+                  </p>
+                </div>
+              </div>
+
+              {/* Key learnings accordion */}
+              <Accordion label="Key technical learnings" labelFr="Enseignements techniques clés" isFr={isFr}>
+                <div className="pt-3 space-y-2">
+                  {[
+                    {
+                      en: "Never use AI conversation history as game state source of truth — inject state via additional_instructions (OpenAI) or equivalent.",
+                      fr: "Ne jamais utiliser l'historique IA comme source de vérité d'un jeu — injecter l'état via additional_instructions (OpenAI) ou équivalent.",
+                    },
+                    {
+                      en: "Instrument before interpreting: PostHog client + server dashboards revealed that perceived latency problems were actually UX problems (missing micro-feedback).",
+                      fr: "Instrumenter avant d'interpréter : les dashboards PostHog client + serveur ont révélé que les problèmes de latence perçue étaient en réalité des problèmes UX (micro-feedbacks manquants).",
+                    },
+                    {
+                      en: "ElevenLabs Scribe STT: WER 2.11% vs 6.45% for OpenAI Whisper on French — decisive quality difference for classroom use.",
+                      fr: "ElevenLabs Scribe STT : WER 2.11% vs 6.45% pour OpenAI Whisper en français — différence de qualité décisive pour un usage en classe.",
+                    },
+                    {
+                      en: "Flowise chatflow audit (28 nodes, longest path 15 nodes): complexity is the main latency bottleneck — simplification is a priority.",
+                      fr: "Audit du chatflow Flowise (28 nœuds, chemin le plus long 15 nœuds) : la complexité est le principal goulot d'étranglement de latence — la simplification est une priorité.",
+                    },
+                    {
+                      en: "Pre-generated resume message: 150–500ms instead of 3–7s for the return to session — perceived continuity is as important as real latency.",
+                      fr: "Message de reprise pré-généré : 150–500ms au lieu de 3–7s pour le retour en session — la continuité perçue est aussi importante que la latence réelle.",
+                    },
+                  ].map((l, i) => (
+                    <div key={i} className="flex gap-2">
+                      <span className="text-xs shrink-0 mt-0.5" style={{ color: DILEMME_COLOR }}>→</span>
+                      <span className="text-xs text-slate-600 leading-relaxed" style={{ fontFamily: "'Source Serif 4', serif" }}>{isFr ? l.fr : l.en}</span>
+                    </div>
+                  ))}
+                </div>
+              </Accordion>
+
+              {/* Cross-links */}
+              <div>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Enjeux techniques → solutions documentées" : "Technical challenges → documented solutions"}
+                </h3>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <CrossLink
+                    href="/voice/stt"
+                    icon={Mic}
+                    title="STT / Speech-to-Text"
+                    titleFr="STT / Reconnaissance Vocale"
+                    desc="ElevenLabs Scribe vs Deepgram vs Whisper — WER, latency, French accuracy. Dilemme uses Scribe (WER 2.11%)."
+                    descFr="ElevenLabs Scribe vs Deepgram vs Whisper — WER, latence, précision française. Dilemme utilise Scribe (WER 2.11%)."
+                    color={DILEMME_COLOR}
+                    isFr={isFr}
+                  />
+                  <CrossLink
+                    href="/voice/tts"
+                    icon={Mic}
+                    title="TTS & Voice Synthesis"
+                    titleFr="TTS & Synthèse Vocale"
+                    desc="ElevenLabs eleven_multilingual_v2 — 1507ms avg vs 2373ms OpenAI. Cache LRU strategy for classroom use."
+                    descFr="ElevenLabs eleven_multilingual_v2 — 1507ms moy vs 2373ms OpenAI. Stratégie cache LRU pour usage en classe."
+                    color={DILEMME_COLOR}
+                    isFr={isFr}
+                  />
+                  <CrossLink
+                    href="/voice/pipeline"
+                    icon={Zap}
+                    title="Voice-to-Voice Pipeline"
+                    titleFr="Pipeline Vocal Voice-to-Voice"
+                    desc="Interactive V2V diagram — visualize the full pipeline latency budget as used in both Dilemme prototypes."
+                    descFr="Diagramme V2V interactif — visualiser le budget latence complet du pipeline tel qu'utilisé dans les deux prototypes Dilemme."
+                    color={DILEMME_COLOR}
+                    isFr={isFr}
+                  />
+                  <CrossLink
+                    href="/research/gaps"
+                    icon={Zap}
+                    title="Opportunities & Gaps"
+                    titleFr="Opportunités & Lacunes"
+                    desc="Flowise orchestration limits, LLM latency, STT accuracy on children's voices — gaps that GamiWays addresses."
+                    descFr="Limites de l'orchestration Flowise, latence LLM, précision STT sur voix d'enfants — lacunes que GamiWays adresse."
+                    color={DILEMME_COLOR}
+                    isFr={isFr}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── SECTION 3: CONVERGENCE → GAMIWAYS ───────────────────────────── */}
+        <section>
+          <SectionDivider number="03" title="Convergence → GamiWays" titleFr="Convergence → GamiWays" isFr={isFr} />
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 mb-3" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+              {isFr ? "Les mêmes défis, une seule réponse." : "The same challenges, one answer."}
+            </h2>
+            <p className="text-sm text-slate-500 leading-relaxed max-w-2xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+              {isFr
+                ? "Malgré des contextes d'usage radicalement différents, les deux prototypes ont convergé vers les mêmes besoins non satisfaits. Cette convergence est la justification technique et stratégique de GamiWays."
+                : "Despite radically different use contexts, both prototypes converged on the same unmet needs. This convergence is the technical and strategic justification for GamiWays."}
+            </p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>{isFr ? "Défi" : "Challenge"}</th>
+                  <th>{isFr ? "AVA (Storygami)" : "AVA (Storygami)"}</th>
+                  <th>{isFr ? "Dilemme (Edugami)" : "Dilemme (Edugami)"}</th>
+                  <th>{isFr ? "Solution GamiWays" : "GamiWays solution"}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    challenge: isFr ? "Latence pipeline" : "Pipeline latency",
+                    ava: isFr ? "Parallélisation GM+Max, fail-open validator" : "GM+Max parallelization, fail-open validator",
+                    dilemme: isFr ? "Cache LRU TTS, reprise pré-générée, Deepgram live" : "TTS LRU cache, pre-generated resume, Deepgram live",
+                    gamiways: isFr ? "Runtime State + SSE, budget latence <2s par couche" : "Runtime State + SSE, <2s latency budget per layer",
+                  },
+                  {
+                    challenge: isFr ? "Mémoire de session" : "Session memory",
+                    ava: isFr ? "summarize-session (Faits/Sujets/Promesses, tous les 4 tours)" : "summarize-session (Facts/Topics/Promises, every 4 turns)",
+                    dilemme: isFr ? "additional_instructions comme source de vérité" : "additional_instructions as source of truth",
+                    gamiways: isFr ? "Memory System v2 — épisodique + sémantique + procédural" : "Memory System v2 — episodic + semantic + procedural",
+                  },
+                  {
+                    challenge: isFr ? "Qualité vocale FR" : "French voice quality",
+                    ava: isFr ? "ElevenLabs stability 0.6, speed 0.92 — preset 'Claire et articulé'" : "ElevenLabs stability 0.6, speed 0.92 — 'Clear & articulate' preset",
+                    dilemme: isFr ? "ElevenLabs Scribe STT WER 2.11% — TTS eleven_multilingual_v2" : "ElevenLabs Scribe STT WER 2.11% — TTS eleven_multilingual_v2",
+                    gamiways: isFr ? "Voice Pipeline documenté — 17 TTS + 10 STT comparés" : "Documented Voice Pipeline — 17 TTS + 10 STT compared",
+                  },
+                  {
+                    challenge: isFr ? "Orchestration agent" : "Agent orchestration",
+                    ava: isFr ? "Game Master autonome (trust, triggers, game over)" : "Autonomous Game Master (trust, triggers, game over)",
+                    dilemme: isFr ? "Flowise 28 nœuds — complexité = goulot d'étranglement" : "Flowise 28 nodes — complexity = bottleneck",
+                    gamiways: isFr ? "Context Engine v2 — 7 dimensions, Game Master headless" : "Context Engine v2 — 7 dimensions, headless Game Master",
+                  },
+                  {
+                    challenge: isFr ? "Avatar expressif" : "Expressive avatar",
+                    ava: isFr ? "Vidéo Gumlet + triggers dynamiques (R&D)" : "Gumlet video + dynamic triggers (R&D)",
+                    dilemme: isFr ? "Avatar élève (vignette) — Peter sans avatar vidéo" : "Student avatar (thumbnail) — Peter without video avatar",
+                    gamiways: isFr ? "Epic C.1 — Expressive Avatar Integration (Phase C)" : "Epic C.1 — Expressive Avatar Integration (Phase C)",
+                  },
+                  {
+                    challenge: isFr ? "Souveraineté données" : "Data sovereignty",
+                    ava: isFr ? "Supabase Edge Functions — clés côté serveur" : "Supabase Edge Functions — server-side keys",
+                    dilemme: isFr ? "Replit + Neon Postgres — données en classe" : "Replit + Neon Postgres — classroom data",
+                    gamiways: isFr ? "Architecture LLM-agnostic, Exoscale Swiss GPU cloud" : "LLM-agnostic architecture, Exoscale Swiss GPU cloud",
+                  },
+                ].map((row) => (
+                  <tr key={row.challenge}>
+                    <td className="font-semibold text-slate-800">{row.challenge}</td>
+                    <td className="text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>{row.ava}</td>
+                    <td className="text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>{row.dilemme}</td>
+                    <td className="font-medium" style={{ color: "oklch(0.45 0.18 200)" }}>{row.gamiways}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* CTA to project page */}
+          <div className="mt-8 p-5 rounded-lg border" style={{ borderColor: "oklch(0.55 0.20 200)30", background: "oklch(0.97 0.02 200)" }}>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <div className="text-sm font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "De ces deux prototypes est né GamiWays." : "From these two prototypes, GamiWays was born."}
+                </div>
+                <p className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "Découvrez la vision produit, l'architecture cible et l'état d'avancement du Core Engine."
+                    : "Discover the product vision, target architecture and Core Engine build status."}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/project">
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded text-xs font-mono font-bold cursor-pointer transition-colors hover:opacity-80" style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
+                    {isFr ? "Projet GamiWays" : "GamiWays Project"}
+                    <ArrowRight size={12} />
+                  </span>
+                </Link>
+                <Link href="/project/status">
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded border text-xs font-mono cursor-pointer transition-colors hover:bg-white" style={{ borderColor: "oklch(0.55 0.20 200)40", color: "oklch(0.45 0.18 200)" }}>
+                    {isFr ? "État d'avancement" : "Build Status"}
+                    <ArrowRight size={12} />
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  );
+}

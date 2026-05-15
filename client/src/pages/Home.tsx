@@ -7,7 +7,8 @@
  */
 import { useLang } from "@/contexts/LangContext";
 import InternalLink from "@/components/InternalLink";
-import { ArrowRight, Mic, Video, FlaskConical, Layers, BookOpen, BarChart3, Cpu, ChevronRight } from "lucide-react";
+import { ArrowRight, Mic, Video, FlaskConical, Layers, BookOpen, BarChart3, Cpu, ChevronRight, Film, ExternalLink } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Home() {
   const { t } = useLang();
@@ -217,6 +218,123 @@ export default function Home() {
             {isFr
               ? "La section Video Avatars analyse l'écosystème des avatars vidéo streaming : comparatifs de plateformes, simulateur de coûts interactif, enjeux business et opportunités de marché. Un outil essentiel pour évaluer les options d'intégration d'un avatar conversationnel dans un projet client."
               : "The Video Avatars section analyzes the streaming video avatar ecosystem: platform comparisons, interactive cost simulator, business challenges, and market opportunities. An essential tool for evaluating avatar integration options in a client project."}
+          </p>
+        </div>
+      </section>
+
+      {/* ── FOUNDING PROTOTYPES ──────────────────────────────────────────── */}
+      <section className="border-b border-slate-200 py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "oklch(0.97 0.02 200)" }}>
+                <FlaskConical size={16} style={{ color: "oklch(0.55 0.20 200)" }} />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+                  {isFr ? "Prototypes Fondateurs" : "Founding Prototypes"}
+                </h2>
+                <p className="text-xs text-slate-400" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr ? "Les origines concrètes de GamiWays" : "The concrete origins of GamiWays"}
+                </p>
+              </div>
+            </div>
+            <Link href="/project/prototypes">
+              <span className="inline-flex items-center gap-1 text-xs font-semibold transition-colors hover:opacity-70 cursor-pointer" style={{ color: "oklch(0.55 0.20 200)", fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Voir les deux prototypes" : "View both prototypes"}
+                <ChevronRight size={12} />
+              </span>
+            </Link>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-5 mb-6">
+            {/* AVA card */}
+            <div className="border rounded-xl overflow-hidden bg-white" style={{ borderColor: "oklch(0.72 0.18 50)30" }}>
+              <div className="px-5 py-4 flex items-start justify-between gap-3" style={{ background: "oklch(0.72 0.18 50)08", borderBottom: "1px solid oklch(0.72 0.18 50)20" }}>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Film size={13} style={{ color: "oklch(0.72 0.18 50)" }} />
+                    <span className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: "oklch(0.72 0.18 50)" }}>Storygami</span>
+                  </div>
+                  <h3 className="font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Parle à AVA!</h3>
+                </div>
+                <span className="text-xs px-2 py-0.5 rounded border font-mono shrink-0" style={{ color: "oklch(0.72 0.18 50)", borderColor: "oklch(0.72 0.18 50)40", background: "oklch(0.72 0.18 50)0d" }}>
+                  {isFr ? "Cinéma interactif" : "Interactive cinema"}
+                </span>
+              </div>
+              <div className="p-5">
+                <p className="text-xs text-slate-600 leading-relaxed mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "L'utilisateur entre dans l'univers du film \"Où est Ava ?\" et parle en visioconférence avec Max, un personnage IA. Un Game Master orchestre l'expérience en temps réel via un pipeline STT→LLM→TTS enrichi par RAG."
+                    : "The user enters the film universe \"Where is Ava?\" and speaks via video call with Max, an AI character. A Game Master orchestrates the experience in real time via an STT→LLM→TTS pipeline enriched by RAG."}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <a href="https://proto1.parle-a-ava.com/" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors hover:opacity-80"
+                    style={{ background: "oklch(0.72 0.18 50)", color: "white" }}>
+                    <ExternalLink size={10} />
+                    {isFr ? "Tester" : "Try it"}
+                  </a>
+                  <Link href="/project/prototypes">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono cursor-pointer transition-colors hover:bg-slate-50"
+                      style={{ borderColor: "oklch(0.72 0.18 50)40", color: "oklch(0.72 0.18 50)" }}>
+                      {isFr ? "Détails techniques" : "Technical details"}
+                      <ArrowRight size={10} />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Dilemme Plastique card */}
+            <div className="border rounded-xl overflow-hidden bg-white" style={{ borderColor: "oklch(0.55 0.20 200)30" }}>
+              <div className="px-5 py-4 flex items-start justify-between gap-3" style={{ background: "oklch(0.55 0.20 200)08", borderBottom: "1px solid oklch(0.55 0.20 200)20" }}>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <BookOpen size={13} style={{ color: "oklch(0.55 0.20 200)" }} />
+                    <span className="text-xs font-bold font-mono uppercase tracking-wider" style={{ color: "oklch(0.55 0.20 200)" }}>Edugami</span>
+                  </div>
+                  <h3 className="font-bold text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Le Dilemme Plastique</h3>
+                </div>
+                <span className="text-xs px-2 py-0.5 rounded border font-mono shrink-0" style={{ color: "oklch(0.55 0.20 200)", borderColor: "oklch(0.55 0.20 200)40", background: "oklch(0.55 0.20 200)0d" }}>
+                  {isFr ? "Éducation voice-first" : "Voice-first education"}
+                </span>
+              </div>
+              <div className="p-5">
+                <p className="text-xs text-slate-600 leading-relaxed mb-4" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                  {isFr
+                    ? "Peter guide des élèves de 12–18 ans dans la découverte de 6 indices sur la pollution plastique. Deux prototypes complémentaires : pipeline léger (25h, ~220 CHF) et orchestration Flowise complète (45h, ~160 CHF)."
+                    : "Peter guides 12–18 year-old students in discovering 6 clues about plastic pollution. Two complementary prototypes: lightweight pipeline (25h, ~220 CHF) and full Flowise orchestration (45h, ~160 CHF)."}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <a href="https://proto-dilemme2.edugami.app/" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-colors hover:opacity-80"
+                    style={{ background: "oklch(0.55 0.20 200)", color: "white" }}>
+                    <ExternalLink size={10} />
+                    {isFr ? "Tester (light)" : "Try (light)"}
+                  </a>
+                  <a href="https://dilemme-proto.replit.app/" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono transition-colors hover:bg-slate-50"
+                    style={{ borderColor: "oklch(0.55 0.20 200)40", color: "oklch(0.55 0.20 200)" }}>
+                    <ExternalLink size={10} />
+                    {isFr ? "Tester (Flowise)" : "Try (Flowise)"}
+                  </a>
+                  <Link href="/project/prototypes">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border text-xs font-mono cursor-pointer transition-colors hover:bg-slate-50"
+                      style={{ borderColor: "oklch(0.55 0.20 200)40", color: "oklch(0.55 0.20 200)" }}>
+                      {isFr ? "Détails techniques" : "Technical details"}
+                      <ArrowRight size={10} />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-sm text-slate-500 leading-relaxed max-w-3xl" style={{ fontFamily: "'Source Serif 4', serif" }}>
+            {isFr
+              ? "Ces deux prototypes ont révélé les mêmes défis fondamentaux — latence, mémoire de session, qualité vocale française, avatar expressif — et ont directement motivé la création du GamiWays Core Engine comme infrastructure générique."
+              : "These two prototypes revealed the same fundamental challenges — latency, session memory, French voice quality, expressive avatar — and directly motivated the creation of the GamiWays Core Engine as a generic infrastructure."}
           </p>
         </div>
       </section>
