@@ -132,7 +132,7 @@ function SessionLatencyBar({
   nodes: number | null;
   tools: number | null;
   token_count: number | null;
-  trace_id: unknown;
+  trace_id: string | number | null | undefined;
   success: unknown;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -1058,7 +1058,7 @@ function DilemmeFlowise({ period, isFr }: { period: Period; isFr: boolean }) {
               nodes={r.nodes !== null && r.nodes !== undefined ? Number(r.nodes) : null}
               tools={r.tools !== null && r.tools !== undefined ? Number(r.tools) : null}
               token_count={r.token_count !== null && r.token_count !== undefined ? Number(r.token_count) : null}
-              trace_id={r.trace_id}
+              trace_id={r.trace_id != null ? String(r.trace_id) : null}
               success={r.success}
             />
           ))
