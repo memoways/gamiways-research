@@ -26,7 +26,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { RefreshCw, AlertCircle, BarChart2, Activity, Mic } from "lucide-react";
+import { RefreshCw, AlertCircle, BarChart2, Activity, Mic, ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -75,7 +75,257 @@ function msToMs(v: unknown): number | null {
   return round1(v);
 }
 
+/**
+ * Format a timestamp as "HH:MM" for today's dates or "DD/MM HH:MM" otherwise.
+ */
+function formatTimestamp(raw: unknown): string {
+  if (!raw) return "";
+  const s = String(raw);
+  const d = new Date(s);
+  if (isNaN(d.getTime())) return s;
+  const now = new Date();
+  const isToday =
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate();
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  if (isToday) return `${hh}:${mm}`;
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mo = String(d.getMonth() + 1).padStart(2, "0");
+  return `${dd}/${mo} ${hh}:${mm}`;
+}
+
+// Latency bar colors
+const BAR_CONNECT = "#3b82f6";
+const BAR_PRE_TTFT = "#a78bfa";
+const BAR_STREAM = "#22c55e";
+const BAR_RECORDING = "#3b82f6";
+const BAR_STT = "#06b6d4";
+const BAR_LLM_TTS = "#f59e0b";
+
 // ── Sub-components ────────────────────────────────────────────────────────────
+
+/**
+ * Stacked horizontal latency bar for a single Flowise pipeline session.
+ * Dark-themed row showing: connect (blue) / pre-ttft (purple) / stream (green).
+ */
+function SessionLatencyBar({
+  connect_ms,
+  ttft_ms,
+  stream_ms,
+  total_ms,
+  timestamp,
+  chat_id,
+  nodes,
+  tools,
+  token_count,
+  trace_id,
+  success,
+}: {
+  connect_ms: number | null;
+  ttft_ms: number | null;
+  stream_ms: number | null;
+  total_ms: number | null;
+  timestamp: unknown;
+  chat_id: unknown;
+  nodes: number | null;
+  tools: number | null;
+  token_count: number | null;
+  trace_id: unknown;
+  success: unknown;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  const pre_ttft_ms = ttft_ms !== null && connect_ms !== null ? ttft_ms - connect_ms : null;
+  const safe_total = total_ms ?? 1;
+
+  const connectPct = connect_ms !== null ? (connect_ms / safe_total) * 100 : 0;
+  const preTtftPct = pre_ttft_ms !== null ? (pre_ttft_ms / safe_total) * 100 : 0;
+  const streamPct = stream_ms !== null ? (stream_ms / safe_total) * 100 : 0;
+
+  const isSuccess = String(success) === "true" || String(success) === "True";
+
+  return (
+    <div
+      style={{ background: "#0f172a", borderRadius: 8, marginBottom: 6, padding: "10px 12px", border: "1px solid #1e293b" }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+        <span style={{ color: "#94a3b8", fontSize: 11, fontFamily: "monospace", minWidth: 90 }}>
+          {formatTimestamp(timestamp)}
+        </span>
+        <span style={{ color: "#64748b", fontSize: 10, fontFamily: "monospace", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {String(chat_id ?? "").slice(0, 12)}…
+        </span>
+        <span
+          style={{
+            fontSize: 10,
+            color: isSuccess ? "#22c55e" : "#ef4444",
+            fontFamily: "monospace",
+            marginRight: 4,
+          }}
+        >
+          {isSuccess ? "✓" : "✗"}
+        </span>
+        <span style={{ color: "#e2e8f0", fontSize: 12, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, minWidth: 65, textAlign: "right" }}>
+          {total_ms !== null ? `${Math.round(total_ms)} ms` : "—"}
+        </span>
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          style={{ color: "#475569", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}
+        >
+          {expanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+        </button>
+      </div>
+
+      {/* Stacked bar */}
+      <div style={{ display: "flex", height: 10, borderRadius: 5, overflow: "hidden", background: "#1e293b" }}>
+        {connect_ms !== null && connectPct > 0 && (
+          <div style={{ width: `${connectPct}%`, background: BAR_CONNECT, transition: "width 0.3s" }} title={`Connect: ${Math.round(connect_ms)} ms`} />
+        )}
+        {pre_ttft_ms !== null && preTtftPct > 0 && (
+          <div style={{ width: `${preTtftPct}%`, background: BAR_PRE_TTFT, transition: "width 0.3s" }} title={`Pré-TTFT: ${Math.round(pre_ttft_ms)} ms`} />
+        )}
+        {stream_ms !== null && streamPct > 0 && (
+          <div style={{ width: `${streamPct}%`, background: BAR_STREAM, transition: "width 0.3s" }} title={`Stream: ${Math.round(stream_ms)} ms`} />
+        )}
+      </div>
+
+      {/* Expanded details */}
+      {expanded && (
+        <div style={{ marginTop: 8, display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <span style={{ color: BAR_CONNECT, fontSize: 10, fontFamily: "monospace" }}>
+            Connect: {connect_ms !== null ? `${Math.round(connect_ms)} ms` : "—"}
+          </span>
+          <span style={{ color: BAR_PRE_TTFT, fontSize: 10, fontFamily: "monospace" }}>
+            Pré-TTFT: {pre_ttft_ms !== null ? `${Math.round(pre_ttft_ms)} ms` : "—"}
+          </span>
+          <span style={{ color: BAR_STREAM, fontSize: 10, fontFamily: "monospace" }}>
+            Stream: {stream_ms !== null ? `${Math.round(stream_ms)} ms` : "—"}
+          </span>
+          {nodes !== null && (
+            <span style={{ color: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}>
+              Nodes: {nodes}
+            </span>
+          )}
+          {tools !== null && (
+            <span style={{ color: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}>
+              Tools: {tools}
+            </span>
+          )}
+          {token_count !== null && (
+            <span style={{ color: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}>
+              Tokens: {token_count}
+            </span>
+          )}
+          {trace_id && String(trace_id) !== "null" && (
+            <span style={{ color: "#475569", fontSize: 10, fontFamily: "monospace" }}>
+              Trace: {String(trace_id).slice(0, 16)}…
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Stacked horizontal latency bar for a single Dilemme Light voice turn.
+ * Dark-themed row showing: recording (blue) / STT (cyan) / LLM+TTS (amber).
+ */
+function TurnLatencyBar({
+  session_id,
+  turn_index,
+  recording_ms,
+  stt_ms,
+  stt_to_complete_ms,
+  total_ms,
+  timestamp,
+}: {
+  session_id: unknown;
+  turn_index: number | null;
+  recording_ms: number | null;
+  stt_ms: number | null;
+  stt_to_complete_ms: number | null;
+  total_ms: number | null;
+  timestamp: unknown;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  // LLM+TTS = total - stt_to_complete
+  const llm_tts_ms =
+    total_ms !== null && stt_to_complete_ms !== null ? total_ms - stt_to_complete_ms : null;
+
+  const safe_total = total_ms ?? 1;
+  const recPct = recording_ms !== null ? (recording_ms / safe_total) * 100 : 0;
+  const sttPct = stt_ms !== null ? (stt_ms / safe_total) * 100 : 0;
+  const llmPct = llm_tts_ms !== null ? Math.max(0, (llm_tts_ms / safe_total) * 100) : 0;
+
+  const shortSession = String(session_id ?? "").slice(0, 8);
+
+  return (
+    <div
+      style={{ background: "#0f172a", borderRadius: 8, marginBottom: 6, padding: "10px 12px", border: "1px solid #1e293b" }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+        <span style={{ color: "#94a3b8", fontSize: 11, fontFamily: "monospace", minWidth: 90 }}>
+          {formatTimestamp(timestamp)}
+        </span>
+        <span style={{ color: "#64748b", fontSize: 10, fontFamily: "monospace" }}>
+          {shortSession}…
+        </span>
+        {turn_index !== null && (
+          <span style={{ color: "#475569", fontSize: 10, fontFamily: "monospace" }}>
+            #{turn_index}
+          </span>
+        )}
+        <span style={{ flex: 1 }} />
+        <span style={{ color: "#e2e8f0", fontSize: 12, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, minWidth: 65, textAlign: "right" }}>
+          {total_ms !== null ? `${Math.round(total_ms)} ms` : "—"}
+        </span>
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          style={{ color: "#475569", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}
+        >
+          {expanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+        </button>
+      </div>
+
+      {/* Stacked bar */}
+      <div style={{ display: "flex", height: 10, borderRadius: 5, overflow: "hidden", background: "#1e293b" }}>
+        {recording_ms !== null && recPct > 0 && (
+          <div style={{ width: `${recPct}%`, background: BAR_RECORDING }} title={`Enregistrement: ${Math.round(recording_ms)} ms`} />
+        )}
+        {stt_ms !== null && sttPct > 0 && (
+          <div style={{ width: `${sttPct}%`, background: BAR_STT }} title={`STT: ${Math.round(stt_ms)} ms`} />
+        )}
+        {llm_tts_ms !== null && llmPct > 0 && (
+          <div style={{ width: `${llmPct}%`, background: BAR_LLM_TTS }} title={`LLM+TTS: ${Math.round(llm_tts_ms)} ms`} />
+        )}
+      </div>
+
+      {/* Expanded details */}
+      {expanded && (
+        <div style={{ marginTop: 8, display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <span style={{ color: BAR_RECORDING, fontSize: 10, fontFamily: "monospace" }}>
+            Enreg.: {recording_ms !== null ? `${Math.round(recording_ms)} ms` : "—"}
+          </span>
+          <span style={{ color: BAR_STT, fontSize: 10, fontFamily: "monospace" }}>
+            STT: {stt_ms !== null ? `${Math.round(stt_ms)} ms` : "—"}
+          </span>
+          <span style={{ color: BAR_LLM_TTS, fontSize: 10, fontFamily: "monospace" }}>
+            LLM+TTS: {llm_tts_ms !== null ? `${Math.round(llm_tts_ms)} ms` : "—"}
+          </span>
+          {stt_to_complete_ms !== null && (
+            <span style={{ color: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}>
+              STT total: {Math.round(stt_to_complete_ms)} ms
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -223,11 +473,16 @@ function PeriodSelector({
 // ── Tab: Dilemme Light ────────────────────────────────────────────────────────
 
 function DilemmeLight({ period, isFr }: { period: Period; isFr: boolean }) {
+  const [turnSort, setTurnSort] = useState<"recent" | "slowest" | "mic">("recent");
+  const [turnLimit, setTurnLimit] = useState(20);
+
   const { data: phase1, isLoading: l1, error: e1 } = trpc.posthog.dilemmeLightTtsPhase1.useQuery({ period });
   const { data: phase2, isLoading: l2, error: e2 } = trpc.posthog.dilemmeLightTtsPhase2.useQuery({ period });
   const { data: voice, isLoading: lv, error: ev } = trpc.posthog.dilemmeLightVoiceTurn.useQuery({ period });
   const { data: welcome, isLoading: lw, error: ew } = trpc.posthog.dilemmeLightWelcome.useQuery({ period });
   const { data: sessions, isLoading: ls, error: es } = trpc.posthog.dilemmeLightSessions.useQuery({ period });
+  const { data: recentTurns, isLoading: lrt, error: ert } = trpc.posthog.dilemmeLightRecentTurns.useQuery({ period, limit: turnLimit });
+  const { data: phaseTrends, isLoading: lpt, error: ept } = trpc.posthog.dilemmeLightPhaseTrends.useQuery({ period });
 
   // ── Derived stats ──────────────────────────────────────────────────────────
 
@@ -258,6 +513,32 @@ function DilemmeLight({ period, isFr }: { period: Period; isFr: boolean }) {
     stt_p50: msToMs(r.stt_p50),
     stt_p95: msToMs(r.stt_p95),
   }));
+
+  // Recent turns sorted
+  const sortedTurns = [...(recentTurns ?? [])].sort((a, b) => {
+    if (turnSort === "slowest") return (Number(b.total_ms) || 0) - (Number(a.total_ms) || 0);
+    if (turnSort === "mic") return (Number(b.recording_ms) || 0) - (Number(a.recording_ms) || 0);
+    // recent: already sorted DESC by timestamp from API, preserve
+    return 0;
+  });
+
+  // Phase trends for DilemmeLight
+  const lightPhaseTrendsData = (phaseTrends ?? []).map((r) => ({
+    week: formatWeek(r.week),
+    total_p50: msToMs(r.total_p50),
+    stt_p50: msToMs(r.stt_p50),
+    rec_p50: msToMs(r.rec_p50),
+  }));
+
+  // Summary stats from recent turns
+  const turnTotalValues = (recentTurns ?? []).map((r) => Number(r.total_ms)).filter((v) => !isNaN(v) && v > 0);
+  const turnSttValues = (recentTurns ?? []).map((r) => Number(r.stt_ms)).filter((v) => !isNaN(v) && v > 0);
+  const turnMedianTotal = turnTotalValues.length > 0
+    ? Math.round(turnTotalValues.sort((a, b) => a - b)[Math.floor(turnTotalValues.length / 2)])
+    : null;
+  const turnMedianStt = turnSttValues.length > 0
+    ? Math.round(turnSttValues.sort((a, b) => a - b)[Math.floor(turnSttValues.length / 2)])
+    : null;
 
   // Welcome: split by cache hit / miss
   const welcomeWeeks = Array.from(new Set((welcome ?? []).map((r) => formatWeek(r.week))));
