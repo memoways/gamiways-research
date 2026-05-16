@@ -355,9 +355,9 @@ export const postHogRouter = router({
           toFloat(toString(properties.ttftMs)) AS ttft_ms,
           toFloat(toString(properties.streamMs)) AS stream_ms,
           toFloat(toString(properties.totalMs)) AS total_ms,
-          toInt64OrNull(toString(properties.nodes)) AS nodes,
-          toInt64OrNull(toString(properties.tools)) AS tools,
-          toInt64OrNull(toString(properties.tokenCount)) AS token_count,
+          toInt(toString(properties.nodes)) AS nodes,
+          toInt(toString(properties.tools)) AS tools,
+          toInt(toString(properties.tokenCount)) AS token_count,
           toString(properties.traceId) AS trace_id,
           toString(properties.success) AS success
         FROM events
@@ -455,7 +455,7 @@ export const postHogRouter = router({
           toFloat(toString(properties.stt_latency_ms)) AS stt_ms,
           toFloat(toString(properties.stt_to_complete_ms)) AS stt_to_complete_ms,
           toFloat(toString(properties.recording_duration_ms)) AS recording_ms,
-          toInt64OrNull(toString(properties.exchange_index)) AS turn_index
+          toInt(toString(properties.exchange_index)) AS turn_index
         FROM events
         WHERE event = 'voice_turn_complete'
           AND properties.total_ms IS NOT NULL
