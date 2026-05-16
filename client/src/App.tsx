@@ -23,6 +23,7 @@ import ProjectStatus from "@/pages/ProjectStatus";
 import GamiWaysGaps from "@/pages/GamiWaysGaps";
 import GamiWaysAcademic from "@/pages/GamiWaysAcademic";
 import PrototypesOrigins from "@/pages/PrototypesOrigins";
+import ProjectAnalytics from "@/pages/ProjectAnalytics";
 
 // ── Voice Pipeline pages ───────────────────────────────────────────────────
 import VoiceTTS from "@/pages/VoiceTTS";
@@ -49,8 +50,8 @@ function ScrollToTop() {
   }, [location]);
   return null;
 }
-
 function Router() {
+  // make sure to consider if you need authentication for certain routes
   return (
     <>
       <ScrollToTop />
@@ -64,6 +65,7 @@ function Router() {
           <Route path="/project" component={Project} />
           <Route path="/project/status" component={ProjectStatus} />
           <Route path="/project/prototypes" component={PrototypesOrigins} />
+          <Route path="/project/analytics" component={ProjectAnalytics} />
           <Route path="/research" component={Research} />
           <Route path="/research/architecture" component={GamiWaysArchitecture} />
           <Route path="/research/gaps" component={GamiWaysGaps} />

@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export default function Home() {
-  const { t } = useLang();
+   const { t } = useLang();
   const isFr = t("nav.home") === "Accueil";
 
   // ── KEY LEARNINGS — Voice ────────────────────────────────────────────────
