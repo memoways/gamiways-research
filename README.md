@@ -3,7 +3,7 @@
 > **Portail de veille technologique et d'aide à la décision** — benchmarks, analyses stratégiques et outils interactifs pour les technologies de synthèse vocale (TTS/STT) et d'avatars vidéo conversationnels.
 
 **URL de production :** [gamiways.memoways.com](https://gamiways.memoways.com)
-**Version :** 1.0.0 — Mai 2026
+**Version :** 1.1.0 — Mai 2026
 **Statut :** 🟢 En production — itérations continues
 **Partenariat :** [Gamilab](https://gamilab.ch) × [Memoways](https://memoways.com)
 
@@ -65,6 +65,19 @@ Analyse indépendante des technologies d'avatars vidéo conversationnels :
 | `/avatars/behavior` | Avatar Behavior & Expressiveness | Fidélité comportementale, langage corporel, TTS expressif |
 | `/avatars/emotional` | Emotional Toolbox & Character Design | Design émotionnel cinématographique pour avatars conversationnels |
 | `/platform/:id` | Fiche Plateforme | Fiche détaillée par plateforme avatar |
+
+### The Project — Analytics
+
+| Route | Titre | Contenu |
+|-------|-------|---------|
+| `/project/analytics` | Usage & Latence | Dashboard PostHog temps réel — latences pipeline, sessions récentes, tendances, erreurs |
+
+Les données sont proxifiées côté serveur via tRPC — la clé API PostHog n'est jamais exposée côté client.
+
+**3 projets PostHog suivis :**
+- **Dilemme Light** (107669) — tours vocaux : recording / STT / LLM+TTS, tendances p50/p95 hebdomadaires
+- **Dilemme Flowise** (171071) — sessions Flowise : Connect / Pré-TTFT / Stream, erreurs TTS ElevenLabs
+- **AVA** (137897) — events jeu : parties démarrées/terminées, personnages, phases, modalité vocale
 
 ### About / À propos
 
@@ -142,6 +155,25 @@ Cette approche repose sur trois convictions :
 > **2. Le contexte prime sur le benchmark.** Un outil avec un WER de 3% peut être le mauvais choix si vos données audio sont soumises au RGPD et que le fournisseur est une cible d'acquisition. Le scoring personnalisé est là pour ça.
 
 > **3. La souveraineté est un critère de premier ordre.** Pas une contrainte réglementaire accessoire. Les analyses stratégiques de chaque outil (lock-in, financement, trajectoire open-source, risque M&A) sont intégrées dans chaque fiche.
+
+---
+
+## Analytics temps réel
+
+Le portail intègre un proxy PostHog côté serveur pour interroger les 3 projets GamiWays sans exposer la clé API au client. Les données sont récupérées via des requêtes HogQL et présentées dans le dashboard `/project/analytics`.
+
+| Composant | Rôle |
+|-----------|------|
+| `server/routers/posthog.ts` | Proxy HogQL — 17 procédures tRPC, 3 projets PostHog |
+| `SessionLatencyBar` | Barre horizontale empilée Connect / Pré-TTFT / Stream (thème sombre) |
+| `TurnLatencyBar` | Barre horizontale empilée Recording / STT / LLM+TTS |
+| `dilemmeFlowiseRecentSessions` | Sessions Flowise brutes triables (Plus récent / Plus lent / TTFT) |
+| `dilemmeFlowisePhaseTrends` | Tendances hebdomadaires p50/p95 par phase pipeline |
+| `dilemmeFlowiseErrors` | Erreurs ElevenLabs TTS par semaine (component + message) |
+| `dilemmeLightRecentTurns` | Tours vocaux bruts avec exchange_index |
+| `dilemmeLightPhaseTrends` | Tendances hebdomadaires STT / Recording / Total |
+
+**Variable d'environnement requise :** `POSTHOG_API_KEY` (clé Bearer eu.posthog.com)
 
 ---
 

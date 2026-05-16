@@ -15,6 +15,36 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/) et [Se
 - Tooltip au survol du "?" dans les tableaux (définition glossaire en overlay)
 - Mise à jour des fiches Google STT v2 et Azure Speech avec données 2026
 - Filtre "Clonage vocal natif" dans le tableau TTS
+- Connexion AVA pipeline backend à PostHog (latences Query rewrite / RAG / LLM / Validator)
+
+---
+
+## [1.1.0] — 2026-05-16
+
+### Ajouté — Latences PostHog enrichies (3 projets)
+
+#### Backend — 5 nouvelles procédures tRPC (`server/routers/posthog.ts`)
+- **`dilemmeFlowiseRecentSessions`** : récupération brute des `N` sessions les plus récentes de `flowise_stream_completed` avec décomposition complète (`connectMs`, `ttftMs`, `streamMs`, `totalMs`, `nodes`, `tools`, `tokenCount`, `traceId`)
+- **`dilemmeFlowisePhaseTrends`** : tendances hebdomadaires par phase pipeline Flowise — p50/p95 pour Connect, Pré-TTFT (`ttftMs - connectMs`), Stream et Total
+- **`dilemmeFlowiseErrors`** : analyse hebdomadaire des `error_occurred` groupés par `component`, `errorType` et `message` (ex : clé API ElevenLabs invalide)
+- **`dilemmeLightRecentTurns`** : tours vocaux bruts avec `session_id`, `total_ms`, `stt_latency_ms`, `recording_duration_ms`, `stt_to_complete_ms`, `exchange_index`
+- **`dilemmeLightPhaseTrends`** : tendances hebdomadaires par phase Dilemme Light — p50/p95 Total, STT, Recording, STT-processing
+
+#### Frontend — nouveaux composants et sections (`client/src/pages/ProjectAnalytics.tsx`)
+- **Composant `SessionLatencyBar`** : barre horizontale empilée par session Flowise (Connect bleu / Pré-TTFT violet / Stream vert), thème sombre, expandable (nodes, tools, tokenCount, traceId)
+- **Composant `TurnLatencyBar`** : barre horizontale empilée par tour Dilemme Light (Enregistrement bleu / STT cyan / LLM+TTS ambre)
+- **Dilemme Flowise — "Sessions récentes"** : stat cards (médiane total, p95, médiane Pré-TTFT, nb sessions), tri (Plus récent / Plus lent / TTFT), sélecteur 10/20 sessions, légende
+- **Dilemme Flowise — "Tendances pipeline"** : line chart par phase hebdomadaire (connect_p50, pre_ttft_p50, stream_p50, total_p50)
+- **Dilemme Flowise — "Erreurs & blocages"** : badge vert si aucune erreur, sinon bannière rouge dernière erreur + BarChart erreurs par semaine
+- **Dilemme Light — "Tours récents"** : stat cards (médiane total, médiane STT), tri (Plus récent / Plus lent / Micro le plus long), sélecteur 10/20 tours
+- **Dilemme Light — "Tendances par phase"** : line chart total_p50, stt_p50, rec_p50 hebdomadaires
+
+### Découvertes PostHog (exploration MCP)
+- Dilemme Flowise (171071) : `flowise_stream_completed` contient `connectMs` / `ttftMs` / `streamMs` / `totalMs` — décomposition exacte Connect / Pré-TTFT / Stream
+- Dilemme Flowise : `error_occurred` tracke les erreurs TTS par `component` + `message` (ex : clé ElevenLabs expirée)
+- Dilemme Light (107669) : `voice_turn_complete` contient `recording_duration_ms`, `stt_latency_ms`, `stt_to_complete_ms`, `exchange_index` — 28 tours disponibles
+- AVA (137897) : uniquement events jeu frontend — les latences pipeline (Query rewrite, RAG, LLM, Validator) visibles dans l'admin de jeu ne sont pas encore exposées dans ce projet PostHog
+- Routage PostHog → projets vérifié : aucun mélange entre les 3 projets (107669, 171071, 137897)
 
 ---
 

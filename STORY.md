@@ -5,7 +5,7 @@
 > **Partnership**: Gamilab × Memoways — Geneva, Switzerland
 > **Started**: 2026-03-04 (sous le nom DigiDouble Research Portal)
 > **Renamed GamiWays**: 2026-05-10
-> **Last Updated**: 2026-05-10
+> **Last Updated**: 2026-05-16
 
 ---
 
@@ -255,6 +255,42 @@ comparatifs, benchmarks de latence, analyse état de l'art.
 
 ---
 
+### 2026-05-16 — Latences PostHog enrichies — sessions récentes + tendances pipeline 🔷
+
+**Intent**: Extraire le maximum d'informations des 3 projets PostHog pour avoir une vue détaillée des latences, des blocages et des tendances — à la manière des dashboards de l'admin du jeu AVA.
+
+**Prompt**:
+```
+Analyser le projet, voir pour améliorer la récupération des statistiques de 
+latence de Posthog pour les 3 projets. Avoir les statistiques de latence des 
+3 projets avec présentation similaire aux screenshots fournis — vue des tendances, 
+des éléments / parties de la mécanique qui bloquent, avec pistes de solution.
+```
+
+**Tool**: Claude Code (claude-sonnet-4-6) — exploration MCP PostHog + implémentation
+
+**Process**:
+- Exploration MCP PostHog pour découvrir les events réels dans les 3 projets
+- Dilemme Flowise : découverte de `flowise_stream_completed` avec la décomposition exacte Connect / Pré-TTFT / Stream — les données étaient là, non exploitées
+- Dilemme Light : `voice_turn_complete` contient `recording_duration_ms`, `stt_latency_ms`, `exchange_index` — suffisant pour un breakdown par phase
+- AVA : seulement des events jeu frontend — les latences pipeline (Query rewrite, RAG, LLM, Validator) visibles dans l'admin jeu viennent d'un système non encore connecté à ce projet PostHog
+
+**Outcome**:
+- 5 nouvelles procédures HogQL backend : sessions brutes, tendances par phase, erreurs
+- Composants `SessionLatencyBar` et `TurnLatencyBar` : barres horizontales empilées proportionnelles, thème sombre
+- Sections "Sessions récentes", "Tendances pipeline", "Erreurs & blocages" dans Flowise
+- Sections "Tours récents", "Tendances par phase" dans Dilemme Light
+- Tri et sélecteur de limite pour les listes de sessions/tours
+- Vérification du routage PostHog → projets : aucun mélange
+
+**Surprise**: `ttftMs - connectMs` = Pré-TTFT, `streamMs` = Stream — la décomposition du screenshot de l'admin était déjà encodée dans un seul event PostHog. Il suffisait de l'extraire.
+
+**Friction**: Le projet AVA (137897) n'a que des events jeu frontend. Les latences pipeline (Query rewrite, RAG, LLM, Validator) doivent être gérées depuis un backend séparé et ne sont pas encore connectées à ce projet PostHog.
+
+**Time**: ~1.5h
+
+---
+
 ### 2026-05-10 — Section Projet enrichie depuis gami-digidouble-core 🔷
 
 **Intent**: Mettre à jour la section "The Project" à partir du repo `gami-lab/gami-digidouble-core` qui documente l'architecture réelle du moteur.
@@ -388,6 +424,7 @@ Length: Blog post (800-1200 words)
 
 | Date | Description | Impact | Plan de fix |
 |------|-------------|--------|-------------|
+| 2026-05-16 | AVA pipeline latency non connecté : les events Query rewrite / RAG / LLM / Validator ne sont pas dans PostHog projet 137897 | Haut | Connecter le backend AVA à PostHog |
 | 2026-05-10 | Cadre de décision STT interactif manquant (symétrique au Decision Framework TTS) | Moyen | Prochaine session |
 | 2026-05-10 | 5 solutions STT/TTS sans données vérifiées datées (Google, Azure, Voxtral, Chatterbox, Moshi) | Moyen | Session suivante |
 | 2026-05-10 | Tooltip au survol du "?" (définition glossaire en overlay) non implémenté | Bas | Prochaine session |
@@ -397,6 +434,23 @@ Length: Blog post (800-1200 words)
 ---
 
 ## Contrats de session (DBC)
+
+### Session — 2026-05-16
+
+**Préconditions vérifiées au départ :**
+- [x] Build passait au démarrage
+- [x] Branche main propre
+
+**Postconditions au départ :**
+- [x] 5 nouvelles procédures PostHog backend
+- [x] Composants SessionLatencyBar + TurnLatencyBar
+- [x] Sections Sessions récentes, Tendances pipeline, Erreurs & blocages (Flowise)
+- [x] Sections Tours récents, Tendances par phase (Dilemme Light)
+- [x] PR #1 mergée sur main
+- [x] Routage PostHog → projets vérifié (aucun mélange)
+- [x] STORY.md, CHANGELOG.md, README.md mis à jour
+
+---
 
 ### Session — 2026-05-10
 
