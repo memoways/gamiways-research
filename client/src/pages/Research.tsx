@@ -926,6 +926,29 @@ export default function Research() {
           </div>
         </section>
 
+        {/* CTA — Core Engine Build Status */}
+        <section>
+          <div className="p-5 border border-slate-200 rounded-xl bg-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <div className="text-sm font-bold text-slate-900 mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {isFr ? "Voir l’état d’avancement du Core Engine" : "Core Engine Build Status"}
+              </div>
+              <p className="text-xs text-slate-500" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {isFr
+                  ? "Suivi épic par épic des 24 épics Phase A — 21 terminés, mis à jour depuis le repo de développement."
+                  : "Epic-by-epic tracking of the 24 Phase A epics — 21 completed, synced from the development repository."}
+              </p>
+            </div>
+            <InternalLink
+              to="/project/status"
+              className="shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-4 py-2 transition-all hover:opacity-90"
+              style={{ background: "oklch(0.55 0.20 200)", fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}
+            >
+              {isFr ? "Voir l’avanacement →" : "View build status →"}
+            </InternalLink>
+          </div>
+        </section>
+
       </div>
     </div>
   );

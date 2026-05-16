@@ -44,7 +44,6 @@ const NAV_MENUS: NavMenu[] = [
       { href: "/research/architecture", label: "Target Architecture", labelFr: "Architecture Cible", desc: "System design & latency budget", descFr: "Design système & budget latence" },
       { href: "/research/gaps", label: "Opportunities & Gaps", labelFr: "Opportunités & Lacunes", desc: "Technology gaps & strategic opportunities", descFr: "Lacunes technologiques & opportunités stratégiques" },
       { href: "/research/academic", label: "State of the Art", labelFr: "État de l'Art", desc: "Key papers & benchmarks 2023–2026", descFr: "Publications clés & benchmarks 2023–2026" },
-      { href: "/project/status", label: "Core Engine Build Status", labelFr: "État d'avancement du Core", desc: "Epic-level progress tracking — synced from dev repo", descFr: "Suivi des épics — mis à jour depuis le repo de développement" },
     ],
   },
   {

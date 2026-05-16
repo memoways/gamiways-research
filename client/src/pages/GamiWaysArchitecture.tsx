@@ -479,10 +479,10 @@ export default function GamiWaysArchitecture() {
           </InternalLink>
           <InternalLink
             to="/project/status"
-            className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border border-slate-300 text-slate-700 hover:bg-slate-50 transition-all"
-            style={{ fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-white rounded-lg px-4 py-2 transition-all hover:opacity-90"
+            style={{ background: "oklch(0.55 0.20 130)", fontFamily: "'Space Grotesk', sans-serif" } as React.CSSProperties}
           >
-            {isFr ? "Build Status →" : "Build Status →"}
+            {isFr ? "État d’avancement du Core →" : "Core Engine Build Status →"}
           </InternalLink>
           <InternalLink
             to="/voice/pipeline"
