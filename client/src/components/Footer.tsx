@@ -3,6 +3,7 @@
  * i18n: EN/FR via LangContext
  * Date is generated dynamically at build time — no manual update needed.
  */
+import { Link } from "wouter";
 import { useLang } from "@/contexts/LangContext";
 
 // Dynamic date — auto-generated at build time, always current
@@ -41,11 +42,28 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            <span>
-              {isFr ? "Dernière mise à jour" : "Last updated"}{" "}
-              <span className="text-slate-600 font-medium">{isFr ? LAST_UPDATED_FR : LAST_UPDATED}</span>
-            </span>
+          <div className="flex flex-col items-start md:items-end gap-2">
+            {/* Build status link — accessible on mobile */}
+            <Link
+              to="/project/status"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 transition-colors group"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              <span
+                className="inline-block w-2 h-2 rounded-full"
+                style={{ background: "oklch(0.60 0.18 145)" }}
+              />
+              <span className="group-hover:underline underline-offset-2">
+                {isFr ? "Core Engine — Phase A · 87% terminé" : "Core Engine — Phase A · 87% complete"}
+              </span>
+              <span className="text-slate-400">{isFr ? "→" : "→"}</span>
+            </Link>
+            <div className="flex items-center gap-2 text-xs text-slate-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+              <span>
+                {isFr ? "Dernière mise à jour" : "Last updated"}{" "}
+                <span className="text-slate-600 font-medium">{isFr ? LAST_UPDATED_FR : LAST_UPDATED}</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
