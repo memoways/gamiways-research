@@ -51,6 +51,9 @@ function ScrollToTop() {
 }
 
 function Router() {
+  const [location] = useLocation();
+  const hideGlobalFooter = location === "/project/analytics";
+
   return (
     <>
       <ScrollToTop />
@@ -103,7 +106,7 @@ function Router() {
           <Route path="/404" component={NotFound} />
           <Route component={NotFound} />
         </Switch>
-        <Footer />
+        {!hideGlobalFooter && <Footer />}
       </main>
     </>
   );
