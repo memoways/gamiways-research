@@ -335,6 +335,171 @@ export const postHogRouter = router({
       return runHogQL(171071, query, apiKey);
     }),
 
+  /**
+   * Recent flowise_stream_completed events for Dilemme Flowise.
+   */
+  dilemmeFlowiseRecentSessions: publicProcedure
+    .input(z.object({ period: periodSchema, limit: z.number().min(5).max(50).default(20) }))
+    .query(async ({ input }) => {
+      const apiKey = ENV.postHogApiKey;
+      const { date_from } = buildDateFilter(input.period);
+      const dateClause = date_from
+        ? `AND toDate(timestamp) >= today() - INTERVAL ${date_from.replace("-", "").replace("d", "")} DAY`
+        : "";
+
+      const query = `
+        SELECT
+          timestamp,
+          distinct_id AS chat_id,
+          toFloat(toString(properties.connectMs)) AS connect_ms,
+          toFloat(toString(properties.ttftMs)) AS ttft_ms,
+          toFloat(toString(properties.streamMs)) AS stream_ms,
+          toFloat(toString(properties.totalMs)) AS total_ms,
+          toInt64OrNull(toString(properties.nodes)) AS nodes,
+          toInt64OrNull(toString(properties.tools)) AS tools,
+          toInt64OrNull(toString(properties.tokenCount)) AS token_count,
+          toString(properties.traceId) AS trace_id,
+          toString(properties.success) AS success
+        FROM events
+        WHERE event = 'flowise_stream_completed'
+          AND properties.totalMs IS NOT NULL
+          ${dateClause}
+        ORDER BY timestamp DESC
+        LIMIT ${input.limit}
+      `;
+
+      return runHogQL(171071, query, apiKey);
+    }),
+
+  /**
+   * Weekly per-phase latency trends for Dilemme Flowise pipeline.
+   */
+  dilemmeFlowisePhaseTrends: publicProcedure
+    .input(z.object({ period: periodSchema }))
+    .query(async ({ input }) => {
+      const apiKey = ENV.postHogApiKey;
+      const { date_from } = buildDateFilter(input.period);
+      const dateClause = date_from
+        ? `AND toDate(timestamp) >= today() - INTERVAL ${date_from.replace("-", "").replace("d", "")} DAY`
+        : "";
+
+      const query = `
+        SELECT
+          toStartOfWeek(timestamp) AS week,
+          quantile(0.50)(toFloat(toString(properties.totalMs))) AS total_p50,
+          quantile(0.95)(toFloat(toString(properties.totalMs))) AS total_p95,
+          quantile(0.50)(toFloat(toString(properties.ttftMs)) - toFloat(toString(properties.connectMs))) AS pre_ttft_p50,
+          quantile(0.95)(toFloat(toString(properties.ttftMs)) - toFloat(toString(properties.connectMs))) AS pre_ttft_p95,
+          quantile(0.50)(toFloat(toString(properties.streamMs))) AS stream_p50,
+          quantile(0.95)(toFloat(toString(properties.streamMs))) AS stream_p95,
+          quantile(0.50)(toFloat(toString(properties.connectMs))) AS connect_p50,
+          count() AS n
+        FROM events
+        WHERE event = 'flowise_stream_completed'
+          AND properties.totalMs IS NOT NULL
+          ${dateClause}
+        GROUP BY week
+        ORDER BY week ASC
+      `;
+
+      return runHogQL(171071, query, apiKey);
+    }),
+
+  /**
+   * Error analysis for Dilemme Flowise (error_occurred events).
+   */
+  dilemmeFlowiseErrors: publicProcedure
+    .input(z.object({ period: periodSchema }))
+    .query(async ({ input }) => {
+      const apiKey = ENV.postHogApiKey;
+      const { date_from } = buildDateFilter(input.period);
+      const dateClause = date_from
+        ? `AND toDate(timestamp) >= today() - INTERVAL ${date_from.replace("-", "").replace("d", "")} DAY`
+        : "";
+
+      const query = `
+        SELECT
+          toStartOfWeek(timestamp) AS week,
+          toString(properties.component) AS component,
+          toString(properties.errorType) AS error_type,
+          toString(properties.message) AS message,
+          count() AS n
+        FROM events
+        WHERE event = 'error_occurred'
+          ${dateClause}
+        GROUP BY week, component, error_type, message
+        ORDER BY week DESC, n DESC
+        LIMIT 100
+      `;
+
+      return runHogQL(171071, query, apiKey);
+    }),
+
+  /**
+   * Recent voice_turn_complete events for Dilemme Light.
+   */
+  dilemmeLightRecentTurns: publicProcedure
+    .input(z.object({ period: periodSchema, limit: z.number().min(5).max(50).default(20) }))
+    .query(async ({ input }) => {
+      const apiKey = ENV.postHogApiKey;
+      const { date_from } = buildDateFilter(input.period);
+      const dateClause = date_from
+        ? `AND toDate(timestamp) >= today() - INTERVAL ${date_from.replace("-", "").replace("d", "")} DAY`
+        : "";
+
+      const query = `
+        SELECT
+          timestamp,
+          toString(properties.$session_id) AS session_id,
+          toFloat(toString(properties.total_ms)) AS total_ms,
+          toFloat(toString(properties.stt_latency_ms)) AS stt_ms,
+          toFloat(toString(properties.stt_to_complete_ms)) AS stt_to_complete_ms,
+          toFloat(toString(properties.recording_duration_ms)) AS recording_ms,
+          toInt64OrNull(toString(properties.exchange_index)) AS turn_index
+        FROM events
+        WHERE event = 'voice_turn_complete'
+          AND properties.total_ms IS NOT NULL
+          ${dateClause}
+        ORDER BY timestamp DESC
+        LIMIT ${input.limit}
+      `;
+
+      return runHogQL(107669, query, apiKey);
+    }),
+
+  /**
+   * Weekly per-phase latency trends for Dilemme Light voice pipeline.
+   */
+  dilemmeLightPhaseTrends: publicProcedure
+    .input(z.object({ period: periodSchema }))
+    .query(async ({ input }) => {
+      const apiKey = ENV.postHogApiKey;
+      const { date_from } = buildDateFilter(input.period);
+      const dateClause = date_from
+        ? `AND toDate(timestamp) >= today() - INTERVAL ${date_from.replace("-", "").replace("d", "")} DAY`
+        : "";
+
+      const query = `
+        SELECT
+          toStartOfWeek(timestamp) AS week,
+          quantile(0.50)(toFloat(toString(properties.total_ms))) AS total_p50,
+          quantile(0.95)(toFloat(toString(properties.total_ms))) AS total_p95,
+          quantile(0.50)(toFloat(toString(properties.stt_latency_ms))) AS stt_p50,
+          quantile(0.95)(toFloat(toString(properties.stt_latency_ms))) AS stt_p95,
+          quantile(0.50)(toFloat(toString(properties.recording_duration_ms))) AS rec_p50,
+          quantile(0.50)(toFloat(toString(properties.stt_to_complete_ms)) - toFloat(toString(properties.recording_duration_ms))) AS stt_proc_p50,
+          count() AS n
+        FROM events
+        WHERE event = 'voice_turn_complete'
+          AND properties.total_ms IS NOT NULL
+          ${dateClause}
+        GROUP BY week
+        ORDER BY week ASC
+      `;
+
+      return runHogQL(107669, query, apiKey);
+    }),
+
   // ── AVA (137897) ────────────────────────────────────────────────────────
 
   /**

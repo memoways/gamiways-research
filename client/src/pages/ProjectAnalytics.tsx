@@ -26,7 +26,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { RefreshCw, AlertCircle, BarChart2, Activity, Mic } from "lucide-react";
+import { RefreshCw, AlertCircle, BarChart2, Activity, Mic, ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -75,7 +75,257 @@ function msToMs(v: unknown): number | null {
   return round1(v);
 }
 
+/**
+ * Format a timestamp as "HH:MM" for today's dates or "DD/MM HH:MM" otherwise.
+ */
+function formatTimestamp(raw: unknown): string {
+  if (!raw) return "";
+  const s = String(raw);
+  const d = new Date(s);
+  if (isNaN(d.getTime())) return s;
+  const now = new Date();
+  const isToday =
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate();
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  if (isToday) return `${hh}:${mm}`;
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mo = String(d.getMonth() + 1).padStart(2, "0");
+  return `${dd}/${mo} ${hh}:${mm}`;
+}
+
+// Latency bar colors
+const BAR_CONNECT = "#3b82f6";
+const BAR_PRE_TTFT = "#a78bfa";
+const BAR_STREAM = "#22c55e";
+const BAR_RECORDING = "#3b82f6";
+const BAR_STT = "#06b6d4";
+const BAR_LLM_TTS = "#f59e0b";
+
 // ── Sub-components ────────────────────────────────────────────────────────────
+
+/**
+ * Stacked horizontal latency bar for a single Flowise pipeline session.
+ * Dark-themed row showing: connect (blue) / pre-ttft (purple) / stream (green).
+ */
+function SessionLatencyBar({
+  connect_ms,
+  ttft_ms,
+  stream_ms,
+  total_ms,
+  timestamp,
+  chat_id,
+  nodes,
+  tools,
+  token_count,
+  trace_id,
+  success,
+}: {
+  connect_ms: number | null;
+  ttft_ms: number | null;
+  stream_ms: number | null;
+  total_ms: number | null;
+  timestamp: unknown;
+  chat_id: unknown;
+  nodes: number | null;
+  tools: number | null;
+  token_count: number | null;
+  trace_id: unknown;
+  success: unknown;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  const pre_ttft_ms = ttft_ms !== null && connect_ms !== null ? ttft_ms - connect_ms : null;
+  const safe_total = total_ms ?? 1;
+
+  const connectPct = connect_ms !== null ? (connect_ms / safe_total) * 100 : 0;
+  const preTtftPct = pre_ttft_ms !== null ? (pre_ttft_ms / safe_total) * 100 : 0;
+  const streamPct = stream_ms !== null ? (stream_ms / safe_total) * 100 : 0;
+
+  const isSuccess = String(success) === "true" || String(success) === "True";
+
+  return (
+    <div
+      style={{ background: "#0f172a", borderRadius: 8, marginBottom: 6, padding: "10px 12px", border: "1px solid #1e293b" }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+        <span style={{ color: "#94a3b8", fontSize: 11, fontFamily: "monospace", minWidth: 90 }}>
+          {formatTimestamp(timestamp)}
+        </span>
+        <span style={{ color: "#64748b", fontSize: 10, fontFamily: "monospace", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {String(chat_id ?? "").slice(0, 12)}…
+        </span>
+        <span
+          style={{
+            fontSize: 10,
+            color: isSuccess ? "#22c55e" : "#ef4444",
+            fontFamily: "monospace",
+            marginRight: 4,
+          }}
+        >
+          {isSuccess ? "✓" : "✗"}
+        </span>
+        <span style={{ color: "#e2e8f0", fontSize: 12, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, minWidth: 65, textAlign: "right" }}>
+          {total_ms !== null ? `${Math.round(total_ms)} ms` : "—"}
+        </span>
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          style={{ color: "#475569", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}
+        >
+          {expanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+        </button>
+      </div>
+
+      {/* Stacked bar */}
+      <div style={{ display: "flex", height: 10, borderRadius: 5, overflow: "hidden", background: "#1e293b" }}>
+        {connect_ms !== null && connectPct > 0 && (
+          <div style={{ width: `${connectPct}%`, background: BAR_CONNECT, transition: "width 0.3s" }} title={`Connect: ${Math.round(connect_ms)} ms`} />
+        )}
+        {pre_ttft_ms !== null && preTtftPct > 0 && (
+          <div style={{ width: `${preTtftPct}%`, background: BAR_PRE_TTFT, transition: "width 0.3s" }} title={`Pré-TTFT: ${Math.round(pre_ttft_ms)} ms`} />
+        )}
+        {stream_ms !== null && streamPct > 0 && (
+          <div style={{ width: `${streamPct}%`, background: BAR_STREAM, transition: "width 0.3s" }} title={`Stream: ${Math.round(stream_ms)} ms`} />
+        )}
+      </div>
+
+      {/* Expanded details */}
+      {expanded && (
+        <div style={{ marginTop: 8, display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <span style={{ color: BAR_CONNECT, fontSize: 10, fontFamily: "monospace" }}>
+            Connect: {connect_ms !== null ? `${Math.round(connect_ms)} ms` : "—"}
+          </span>
+          <span style={{ color: BAR_PRE_TTFT, fontSize: 10, fontFamily: "monospace" }}>
+            Pré-TTFT: {pre_ttft_ms !== null ? `${Math.round(pre_ttft_ms)} ms` : "—"}
+          </span>
+          <span style={{ color: BAR_STREAM, fontSize: 10, fontFamily: "monospace" }}>
+            Stream: {stream_ms !== null ? `${Math.round(stream_ms)} ms` : "—"}
+          </span>
+          {nodes !== null && (
+            <span style={{ color: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}>
+              Nodes: {nodes}
+            </span>
+          )}
+          {tools !== null && (
+            <span style={{ color: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}>
+              Tools: {tools}
+            </span>
+          )}
+          {token_count !== null && (
+            <span style={{ color: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}>
+              Tokens: {token_count}
+            </span>
+          )}
+          {trace_id && String(trace_id) !== "null" && (
+            <span style={{ color: "#475569", fontSize: 10, fontFamily: "monospace" }}>
+              Trace: {String(trace_id).slice(0, 16)}…
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Stacked horizontal latency bar for a single Dilemme Light voice turn.
+ * Dark-themed row showing: recording (blue) / STT (cyan) / LLM+TTS (amber).
+ */
+function TurnLatencyBar({
+  session_id,
+  turn_index,
+  recording_ms,
+  stt_ms,
+  stt_to_complete_ms,
+  total_ms,
+  timestamp,
+}: {
+  session_id: unknown;
+  turn_index: number | null;
+  recording_ms: number | null;
+  stt_ms: number | null;
+  stt_to_complete_ms: number | null;
+  total_ms: number | null;
+  timestamp: unknown;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  // LLM+TTS = total - stt_to_complete
+  const llm_tts_ms =
+    total_ms !== null && stt_to_complete_ms !== null ? total_ms - stt_to_complete_ms : null;
+
+  const safe_total = total_ms ?? 1;
+  const recPct = recording_ms !== null ? (recording_ms / safe_total) * 100 : 0;
+  const sttPct = stt_ms !== null ? (stt_ms / safe_total) * 100 : 0;
+  const llmPct = llm_tts_ms !== null ? Math.max(0, (llm_tts_ms / safe_total) * 100) : 0;
+
+  const shortSession = String(session_id ?? "").slice(0, 8);
+
+  return (
+    <div
+      style={{ background: "#0f172a", borderRadius: 8, marginBottom: 6, padding: "10px 12px", border: "1px solid #1e293b" }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+        <span style={{ color: "#94a3b8", fontSize: 11, fontFamily: "monospace", minWidth: 90 }}>
+          {formatTimestamp(timestamp)}
+        </span>
+        <span style={{ color: "#64748b", fontSize: 10, fontFamily: "monospace" }}>
+          {shortSession}…
+        </span>
+        {turn_index !== null && (
+          <span style={{ color: "#475569", fontSize: 10, fontFamily: "monospace" }}>
+            #{turn_index}
+          </span>
+        )}
+        <span style={{ flex: 1 }} />
+        <span style={{ color: "#e2e8f0", fontSize: 12, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, minWidth: 65, textAlign: "right" }}>
+          {total_ms !== null ? `${Math.round(total_ms)} ms` : "—"}
+        </span>
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          style={{ color: "#475569", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}
+        >
+          {expanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+        </button>
+      </div>
+
+      {/* Stacked bar */}
+      <div style={{ display: "flex", height: 10, borderRadius: 5, overflow: "hidden", background: "#1e293b" }}>
+        {recording_ms !== null && recPct > 0 && (
+          <div style={{ width: `${recPct}%`, background: BAR_RECORDING }} title={`Enregistrement: ${Math.round(recording_ms)} ms`} />
+        )}
+        {stt_ms !== null && sttPct > 0 && (
+          <div style={{ width: `${sttPct}%`, background: BAR_STT }} title={`STT: ${Math.round(stt_ms)} ms`} />
+        )}
+        {llm_tts_ms !== null && llmPct > 0 && (
+          <div style={{ width: `${llmPct}%`, background: BAR_LLM_TTS }} title={`LLM+TTS: ${Math.round(llm_tts_ms)} ms`} />
+        )}
+      </div>
+
+      {/* Expanded details */}
+      {expanded && (
+        <div style={{ marginTop: 8, display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <span style={{ color: BAR_RECORDING, fontSize: 10, fontFamily: "monospace" }}>
+            Enreg.: {recording_ms !== null ? `${Math.round(recording_ms)} ms` : "—"}
+          </span>
+          <span style={{ color: BAR_STT, fontSize: 10, fontFamily: "monospace" }}>
+            STT: {stt_ms !== null ? `${Math.round(stt_ms)} ms` : "—"}
+          </span>
+          <span style={{ color: BAR_LLM_TTS, fontSize: 10, fontFamily: "monospace" }}>
+            LLM+TTS: {llm_tts_ms !== null ? `${Math.round(llm_tts_ms)} ms` : "—"}
+          </span>
+          {stt_to_complete_ms !== null && (
+            <span style={{ color: "#94a3b8", fontSize: 10, fontFamily: "monospace" }}>
+              STT total: {Math.round(stt_to_complete_ms)} ms
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -223,11 +473,16 @@ function PeriodSelector({
 // ── Tab: Dilemme Light ────────────────────────────────────────────────────────
 
 function DilemmeLight({ period, isFr }: { period: Period; isFr: boolean }) {
+  const [turnSort, setTurnSort] = useState<"recent" | "slowest" | "mic">("recent");
+  const [turnLimit, setTurnLimit] = useState(20);
+
   const { data: phase1, isLoading: l1, error: e1 } = trpc.posthog.dilemmeLightTtsPhase1.useQuery({ period });
   const { data: phase2, isLoading: l2, error: e2 } = trpc.posthog.dilemmeLightTtsPhase2.useQuery({ period });
   const { data: voice, isLoading: lv, error: ev } = trpc.posthog.dilemmeLightVoiceTurn.useQuery({ period });
   const { data: welcome, isLoading: lw, error: ew } = trpc.posthog.dilemmeLightWelcome.useQuery({ period });
   const { data: sessions, isLoading: ls, error: es } = trpc.posthog.dilemmeLightSessions.useQuery({ period });
+  const { data: recentTurns, isLoading: lrt, error: ert } = trpc.posthog.dilemmeLightRecentTurns.useQuery({ period, limit: turnLimit });
+  const { data: phaseTrends, isLoading: lpt, error: ept } = trpc.posthog.dilemmeLightPhaseTrends.useQuery({ period });
 
   // ── Derived stats ──────────────────────────────────────────────────────────
 
@@ -258,6 +513,32 @@ function DilemmeLight({ period, isFr }: { period: Period; isFr: boolean }) {
     stt_p50: msToMs(r.stt_p50),
     stt_p95: msToMs(r.stt_p95),
   }));
+
+  // Recent turns sorted
+  const sortedTurns = [...(recentTurns ?? [])].sort((a, b) => {
+    if (turnSort === "slowest") return (Number(b.total_ms) || 0) - (Number(a.total_ms) || 0);
+    if (turnSort === "mic") return (Number(b.recording_ms) || 0) - (Number(a.recording_ms) || 0);
+    // recent: already sorted DESC by timestamp from API, preserve
+    return 0;
+  });
+
+  // Phase trends for DilemmeLight
+  const lightPhaseTrendsData = (phaseTrends ?? []).map((r) => ({
+    week: formatWeek(r.week),
+    total_p50: msToMs(r.total_p50),
+    stt_p50: msToMs(r.stt_p50),
+    rec_p50: msToMs(r.rec_p50),
+  }));
+
+  // Summary stats from recent turns
+  const turnTotalValues = (recentTurns ?? []).map((r) => Number(r.total_ms)).filter((v) => !isNaN(v) && v > 0);
+  const turnSttValues = (recentTurns ?? []).map((r) => Number(r.stt_ms)).filter((v) => !isNaN(v) && v > 0);
+  const turnMedianTotal = turnTotalValues.length > 0
+    ? Math.round([...turnTotalValues].sort((a, b) => a - b)[Math.floor(turnTotalValues.length / 2)])
+    : null;
+  const turnMedianStt = turnSttValues.length > 0
+    ? Math.round([...turnSttValues].sort((a, b) => a - b)[Math.floor(turnSttValues.length / 2)])
+    : null;
 
   // Welcome: split by cache hit / miss
   const welcomeWeeks = Array.from(new Set((welcome ?? []).map((r) => formatWeek(r.week))));
@@ -297,6 +578,123 @@ function DilemmeLight({ period, isFr }: { period: Period; isFr: boolean }) {
           value={avgActions}
           color={C.blue}
         />
+      </div>
+
+      {/* Tours récents */}
+      <SectionTitle>{isFr ? "Tours récents" : "Recent Turns"}</SectionTitle>
+      <div
+        style={{ background: "#020617", borderRadius: 12, border: "1px solid #1e293b", padding: "16px" }}
+        className="mb-4"
+      >
+        {/* Summary stats */}
+        <div style={{ display: "flex", gap: 24, marginBottom: 12, flexWrap: "wrap" }}>
+          <div>
+            <div style={{ color: BAR_STT, fontSize: 20, fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+              {turnMedianTotal !== null ? `${turnMedianTotal} ms` : "—"}
+            </div>
+            <div style={{ color: "#64748b", fontSize: 10, fontFamily: "'Source Serif 4', serif" }}>
+              {isFr ? "Médiane total" : "Median total"}
+            </div>
+          </div>
+          <div>
+            <div style={{ color: BAR_STT, fontSize: 20, fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+              {turnMedianStt !== null ? `${turnMedianStt} ms` : "—"}
+            </div>
+            <div style={{ color: "#64748b", fontSize: 10, fontFamily: "'Source Serif 4', serif" }}>
+              {isFr ? "Médiane STT" : "Median STT"}
+            </div>
+          </div>
+          <div>
+            <div style={{ color: "#94a3b8", fontSize: 20, fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+              {recentTurns?.length ?? "—"}
+            </div>
+            <div style={{ color: "#64748b", fontSize: 10, fontFamily: "'Source Serif 4', serif" }}>
+              {isFr ? "Tours affichés" : "Turns shown"}
+            </div>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+          {(["recent", "slowest", "mic"] as const).map((s) => (
+            <button
+              key={s}
+              onClick={() => setTurnSort(s)}
+              style={{
+                background: turnSort === s ? "#1e293b" : "transparent",
+                border: `1px solid ${turnSort === s ? "#334155" : "#1e293b"}`,
+                color: turnSort === s ? "#e2e8f0" : "#475569",
+                borderRadius: 6,
+                padding: "3px 10px",
+                fontSize: 11,
+                fontFamily: "'Space Grotesk', sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              {s === "recent" ? (isFr ? "Plus récent" : "Most recent") : s === "slowest" ? (isFr ? "Plus lent" : "Slowest") : (isFr ? "Micro le plus long" : "Longest mic")}
+            </button>
+          ))}
+          <div style={{ flex: 1 }} />
+          {([10, 20] as const).map((l) => (
+            <button
+              key={l}
+              onClick={() => setTurnLimit(l)}
+              style={{
+                background: turnLimit === l ? "#1e293b" : "transparent",
+                border: `1px solid ${turnLimit === l ? "#334155" : "#1e293b"}`,
+                color: turnLimit === l ? "#e2e8f0" : "#475569",
+                borderRadius: 6,
+                padding: "3px 10px",
+                fontSize: 11,
+                fontFamily: "'Space Grotesk', sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+
+        {/* Legend */}
+        <div style={{ display: "flex", gap: 16, marginBottom: 10 }}>
+          {[
+            { color: BAR_RECORDING, label: isFr ? "Enregistrement" : "Recording" },
+            { color: BAR_STT, label: "STT" },
+            { color: BAR_LLM_TTS, label: "LLM+TTS" },
+          ].map(({ color, label }) => (
+            <div key={label} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <div style={{ width: 8, height: 8, borderRadius: 2, background: color }} />
+              <span style={{ color: "#64748b", fontSize: 10, fontFamily: "'Space Grotesk', sans-serif" }}>{label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Rows */}
+        {lrt ? (
+          <div style={{ color: "#475569", fontSize: 12, textAlign: "center", padding: "20px 0" }}>
+            <RefreshCw size={16} style={{ display: "inline", marginRight: 6 }} />
+            {isFr ? "Chargement…" : "Loading…"}
+          </div>
+        ) : ert ? (
+          <div style={{ color: "#ef4444", fontSize: 11, padding: "8px 0" }}>{String(ert)}</div>
+        ) : sortedTurns.length === 0 ? (
+          <div style={{ color: "#475569", fontSize: 11, textAlign: "center", padding: "20px 0" }}>
+            {isFr ? "Aucune donnée pour cette période" : "No data for this period"}
+          </div>
+        ) : (
+          sortedTurns.map((r, i) => (
+            <TurnLatencyBar
+              key={i}
+              session_id={r.session_id}
+              turn_index={r.turn_index !== null && r.turn_index !== undefined ? Number(r.turn_index) : null}
+              recording_ms={r.recording_ms !== null && r.recording_ms !== undefined ? Number(r.recording_ms) : null}
+              stt_ms={r.stt_ms !== null && r.stt_ms !== undefined ? Number(r.stt_ms) : null}
+              stt_to_complete_ms={r.stt_to_complete_ms !== null && r.stt_to_complete_ms !== undefined ? Number(r.stt_to_complete_ms) : null}
+              total_ms={r.total_ms !== null && r.total_ms !== undefined ? Number(r.total_ms) : null}
+              timestamp={r.timestamp}
+            />
+          ))
+        )}
       </div>
 
       {/* TTS Phase 1 latency */}
@@ -410,6 +808,29 @@ function DilemmeLight({ period, isFr }: { period: Period; isFr: boolean }) {
         </ResponsiveContainer>
       </ChartCard>
 
+      {/* Tendances par phase */}
+      <SectionTitle>{isFr ? "Tendances par phase (hebdomadaire)" : "Phase Trends (weekly)"}</SectionTitle>
+      <ChartCard
+        title={isFr ? "Latence par phase — p50 hebdomadaire" : "Phase latency — weekly p50"}
+        subtitle={isFr ? "Total / STT / Enregistrement (event voice_turn_complete)" : "Total / STT / Recording (event voice_turn_complete)"}
+        isLoading={lpt}
+        error={ept ? String(ept) : null}
+        isEmpty={!lightPhaseTrendsData.length}
+      >
+        <ResponsiveContainer width="100%" height={220}>
+          <LineChart data={lightPhaseTrendsData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+            <XAxis dataKey="week" tick={{ fontSize: 10, fill: "#94a3b8" }} />
+            <YAxis tick={{ fontSize: 10, fill: "#94a3b8" }} unit="ms" width={60} />
+            <Tooltip formatter={(v: unknown) => [`${v} ms`]} />
+            <Legend wrapperStyle={{ fontSize: 11 }} />
+            <Line type="monotone" dataKey="total_p50" stroke={RECHARTS_BLUE} strokeWidth={2} dot={false} name={isFr ? "Total p50" : "Total p50"} />
+            <Line type="monotone" dataKey="stt_p50" stroke={BAR_STT} strokeWidth={2} dot={false} name="STT p50" />
+            <Line type="monotone" dataKey="rec_p50" stroke={RECHARTS_AMBER} strokeWidth={2} dot={false} name={isFr ? "Enreg. p50" : "Rec. p50"} />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartCard>
+
       {/* Phase 2 note */}
       <div className="mt-4 text-xs text-slate-400 border border-slate-100 rounded-lg p-3 bg-slate-50" style={{ fontFamily: "'Source Serif 4', serif" }}>
         <strong className="text-slate-500">Note :</strong>{" "}
@@ -424,9 +845,15 @@ function DilemmeLight({ period, isFr }: { period: Period; isFr: boolean }) {
 // ── Tab: Dilemme Flowise ──────────────────────────────────────────────────────
 
 function DilemmeFlowise({ period, isFr }: { period: Period; isFr: boolean }) {
+  const [sessionSort, setSessionSort] = useState<"recent" | "slowest" | "ttft">("recent");
+  const [sessionLimit, setSessionLimit] = useState(20);
+
   const { data: tts, isLoading: lt, error: et } = trpc.posthog.dilemmeFlowiseTts.useQuery({ period });
   const { data: sessions, isLoading: ls, error: es } = trpc.posthog.dilemmeFlowiseSessions.useQuery({ period });
   const { data: requests, isLoading: lr, error: er } = trpc.posthog.dilemmeFlowiseTtsRequests.useQuery({ period });
+  const { data: recentSessions, isLoading: lrs, error: ers } = trpc.posthog.dilemmeFlowiseRecentSessions.useQuery({ period, limit: sessionLimit });
+  const { data: phaseTrends, isLoading: lpt, error: ept } = trpc.posthog.dilemmeFlowisePhaseTrends.useQuery({ period });
+  const { data: errors, isLoading: le, error: ee } = trpc.posthog.dilemmeFlowiseErrors.useQuery({ period });
 
   // ── Derived stats ──────────────────────────────────────────────────────────
 
@@ -435,6 +862,24 @@ function DilemmeFlowise({ period, isFr }: { period: Period; isFr: boolean }) {
     ? round1(sessions.reduce((acc, r) => acc + (Number(r.avg_duration_s) || 0), 0) / sessions.length)
     : null;
   const totalTtsRequests = requests?.reduce((acc, r) => acc + (Number(r.tts_requests) || 0), 0) ?? null;
+
+  // Summary stats from recent sessions
+  const sessionTotalValues = (recentSessions ?? []).map((r) => Number(r.total_ms)).filter((v) => !isNaN(v) && v > 0);
+  const sessionPreTtftValues = (recentSessions ?? []).map((r) => {
+    const ttft = Number(r.ttft_ms);
+    const connect = Number(r.connect_ms);
+    return !isNaN(ttft) && !isNaN(connect) ? ttft - connect : NaN;
+  }).filter((v) => !isNaN(v) && v > 0);
+
+  const sessionMedianTotal = sessionTotalValues.length > 0
+    ? Math.round([...sessionTotalValues].sort((a, b) => a - b)[Math.floor(sessionTotalValues.length / 2)])
+    : null;
+  const sessionP95Total = sessionTotalValues.length > 0
+    ? Math.round([...sessionTotalValues].sort((a, b) => a - b)[Math.floor(sessionTotalValues.length * 0.95)])
+    : null;
+  const sessionMedianPreTtft = sessionPreTtftValues.length > 0
+    ? Math.round([...sessionPreTtftValues].sort((a, b) => a - b)[Math.floor(sessionPreTtftValues.length / 2)])
+    : null;
 
   // ── Chart data ─────────────────────────────────────────────────────────────
 
@@ -464,8 +909,162 @@ function DilemmeFlowise({ period, isFr }: { period: Period; isFr: boolean }) {
     avg_chars: round1(r.avg_chars),
   }));
 
+  // Phase trends
+  const flowisePhaseTrendsData = (phaseTrends ?? []).map((r) => ({
+    week: formatWeek(r.week),
+    total_p50: msToMs(r.total_p50),
+    pre_ttft_p50: msToMs(r.pre_ttft_p50),
+    stream_p50: msToMs(r.stream_p50),
+    connect_p50: msToMs(r.connect_p50),
+  }));
+
+  // Errors: aggregate by week
+  const errorWeeks = Array.from(new Set((errors ?? []).map((r) => formatWeek(r.week))));
+  const errorByWeek = errorWeeks.map((week) => ({
+    week,
+    n: (errors ?? []).filter((r) => formatWeek(r.week) === week).reduce((acc, r) => acc + (Number(r.n) || 0), 0),
+  }));
+  const totalErrors = (errors ?? []).reduce((acc, r) => acc + (Number(r.n) || 0), 0);
+  const lastError = (errors ?? [])[0];
+
+  // Recent sessions sorted
+  const sortedSessions = [...(recentSessions ?? [])].sort((a, b) => {
+    if (sessionSort === "slowest") return (Number(b.total_ms) || 0) - (Number(a.total_ms) || 0);
+    if (sessionSort === "ttft") return (Number(b.ttft_ms) || 0) - (Number(a.ttft_ms) || 0);
+    return 0; // recent: API already returns DESC
+  });
+
   return (
     <div>
+      {/* Sessions récentes */}
+      <SectionTitle>{isFr ? "Sessions récentes" : "Recent Sessions"}</SectionTitle>
+      <div
+        style={{ background: "#020617", borderRadius: 12, border: "1px solid #1e293b", padding: "16px" }}
+        className="mb-6"
+      >
+        {/* Summary stats */}
+        <div style={{ display: "flex", gap: 24, marginBottom: 12, flexWrap: "wrap" }}>
+          <div>
+            <div style={{ color: BAR_PRE_TTFT, fontSize: 20, fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+              {sessionMedianTotal !== null ? `${sessionMedianTotal} ms` : "—"}
+            </div>
+            <div style={{ color: "#64748b", fontSize: 10, fontFamily: "'Source Serif 4', serif" }}>
+              {isFr ? "Médiane total" : "Median total"}
+            </div>
+          </div>
+          <div>
+            <div style={{ color: BAR_PRE_TTFT, fontSize: 20, fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+              {sessionP95Total !== null ? `${sessionP95Total} ms` : "—"}
+            </div>
+            <div style={{ color: "#64748b", fontSize: 10, fontFamily: "'Source Serif 4', serif" }}>
+              p95 total
+            </div>
+          </div>
+          <div>
+            <div style={{ color: BAR_PRE_TTFT, fontSize: 20, fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+              {sessionMedianPreTtft !== null ? `${sessionMedianPreTtft} ms` : "—"}
+            </div>
+            <div style={{ color: "#64748b", fontSize: 10, fontFamily: "'Source Serif 4', serif" }}>
+              {isFr ? "Médiane Pré-TTFT" : "Median Pre-TTFT"}
+            </div>
+          </div>
+          <div>
+            <div style={{ color: "#94a3b8", fontSize: 20, fontWeight: 800, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.03em" }}>
+              {recentSessions?.length ?? "—"}
+            </div>
+            <div style={{ color: "#64748b", fontSize: 10, fontFamily: "'Source Serif 4', serif" }}>
+              {isFr ? "Sessions affichées" : "Sessions shown"}
+            </div>
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+          {(["recent", "slowest", "ttft"] as const).map((s) => (
+            <button
+              key={s}
+              onClick={() => setSessionSort(s)}
+              style={{
+                background: sessionSort === s ? "#1e293b" : "transparent",
+                border: `1px solid ${sessionSort === s ? "#334155" : "#1e293b"}`,
+                color: sessionSort === s ? "#e2e8f0" : "#475569",
+                borderRadius: 6,
+                padding: "3px 10px",
+                fontSize: 11,
+                fontFamily: "'Space Grotesk', sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              {s === "recent" ? (isFr ? "Plus récent" : "Most recent") : s === "slowest" ? (isFr ? "Plus lent" : "Slowest") : "TTFT"}
+            </button>
+          ))}
+          <div style={{ flex: 1 }} />
+          {([10, 20] as const).map((l) => (
+            <button
+              key={l}
+              onClick={() => setSessionLimit(l)}
+              style={{
+                background: sessionLimit === l ? "#1e293b" : "transparent",
+                border: `1px solid ${sessionLimit === l ? "#334155" : "#1e293b"}`,
+                color: sessionLimit === l ? "#e2e8f0" : "#475569",
+                borderRadius: 6,
+                padding: "3px 10px",
+                fontSize: 11,
+                fontFamily: "'Space Grotesk', sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+
+        {/* Legend */}
+        <div style={{ display: "flex", gap: 16, marginBottom: 10 }}>
+          {[
+            { color: BAR_CONNECT, label: "Connect" },
+            { color: BAR_PRE_TTFT, label: "Pré-TTFT" },
+            { color: BAR_STREAM, label: "Stream" },
+          ].map(({ color, label }) => (
+            <div key={label} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <div style={{ width: 8, height: 8, borderRadius: 2, background: color }} />
+              <span style={{ color: "#64748b", fontSize: 10, fontFamily: "'Space Grotesk', sans-serif" }}>{label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Rows */}
+        {lrs ? (
+          <div style={{ color: "#475569", fontSize: 12, textAlign: "center", padding: "20px 0" }}>
+            <RefreshCw size={16} style={{ display: "inline", marginRight: 6 }} />
+            {isFr ? "Chargement…" : "Loading…"}
+          </div>
+        ) : ers ? (
+          <div style={{ color: "#ef4444", fontSize: 11, padding: "8px 0" }}>{String(ers)}</div>
+        ) : sortedSessions.length === 0 ? (
+          <div style={{ color: "#475569", fontSize: 11, textAlign: "center", padding: "20px 0" }}>
+            {isFr ? "Aucune donnée pour cette période" : "No data for this period"}
+          </div>
+        ) : (
+          sortedSessions.map((r, i) => (
+            <SessionLatencyBar
+              key={i}
+              connect_ms={r.connect_ms !== null && r.connect_ms !== undefined ? Number(r.connect_ms) : null}
+              ttft_ms={r.ttft_ms !== null && r.ttft_ms !== undefined ? Number(r.ttft_ms) : null}
+              stream_ms={r.stream_ms !== null && r.stream_ms !== undefined ? Number(r.stream_ms) : null}
+              total_ms={r.total_ms !== null && r.total_ms !== undefined ? Number(r.total_ms) : null}
+              timestamp={r.timestamp}
+              chat_id={r.chat_id}
+              nodes={r.nodes !== null && r.nodes !== undefined ? Number(r.nodes) : null}
+              tools={r.tools !== null && r.tools !== undefined ? Number(r.tools) : null}
+              token_count={r.token_count !== null && r.token_count !== undefined ? Number(r.token_count) : null}
+              trace_id={r.trace_id}
+              success={r.success}
+            />
+          ))
+        )}
+      </div>
+
       {/* Stats row */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
         <StatCard
@@ -554,6 +1153,78 @@ function DilemmeFlowise({ period, isFr }: { period: Period; isFr: boolean }) {
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
+
+      {/* Tendances pipeline */}
+      <SectionTitle>{isFr ? "Tendances pipeline (hebdomadaire)" : "Pipeline Trends (weekly)"}</SectionTitle>
+      <ChartCard
+        title={isFr ? "Latence par phase — p50 hebdomadaire" : "Phase latency — weekly p50"}
+        subtitle={isFr ? "Connect / Pré-TTFT / Stream / Total (event flowise_stream_completed)" : "Connect / Pre-TTFT / Stream / Total (event flowise_stream_completed)"}
+        isLoading={lpt}
+        error={ept ? String(ept) : null}
+        isEmpty={!flowisePhaseTrendsData.length}
+      >
+        <ResponsiveContainer width="100%" height={220}>
+          <LineChart data={flowisePhaseTrendsData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+            <XAxis dataKey="week" tick={{ fontSize: 10, fill: "#94a3b8" }} />
+            <YAxis tick={{ fontSize: 10, fill: "#94a3b8" }} unit="ms" width={60} />
+            <Tooltip formatter={(v: unknown) => [`${v} ms`]} />
+            <Legend wrapperStyle={{ fontSize: 11 }} />
+            <Line type="monotone" dataKey="total_p50" stroke={RECHARTS_SLATE} strokeWidth={2} dot={false} name="Total p50" strokeDasharray="4 2" />
+            <Line type="monotone" dataKey="connect_p50" stroke={BAR_CONNECT} strokeWidth={2} dot={false} name="Connect p50" />
+            <Line type="monotone" dataKey="pre_ttft_p50" stroke={BAR_PRE_TTFT} strokeWidth={2} dot={false} name="Pré-TTFT p50" />
+            <Line type="monotone" dataKey="stream_p50" stroke={BAR_STREAM} strokeWidth={2} dot={false} name="Stream p50" />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartCard>
+
+      {/* Erreurs & blocages */}
+      <SectionTitle>{isFr ? "Erreurs & blocages" : "Errors & Blocks"}</SectionTitle>
+      {le ? (
+        <div className="text-xs text-red-400 border border-red-100 rounded-lg p-3 bg-red-50">
+          {String(ee)}
+        </div>
+      ) : totalErrors === 0 && !le ? (
+        <div className="flex items-center gap-2 border border-green-100 rounded-xl bg-green-50 px-4 py-3 mb-4">
+          <CheckCircle size={14} className="text-green-500" />
+          <span className="text-xs text-green-700 font-bold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            {isFr ? "Aucune erreur sur cette période" : "No errors in this period"}
+          </span>
+        </div>
+      ) : (
+        <div>
+          {lastError && (
+            <div className="border border-red-100 rounded-xl bg-red-50 px-4 py-3 mb-4">
+              <div className="flex items-center gap-2 mb-1">
+                <AlertCircle size={13} className="text-red-400" />
+                <span className="text-xs font-bold text-red-700" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  {isFr ? "Dernière erreur" : "Last error"} — {String(lastError.component ?? "")} / {String(lastError.error_type ?? "")}
+                </span>
+              </div>
+              <p className="text-xs text-red-600 ml-5" style={{ fontFamily: "'Source Serif 4', serif" }}>
+                {String(lastError.message ?? "")}
+              </p>
+            </div>
+          )}
+          <ChartCard
+            title={isFr ? "Erreurs par semaine" : "Errors per week"}
+            subtitle={isFr ? "Event error_occurred — toutes sources" : "Event error_occurred — all sources"}
+            isLoading={le}
+            error={ee ? String(ee) : null}
+            isEmpty={!errorByWeek.length}
+          >
+            <ResponsiveContainer width="100%" height={180}>
+              <BarChart data={errorByWeek} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="week" tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                <YAxis tick={{ fontSize: 10, fill: "#94a3b8" }} />
+                <Tooltip />
+                <Bar dataKey="n" fill={RECHARTS_RED} name={isFr ? "Erreurs" : "Errors"} radius={[3, 3, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        </div>
+      )}
     </div>
   );
 }
