@@ -3,7 +3,7 @@
 > **Portail de veille technologique et d'aide à la décision** — benchmarks, analyses stratégiques et outils interactifs pour les technologies de synthèse vocale (TTS/STT) et d'avatars vidéo conversationnels.
 
 **URL de production :** [gamiways.memoways.com](https://gamiways.memoways.com)
-**Version :** 1.1.0 — Mai 2026
+**Version :** 1.3.0 — Mai 2026
 **Statut :** 🟢 En production — itérations continues
 **Partenariat :** [Gamilab](https://gamilab.ch) × [Memoways](https://memoways.com)
 
@@ -32,11 +32,18 @@ Pages dédiées au projet GamiWays Core Engine (Gamilab × Memoways) :
 | Route | Contenu |
 | --- | --- |
 | `/project` | Présentation du projet, vision, concepts clés, roadmap A/B/C |
+| `/project/prototypes` | Prototypes fondateurs — *Parle à AVA !* et *Le Dilemme Plastique* avec diagrammes Mermaid, architectures, coûts |
+| `/project/status` | Build Status — 24 épics Phase A (21/24 · 87%), barres Phase A/B/C, badge sync `gami-digidouble-core` |
+| `/project/analytics` | Usage & Latence — dashboard PostHog temps réel, sessions récentes, tendances pipeline, erreurs |
 | `/research` | Défis techniques et objectifs produit |
-| `/research/architecture` | Architecture 4 couches, stack technique réelle (Fastify, pgvector, Redis, Langfuse), endpoints API |
+| `/research/architecture` | Architecture 4 couches, Context Engine v2 (7 dimensions), Knowledge Pipeline, 16 endpoints API |
 | `/research/gaps` | Opportunités et lacunes techniques identifiées |
 | `/research/academic` | État de l'art avec références et liens |
-| `/project/status` | Build Status — tableau des épics Phase A avec statut ✅/🔄/⏳ |
+
+**Analytics PostHog — 3 projets suivis :**
+- **Dilemme Light** (107669) — tours vocaux : recording / STT / LLM+TTS, tendances p50/p95 hebdomadaires
+- **Dilemme Flowise** (171071) — sessions Flowise : Connect / Pré-TTFT / Stream, erreurs TTS ElevenLabs
+- **AVA** (137897) — events jeu : parties démarrées/terminées, personnages, phases, modalité vocale
 
 ### Voice Pipeline
 
@@ -45,7 +52,7 @@ Analyse indépendante des technologies de synthèse et reconnaissance vocale —
 | Route | Titre | Contenu |
 |-------|-------|---------|
 | `/voice/stt` | STT / Speech-to-Text | Comparatif de 10 moteurs STT/ASR (cloud, open-source, souverain) |
-| `/voice/tts` | TTS & Voice Synthesis | Comparatif de 16 moteurs TTS (cloud, on-premise, open-source) |
+| `/voice/tts` | TTS & Voice Synthesis | Comparatif de **17 moteurs TTS** (cloud, on-premise, open-source) |
 | `/voice/benchmarks` | Audio Synthesis Benchmarks | Benchmarks latence, WER, ELO, coût, qualité STT→TTS |
 | `/voice/stack` | Decision Framework | Cadre de décision par couche (STT → TTS → LLM → Mémoire → Streaming → Infrastructure) + simulateur interactif |
 | `/voice/pipeline` | Voice-to-Voice Pipeline | Diagramme du pipeline Voice-to-Voice complet |
@@ -59,25 +66,10 @@ Analyse indépendante des technologies d'avatars vidéo conversationnels :
 
 | Route | Titre | Contenu |
 |-------|-------|---------|
-| `/avatars` | Streaming Video Avatars | Comparatif des plateformes de streaming vidéo avatar |
-| `/avatars/market` | Business & Market | Enjeux business et opportunités de marché (2025–2026) |
+| `/avatars` | Streaming Video Avatars | Comparatif des plateformes + section Business & Market intégrée |
 | `/avatars/pricing` | Cost Simulator | Simulateur de coûts comparatif (30–3000 min/mo, 8 filtres use-case) |
-| `/avatars/behavior` | Avatar Behavior & Expressiveness | Fidélité comportementale, langage corporel, TTS expressif |
-| `/avatars/emotional` | Emotional Toolbox & Character Design | Design émotionnel cinématographique pour avatars conversationnels |
+| `/avatars/behavior` | Avatar Behavior & Emotional Design | Fidélité comportementale, expressivité, design émotionnel cinématographique (page fusionnée) |
 | `/platform/:id` | Fiche Plateforme | Fiche détaillée par plateforme avatar |
-
-### The Project — Analytics
-
-| Route | Titre | Contenu |
-|-------|-------|---------|
-| `/project/analytics` | Usage & Latence | Dashboard PostHog temps réel — latences pipeline, sessions récentes, tendances, erreurs |
-
-Les données sont proxifiées côté serveur via tRPC — la clé API PostHog n'est jamais exposée côté client.
-
-**3 projets PostHog suivis :**
-- **Dilemme Light** (107669) — tours vocaux : recording / STT / LLM+TTS, tendances p50/p95 hebdomadaires
-- **Dilemme Flowise** (171071) — sessions Flowise : Connect / Pré-TTFT / Stream, erreurs TTS ElevenLabs
-- **AVA** (137897) — events jeu : parties démarrées/terminées, personnages, phases, modalité vocale
 
 ### About / À propos
 
@@ -106,26 +98,27 @@ Slider 30–3000 min/mois, 5 presets, toggle coûts cachés, classement dynamiqu
 
 ## Couverture des outils
 
-### TTS — 16 moteurs évalués
+### TTS — 17 moteurs évalués
 
-| Outil | Type | Infra |
-| --- | --- | --- |
-| ElevenLabs v3 | Cloud API | US |
-| Cartesia Sonic 3 | Cloud API | US |
-| Inworld TTS-2 | Cloud API | US |
-| Hume AI Octave 2 | Cloud API | US |
-| Fish Audio OpenAudio S1 | Cloud API | CN/US |
-| Deepgram Aura 2 | Cloud API | US |
-| Kokoro 82M v1.0 | Open-source | Self-hosted |
-| Chatterbox (Resemble AI) | Open-source | Self-hosted |
-| Orpheus 3B | Open-source | Self-hosted |
-| Dia (Nari Labs) | Open-source | Self-hosted |
-| Kyutai TTS 1.6B | Open-source | Self-hosted |
-| Sesame CSM | Open-source | Self-hosted |
-| Ultravox v0.5 | End-to-end | Self-hosted |
-| Moshi (Kyutai) | End-to-end | Self-hosted |
-| Voxtral TTS (Mistral) | Open-source | Self-hosted / EU |
-| OpenAI Realtime API | Cloud API | US |
+| Outil | Type | Infra | Notes |
+| --- | --- | --- | --- |
+| OpenAI Realtime API | Cloud API | US | 3 modèles : GPT-Realtime-2, Translate, Whisper |
+| ElevenLabs v3 | Cloud API | US | ELO 1178 |
+| StepAudio 2.5 | Cloud API | US | ELO 1187 — zero-shot cloning 3s |
+| Inworld TTS-2 | Cloud API | US | Research Preview — Voice Direction |
+| Cartesia Sonic 3 | Cloud API | US | |
+| Hume AI Octave 2 | Cloud API | US | |
+| Fish Audio OpenAudio S1 | Cloud API | CN/US | |
+| Deepgram Aura 2 | Cloud API | US | |
+| Kokoro 82M v1.0 | Open-source | Self-hosted | |
+| Chatterbox (Resemble AI) | Open-source | Self-hosted | |
+| Orpheus 3B | Open-source | Self-hosted | |
+| Dia (Nari Labs) | Open-source | Self-hosted | |
+| Kyutai TTS 1.6B | Open-source | Self-hosted | |
+| Sesame CSM | Open-source | Self-hosted | |
+| Ultravox v0.5 | End-to-end | Self-hosted | |
+| Moshi (Kyutai) | End-to-end | Self-hosted | |
+| Voxtral TTS (Mistral) | Open-source | Self-hosted / EU | |
 
 ### STT — 10 moteurs évalués
 

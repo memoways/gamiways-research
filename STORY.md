@@ -236,6 +236,84 @@ comparatifs, benchmarks de latence, analyse état de l'art.
 
 ---
 
+### 2026-05-15 — Prototypes Fondateurs : Mermaid, Home, textes officiels 🔶
+
+**Intent**: Transformer la page Prototypes en une présentation riche et authentique des deux projets fondateurs, avec diagrammes Mermaid depuis Notion et réorganisation de la Home.
+
+**Prompt**:
+```
+Enrichir la page /project/prototypes avec les vrais textes des prototypes (fournis 
+par Ulrich pour AVA, depuis le blog Memoways pour Dilemme Plastique). Ajouter des 
+diagrammes Mermaid tirés des pages Notion. Réorganiser la Home pour mettre les 
+prototypes en avant.
+```
+
+**Outcome**:
+- **8 diagrammes Mermaid** (composant `MermaidDiagram.tsx`) : AVA (4 diagrammes), Dilemme Light (2), Flowise (2)
+- **Textes officiels** : AVA (thriller dystopique, famille Emma/Max/Ava/Léo, film Où est Ava ?, objectif réflexif), Dilemme Plastique (genèse Peter Charaf, Race for Water, base de données propriétaire)
+- **Home réorganisée** : Hero → Prototypes Fondateurs → Core Engine (strip de convergence) → Portal → Voice Pipeline → Video Avatars
+- **Screenshots CDN** des 3 prototypes intégrés dans les cartes Home
+- **Assainissement** : coûts inventés remplacés par totaux Notion uniquement, barres latences inventées remplacées par 3 mesures réelles PostHog
+
+**Surprise**: La règle "zéro donnée inventée" appliquée aux coûts a révélé l'absence de décomposition documentée pour AVA — honnêteté > précision apparente.
+
+**Friction**: Les diagrammes Mermaid en SSR avec Vite nécessitent le package `mermaid` installé côté bundle — erreur silencieuse au build, détectée au run.
+
+**Time**: ~5h (la journée la plus dense en contenu)
+
+---
+
+### 2026-05-14 — Sync gami-digidouble-core + Build Status enrichi 🔷
+
+**Intent**: Synchroniser le portail avec l'état réel du repo `gami-lab/gami-digidouble-core` et enrichir la page Build Status.
+
+**Outcome**:
+- 24 épics Phase A (dont 21 done), 12 nouveaux épics documentés avec dates de completion
+- Architecture : 16 endpoints API, Context Engine v2 (7 dimensions), Knowledge Pipeline (3 types retrieval)
+- 3 barres de progression individuelles Phase A/B/C + barre globale (66%)
+- Badge "Synced from repo · 2026-05-14" avec constante `LAST_SYNC_DATE`
+
+**Time**: ~2h
+
+---
+
+### 2026-05-13 — ELO TTS actualisé + bugfix React 🔷
+
+**Outcome**:
+- 5 valeurs ELO corrigées depuis Artificial Analysis API (13 mai 2026) — OpenAI Realtime passe #1 à 1208 ELO, Chatterbox recule à 1006
+- Fix erreur React "duplicate key" dans Home.tsx (deux liens vers `/research/behavior`)
+
+**Time**: ~30min
+
+---
+
+### 2026-05-12 — StepAudio 2.5 : 17e moteur TTS 🔷
+
+**Intent**: Intégrer StepAudio 2.5 (rang #3 mondial ELO au moment de l'intégration).
+
+**Outcome**:
+- StepAudio 2.5 : ELO 1187, dual-level context control, zero-shot voice cloning 3s, $0.064/min
+- Compteur global : 16 → 17 moteurs TTS dans VoiceBenchmarks et Home
+- Fiche détail `/tts/stepaudio_25` disponible automatiquement via TTSDetail
+
+**Time**: ~45min
+
+---
+
+### 2026-05-11 — Fusion pages avatars 🔷
+
+**Intent**: Simplifier la navigation en fusionnant les pages avatars trop fragmentées.
+
+**Outcome**:
+- **AvatarsBehavior + AvatarsEmotional → une page** "Avatar Behavior & Emotional Design" — codes ET-x, Axe 2 supprimés
+- **AvatarsMarket → section finale d'AvatarsOverview** — route `/avatars/market` retirée
+
+**Surprise**: La fusion a révélé une duplication de contenu entre Behavior et Emotional — la version fusionnée est plus cohérente que les deux pages séparées.
+
+**Time**: ~1h
+
+---
+
 ### 2026-05-10 — Rebranding GamiWays 🔶
 
 **Intent**: Renommer le portail de DigiDouble Research Portal à GamiWays Research Portal, repositionner l'identité éditoriale.
@@ -250,6 +328,20 @@ comparatifs, benchmarks de latence, analyse état de l'art.
 - Repo GitHub : memoways/digidouble-research → memoways/gamiways-research
 
 **Emotional state**: Clarté — le portail avait dépassé son contexte d'origine. Le rebranding aligne le nom avec la réalité du projet.
+
+**Time**: ~2h
+
+---
+
+### 2026-05-16 (matin) — Page Analytics PostHog + OpenAI Realtime 3 modèles 🔷
+
+**Intent**: Créer un dashboard PostHog backend-proxied et documenter les 3 nouveaux modèles OpenAI Realtime annoncés le 7 mai.
+
+**Outcome**:
+- Page `/project/analytics` : proxy tRPC sécurisé, 3 onglets projets, sélecteur période, Recharts (LineChart/BarChart/PieChart)
+- Lien Build Status dans Footer sur toutes les pages
+- OpenAI Realtime mis à jour : GPT-Realtime-2 (raisonnement GPT-5), GPT-Realtime-Translate ($0.034/min), GPT-Realtime-Whisper ($0.017/min)
+- Fix MermaidDiagram.tsx + package mermaid v11.15.0 installé
 
 **Time**: ~2h
 
@@ -344,6 +436,20 @@ des éléments / parties de la mécanique qui bloquent, avec pistes de solution.
 
 ## Pulse Checks
 
+### 2026-05-16 — Pulse Check #3
+
+**Energy level**: 9/10
+
+**Current doubt**: La maintenance des données PostHog dépend de la qualité et de la cohérence des events envoyés par les prototypes — si un event change de nom ou de structure, les queries cassent silencieusement. Un mécanisme de validation serait utile.
+
+**Current satisfaction**: Le portail est maintenant une référence complète à trois niveaux — veille technologique (Voice/Avatars), état du projet (Architecture/Build Status/Prototypes) et observabilité temps réel (Analytics PostHog). La boucle est bouclée.
+
+**If you stopped now, what would you regret?**: Ne pas avoir connecté les latences pipeline backend d'AVA (Query rewrite / RAG / LLM / Validator) au projet PostHog 137897 — c'est la donnée la plus riche et elle est invisible dans le portail.
+
+**One word for how this feels**: **Complétude**
+
+---
+
 ### 2026-05-10 — Pulse Check #2
 
 **Energy level**: 9/10
@@ -376,6 +482,9 @@ des éléments / parties de la mécanique qui bloquent, avec pistes de solution.
 - **2026-04-29**: La séparation données/rendu (sttData.ts, ttsData.ts, strategicData.ts) est la décision architecturale la plus importante du projet — elle permet de mettre à jour 26 fiches sans toucher au code de rendu.
 - **2026-05-02**: Vérifier les données sur les sites officiels révèle systématiquement des informations absentes des benchmarks tiers — le prix Voice Agent API $0.015/min d'Inworld n'était documenté nulle part ailleurs.
 - **2026-05-10**: Le rebranding n'est pas qu'un changement de nom — c'est une clarification de la proposition de valeur. GamiWays Research Portal dit exactement ce que c'est : un portail de recherche pour le projet GamiWays, pas un projet académique.
+- **2026-05-15**: La règle "zéro donnée inventée" appliquée aux coûts est plus honnête et plus crédible qu'un tableau complet avec des estimations — un blanc assumé vaut mieux qu'une précision apparente non fondée.
+- **2026-05-15**: Les diagrammes Mermaid depuis Notion sont plus fiables que les diagrammes SVG faits à la main — ils sont maintenus par l'équipe, pas par le portail.
+- **2026-05-16**: `ttftMs - connectMs` = Pré-TTFT. La décomposition du screenshot d'admin était déjà encodée dans un seul event PostHog — il suffisait de l'extraire plutôt que de créer de nouveaux events.
 
 ---
 

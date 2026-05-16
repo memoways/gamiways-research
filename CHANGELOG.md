@@ -19,7 +19,107 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/) et [Se
 
 ---
 
-## [1.1.0] — 2026-05-16
+## [1.3.0] — 2026-05-16
+
+### Ajouté — Latences PostHog enrichies (3 projets)
+
+#### Backend — 5 nouvelles procédures tRPC (`server/routers/posthog.ts`)
+- **`dilemmeFlowiseRecentSessions`** : récupération brute des `N` sessions les plus récentes de `flowise_stream_completed` avec décomposition complète (`connectMs`, `ttftMs`, `streamMs`, `totalMs`, `nodes`, `tools`, `tokenCount`, `traceId`)
+- **`dilemmeFlowisePhaseTrends`** : tendances hebdomadaires par phase pipeline Flowise — p50/p95 pour Connect, Pré-TTFT (`ttftMs - connectMs`), Stream et Total
+- **`dilemmeFlowiseErrors`** : analyse hebdomadaire des `error_occurred` groupés par `component`, `errorType` et `message`
+- **`dilemmeLightRecentTurns`** : tours vocaux bruts avec `session_id`, `total_ms`, `stt_latency_ms`, `recording_duration_ms`, `stt_to_complete_ms`, `exchange_index`
+- **`dilemmeLightPhaseTrends`** : tendances hebdomadaires par phase Dilemme Light — p50/p95 Total, STT, Recording, STT-processing
+
+#### Frontend — nouveaux composants et sections (`client/src/pages/ProjectAnalytics.tsx`)
+- **Composant `SessionLatencyBar`** : barre horizontale empilée par session Flowise (Connect bleu / Pré-TTFT violet / Stream vert), thème sombre, expandable
+- **Composant `TurnLatencyBar`** : barre horizontale empilée par tour Dilemme Light (Enregistrement bleu / STT cyan / LLM+TTS ambre)
+- **Dilemme Flowise** : sections "Sessions récentes", "Tendances pipeline", "Erreurs & blocages" avec tri, sélecteur de limite et stat cards
+- **Dilemme Light** : sections "Tours récents" et "Tendances par phase"
+- Routage PostHog → projets vérifié : aucun mélange entre les 3 projets (107669, 171071, 137897)
+
+---
+
+## [1.2.0] — 2026-05-16
+
+### Ajouté
+- **Page `/project/analytics`** (ProjectAnalytics.tsx) : dashboard PostHog temps réel avec proxy backend sécurisé (clé API jamais exposée côté client) — 3 onglets Dilemme Light / Dilemme Flowise / AVA, sélecteur de période 30j/90j/tout, granularité hebdomadaire, graphiques Recharts (LineChart, BarChart, PieChart). Lien NavBar dans le menu The Project.
+- **Lien Build Status dans Footer** : pastille verte + texte "Core Engine — Phase A · 87% complete" accessible depuis toutes les pages
+
+### Modifié
+- **OpenAI Realtime API** — 3 nouveaux modèles annoncés le 7 mai 2026 : GPT-Realtime-2 (raisonnement GPT-5, contexte 128K, +15.2% Big Bench Audio), GPT-Realtime-Translate ($0.034/min, 70+ langues), GPT-Realtime-Whisper (STT streaming, $0.017/min) — mis à jour dans `ttsData.ts` et `strategicData.ts`
+- Suppression du lien "Core Engine Build Status" du dropdown NavBar → remplacé par CTA dans Research.tsx (Défis Techniques) et GamiWaysArchitecture.tsx (bouton mis en valeur)
+- Fix : package `mermaid` installé (v11.15.0) + erreurs TypeScript corrigées dans `MermaidDiagram.tsx`
+
+---
+
+## [1.1.0] — 2026-05-15
+
+### Ajouté
+- **Page `/project/prototypes`** (PrototypesOrigins.tsx) : présentation des 2 prototypes fondateurs — *Parle à AVA !* (thriller dystopique, famille Emma/Max/Ava/Léo, film Où est Ava ?, objectif réflexif) et *Le Dilemme Plastique* (genèse Peter Charaf/Race for Water, base de données propriétaire, pivot 2024). Textes officiels fournis par Ulrich — zéro donnée inventée
+- **8 diagrammes Mermaid** extraits des pages Notion (composant `MermaidDiagram.tsx`) :
+  - AVA : parcours UX, pipeline STT→RAG→GM→LLM→TTS, boucle Game Master, sync Notion→Supabase
+  - Dilemme Light : parcours pédagogique 6 indices, mécanique Peter
+  - Dilemme Flowise : architecture end-to-end, séquence conversation
+  - DiagramToggle avec pastilles technique/concept/expérience
+- **`prototypeDiagrams.ts`** : données diagrammes centralisées depuis Notion uniquement
+- **Screenshots CDN** : captures des 3 prototypes (AVA, Dilemme Light, Flowise) intégrées dans les cartes Home
+- **Section 01 "Origins"** dans Project.tsx : texte narratif (2 paragraphes sources vérifiées) + boutons de démo + lien vers /project/prototypes
+
+### Modifié
+- **Home.tsx — réorganisation complète** : nouvel ordre Hero → Prototypes Fondateurs (AVA + Dilemme) → Core Engine (barre Phase A 87%, 3 piliers, strip de convergence AVA + Dilemme → GamiWays Core) → Explore the portal → Voice Pipeline → Video Avatars
+- **Architectures AVA et Flowise** redesignées en grille visuelle avec numérotation 01/02/03/04 et fond coloré par couche
+- **Coûts prototypes** : suppression des estimations non fondées — uniquement les totaux documentés dans Notion (Light 25h / ~220 CHF, Flowise 45h / ~160 CHF, AVA liste d'outils sans total inventé)
+- **Section latences mesurées** : remplacement des barres inventées par les 3 valeurs réellement mesurées dans les CHANGELOG — TTS hit LRU ~40ms, TTS welcome 2569ms→40ms (Flowise), reprise pré-générée 150-500ms (Light)
+- **CTA inversés** : primaire = Détails techniques (interne), secondaire = Tester (sortant) dans Home, Project et PrototypesOrigins
+- NavBar : Founding Prototypes en premier dans le menu The Project, badges "Interactive" supprimés
+
+---
+
+## [1.0.4] — 2026-05-14
+
+### Ajouté
+- **Badge "Synced from repo · 2026-05-14"** dans ProjectStatus.tsx — constante `LAST_SYNC_DATE` à mettre à jour manuellement à chaque sync avec `gami-digidouble-core`
+- **3 barres de progression individuelles** (Phase A / B / C) sous la barre globale dans ProjectStatus : titre coloré, période, compteur done/total, pourcentage. Phase A : 21/24 · 87%, Phase B : 0/5 · 0%, Phase C : 0/3 · 0%, Global : 21/32 · 66%
+
+### Modifié
+- **Synchronisation complète avec `gami-lab/gami-digidouble-core`** :
+  - ProjectStatus.tsx : 24 épics Phase A (dont 21 done), dates de completion, nouveaux épics 2.1b/2.7/2.8/3.1/3.2/4.2/4.2b/4.2c/4.5/5.1/5.2/5.5
+  - GamiWaysArchitecture.tsx : 16 endpoints API (`/runtime-state`, `/events/stream`, `/users/:id/persona`, `/knowledge-sources`), Domain Layer v2, Context Engine v2 (7 dimensions), Knowledge Pipeline (3 types retrieval + cycle de vie ingestion)
+  - Project.tsx : table des concepts clés enrichie (Context Engine v2, Knowledge Pipeline, User Persona, Runtime State)
+
+---
+
+## [1.0.3] — 2026-05-13
+
+### Modifié
+- **ELO TTS mis à jour** depuis l'API Artificial Analysis (13 mai 2026) — 5 moteurs corrigés dans `ttsData.ts` et `VoiceBenchmarks.tsx` :
+  - OpenAI Realtime API : 1106 → **1208** (rang #1)
+  - ElevenLabs v3 : 1108 → **1178** (rang #4)
+  - Fish Audio OpenAudio S1 : 1074 → **1128** (rang #6)
+  - Cartesia Sonic 3 : 1054 → **1069** (rang #8)
+  - Chatterbox (Resemble AI) : 1050 → **1006** (rang #18)
+
+### Corrigé
+- Erreur React "two children with the same key `/research/behavior`" dans Home.tsx — suppression du lien redondant (ancienne page fusionnée)
+
+---
+
+## [1.0.2] — 2026-05-12
+
+### Ajouté
+- **StepAudio 2.5 TTS** — 17e moteur évalué : ELO 1187 (rang #3 mondial), dual-level context control, zero-shot voice cloning 3 sec, $0.064/min. Ajouté dans `ttsData.ts`, `VoiceBenchmarks`, compteurs mis à jour 16→17 dans VoiceBenchmarks et Home. Fiche détail `/tts/stepaudio_25` automatiquement disponible via TTSDetail
+
+---
+
+## [1.0.1] — 2026-05-11
+
+### Modifié
+- **Fusion AvatarsBehavior + AvatarsEmotional** → une seule page "Avatar Behavior & Emotional Design" centrée sur l'expérience temps réel vivante, organique, crédible. Suppression des codes ET-x, Axe 2. Mise à jour NavBar, App.tsx, Home.tsx, Research.tsx
+- **Fusion AvatarsMarket → AvatarsOverview** : contenu Business & Market (tableau marché, souveraineté/technologie/marché, positionnement GamiWays) intégré comme section finale d'AvatarsOverview. Route `/avatars/market` retirée, références nettoyées
+
+---
+
+## [1.0.0] — 2026-05-10
 
 ### Ajouté — Latences PostHog enrichies (3 projets)
 
