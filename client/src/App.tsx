@@ -20,7 +20,6 @@ import PipelinePhase1 from "@/pages/PipelinePhase1";
 /// ── GamiWays sub-pages ───────────────────────────────────────────────
 import GamiWaysArchitecture from "@/pages/GamiWaysArchitecture";
 import ProjectStatus from "@/pages/ProjectStatus";
-import GamiWaysGaps from "@/pages/GamiWaysGaps";
 import GamiWaysAcademic from "@/pages/GamiWaysAcademic";
 import PrototypesOrigins from "@/pages/PrototypesOrigins";
 import ProjectAnalytics from "@/pages/ProjectAnalytics";
@@ -68,7 +67,7 @@ function Router() {
           <Route path="/project/analytics" component={ProjectAnalytics} />
           <Route path="/research" component={Research} />
           <Route path="/research/architecture" component={GamiWaysArchitecture} />
-          <Route path="/research/gaps" component={GamiWaysGaps} />
+          <Route path="/research/gaps"><Redirect to="/project" /></Route>
           <Route path="/research/academic" component={GamiWaysAcademic} />
           {/* Avatar sub-pages also under /research for semantic grouping */}
           <Route path="/research/behavior" component={AvatarsBehavior} />

@@ -42,7 +42,6 @@ const NAV_MENUS: NavMenu[] = [
       { href: "/project", label: "GamiWays Project", labelFr: "Projet GamiWays", desc: "Vision, positioning & product roadmap", descFr: "Vision, positionnement & roadmap produit" },
       { href: "/research", label: "Technical Challenges", labelFr: "Défis Techniques", desc: "Core technical challenges & product objectives", descFr: "Défis techniques clés & objectifs produit" },
       { href: "/research/architecture", label: "Target Architecture", labelFr: "Architecture Cible", desc: "System design & latency budget", descFr: "Design système & budget latence" },
-      { href: "/research/gaps", label: "Opportunities & Gaps", labelFr: "Opportunités & Lacunes", desc: "Technology gaps & strategic opportunities", descFr: "Lacunes technologiques & opportunités stratégiques" },
       { href: "/research/academic", label: "State of the Art", labelFr: "État de l'Art", desc: "Key papers & benchmarks 2023–2026", descFr: "Publications clés & benchmarks 2023–2026" },
       { href: "/project/analytics", label: "Usage & Latency", labelFr: "Usage & Latence", desc: "PostHog analytics — 3 prototypes, weekly granularity", descFr: "Analytics PostHog — 3 prototypes, granularité hebdomadaire", highlight: true, highlightColor: "oklch(0.55 0.20 200)" },
     ],
